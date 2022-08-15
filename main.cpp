@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/14 22:19:53 by jrasser           #+#    #+#             */
-/*   Updated: 2022/08/14 22:26:44 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/08/15 22:46:55 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,23 @@
 #include <vector>
 #include <iostream>
 
+//using namespace ft;
+//using namespace std;
+
 int main()
 {
-	std::vector<int> test;
-
-	test.push_back(10);
-	test.push_back(10);
-	test.push_back(10);
-	test.push_back(10);
-
+	std::vector<int> test(3, 10);
 	std::vector<int>::iterator it = test.begin();
 
 	for(; it != test.end(); it++)
 		std::cout << *it << std::endl;
 
+
+
+
+
+
+	//ft::vector<int> test2(3, 42);
 
 
 
