@@ -6,13 +6,12 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/14 22:19:53 by jrasser           #+#    #+#             */
-/*   Updated: 2022/08/15 22:46:55 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/08/19 22:36:57 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Vector.hpp"
 #include <vector>
-#include <iostream>
 
 //using namespace ft;
 //using namespace std;
@@ -30,7 +29,7 @@ int main()
 
 
 
-	//ft::vector<int> test2(3, 42);
+	ft::vector<int> test2(1);
 
 
 

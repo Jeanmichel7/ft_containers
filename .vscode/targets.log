@@ -5,8 +5,9 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
+ 
 
-# Make data base, printed on Mon Aug 15 16:08:11 2022
+# Make data base, printed on Fri Aug 19 22:27:52 2022
 
 # Variables
 
@@ -67,7 +68,7 @@ NVM_BIN = /home/jrasser/.nvm/versions/node/v16.14.2/bin
 # environment
 ELECTRON_RUN_AS_NODE = 1
 # environment
-VSCODE_IPC_HOOK_CLI = /mnt/wslg/runtime-dir/vscode-ipc-ae0bb64c-aada-4815-81c5-1a7b2731f0b0.sock
+VSCODE_IPC_HOOK_CLI = /mnt/wslg/runtime-dir/vscode-ipc-f8a98c9a-b7aa-41f6-ae1d-9df62b0071fb.sock
 # default
 .FEATURES := target-specific order-only second-expansion else-if shortest-stem undefine oneshell archives jobserver output-sync check-symlink load
 # makefile (from 'Makefile', line 14)
@@ -89,7 +90,7 @@ PULSE_SERVER = /mnt/wslg/PulseServer
 # makefile (from 'Makefile', line 13)
 BLU = \033[0;34m
 # environment
-WT_SESSION = 1bd3bb61-2a0d-41be-9345-c22533fe60e8
+WT_SESSION = 0bbf7842-960c-496a-8283-ae4c82d3daf4
 # environment
 VSCODE_AMD_ENTRYPOINT = vs/workbench/api/node/extensionHostProcess
 # environment
@@ -187,7 +188,7 @@ TERM = xterm-256color
 # environment
 WSL_DISTRO_NAME = Ubuntu
 # variable set hash-table stats:
-# Load=88/1024=9%, Rehash=0, Collisions=11/132=8%
+# Load=88/1024=9%, Rehash=0, Collisions=11/119=9%
 
 # Pattern-specific Variable Values
 
@@ -195,10 +196,10 @@ WSL_DISTRO_NAME = Ubuntu
 
 # Directories
 
-# . (device 2080, inode 350623): 10 files, no impossibilities.
+# . (device 2080, inode 350623): 12 files, no impossibilities.
 # srcs (device 2080, inode 350711): 3 files, no impossibilities.
 
-# 13 files, no impossibilities in 2 directories.
+# 15 files, no impossibilities in 2 directories.
 
 # Implicit Rules
 
@@ -221,27 +222,9 @@ objs/%.o: srcs/**%.cpp
 objs/main.o: main.cpp
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: 'main'
-#  Last modified 2022-08-14 22:25:17.457109
+#  Last modified 2022-08-16 01:52:53.048482
 #  File has been updated.
-#  Needs to be updated (-q is set).
-# automatic
-# @ := objs/main.o
-# automatic
-# % := 
-# automatic
-# * := main
-# automatic
-# + := main.cpp
-# automatic
-# | := 
-# automatic
-# < := main.cpp
-# automatic
-# ^ := main.cpp
-# automatic
-# ? := main.cpp
-# variable set hash-table stats:
-# Load=8/32=25%, Rehash=0, Collisions=4/24=17%
+#  Successfully updated.
 #  recipe to execute (from 'Makefile', line 31):
 			@mkdir -p $(OBJS_DIR)
 			@${CC} $(CPPFLAGS) -o $@ -c $< ${CFLAGS} ${DEBEUG}
@@ -253,14 +236,19 @@ all: prog
 #  Implicit rule search has not been done.
 #  File does not exist.
 #  File has been updated.
-#  Needs to be updated (-q is set).
-# variable set hash-table stats:
-# Load=0/32=0%, Rehash=0, Collisions=0/13=0%
+#  Successfully updated.
 
 .PHONY: all clean fclean re
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
+
+# Not a target:
+srcs/Vector.cpp:
+#  Implicit rule search has been done.
+#  Last modified 2022-08-14 22:27:17.754122
+#  File has been updated.
+#  Successfully updated.
 
 # Not a target:
 Makefile:
@@ -272,18 +260,15 @@ Makefile:
 # Not a target:
 main.cpp:
 #  Implicit rule search has been done.
-#  Last modified 2022-08-14 22:26:44.742786
+#  Last modified 2022-08-16 01:52:51.278482
 #  File has been updated.
 #  Successfully updated.
 
 prog: objs/main.o objs/Vector.o
 #  Implicit rule search has not been done.
- 
-#  Last modified 2022-08-14 22:25:17.577109
+#  Last modified 2022-08-16 01:52:53.278482
 #  File has been updated.
-#  Needs to be updated (-q is set).
-# variable set hash-table stats:
-# Load=0/32=0%, Rehash=0, Collisions=0/13=0%
+#  Successfully updated.
 #  recipe to execute (from 'Makefile', line 41):
 			@${CC} ${OBJS} -o $(NAME) ${CFLAGS} ${DEBEUG}
 			@echo "$(ERASE)$(GRN) [Successfully compiled]$(END)	$(CHECK) \n"
@@ -319,26 +304,31 @@ clean:
 			${RM} $(OBJS)
 			@echo "$(GRN) [Clean]$(END) 			$(CHECK)"
 
-# Not a target:
-objs/Vector.o:
-#  Implicit rule search has not been done.
-#  Modification time never checked.
-#  File has not been updated.
+objs/Vector.o: srcs/Vector.cpp
+#  Implicit rule search has been done.
+#  Implicit/static pattern stem: 'Vector'
+#  Last modified 2022-08-16 01:52:53.158482
+#  File has been updated.
+#  Successfully updated.
+#  recipe to execute (from 'Makefile', line 36):
+			@mkdir -p $(OBJS_DIR)
+			@${CC} $(CPPFLAGS) -o $@ -c $< ${CFLAGS} ${DEBEUG}
+			@printf	"$(ERASE) ${BLU}$ [BUILD]${RST} '$<' $(END)"
 
 # files hash-table stats:
-# Load=12/1024=1%, Rehash=0, Collisions=0/36=0%
+# Load=13/1024=1%, Rehash=0, Collisions=0/41=0%
 # VPATH Search Paths
 
 # No 'vpath' search paths.
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 26 / storage = 206 B / avg = 7 B
-# current buf: size = 8162 B / used = 206 B / count = 26 / avg = 7 B
+# strcache buffers: 1 (0) / strings = 31 / storage = 267 B / avg = 8 B
+# current buf: size = 8162 B / used = 267 B / count = 31 / avg = 8 B
 
-# strcache performance: lookups = 52 / hit rate = 50%
+# strcache performance: lookups = 58 / hit rate = 46%
 # hash-table stats:
-# Load=26/8192=0%, Rehash=0, Collisions=2/52=4%
-# Finished Make data base on Mon Aug 15 16:08:11 2022
+# Load=31/8192=0%, Rehash=0, Collisions=2/58=3%
+# Finished Make data base on Fri Aug 19 22:27:52 2022
 
  

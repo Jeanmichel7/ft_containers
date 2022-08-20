@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/14 22:06:29 by jrasser           #+#    #+#             */
-/*   Updated: 2022/08/16 01:26:26 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/08/20 03:03:53 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include <memory>
 #include <cstddef>
 #include <iterator>
+#include <iostream>
 
 
 
@@ -47,42 +48,79 @@ namespace ft
 	class vector
 	{
 
+	public:
+
+
+
 		/* Typedef */
-		typedef unsigned int size_type;
-		typedef Allocator allocator_type;
+		typedef std::size_t									size_type;
+		typedef Allocator 									allocator_type;
 
-		typedef T &reference;
-		typedef const T &const_reference;
+		typedef T											&reference;
+		typedef const T										&const_reference;
 
-		typedef std::random_access_iterator_tag iterator;
-		typedef std::random_access_iterator_tag const const_iterator;
+		typedef  T*									pointer;
+		typedef const  T*							const_pointer;
+		
 
-		typedef std::reverse_iterator<iterator> reverse_iterator;
-		typedef std::reverse_iterator<const_iterator> const const_reverse_iterator;
+		typedef std::random_access_iterator_tag				iterator;
+		typedef std::random_access_iterator_tag const		const_iterator;
 
+		typedef std::reverse_iterator<iterator>				reverse_iterator;
+		typedef std::reverse_iterator<const_iterator> const	const_reverse_iterator;
 
 
 	private:
-		T _nb;
+		pointer _start;
+		pointer _finish;
+		pointer _end_of_storage;
+		unsigned int _nb_elem;
+
+
 
 	public:
+
+
 		/* ******* CONSTRUCTION ******* */
 		//https://en.cppreference.com/w/cpp/container/vector/vector
 		
-		vector();
-		explicit vector( const Allocator &alloc );				//(2)
-		explicit vector( size_type count,
+		vector() {
+			std::cout << "0" << std::endl;
+
+		};
+		explicit vector( const Allocator &alloc ) {				//(2)
+			std::cout << "1" << std::endl;
+
+		};
+
+		explicit vector( size_type count,						//(3)
 						const T &value = T(),
-						const Allocator &alloc = Allocator() );	//(3)
+						const Allocator &alloc = Allocator() ) :
+						
+		_start( alloc.allocate(const_cast<size_type&>(count)) )
+		{
+			std::cout << "2" << std::endl;
 
-		template <class InputIt>
-			vector( InputIt first, InputIt last,
-				const Allocator &alloc = Allocator() );			//(5)
 
-		vector( const vector& other );							//(6)
-		~vector();
+		};
+
+		template <class InputIt>								//(5)
+		vector( InputIt first, InputIt last,
+		const Allocator &alloc = Allocator() ) {
+			std::cout << "3" << std::endl;
+		};
+
+		vector( const vector& other ) {							//(6)
+			std::cout << "4" << std::endl;
+		};
+
+		~vector() {};
 		
 		vector &operator=( const vector & );
+
+
+
+		
 		allocator_type get_allocator() const;
 
 
@@ -189,25 +227,30 @@ namespace ft
 
 
 
-
-
-
-
-
-		/* ******* MES TESTs ******* */
-		T getNumber();
 	};
 
-	/* ******* CONSTRUCTION ******* */
-	template <typename T, typename Allocator>
-	vector<T, Allocator>::vector()
-	{
-	}
+	// /* ******* CONSTRUCTION ******* */
+	// template <typename T, typename Allocator>
+	// vector<T, Allocator>::vector()
+	// {
+	// }
 
-	template <typename T, typename Allocator>
-	vector<T, Allocator>::~vector()
-	{
-	}
+	// template <typename T, typename Allocator>
+	// vector<T, Allocator>::~vector()
+	// {
+	// }
+
+
+
+
+
+	// //	explicit vector( const Allocator &alloc );				//(2)
+	// template <typename T, typename Allocator>
+	// vector<T, Allocator>::vector( Allocator const &alloc )
+	// {
+		
+	// }
+
 	
 	/* ******* ELEMENT ACCESS ******* */
 
