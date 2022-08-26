@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Vector.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jrasser <jrasser@42.fr>                    +#+  +:+       +#+        */
+/*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/14 22:06:29 by jrasser           #+#    #+#             */
-/*   Updated: 2022/08/26 18:59:24 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/08/26 22:32:59 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,14 +53,14 @@ namespace ft
 
 
 		/* Typedef */
-		typedef std::size_t									size_type;
-		typedef Allocator 									allocator_type;
+		typedef std::size_t								size_type;
+		typedef Allocator 								allocator_type;
 
-		typedef T											&reference;
-		typedef const T										&const_reference;
+		typedef T										&reference;
+		typedef const T									&const_reference;
 
-		typedef  T*									pointer;
-		typedef const  T*							const_pointer;
+		typedef  T*										pointer;
+		typedef const  T*								const_pointer;
 		
 
 		typedef std::random_access_iterator_tag				iterator;
@@ -75,7 +75,9 @@ namespace ft
 		pointer			_start;
 		pointer			_finish;
 		pointer			_end_of_storage;
-		size_type		_nb_elem;
+		
+		size_type		_nb_elems;
+		size_type		_capacity;
 
 
 
@@ -87,69 +89,133 @@ namespace ft
 		}
 
 		/* ******* CONSTRUCTION ******* */
-		//https://en.cppreference.com/w/cpp/container/vector/vector
 		
-		vector() {
-			_nb_elem = 0;
-			_start = NULL;
-		};
+		vector() :
+			_start(NULL), _finish(NULL),
+			_end_of_storage(NULL),
+			_nb_elems(0),
+			_capacity(0)
+			{
+				std::cout << "Constructor" << std::endl;
+			};
 
-		explicit vector( const Allocator &alloc ) {				//(2)
-			std::cout << "1" << std::endl;
-
-		};
+		explicit vector( const Allocator &alloc ) :
+			_alloc(alloc),
+			_start(_alloc.allocate(0)),
+			_finish(_start),
+			_end_of_storage(_start),
+			_nb_elems(0),
+			_capacity(0)
+			{
+				std::cout << "Constructor with allocator" << std::endl;
+			};
 
 		explicit vector( size_type count,						//(3)
 						const T &value = T(),
-						const Allocator &alloc = Allocator() )
-		: _alloc(alloc)
-		{
-			std::cout << "2" << std::endl;
-
-			_start = _alloc.allocate(count);
-			for(size_type i = 0; i < count; i++) {
-				_alloc.construct(_start + i, value);
-				_nb_elem = i;
-			}
-		};
+						const Allocator &alloc = Allocator() ) :
+			_alloc(alloc),
+			_start(_alloc.allocate(count)),
+			_finish(_start + count),
+			_end_of_storage(_start + count),
+			_nb_elems(count),
+			_capacity(count)
+			{
+				std::cout << "Constructor with count" << std::endl;
+	
+				//std::uninitialized_fill_n(_start, count, value);
+				for(size_type i = 0; i < count; i++) {
+					_alloc.construct(_start + i, value);
+					_nb_elems = i;
+				}
+			};
 
 		template <class InputIt>								//(5)
-		vector( InputIt first, InputIt last,
-				const Allocator &alloc = Allocator() )
-		: _alloc(alloc)
-		{
+			vector( InputIt first, InputIt last,
+				const Allocator &alloc = Allocator() ) :
+			_alloc(alloc),
+			_start(_alloc.allocate(first)),
+			_finish(_start + first),
+			_end_of_storage(_start + first),
+			_nb_elems(first),
+			_capacity(first)
+			{
+				std::cout << "Constructor with InputIt" << std::endl;
 
-			std::cout << "first : " << first << std::endl;
-			std::cout << "last : " << last << std::endl;
+				//std::uninitialized_copy(first, last, _start);
+				for(InputIt i = 0; i < first; i++) {
+					_alloc.construct(_start + i, last + i);
+					_nb_elems = i;
+				}
+			};
 
-			_start = _alloc.allocate(first);
-			for(size_type i = 0; i < first; i++)
-				_alloc.construct(_start + i, last);
-		};
+		vector( const vector& other ) :							//(6)
+			_alloc(Allocator()),
+			_start(_alloc.allocate(other._nb_elems)),
+			_finish(_start + other._nb_elems),
+			_end_of_storage(_start + other._nb_elems),
+			_nb_elems(other._nb_elems),
+			_capacity(other._capacity)
+			{
+				std::cout << "Copy constructor" << std::endl;
 
-		vector( const vector& other ) {							//(6)
-			std::cout << "4" << std::endl;
+				//std::uninitialized_copy(other._start, other._finish, _start);
+				for(size_type i = 0; i < other._nb_elems; i++) {
+					_alloc.construct(_start + i, other._start[i]);
+				}
+			};
+
+
+		vector &operator=( const vector &other ) {
+			std::cout << "Assignment operator" << std::endl;
+			
+			//del
+			for(size_type i = 0; i < _nb_elems; i++) {
+				_alloc.destroy(_start + i);
+			}
+			_alloc.deallocate(_start, _capacity);
+
+			//affec
+			_start = _alloc.allocate(other._nb_elems);
+			_finish = _start + other._nb_elems;
+			_end_of_storage = _start + other._nb_elems;
+			_nb_elems = other._nb_elems;
+			_capacity = other._capacity;
+			for(size_type i = 0; i < other._nb_elems; i++) {
+				_alloc.construct(_start + i, other._start[i]);
+			}
+
+			return *this;
 		};
 
 		~vector() {
-			if (_start) {
-				_alloc.destroy(_start);
-				_alloc.deallocate(_start, _nb_elem);
+			std::cout << "Destructor" << std::endl;
+			for(size_type i = 0; i < _nb_elems; i++) {
+				_alloc.destroy(_start + i);
 			}
+			_alloc.deallocate(_start, _capacity);
 		};
-		
-		vector &operator=( const vector & );
-
 
 
 		
-		allocator_type get_allocator() const;
+		allocator_type get_allocator() const { return _alloc; };
 
 
 
 		/* ******* ELEMENT ACCESS ******* */
-		reference at( size_type pos );
-		const_reference at( size_type pos ) const;
+		reference at( size_type pos )
+		{
+			try {
+				if(pos >= _nb_elems)
+					throw std::out_of_range("out of range");
+				return _start[pos];
+			}
+			catch(const std::exception& e) {
+				std::cerr << e.what() << "'\n";
+				std::terminate();}
+		};
+		const_reference at( size_type pos ) const {
+			return const_cast<vector*>(this)->at(pos);
+		};
 
 		reference operator[]( size_type pos );
 		const_reference operator[]( size_type pos ) const;
@@ -194,7 +260,7 @@ namespace ft
 
 		void reserve( size_type new_cap );
 		
-		size_type capacity() const;
+		size_type capacity() const {return _capacity;};
 
 
 
@@ -251,28 +317,7 @@ namespace ft
 
 	};
 
-	// /* ******* CONSTRUCTION ******* */
-	// template <typename T, typename Allocator>
-	// vector<T, Allocator>::vector()
-	// {
-	// }
-
-	// template <typename T, typename Allocator>
-	// vector<T, Allocator>::~vector()
-	// {
-	// }
-
-
-
-
-
-	// //	explicit vector( const Allocator &alloc );				//(2)
-	// template <typename T, typename Allocator>
-	// vector<T, Allocator>::vector( Allocator const &alloc )
-	// {
-		
-	// }
-
+	/* ******* CONSTRUCTION ******* */
 	
 	/* ******* ELEMENT ACCESS ******* */
 
@@ -280,17 +325,12 @@ namespace ft
 
 	/* ******* CAPACITY ******* */
 
-
 	/* ******* MODIFIERS ******* */
 
 	/* ******* NON MEMBER FUNCTION OVERLOAD ******* */
 
 	/* ******* MES TESTs ******* */
-	//template <typename T, typename Allocator>
-	//T vector<T, Allocator>::getNumber()
-	//{
-	//	return (_nb);
-	//}
+
 
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jrasser <jrasser@42.fr>                    +#+  +:+       +#+        */
+/*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/14 22:19:53 by jrasser           #+#    #+#             */
-/*   Updated: 2022/08/26 18:59:06 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/08/26 22:32:03 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,23 +18,60 @@
 
 int main()
 {
-	std::vector<int> test(3, 10);
-	std::vector<int>::iterator it = test.begin();
+	std::vector<int> test;
+	test.push_back(1);
+	test.push_back(2);
+	test.push_back(3);
 
+	std::vector<int>::iterator it = test.begin();
 	for(; it != test.end(); it++)
 		std::cout << *it << std::endl;
 
+	std::vector<int> test_copie = test;
+	std::vector<int>::iterator it2 = test_copie.begin();
+	for(; it2 != test_copie.end(); it2++)
+		std::cout << *it2 << std::endl;
+
+
+	//std::cout << "at : " << test.at(1000) << std::endl;
+
+
+
+
+	std::cout << "\n\n";
 
 
 
 
 
-	ft::vector<int> test2(30, 10);
-	for(int i = 0; i < 30; i++)
+
+
+	ft::vector<int> test2(3, 100);
+	//test2.push_back(1);
+	for(int i = 0; i < 3; i++)
 		std::cout << *(test2.getElem() + i) << std::endl;
 
-	//ft::vector<int> test2(5, 10);
+	test2.get_allocator();
+
+
+	// ft::vector<int> test3 = test2;
+	// for(int i = 0; i < 3; i++)
+	// 	std::cout << *(test3.getElem() + i) << std::endl;
 	
+
+
+
+	// ft::vector<int> test_aff(5, 10);
+	// for(int i = 0; i < 5; i++)
+	// 	std::cout << *(test_aff.getElem() + i) << std::endl;
+
+	// test_aff = test2;
+	// for(int i = 0; i < 10; i++)
+	// 	std::cout << *(test_aff.getElem() + i) << std::endl;
+
+
+	std::cout << "capacity : " << test2.capacity() << std::endl;
+	std::cout << "at : " << test2.at(100) << std::endl;
 
 
 
