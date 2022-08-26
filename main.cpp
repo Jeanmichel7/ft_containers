@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/14 22:19:53 by jrasser           #+#    #+#             */
-/*   Updated: 2022/08/26 17:54:34 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/08/26 18:59:06 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,12 @@ int main()
 
 
 
-	ft::vector<int> test2(5);
-	for(int i = 0; i < 5; i++)
+	ft::vector<int> test2(30, 10);
+	for(int i = 0; i < 30; i++)
 		std::cout << *(test2.getElem() + i) << std::endl;
 
+	//ft::vector<int> test2(5, 10);
+	
 
 
 
