@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Vector.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
+/*   By: jrasser <jrasser@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/14 22:06:29 by jrasser           #+#    #+#             */
-/*   Updated: 2022/08/20 03:03:53 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/08/26 17:54:42 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,15 +71,20 @@ namespace ft
 
 
 	private:
-		pointer _start;
-		pointer _finish;
-		pointer _end_of_storage;
-		unsigned int _nb_elem;
+		Allocator		_alloc;
+		pointer			_start;
+		pointer			_finish;
+		pointer			_end_of_storage;
+		unsigned int	_nb_elem;
 
 
 
 	public:
 
+		/* TEST */
+		pointer getElem() {
+			return (_start);
+		}
 
 		/* ******* CONSTRUCTION ******* */
 		//https://en.cppreference.com/w/cpp/container/vector/vector
@@ -95,13 +100,12 @@ namespace ft
 
 		explicit vector( size_type count,						//(3)
 						const T &value = T(),
-						const Allocator &alloc = Allocator() ) :
-						
-		_start( alloc.allocate(const_cast<size_type&>(count)) )
+						const Allocator &alloc = Allocator() )
+		: _alloc(alloc)
 		{
-			std::cout << "2" << std::endl;
-
-
+			_start = _alloc.allocate(count);
+			for(size_type i = 0; i < count; i++)
+				_alloc.construct(_start + i, value);
 		};
 
 		template <class InputIt>								//(5)
