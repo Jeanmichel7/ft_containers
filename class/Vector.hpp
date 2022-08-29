@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/14 22:06:29 by jrasser           #+#    #+#             */
-/*   Updated: 2022/08/29 18:51:26 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/08/29 21:56:49 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 #include <cstddef>
 #include <iterator>
 #include <iostream>
+#include <limits>
 
 
 
@@ -24,31 +25,9 @@
 
 namespace ft
 {
-
-
-// Member type	Definition
-// value_type				T
-// allocator_type			Allocator
-// size_type				Unsigned integer type (usually std::size_t)
-
-// reference				value_type&
-// const_reference			const value_type&
-
-// pointer					Allocator::pointer
-// const_pointer			Allocator::const_pointer	(until C++11)
-
-// iterator					LegacyRandomAccessIterator and LegacyContiguousIterator to value_type
-// const_iterator			LegacyRandomAccessIterator and LegacyContiguousIterator to const value_type
-
-// reverse_iterator			std::reverse_iterator<iterator>
-// const_reverse_iterator	std::reverse_iterator<const_iterator>
-
-
 	template <typename T, typename Allocator = std::allocator<T> >
 	class vector
 	{
-
-		//typedef __gnu_cxx::__alloc_traits<_Tp_alloc_type> _Alloc_traits;
 
 	public:
 		/* Typedef */
@@ -80,16 +59,13 @@ namespace ft
 		size_type		_nb_elems;
 		size_type		_capacity;
 
-
-
 	public:
 
-		/* TEST */
-		pointer getElem() {
-			return (_start);
-		}
-
-		/* ******* CONSTRUCTION ******* */
+		/* *************************************************** */
+		/*                                                     */
+		/*                     CONSTRUCTION                    */
+		/*                                                     */
+		/* *************************************************** */
 		
 		vector() :
 			_start(NULL), _finish(NULL),
@@ -145,7 +121,6 @@ namespace ft
 				//std::uninitialized_copy(first, last, _start);
 				for(InputIt i = 0; i < first; i++) {
 					_alloc.construct(_start + i, last);
-					_nb_elems++;
 				}
 			};
 
@@ -201,8 +176,12 @@ namespace ft
 		allocator_type get_allocator() const { return _alloc; };
 
 
+		/* *************************************************** */
+		/*                                                     */
+		/*                    ELEMENT ACCESS                   */
+		/*                                                     */
+		/* *************************************************** */
 
-		/* ******* ELEMENT ACCESS ******* */
 		reference at( size_type pos )
 		{
 			//std::cout << "at" << std::endl;
@@ -210,24 +189,44 @@ namespace ft
 				if(pos >= _nb_elems)
 					throw std::out_of_range("out of range");
 				return _start[pos];
-			}
-			catch(const std::exception& e) {
+			} catch(const std::exception& e) {
 				std::cerr << e.what() << "'\n";
 				std::terminate();
 			}
 		};
 		const_reference at( size_type pos ) const {
 			//std::cout << "const_reference at" << std::endl;
-			return const_cast<vector*>(this)->at(pos);
+			try {
+				if(pos >= _nb_elems)
+					throw std::out_of_range("out of range");
+				return const_cast<vector*>(this)->at(pos);
+			} catch(const std::exception& e) {
+				std::cerr << e.what() << '\n';
+				std::terminate();
+			}
 		};
 
 		reference operator[]( size_type pos ) {
 			//std::cout << "operator[]" << std::endl;
-			return _start[pos];
+			try {
+				if(pos >= _nb_elems)
+					throw std::out_of_range("out of range");
+				return _start[pos];
+			} catch(const std::exception& e) {
+				std::cerr << e.what() << '\n';
+				std::terminate();
+			}
 		};
 		const_reference operator[]( size_type pos ) const {											//c'est utilise quand ?
 			//std::cout << "const_reference operator[]" << std::endl;
-			return const_cast<vector*>(this)->operator[](pos);
+			try {
+				if(pos >= _nb_elems)
+					throw std::out_of_range("out of range");
+				return const_cast<vector*>(this)->operator[](pos);
+			} catch(const std::exception& e) {
+				std::cerr << e.what() << '\n';
+				std::terminate();
+			}
 		};
 		reference front() {
 			//std::cout << "front" << std::endl;
@@ -335,15 +334,39 @@ namespace ft
 
 
 
+		/* *************************************************** */
+		/*                                                     */
+		/*                       CAPACITY                      */
+		/*                                                     */
+		/* *************************************************** */
 
-		/* ******* CAPACITY ******* */
-		bool empty() const;
+		bool empty() const {
+			return ( begin() == end() );
+		};
 
-		size_type size() const;
+		size_type size() const {
+			return (std::distance(begin(), end()));
+		};
 
-		size_type max_size() const;
+		size_type max_size() const {
+			return (std::numeric_limits<size_type>::max());
+		};
 
 		void reserve( size_type new_cap ) {
+			if(new_cap > _capacity) {
+				T* new_start = _alloc.allocate(new_cap);
+				for(size_type i = 0; i < _nb_elems; i++) {
+					_alloc.construct(new_start + i, _start[i]);
+				}
+				for(size_type i = 0; i < _nb_elems; i++) {
+					_alloc.destroy(_start + i);
+				}
+				_alloc.deallocate(_start, _capacity);
+				_start = new_start;
+				_finish = _start + _nb_elems;
+				_end_of_storage = _start + new_cap;
+				_capacity = new_cap;
+			}
 		};
 
 		size_type capacity() const {return _capacity;};
@@ -351,14 +374,24 @@ namespace ft
 
 
 
+		/* *************************************************** */
+		/*                                                     */
+		/*                       MODIFIERS                     */
+		/*                                                     */
+		/* *************************************************** */
 
-		/* ******* MODIFIERS ******* */
-		void clear();
+		void clear() {
+			for(size_type i = 0; i < _nb_elems; i++) {
+				_alloc.destroy(_start + i);
+			}
+			_alloc.deallocate(_start, _capacity);
+			_start = _alloc.allocate(0);
+			_finish = _start;
+			_end_of_storage = _start;
+			_nb_elems = 0;
+		};
 
 		iterator insert( iterator pos, const T& value ) {
-			//std::cout << "insert" << std::endl;
-			//std::cout << "	insert() nb elem : " << _nb_elems << std::endl;
-			//std::cout << "	insert() capacity : " << _capacity << std::endl << std::endl;
 			if(_nb_elems == _capacity) {
 				_capacity *= 2;
 				_capacity += 1;
@@ -371,7 +404,6 @@ namespace ft
 				_finish = _start + _nb_elems;
 				_end_of_storage = _start + _capacity;
 			}
-			//std::cout << "	insert() capacity after: " << _capacity << std::endl<< std::endl;
 			_alloc.construct(_finish, value);
 			++_finish;
 			++_nb_elems;
@@ -385,9 +417,6 @@ namespace ft
 		iterator erase( iterator first, iterator last );
 
 		void push_back( const T& value ) {
-			//std::cout << "push_back : " << value << std::endl;
-			//std::cout << "nb elem : " << _nb_elems << std::endl;
-
 			if(_finish != _end_of_storage) {
 				//std::cout << "	construct() nb elem : " << _nb_elems << std::endl;
 				_alloc.construct(_finish, value);
@@ -399,20 +428,44 @@ namespace ft
 			}
 		};
 		
-		void pop_back();
+		void pop_back() {
+			//std::cout << "pop_back" << std::endl;
+			--_finish;
+			_alloc.destroy(_finish);
+			--_nb_elems;
+		};
 
-		void resize( size_type count, T value = T() );
+		void resize( size_type count, T value = T() ) {
+			//std::cout << "resize" << std::endl;
+			std::cout << "value : " << value << std::endl;
+			if(count > _nb_elems) {
+				for(size_type i = _nb_elems; i < count; i++) {
+					push_back(value);
+				}
+			}
+			else if(count < _nb_elems) {
+				for(size_type i = _nb_elems; i > count; i--) {
+					pop_back();
+				}
+			}
+		};
 
-		void swap( vector& other );
+		void swap( vector& other ) {
+			//std::cout << "swap" << std::endl;
+			std::swap(_start, other._start);
+			std::swap(_finish, other._finish);
+			std::swap(_end_of_storage, other._end_of_storage);
+			std::swap(_nb_elems, other._nb_elems);
+			std::swap(_capacity, other._capacity);
+		};
 
-		// template <class O, class Alloc>
-		// bool operator!=(const vector<T, Alloc> &lhs, const vector<T, Alloc> &rhs) {
-		// 	return !(lhs == rhs);
-		// };
 
+		/* *************************************************** */
+		/*                                                     */
+		/*                       OPERATORS                     */
+		/*                                                     */
+		/* *************************************************** */
 
-		/* ******* OPERATORS ******* */
-		// friends autorise
 		template <class O, class Alloc>
 		bool operator==(const vector<O, Alloc> &rhs) {
 			return (this->_start == rhs._start);
@@ -424,39 +477,58 @@ namespace ft
 		};
 
 		template <class O, class Alloc>
-		bool operator<(const vector<O, Alloc> &rhs);
+		bool operator<(const vector<O, Alloc> &rhs) {
+			return (this->_start < rhs._start);
+		};
 
 		template <class O, class Alloc>
-		bool operator<=(const vector<O, Alloc> &rhs);
+		bool operator<=(const vector<O, Alloc> &rhs) {
+			return (this->_start <= rhs._start);
+		};
 
 		template <class O, class Alloc>
-		bool operator>(const vector<O, Alloc> &rhs);
+		bool operator>(const vector<O, Alloc> &rhs) {
+			return (this->_start > rhs._start);
+		};
 
 		template <class O, class Alloc>
-		bool operator>=(const vector<O, Alloc> &rhs);
+		bool operator>=(const vector<O, Alloc> &rhs) {
+			return (this->_start >= rhs._start);
+		};
 
 		template <class O, class Alloc>
 		void swap(vector<O, Alloc> &lhs,
-				  vector<O, Alloc> &rhs);
+				  vector<O, Alloc> &rhs)
+		{
+			lhs.swap(rhs);
+		};
 
+
+
+	/* *************************************************** */
+	/*                                                     */
+	/*                        MY TEST                      */
+	/*                                                     */
+	/* *************************************************** */
+
+	void	display() const {
+
+		std::cout << "----------------------------------------" << std::endl;
+		std::cout << "start 		: " << _start << std::endl;
+		std::cout << "finish 		: " << _finish << std::endl;
+		std::cout << "end_of_storage 	: " << _end_of_storage << std::endl;
+		std::cout << "nb_elems 	: " << _nb_elems << std::endl;
+		std::cout << "capacity 	: " << _capacity << std::endl;
+		std::cout << "content 	: ";
+		for(size_type i = 0; i < _nb_elems; i++) {
+			std::cout << _start[i] << " ";
+		}
+		std::cout << std::endl;
+		std::cout << "----------------------------------------" << std::endl;
+	};
 
 
 	};
-
-	/* ******* CONSTRUCTION ******* */
-	
-	/* ******* ELEMENT ACCESS ******* */
-
-	/* ******* ITERATOR ******* */
-
-	/* ******* CAPACITY ******* */
-
-	/* ******* MODIFIERS ******* */
-
-	/* ******* NON MEMBER FUNCTION OVERLOAD ******* */
-
-	/* ******* MES TESTs ******* */
-
 
 }
 
