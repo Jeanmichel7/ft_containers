@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/14 22:06:29 by jrasser           #+#    #+#             */
-/*   Updated: 2022/08/26 22:32:59 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/08/29 18:51:26 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,9 @@ namespace ft
 	class vector
 	{
 
+		//typedef __gnu_cxx::__alloc_traits<_Tp_alloc_type> _Alloc_traits;
+
 	public:
-
-
-
 		/* Typedef */
 		typedef std::size_t								size_type;
 		typedef Allocator 								allocator_type;
@@ -61,10 +60,12 @@ namespace ft
 
 		typedef  T*										pointer;
 		typedef const  T*								const_pointer;
-		
 
-		typedef std::random_access_iterator_tag				iterator;
-		typedef std::random_access_iterator_tag const		const_iterator;
+		typedef __gnu_cxx::__normal_iterator<pointer, vector> 		iterator;
+		typedef __gnu_cxx::__normal_iterator<const_pointer, vector> const_iterator;
+		
+		// typedef std::random_access_iterator_tag				iterator;
+		// typedef std::random_access_iterator_tag const		const_iterator;
 
 		typedef std::reverse_iterator<iterator>				reverse_iterator;
 		typedef std::reverse_iterator<const_iterator> const	const_reverse_iterator;
@@ -125,7 +126,7 @@ namespace ft
 				//std::uninitialized_fill_n(_start, count, value);
 				for(size_type i = 0; i < count; i++) {
 					_alloc.construct(_start + i, value);
-					_nb_elems = i;
+					_nb_elems = i + 1;
 				}
 			};
 
@@ -143,8 +144,8 @@ namespace ft
 
 				//std::uninitialized_copy(first, last, _start);
 				for(InputIt i = 0; i < first; i++) {
-					_alloc.construct(_start + i, last + i);
-					_nb_elems = i;
+					_alloc.construct(_start + i, last);
+					_nb_elems++;
 				}
 			};
 
@@ -204,6 +205,7 @@ namespace ft
 		/* ******* ELEMENT ACCESS ******* */
 		reference at( size_type pos )
 		{
+			//std::cout << "at" << std::endl;
 			try {
 				if(pos >= _nb_elems)
 					throw std::out_of_range("out of range");
@@ -211,43 +213,126 @@ namespace ft
 			}
 			catch(const std::exception& e) {
 				std::cerr << e.what() << "'\n";
-				std::terminate();}
+				std::terminate();
+			}
 		};
 		const_reference at( size_type pos ) const {
+			//std::cout << "const_reference at" << std::endl;
 			return const_cast<vector*>(this)->at(pos);
 		};
 
-		reference operator[]( size_type pos );
-		const_reference operator[]( size_type pos ) const;
-		
-		reference front();
-		const_reference front() const;
-		
-		reference back();
-		const_reference back() const;
+		reference operator[]( size_type pos ) {
+			//std::cout << "operator[]" << std::endl;
+			return _start[pos];
+		};
+		const_reference operator[]( size_type pos ) const {											//c'est utilise quand ?
+			//std::cout << "const_reference operator[]" << std::endl;
+			return const_cast<vector*>(this)->operator[](pos);
+		};
+		reference front() {
+			//std::cout << "front" << std::endl;
+			return _start[0];
+		};
+		const_reference front() const {
+			//std::cout << "const_reference front" << std::endl;
+			return const_cast<vector*>(this)->front();
+		};
+		reference back() {
+			//std::cout << "back" << std::endl;
+			return _start[_nb_elems - 1];
+		};
+		const_reference back() const {
+			//std::cout << "const_reference back" << std::endl;
+			return const_cast<vector*>(this)->back();
+		};
 
-		T* data();
-		const T* data() const;
+		T* data(){
+			//std::cout << "data" << std::endl;
+			return _start;
+		};
+		const T* data() const{
+			//std::cout << "const_data" << std::endl;
+			return const_cast<vector*>(this)->data();
+		};
 
-		void assign( size_type count, const T& value );
+		void assign( size_type count, const T& value ){
+			std::cout << "assign" << std::endl;
+
+			for(size_type i = 0; i < _nb_elems; i++) {
+				_alloc.destroy(_start + i);
+			}
+			_alloc.deallocate(_start, _capacity);
+			
+			_start = _alloc.allocate(count);
+			_finish = _start + count;
+			_end_of_storage = _start + count;
+			_nb_elems = count;
+			_capacity = count;
+			for(size_type i = 0; i < count; i++) {
+				_alloc.construct(_start + i, value);
+			}
+		};
 
 		template <class InputIt>
-			void assign( InputIt first, InputIt last );
+			void assign( InputIt first, InputIt last ){
+				std::cout << "template assign" << std::endl;
+
+				for(size_type i = 0; i < _nb_elems; i++) {
+					_alloc.destroy(_start + i);
+				}
+				_alloc.deallocate(_start, _capacity);
+				
+				_alloc = Allocator();
+				_start = _alloc.allocate(first);
+				_finish = _start + first;
+				_end_of_storage = _start + first;
+				_nb_elems = first;
+				_capacity = first;
+				for(InputIt i = 0; i < first; i++) {
+					_alloc.construct(_start + i, last);
+				}
+			};
 
 
 
 		/* ******* ITERATOR ******* */
-		iterator begin();
-		const_iterator begin() const;
+		iterator begin() {
+			//std::cout << "begin" << std::endl;
+			return iterator(this->_start);
+		};
+		const_iterator begin() const {
+			//std::cout << "const_begin" << std::endl;
+			return const_cast<vector*>(this)->begin();
+		};
 
-		iterator end();
-		const_iterator end() const;
+		iterator end(){
+			//std::cout << "end" << std::endl;
+			return iterator(this->_finish);
+		};
+		const_iterator end() const {
+			//std::cout << "const_end" << std::endl;
+			return const_cast<vector*>(this)->end();
+		};
 
-		reverse_iterator rbegin();
-		const_reverse_iterator rbegin() const;
+		reverse_iterator rbegin(){
+			//std::cout << "rbegin" << std::endl;
+			return reverse_iterator(end());
+		};
+		const_reverse_iterator rbegin() const {
+			//std::cout << "const_rbegin" << std::endl;
+			return const_reverse_iterator(end());
+		};
 
-		reverse_iterator rend();
-		const_reverse_iterator rend() const;
+		reverse_iterator rend() {
+			//std::cout << "rend" << std::endl;
+			return reverse_iterator(begin());
+		};
+		const_reverse_iterator rend() const {
+			//std::cout << "const_rend" << std::endl;
+			return const_reverse_iterator(begin());
+		};
+
+
 
 
 
@@ -258,8 +343,9 @@ namespace ft
 
 		size_type max_size() const;
 
-		void reserve( size_type new_cap );
-		
+		void reserve( size_type new_cap ) {
+		};
+
 		size_type capacity() const {return _capacity;};
 
 
@@ -269,15 +355,49 @@ namespace ft
 		/* ******* MODIFIERS ******* */
 		void clear();
 
-		iterator insert( iterator pos, const T& value );
-		void insert( iterator pos, size_type count, const T& value );
+		iterator insert( iterator pos, const T& value ) {
+			//std::cout << "insert" << std::endl;
+			//std::cout << "	insert() nb elem : " << _nb_elems << std::endl;
+			//std::cout << "	insert() capacity : " << _capacity << std::endl << std::endl;
+			if(_nb_elems == _capacity) {
+				_capacity *= 2;
+				_capacity += 1;
+				T* new_start = _alloc.allocate(_capacity);
+				for(size_type i = 0; i < _nb_elems; i++) {
+					_alloc.construct(new_start + i, _start[i]);
+				}
+				_alloc.deallocate(_start, _capacity);
+				_start = new_start;
+				_finish = _start + _nb_elems;
+				_end_of_storage = _start + _capacity;
+			}
+			//std::cout << "	insert() capacity after: " << _capacity << std::endl<< std::endl;
+			_alloc.construct(_finish, value);
+			++_finish;
+			++_nb_elems;
+			return (pos);
+		};
+		void insert( iterator pos, size_type count, const T& value ) { };
 		template< class InputIt >
-			void insert( iterator pos, InputIt first, InputIt last );
+			void insert( iterator pos, InputIt first, InputIt last ) { };
 
 		iterator erase( iterator pos );
 		iterator erase( iterator first, iterator last );
 
-		void push_back( const T& value );
+		void push_back( const T& value ) {
+			//std::cout << "push_back : " << value << std::endl;
+			//std::cout << "nb elem : " << _nb_elems << std::endl;
+
+			if(_finish != _end_of_storage) {
+				//std::cout << "	construct() nb elem : " << _nb_elems << std::endl;
+				_alloc.construct(_finish, value);
+				++_finish;
+				++_nb_elems;
+			}
+			else {
+				insert(end(), value);
+			}
+		};
 		
 		void pop_back();
 
@@ -285,17 +405,23 @@ namespace ft
 
 		void swap( vector& other );
 
+		// template <class O, class Alloc>
+		// bool operator!=(const vector<T, Alloc> &lhs, const vector<T, Alloc> &rhs) {
+		// 	return !(lhs == rhs);
+		// };
 
 
-
-
-		/* ******* NON MEMBER FUNCTION OVERLOAD ******* */
+		/* ******* OPERATORS ******* */
 		// friends autorise
 		template <class O, class Alloc>
-		bool operator==(const vector<O, Alloc> &rhs);
+		bool operator==(const vector<O, Alloc> &rhs) {
+			return (this->_start == rhs._start);
+		};
 
 		template <class O, class Alloc>
-		bool operator!=(const vector<O, Alloc> &rhs);
+		bool operator!=(const vector<O, Alloc> &rhs) {
+			return !(rhs == *this);
+		};
 
 		template <class O, class Alloc>
 		bool operator<(const vector<O, Alloc> &rhs);

@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/14 22:19:53 by jrasser           #+#    #+#             */
-/*   Updated: 2022/08/26 22:32:03 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/08/29 18:51:42 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,18 +22,35 @@ int main()
 	test.push_back(1);
 	test.push_back(2);
 	test.push_back(3);
+	//test.assign(10, 1);
 
 	std::vector<int>::iterator it = test.begin();
 	for(; it != test.end(); it++)
 		std::cout << *it << std::endl;
 
-	std::vector<int> test_copie = test;
-	std::vector<int>::iterator it2 = test_copie.begin();
-	for(; it2 != test_copie.end(); it2++)
+	//std::vector<int> test_copie = test;
+	//std::vector<int>::iterator it2 = test_copie.begin();
+	//for(; it2 != test_copie.end(); it2++)
+	//	std::cout << *it2 << std::endl;
+
+
+	//std::cout << "at : " << test.at(0) << std::endl;
+	//std::cout << "[2] : " << test[2] << std::endl;
+	//std::cout << "data: " 			<< test.data() 	<< std::endl;
+
+
+
+
+	std::cout << *(test.rbegin()) << std::endl;
+	std::cout << "rbegin : \n";
+	std::vector<int>::reverse_iterator it2 = test.rbegin();
+
+	for(; it2 != test.rend(); it2++)
 		std::cout << *it2 << std::endl;
 
 
-	//std::cout << "at : " << test.at(1000) << std::endl;
+
+
 
 
 
@@ -46,32 +63,70 @@ int main()
 
 
 
-	ft::vector<int> test2(3, 100);
-	//test2.push_back(1);
-	for(int i = 0; i < 3; i++)
-		std::cout << *(test2.getElem() + i) << std::endl;
+	ft::vector<int> my_vector(3, 100);
+	//my_vector.push_back(1);
+	//for(int i = 0; i < 3; i++)
+	//	std::cout << *(my_vector.getElem() + i) << std::endl;
 
-	test2.get_allocator();
+	my_vector.get_allocator();
 
 
-	// ft::vector<int> test3 = test2;
+	// ft::vector<int> test3 = my_vector;
 	// for(int i = 0; i < 3; i++)
 	// 	std::cout << *(test3.getElem() + i) << std::endl;
-	
-
-
 
 	// ft::vector<int> test_aff(5, 10);
 	// for(int i = 0; i < 5; i++)
 	// 	std::cout << *(test_aff.getElem() + i) << std::endl;
 
-	// test_aff = test2;
+	// test_aff = my_vector;
 	// for(int i = 0; i < 10; i++)
 	// 	std::cout << *(test_aff.getElem() + i) << std::endl;
 
 
-	std::cout << "capacity : " << test2.capacity() << std::endl;
-	std::cout << "at : " << test2.at(100) << std::endl;
+	//std::cout << "capacity : " << my_vector.capacity() << std::endl;
+	//std::cout << "at : " << my_vector.at(2) << std::endl;
+	//my_vector.at(2) = 12000;
+	//std::cout << "at : " << my_vector.at(2) << std::endl;
+
+	//std::cout << "my_vector[2]: "	<< my_vector[2] 		<< std::endl;
+	//std::cout << "ret: " 			<< my_vector[2] 		<< std::endl;
+	//std::cout << "front: " 			<< my_vector.front()	<< std::endl;
+	//std::cout << "back: " 			<< my_vector.back() 	<< std::endl;
+	//std::cout << "data: " 			<< my_vector.data() 	<< std::endl;
+
+	//my_vector.assign(10,2);
+	ft::vector<int>::iterator it3 = my_vector.begin();
+
+	for(; it3 != my_vector.end(); it3++)
+		std::cout << *it3 << std::endl;
+
+	
+
+	ft::vector<char> my_vector2(1);
+	my_vector2.push_back('a');
+	my_vector2.push_back('b');
+	my_vector2.push_back('c');
+	my_vector2.push_back('d');
+	my_vector2.push_back('e');
+	my_vector2.push_back('f');
+	my_vector2.push_back('g');
+	my_vector2.push_back('h');
+	my_vector2.push_back('i');
+	my_vector2.push_back('j');
+	my_vector2.push_back('k');
+
+	ft::vector<char>::iterator it5 = my_vector2.begin();
+	for(; it5 != my_vector2.end(); it5++)
+		std::cout << *it5 << std::endl;
+
+	std::cout << "TEST reverse_iterator : " << std::endl;
+	ft::vector<char>::reverse_iterator it4 = my_vector2.rbegin();
+	ft::vector<char>::reverse_iterator it4e = my_vector2.rend();
+
+	for(; it4 != it4e; it4++)
+		std::cout << *it4 << std::endl;
+
 
 
 
