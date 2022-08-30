@@ -70,6 +70,7 @@
 		"ratio": "cpp",
 		"ranges": "cpp",
 		"compare": "cpp",
-		"concepts": "cpp"
+		"concepts": "cpp",
+		"map": "cpp"
 	}
 }

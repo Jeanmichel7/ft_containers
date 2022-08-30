@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/14 22:06:29 by jrasser           #+#    #+#             */
-/*   Updated: 2022/08/29 21:56:49 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/08/30 18:18:17 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,23 +31,23 @@ namespace ft
 
 	public:
 		/* Typedef */
-		typedef std::size_t								size_type;
-		typedef Allocator 								allocator_type;
+		typedef std::size_t										size_type;
+		typedef Allocator 										allocator_type;
 
-		typedef T										&reference;
-		typedef const T									&const_reference;
+		typedef T												&reference;
+		typedef const T											&const_reference;
 
-		typedef  T*										pointer;
-		typedef const  T*								const_pointer;
+		typedef  T*												pointer;
+		typedef const  T*										const_pointer;
 
 		typedef __gnu_cxx::__normal_iterator<pointer, vector> 		iterator;
 		typedef __gnu_cxx::__normal_iterator<const_pointer, vector> const_iterator;
 		
-		// typedef std::random_access_iterator_tag				iterator;
+		// typedef std::random_access_ifnag						iterator;
 		// typedef std::random_access_iterator_tag const		const_iterator;
 
-		typedef std::reverse_iterator<iterator>				reverse_iterator;
-		typedef std::reverse_iterator<const_iterator> const	const_reverse_iterator;
+		typedef std::reverse_iterator<iterator>					reverse_iterator;
+		typedef std::reverse_iterator<const_iterator> const		const_reverse_iterator;
 
 
 	private:
