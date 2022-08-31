@@ -6,12 +6,14 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/14 22:06:29 by jrasser           #+#    #+#             */
-/*   Updated: 2022/08/30 18:18:17 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/08/31 18:18:46 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef __VECTOR_HPP__
 #define __VECTOR_HPP__
+
+#include "Iterator_traits.hpp"
 
 #include <memory>
 #include <cstddef>
@@ -19,59 +21,93 @@
 #include <iostream>
 #include <limits>
 
-
-
-// template < class T, class Alloc = allocator<T> > class vector
-
 namespace ft
 {
 	template <typename T, typename Allocator = std::allocator<T> >
 	class vector
 	{
 
-	public:
-		/* Typedef */
-		typedef std::size_t										size_type;
-		typedef Allocator 										allocator_type;
+		// template <class _Category, class _Tp, class _Distance = ptrdiff_t,
+		// 		  class _Pointer = _Tp *, class _Reference = _Tp &>
+		// struct my_iterator
+		// {
+		// 	typedef _Tp 		value_type;
+		// 	typedef _Distance	difference_type;
+		// 	typedef _Pointer	pointer;
+		// 	typedef _Reference	reference;
+		// 	typedef _Category	iterator_category;
+		// };
 
-		typedef T												&reference;
-		typedef const T											&const_reference;
-
-		typedef  T*												pointer;
-		typedef const  T*										const_pointer;
-
-		typedef __gnu_cxx::__normal_iterator<pointer, vector> 		iterator;
-		typedef __gnu_cxx::__normal_iterator<const_pointer, vector> const_iterator;
-		
-		// typedef std::random_access_ifnag						iterator;
-		// typedef std::random_access_iterator_tag const		const_iterator;
-
-		typedef std::reverse_iterator<iterator>					reverse_iterator;
-		typedef std::reverse_iterator<const_iterator> const		const_reverse_iterator;
+		template <class _Iter>
+		class my_iterator
+		{
+		public:
+			typedef _Iter iterator_type;
+			typedef typename std::iterator_traits<iterator_type>::iterator_category iterator_category;
+			typedef typename std::iterator_traits<iterator_type>::value_type 		value_type;
+			typedef typename std::iterator_traits<iterator_type>::difference_type 	difference_type;
+			typedef typename std::iterator_traits<iterator_type>::pointer 			pointer;
+			typedef typename std::iterator_traits<iterator_type>::reference 		reference;
 
 
-	private:
-		Allocator		_alloc;
-		pointer			_start;
-		pointer			_finish;
-		pointer			_end_of_storage;
-		
-		size_type		_nb_elems;
-		size_type		_capacity;
 
-	public:
 
-		/* *************************************************** */
-		/*                                                     */
-		/*                     CONSTRUCTION                    */
-		/*                                                     */
-		/* *************************************************** */
-		
-		vector() :
-			_start(NULL), _finish(NULL),
-			_end_of_storage(NULL),
-			_nb_elems(0),
-			_capacity(0)
+
+
+
+
+
+
+		};
+
+
+
+		public:
+			/* Typedef */
+			typedef std::size_t size_type;
+			typedef Allocator allocator_type;
+
+			typedef T &reference;
+			typedef const T &const_reference;
+
+			typedef T *pointer;
+			typedef const T *const_pointer;
+
+			// typedef __gnu_cxx::__normal_iterator<pointer, vector> 		iterator;
+			// typedef __gnu_cxx::__normal_iterator<const_pointer, vector> const_iterator;
+
+			//typedef std::random_access_iterator_tag iterator;
+			//typedef std::random_access_iterator_tag const const_iterator;
+
+			// typedef __wrap_iter<pointer>                     iterator;
+			// typedef __wrap_iter<const_pointer>               const_iterator;
+
+			typedef my_iterator<pointer>                     iterator;
+			typedef my_iterator<const_pointer>               const_iterator;
+
+			typedef std::reverse_iterator<iterator> reverse_iterator;
+			typedef std::reverse_iterator<const_iterator> const const_reverse_iterator;
+
+		private:
+			Allocator _alloc;
+			pointer _start;
+			pointer _finish;
+			pointer _end_of_storage;
+
+			size_type _nb_elems;
+			size_type _capacity;
+
+		public:
+			/* *************************************************** */
+			/*                                                     */
+			/*                     CONSTRUCTION                    */
+			/*                                                     */
+			/* *************************************************** */
+
+			vector() : _start(NULL), _finish(NULL),
+					   _end_of_storage(NULL),
+					   _nb_elems(0),
+					   _capacity(0)
 			{
 				std::cout << "Constructor" << std::endl;
 			};
@@ -526,10 +562,7 @@ namespace ft
 		std::cout << std::endl;
 		std::cout << "----------------------------------------" << std::endl;
 	};
-
-
-	};
-
+		};
 }
 
 #endif

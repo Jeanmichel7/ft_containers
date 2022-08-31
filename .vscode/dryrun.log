@@ -1,5 +1,10 @@
-make --dry-run --keep-going --print-directory
-make: Entering directory '/home/jrasser/42/ft_containers'
-make: 'prog' is up to date.
-make: Leaving directory '/home/jrasser/42/ft_containers'
+make --dry-run --always-make --keep-going --print-directory
+make: Entering directory `/Users/jrasser/cursus/ft_containers'
+mkdir -p objs/
+g++ -I. -I./class -I./includes -o objs/main.o -c main.cpp -std=c++98 -Wall -Wextra -g -fsanitize=address
+printf	"\033[2K\r \033[0;34m[BUILD] 'main.cpp' \033[0m"
+g++ objs/main.o -o prog -std=c++98 -Wall -Wextra -g -fsanitize=address
+echo "\033[2K\r\033[0;32m [Successfully compiled]\033[0m	✓ \n"
+echo "Executable ./prog \n"
+make: Leaving directory `/Users/jrasser/cursus/ft_containers'
  

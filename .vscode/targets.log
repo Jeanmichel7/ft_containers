@@ -1,196 +1,201 @@
 make all --print-data-base --no-builtin-variables --no-builtin-rules --question
-# GNU Make 4.2.1
-# Built for x86_64-pc-linux-gnu
-# Copyright (C) 1988-2016 Free Software Foundation, Inc.
-# License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
-# This is free software: you are free to change and redistribute it.
-# There is NO WARRANTY, to the extent permitted by law.
+# GNU Make 3.81
+# Copyright (C) 2006  Free Software Foundation, Inc.
+# This is free software; see the source for copying conditions.
+# There is NO warranty; not even for MERCHANTABILITY or FITNESS FOR A
+# PARTICULAR PURPOSE.
 
-# Make data base, printed on Tue Aug 30 18:41:33 2022
+# This program built for i386-apple-darwin11.3.0
+ 
+
+# Make data base, printed on Wed Aug 31 14:21:17 2022
 
 # Variables
 
- 
 # automatic
 <D = $(patsubst %/,%,$(dir $<))
 # automatic
 ?F = $(notdir $?)
 # environment
-WSLENV = ELECTRON_RUN_AS_NODE/w:WT_SESSION::WT_PROFILE_ID
-# default
-.SHELLFLAGS := -c
+ELECTRON_NO_ATTACH_CONSOLE = 1
 # environment
-NVM_INC = /home/jrasser/.nvm/versions/node/v16.14.2/include/node
+VSCODE_LOG_NATIVE = false
 # automatic
 ?D = $(patsubst %/,%,$(dir $?))
-# makefile (from 'Makefile', line 27)
+# makefile (from `Makefile', line 27)
 CPPFLAGS = -I. -I./class -I./includes
 # automatic
 @D = $(patsubst %/,%,$(dir $@))
 # automatic
 @F = $(notdir $@)
 # makefile
-CURDIR := /home/jrasser/42/ft_containers
+CURDIR := /Users/jrasser/cursus/ft_containers
 # makefile
 SHELL = /bin/sh
-# makefile (from 'Makefile', line 24)
+# makefile (from `Makefile', line 24)
 RM = @rm -rf
 # environment
-VSCODE_NLS_CONFIG = {"locale":"en","availableLanguages":{}}
+VSCODE_NLS_CONFIG = {"locale":"fr","availableLanguages":{"*":"fr"},"_languagePackId":"25fe6a3290ec415596628d4afc87a88c.fr","_translationsConfigFile":"/goinfre/jrasser/code-portable-data/user-data/clp/25fe6a3290ec415596628d4afc87a88c.fr/tcf.json","_cacheRoot":"/goinfre/jrasser/code-portable-data/user-data/clp/25fe6a3290ec415596628d4afc87a88c.fr","_resolvedLanguagePackCoreLocation":"/goinfre/jrasser/code-portable-data/user-data/clp/25fe6a3290ec415596628d4afc87a88c.fr/c3511e6c69bb39013c4a4b7b9566ec1ca73fc4d5","_corruptedFile":"/goinfre/jrasser/code-portable-data/user-data/clp/25fe6a3290ec415596628d4afc87a88c.fr/corrupted.info","_languagePackSupport":true}
 # environment
-_ = /mnt/c/Users/michm/AppData/Local/Programs/Microsoft VS Code/bin/code
-# makefile (from 'Makefile', line 26)
+_ = /usr/bin/make
+# makefile (from `Makefile', line 26)
 CFLAGS = -std=c++98 -Wall -Wextra
-# makefile (from 'Makefile', line 1)
+# makefile (from `Makefile', line 1)
 MAKEFILE_LIST :=  Makefile
-# 'override' directive
-GNUMAKEFLAGS := 
 # environment
-XDG_DATA_DIRS = /usr/local/share:/usr/share:/var/lib/snapd/desktop
-# makefile (from 'Makefile', line 23)
+VSCODE_VERBOSE_LOGGING = true
+# makefile (from `Makefile', line 23)
 OBJS = $(addprefix $(OBJS_DIR), $(notdir $(SRCS:.cpp=.o)))
 # environment
-LESSOPEN = | /usr/bin/lesspipe %s
+VSCODE_IPC_HOOK_EXTHOST = /var/folders/zz/zyxvpxvq6csfxvn_n000cb240032rj/T/vscode-ipc-1a85d37b-5518-4636-b211-0d0a78d16069.sock
 # environment
-VSCODE_CWD = /mnt/c/Users/michm/AppData/Local/Programs/Microsoft VS Code
-# default
-MAKE_HOST := x86_64-pc-linux-gnu
+VSCODE_PORTABLE = /goinfre/jrasser/code-portable-data
+# makefile (from `Makefile', line 22)
+OBJS_DIR = objs/
 # environment
-PATH = /home/jrasser/.vscode-server/bin/e4503b30fc78200f846c62cf8091b76ff5547662/bin/remote-cli:/home/jrasser/.local/bin:/home/jrasser/bin:/home/jrasser/.nvm/versions/node/v16.14.2/bin:/home/jrasser/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/lib/wsl/lib:/mnt/c/Program Files (x86)/Common Files/Oracle/Java/javapath:/mnt/c/Windows/system32:/mnt/c/Windows:/mnt/c/Windows/System32/Wbem:/mnt/c/Windows/System32/WindowsPowerShell/v1.0/:/mnt/c/Windows/System32/OpenSSH/:/mnt/c/Program Files/NVIDIA Corporation/NVIDIA NvDLISR:/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common:/mnt/c/Program Files/Git/cmd:/mnt/c/Program Files/Docker/Docker/resources/bin:/mnt/c/ProgramData/DockerDesktop/version-bin:/mnt/c/WINDOWS/system32:/mnt/c/WINDOWS:/mnt/c/WINDOWS/System32/Wbem:/mnt/c/WINDOWS/System32/WindowsPowerShell/v1.0/:/mnt/c/WINDOWS/System32/OpenSSH/:/mnt/c/Program Files/Git LFS:/mnt/c/Program Files (x86)/Windows Kits/10/Windows Performance Toolkit/:/mnt/c/Program Files/dotnet/:/mnt/c/Users/michm/AppData/Local/Microsoft/WindowsApps:/mnt/c/Users/michm/AppData/Local/GitHubDesktop/bin:/mnt/c/Users/michm/AppData/Local/Programs/Microsoft VS Code/bin:/mnt/c/Users/michm/.dotnet/tools:/snap/bin
-# makefile (from 'Makefile', line 21)
-NAME = prog
-# makefile (from 'Makefile', line 17)
+PATH = /usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/munki:/Library/Apple/usr/bin:/Users/jrasser/goinfre/homebrew/bin:/Users/jrasser/goinfre/Visual Studio Code.app/Contents/Resources/app/bin
+# makefile (from `Makefile', line 17)
 END = \033[0m
-# makefile (from 'Makefile', line 28)
+# makefile (from `Makefile', line 28)
 DEBEUG = -g -fsanitize=address
 # environment
-NVM_BIN = /home/jrasser/.nvm/versions/node/v16.14.2/bin
+LaunchInstanceID = 932EBC1C-A4A5-46F2-895E-E7EFB7E20BC1
+# environment
+VSCODE_LOG_STACK = false
 # environment
 ELECTRON_RUN_AS_NODE = 1
-# environment
-VSCODE_IPC_HOOK_CLI = /mnt/wslg/runtime-dir/vscode-ipc-b2bff399-1450-4243-a92b-4ea7b8703b6a.sock
 # default
-.FEATURES := target-specific order-only second-expansion else-if shortest-stem undefine oneshell archives jobserver output-sync check-symlink load
-# makefile (from 'Makefile', line 14)
+.FEATURES := target-specific order-only second-expansion else-if archives jobserver check-symlink
+# makefile (from `Makefile', line 14)
 GRN = \033[0;32m
 # environment
-LS_COLORS = rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:
+SSH_AUTH_SOCK = /private/tmp/com.apple.launchd.VXmMsYHL0m/Listeners
 # automatic
 %F = $(notdir $%)
 # environment
-DISPLAY = :0
+VSCODE_PIPE_LOGGING = true
 # environment
-PWD = /home/jrasser/42/ft_containers
-# default
-.LOADED := 
+PWD = /Users/jrasser/cursus/ft_containers
 # environment
-WSL_INTEROP = /run/WSL/9_interop
+VSCODE_CWD = /Users/jrasser/cursus/ft_containers
 # environment
-PULSE_SERVER = /mnt/wslg/PulseServer
-# makefile (from 'Makefile', line 13)
+ORIGINAL_XDG_CURRENT_DESKTOP = undefined
+# makefile (from `Makefile', line 13)
 BLU = \033[0;34m
-# environment
-WT_SESSION = 26756751-2bd0-4588-8c91-0f99893ee378
 # environment
 VSCODE_AMD_ENTRYPOINT = vs/workbench/api/node/extensionHostProcess
 # environment
-HOME = /home/jrasser
+HOME = /Users/jrasser
+# default
+MAKEFILEPATH := /Applications/Xcode.app/Contents/Developer/Makefiles
 # environment
-LESSCLOSE = /usr/bin/lesspipe %s %s
+VSCODE_CLI = 1
+# environment
+VSCODE_CODE_CACHE_PATH = /goinfre/jrasser/code-portable-data/user-data/CachedData/c3511e6c69bb39013c4a4b7b9566ec1ca73fc4d5
 # environment
 LOGNAME = jrasser
 # environment
-APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = true
-# environment
-NVM_CD_FLAGS = 
+APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = 1
 # environment
 VSCODE_HANDLES_UNCAUGHT_ERRORS = true
 # automatic
 ^D = $(patsubst %/,%,$(dir $^))
 # environment
-MAKELEVEL := 0
+XPC_FLAGS = 0x0
+# environment
+COLORTERM = truecolor
 # default
 MAKE = $(MAKE_COMMAND)
-# default
-MAKECMDGOALS := all
-# makefile (from 'Makefile', line 20)
+# environment
+LC_TERMINAL = iTerm2
+# makefile (from `Makefile', line 20)
 SRCS = $(wildcard *.cpp) $(wildcard srcs/**.cpp)
 # environment
-SHLVL = 1
-# makefile (from 'Makefile', line 25)
+SHLVL = 3
+# makefile (from `Makefile', line 25)
 CC = g++
-# makefile (from 'Makefile', line 16)
+# makefile (from `Makefile', line 16)
 ERASE = \033[2K\r
 # default
-MAKE_VERSION := 4.2.1
+MAKE_VERSION := 3.81
 # environment
 USER = jrasser
-# makefile (from 'Makefile', line 18)
+# makefile (from `Makefile', line 18)
 CHECK = ✓
 # makefile
 .DEFAULT_GOAL := prog
+# default
+MAKECMDGOALS := all
 # environment
-LIBVIRT_DEFAULT_URI = qemu:///system
+TERM_SESSION_ID = w2t0p0:C050154F-E584-4B98-A4DF-B10E0D8BFBFB
+# makefile (from `Makefile', line 21)
+NAME = prog
 # automatic
 %D = $(patsubst %/,%,$(dir $%))
-# environment
-VSCODE_WSL_EXT_LOCATION = /mnt/c/Users/michm/.vscode/extensions/ms-vscode-remote.remote-wsl-0.66.3
 # default
-MAKE_COMMAND := make
+MAKE_COMMAND := /Applications/Xcode.app/Contents/Developer/usr/bin/make
+# environment
+TERM_PROGRAM = iTerm.app
 # default
 .VARIABLES := 
+# environment
+TMPDIR = /var/folders/zz/zyxvpxvq6csfxvn_n000cb240032rj/T/
 # automatic
 *F = $(notdir $*)
-# makefile (from 'Makefile', line 15)
+# environment
+VSCODE_IPC_HOOK = /goinfre/jrasser/code-portable-data/user-data/1.67.2-main.sock
+# makefile (from `Makefile', line 15)
 RED = \033[0;31m
 # makefile
-MAKEFLAGS = pqrR
+MAKEFLAGS = Rrqp
 # environment
-MFLAGS = -pqrR
+MFLAGS = -Rrqp
 # automatic
 *D = $(patsubst %/,%,$(dir $*))
 # environment
-NVM_DIR = /home/jrasser/.nvm
-# makefile (from 'Makefile', line 22)
-OBJS_DIR = objs/
+TERM_PROGRAM_VERSION = 3.4.15
+# environment
+XPC_SERVICE_NAME = 0
+# environment
+LC_TERMINAL_VERSION = 3.4.15
 # automatic
 +D = $(patsubst %/,%,$(dir $+))
 # automatic
 +F = $(notdir $+)
 # environment
-VSCODE_HANDLES_SIGPIPE = true
+ITERM_SESSION_ID = w2t0p0:C050154F-E584-4B98-A4DF-B10E0D8BFBFB
 # environment
-WT_PROFILE_ID = {2c4de342-38b7-51cf-b940-2309a097f518}
+COLORFGBG = 7;0
+# environment
+__CF_USER_TEXT_ENCODING = 0x18B11:0x0:0x0
+# environment
+COMMAND_MODE = unix2003
 # default
 MAKEFILES := 
 # automatic
 <F = $(notdir $<)
 # environment
+ITERM_PROFILE = Default
+# environment
 LC_ALL = C
 # environment
-HOSTTYPE = x86_64
+SECURITYSESSIONID = 186db
 # automatic
 ^F = $(notdir $^)
 # default
 SUFFIXES := 
-# environment
-WAYLAND_DISPLAY = wayland-0
 # default
-.INCLUDE_DIRS = /usr/include /usr/local/include /usr/include
-# default
-.RECIPEPREFIX := 
+.INCLUDE_DIRS = /usr/local/include
 # environment
-XDG_RUNTIME_DIR = /mnt/wslg/runtime-dir
+MAKELEVEL := 0
 # environment
 LANG = C
 # environment
 TERM = xterm-256color
 # environment
-WSL_DISTRO_NAME = Ubuntu
-# environment
-MOTD_SHOWN = update-motd
+VSCODE_PID = 30144
 # variable set hash-table stats:
-# Load=89/1024=9%, Rehash=0, Collisions=11/120=9%
+# Load=91/1024=9%, Rehash=0, Collisions=10/132=8%
 
 # Pattern-specific Variable Values
 
@@ -198,24 +203,26 @@ MOTD_SHOWN = update-motd
 
 # Directories
 
-# . (device 2112, inode 350623): 13 files, no impossibilities.
-# srcs (device 2112, inode 350711): 2 files, no impossibilities.
+# . (device 16777225, inode 1999247): 12 files, no impossibilities.
+# srcs: could not be stat'd.
 
-# 15 files, no impossibilities in 2 directories.
+# 12 files, no impossibilities in 2 directories.
 
 # Implicit Rules
 
 objs/%.o: *%.cpp
-#  recipe to execute (from 'Makefile', line 31):
-			@mkdir -p $(OBJS_DIR)
-			@${CC} $(CPPFLAGS) -o $@ -c $< ${CFLAGS} ${DEBEUG}
-			@printf	"$(ERASE) ${BLU}$ [BUILD]${RST} '$<' $(END)"
+#  commands to execute (from `Makefile', line 31):
+	@mkdir -p $(OBJS_DIR)
+	@${CC} $(CPPFLAGS) -o $@ -c $< ${CFLAGS} ${DEBEUG}
+	@printf	"$(ERASE) ${BLU}$ [BUILD]${RST} '$<' $(END)"
+	
 
 objs/%.o: srcs/**%.cpp
-#  recipe to execute (from 'Makefile', line 36):
-			@mkdir -p $(OBJS_DIR)
-			@${CC} $(CPPFLAGS) -o $@ -c $< ${CFLAGS} ${DEBEUG}
-			@printf	"$(ERASE) ${BLU}$ [BUILD]${RST} '$<' $(END)"
+#  commands to execute (from `Makefile', line 36):
+	@mkdir -p $(OBJS_DIR)
+	@${CC} $(CPPFLAGS) -o $@ -c $< ${CFLAGS} ${DEBEUG}
+	@printf	"$(ERASE) ${BLU}$ [BUILD]${RST} '$<' $(END)"
+	
 
 # 2 implicit rules, 0 (0.0%) terminal.
 
@@ -223,22 +230,43 @@ objs/%.o: srcs/**%.cpp
 
 objs/main.o: main.cpp
 #  Implicit rule search has been done.
-#  Implicit/static pattern stem: 'main'
-#  Last modified 2022-08-30 18:41:30.791112
+#  Implicit/static pattern stem: `main'
+#  File does not exist.
 #  File has been updated.
-#  Successfully updated.
-#  recipe to execute (from 'Makefile', line 31):
-			@mkdir -p $(OBJS_DIR)
-			@${CC} $(CPPFLAGS) -o $@ -c $< ${CFLAGS} ${DEBEUG}
-			@printf	"$(ERASE) ${BLU}$ [BUILD]${RST} '$<' $(END)"
+#  Needs to be updated (-q is set).
+# automatic
+# @ := objs/main.o
+# automatic
+# % := 
+# automatic
+# * := main
+# automatic
+# + := main.cpp
+# automatic
+# | := 
+# automatic
+# < := main.cpp
+# automatic
+# ^ := main.cpp
+# automatic
+# ? := main.cpp
+# variable set hash-table stats:
+# Load=8/32=25%, Rehash=0, Collisions=4/23=17%
+#  commands to execute (from `Makefile', line 31):
+	@mkdir -p $(OBJS_DIR)
+	@${CC} $(CPPFLAGS) -o $@ -c $< ${CFLAGS} ${DEBEUG}
+	@printf	"$(ERASE) ${BLU}$ [BUILD]${RST} '$<' $(END)"
+	
 
 all: prog
 #  Phony target (prerequisite of .PHONY).
-#  Command line target.
+#  Command-line target.
 #  Implicit rule search has not been done.
 #  File does not exist.
 #  File has been updated.
-#  Successfully updated.
+#  Needs to be updated (-q is set).
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/12=0%
 
 .PHONY: all clean fclean re
 #  Implicit rule search has not been done.
@@ -246,37 +274,52 @@ all: prog
 #  File has not been updated.
 
 # Not a target:
+.SUFFIXES:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# Not a target:
 Makefile:
 #  Implicit rule search has been done.
-#  Last modified 2022-08-30 18:41:28.521112
+#  Last modified 2022-08-31 14:19:39
 #  File has been updated.
 #  Successfully updated.
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
 
 # Not a target:
 main.cpp:
 #  Implicit rule search has been done.
-#  Last modified 2022-08-30 18:40:01.454974
+#  Last modified 2022-08-31 14:19:39
 #  File has been updated.
 #  Successfully updated.
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/0=0%
 
 prog: objs/main.o
 #  Implicit rule search has not been done.
-#  Last modified 2022-08-30 18:41:30.911112
+#  File does not exist.
 #  File has been updated.
-#  Successfully updated.
-#  recipe to execute (from 'Makefile', line 41):
-			@${CC} ${OBJS} -o $(NAME) ${CFLAGS} ${DEBEUG}
-			@echo "$(ERASE)$(GRN) [Successfully compiled]$(END)	$(CHECK) \n"
-			@echo "Executable ./$(NAME) \n"
+#  Needs to be updated (-q is set).
+# variable set hash-table stats:
+# Load=0/32=0%, Rehash=0, Collisions=0/12=0%
+#  commands to execute (from `Makefile', line 41):
+	@${CC} ${OBJS} -o $(NAME) ${CFLAGS} ${DEBEUG}
+ 
+	@echo "$(ERASE)$(GRN) [Successfully compiled]$(END)	$(CHECK) \n"
+	@echo "Executable ./$(NAME) \n"
+	
 
 fclean: clean
 #  Phony target (prerequisite of .PHONY).
 #  Implicit rule search has not been done.
 #  File does not exist.
 #  File has not been updated.
-#  recipe to execute (from 'Makefile', line 52):
-			${RM} ${NAME}
-			@echo "$(GRN) [Fclean]$(END) 			$(CHECK)"
+#  commands to execute (from `Makefile', line 52):
+	${RM} ${NAME}
+	@echo "$(GRN) [Fclean]$(END) 			$(CHECK)"
+	
 
 # Not a target:
 .DEFAULT:
@@ -290,30 +333,29 @@ re: fclean all
 #  File does not exist.
 #  File has not been updated.
 
- 
 clean:
 #  Phony target (prerequisite of .PHONY).
 #  Implicit rule search has not been done.
 #  File does not exist.
 #  File has not been updated.
-#  recipe to execute (from 'Makefile', line 48):
-			${RM} $(OBJS)
-			@echo "$(GRN) [Clean]$(END) 			$(CHECK)"
+#  commands to execute (from `Makefile', line 48):
+	${RM} $(OBJS)
+	@echo "$(GRN) [Clean]$(END) 			$(CHECK)"
+	
 
 # files hash-table stats:
-# Load=11/1024=1%, Rehash=0, Collisions=0/34=0%
+# Load=11/1024=1%, Rehash=0, Collisions=0/36=0%
 # VPATH Search Paths
 
-# No 'vpath' search paths.
+# No `vpath' search paths.
 
-# No general ('VPATH' variable) search path.
+# No general (`VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 27 / storage = 216 B / avg = 8 B
-# current buf: size = 8162 B / used = 216 B / count = 27 / avg = 8 B
+# # of strings in strcache: 1
+# # of strcache buffers: 1
+# strcache size: total = 4096 / max = 4096 / min = 4096 / avg = 4096
+# strcache free: total = 4087 / max = 4087 / min = 4087 / avg = 4087
 
-# strcache performance: lookups = 53 / hit rate = 49%
-# hash-table stats:
-# Load=27/8192=0%, Rehash=0, Collisions=2/53=4%
-# Finished Make data base on Tue Aug 30 18:41:33 2022
+# Finished Make data base on Wed Aug 31 14:21:17 2022
 
  
