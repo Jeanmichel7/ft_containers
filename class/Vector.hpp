@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/14 22:06:29 by jrasser           #+#    #+#             */
-/*   Updated: 2022/08/31 18:18:46 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/08/31 21:56:12 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,13 @@ namespace ft
 
 		// template <class _Category, class _Tp, class _Distance = ptrdiff_t,
 		// 		  class _Pointer = _Tp *, class _Reference = _Tp &>
-		// struct my_iterator
+		// class my_iterator
 		// {
+
+		// private:
+		// 	_Iter it;
+
+		// public:
 		// 	typedef _Tp 		value_type;
 		// 	typedef _Distance	difference_type;
 		// 	typedef _Pointer	pointer;
@@ -38,26 +43,95 @@ namespace ft
 		// 	typedef _Category	iterator_category;
 		// };
 
-		template <class _Iter>
+		//template <class _Iter>
+		template <class _Category, class _Tp, class _Distance = ptrdiff_t,
+				  class _Pointer = _Tp *, class _Reference = _Tp &>
 		class my_iterator
 		{
+
+		private:
+			_Tp it;
+
 		public:
-			typedef _Iter iterator_type;
+			typedef _Tp iterator_type;
 			typedef typename std::iterator_traits<iterator_type>::iterator_category iterator_category;
 			typedef typename std::iterator_traits<iterator_type>::value_type 		value_type;
 			typedef typename std::iterator_traits<iterator_type>::difference_type 	difference_type;
 			typedef typename std::iterator_traits<iterator_type>::pointer 			pointer;
 			typedef typename std::iterator_traits<iterator_type>::reference 		reference;
 
+			bool operator!=(my_iterator &rhs)
+			{
+				return (it != rhs.it);
+			}
 
+			bool operator==(my_iterator &rhs)
+			{
+				return (this.it == rhs.it);
+			}
 
+			my_iterator &operator++()
+			{
+				++this.it;
+				return *this;
+			}
 
+			my_iterator &operator--()
+			{
+				--this.it;
+				return *this;
+			}
+			my_iterator operator++(int)
+			{
+				my_iterator tmp = *this;
+				++this.it;
+				return tmp;
+			}
+			my_iterator operator--(int)
+			{
+				my_iterator tmp = *this;
+				--this.it;
+				return tmp;
+			}
+			my_iterator &operator+=(difference_type n)
+			{
+				this.it += n;
+				return *this;
+			}
+			my_iterator &operator-=(difference_type n)
+			{
+				this.it -= n;
+				return *this;
+			}
+			my_iterator operator+(difference_type n)
+			{
+				my_iterator tmp = *this;
+				tmp.it += n;
+				return tmp;
+			}
+			my_iterator operator-(difference_type n)
+			{
+				my_iterator tmp = *this;
+				tmp.it -= n;
+				return tmp;
+			}
+			reference operator*()
+			{
+				return *this.it;
+			}
+			pointer operator->()
+			{
+				return this.it;
+			}
+			reference operator[](difference_type n)
+			{
+				return this.it[n];
+			}
 
-
-
-
-
-
+			// my_iterator end()
+			// {
+			// 	return this->end();
+			// }
 		};
 
 
