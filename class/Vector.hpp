@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/14 22:06:29 by jrasser           #+#    #+#             */
-/*   Updated: 2022/09/01 03:36:13 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/09/01 03:54:10 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -259,6 +259,12 @@ namespace ft
 				my_iterator tmp(*this);
 				tmp.it += n;
 				return (tmp);
+			}
+
+
+			my_iterator operator-(my_iterator &x) const
+			{
+				return (my_iterator(it - x.it));
 			}
 
 			my_iterator operator-(difference_type n) const
@@ -858,7 +864,7 @@ namespace ft
 		};
 
 		size_type size() const {
-			return (std::distance(begin(), end()));
+			return _nb_elems;
 		};
 
 		size_type max_size() const {

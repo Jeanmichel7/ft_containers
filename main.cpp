@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/14 22:19:53 by jrasser           #+#    #+#             */
-/*   Updated: 2022/09/01 02:59:28 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/09/01 03:54:54 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -246,27 +246,27 @@ int main()
 	// 	std::cout << *(test_aff.getElem() + i) << std::endl;
 
 
-	//std::cout << "capacity : " << my_vector.capacity() << std::endl;
-	//std::cout << "at : " << my_vector.at(2) << std::endl;
-	//my_vector.at(2) = 12000;
-	//std::cout << "at : " << my_vector.at(2) << std::endl;
+	std::cout << "capacity : " << my_vector.capacity() << std::endl;
+	std::cout << "at : " << my_vector.at(2) << std::endl;
+	my_vector.at(2) = 12000;
+	std::cout << "at : " << my_vector.at(2) << std::endl;
 
-	//std::cout << "my_vector[2]: "	<< my_vector[2] 		<< std::endl;
-	//std::cout << "ret: " 			<< my_vector[2] 		<< std::endl;
-	//std::cout << "front: " 			<< my_vector.front()	<< std::endl;
-	//std::cout << "back: " 			<< my_vector.back() 	<< std::endl;
-	//std::cout << "data: " 			<< my_vector.data() 	<< std::endl;
+	std::cout << "my_vector[2]: "	<< my_vector[2] 		<< std::endl;
+	std::cout << "ret: " 			<< my_vector[2] 		<< std::endl;
+	std::cout << "front: " 			<< my_vector.front()	<< std::endl;
+	std::cout << "back: " 			<< my_vector.back() 	<< std::endl;
+	std::cout << "data: " 			<< my_vector.data() 	<< std::endl;
 
-	//my_vector.assign(10,2);
+	my_vector.assign(10,2);
 	ft::vector<int>::iterator it100 = my_vector.begin();
 
 	for(; it100 != my_vector.end(); it100++)
 		std::cout << *it100 << std::endl;
 
-	// std::cout << "TEST operator real : " << std::endl;
-	// std::cout 	<< my_vector[100] << " "
-	// 			<< (my_vector[0] > my_vector[0] ? "plus grand" : "plus petit" )
-	// 			<< " que " << my_vector[0] << std::endl;
+	std::cout << "TEST operator real : " << std::endl;
+	std::cout 	<< my_vector[0] << " "
+				<< (my_vector[0] > my_vector[0] ? "plus grand" : "plus petit" )
+				<< " que " << my_vector[0] << std::endl;
 
 
 	ft::vector<char> my_vector2;
@@ -275,7 +275,7 @@ int main()
 	std::cout << "TEST max size : " << my_vector2.max_size() << std::endl;
 
 
-	//std::cout << "TEST popback : " << my_vector2.back() << std::endl;
+	//std::cout << "TEST popback : " << my_vector2.back() << std::endl;	//SEGV
 	
 	
 	my_vector2.push_back('a');
