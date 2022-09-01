@@ -6,11 +6,11 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/14 22:19:53 by jrasser           #+#    #+#             */
-/*   Updated: 2022/09/01 03:54:54 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/09/01 04:59:13 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-//#include <vector>
+#include <vector>
 #include "Vector.hpp"
 //#include "Iterator_traits.hpp"
 
@@ -82,8 +82,6 @@ int main()
 
 
 
-
-/*
 	// typedef std::iterator_traits<char> testee;
 
 	// testee t;
@@ -183,7 +181,7 @@ int main()
 	std::cout << "size : " << test.size() << std::endl;
 	std::cout << "capacity : " << test.capacity() << std::endl;
 	std::cout << "empty : " << test.empty() << std::endl;
-*/
+
 
 
 
@@ -225,27 +223,8 @@ int main()
 	my_vector.push_back(3);
 	my_vector.push_back(4);
 
-
-	//my_vector.push_back(1);
-	//for(int i = 0; i < 3; i++)
-	//	std::cout << *(my_vector.getElem() + i) << std::endl;
-
 	my_vector.get_allocator();
-
-
-	// ft::vector<int> test3 = my_vector;
-	// for(int i = 0; i < 3; i++)
-	// 	std::cout << *(test3.getElem() + i) << std::endl;
-
-	// ft::vector<int> test_aff(5, 10);
-	// for(int i = 0; i < 5; i++)
-	// 	std::cout << *(test_aff.getElem() + i) << std::endl;
-
-	// test_aff = my_vector;
-	// for(int i = 0; i < 10; i++)
-	// 	std::cout << *(test_aff.getElem() + i) << std::endl;
-
-
+	my_vector.pop_back();
 	std::cout << "capacity : " << my_vector.capacity() << std::endl;
 	std::cout << "at : " << my_vector.at(2) << std::endl;
 	my_vector.at(2) = 12000;
@@ -265,8 +244,11 @@ int main()
 
 	std::cout << "TEST operator real : " << std::endl;
 	std::cout 	<< my_vector[0] << " "
-				<< (my_vector[0] > my_vector[0] ? "plus grand" : "plus petit" )
+				<< (my_vector[0] > my_vector[0] ? "plus grand" : "plus petit ou egal" )
 				<< " que " << my_vector[0] << std::endl;
+
+	my_vector.display();
+
 
 
 	ft::vector<char> my_vector2;
@@ -288,11 +270,12 @@ int main()
 	my_vector2.push_back('h');
 	my_vector2.push_back('i');
 	my_vector2.push_back('j');
+	my_vector2.display();
 
-	std::cout << "TEST popback : " << my_vector2.back() << std::endl;
 
-	std::cout << "TEST empty : " << my_vector2.empty() << std::endl;
-	std::cout << "TEST size : " << my_vector2.size() << std::endl;
+	std::cout << "TEST popback : " 	<< my_vector2.back() 	<< std::endl;
+	std::cout << "TEST empty : " 	<< my_vector2.empty() 	<< std::endl;
+	std::cout << "TEST size : " 	<< my_vector2.size() 	<< std::endl;
 	std::cout << "TEST max size : " << my_vector2.max_size() << std::endl;
 
 
@@ -302,6 +285,7 @@ int main()
 	for(; it5 != my_vector2.end(); it5++)
 		std::cout << *it5 << " ";
 	std::cout << std::endl;
+
 	
 
 	std::cout << "TEST reverse_iterator : " << std::endl;
@@ -310,19 +294,25 @@ int main()
 	for(; it4 != it4e; it4++)
 		std::cout << *it4 << " " ;
 	std::cout << std::endl;
+	my_vector2.display();
 
 
-	// std::cout << "TEST popback : ";
-	// my_vector2.pop_back();
-	// my_vector2.display();
+	std::cout << "TEST popback  ";
+	my_vector2.pop_back();
+	my_vector2.display(); 
 
 
-	// std::cout << "TEST resize : ";
-	// my_vector2.resize(10);
-	// my_vector2.display();
+	std::cout << "TEST resize 15 ";
+	my_vector2.resize(15);
+	my_vector2.display();
 
-	// my_vector2.resize(20, 's');
-	// my_vector2.display();
+	std::cout << "TEST resize 5 ";
+	my_vector2.resize(5);
+	my_vector2.display();
+
+	std::cout << "TEST resize 20 ";
+	my_vector2.resize(20, 's');
+	my_vector2.display();
 
 
 	std::cout << "TEST swap : " << std::endl;

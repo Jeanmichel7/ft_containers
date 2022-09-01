@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/14 22:06:29 by jrasser           #+#    #+#             */
-/*   Updated: 2022/09/01 03:54:10 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/09/01 04:57:21 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -956,7 +956,6 @@ namespace ft
 
 		void resize( size_type count, T value = T() ) {
 			//std::cout << "resize" << std::endl;
-			std::cout << "value : " << value << std::endl;
 			if(count > _nb_elems) {
 				for(size_type i = _nb_elems; i < count; i++) {
 					push_back(value);
@@ -1032,10 +1031,10 @@ namespace ft
 
 	void	display() const {
 
-		std::cout << "----------------------------------------" << std::endl;
-		std::cout << "start 		: " << _start << std::endl;
-		std::cout << "finish 		: " << _finish << std::endl;
-		std::cout << "end_of_storage 	: " << _end_of_storage << std::endl;
+		std::cout << "\n----------------------------------------" << std::endl;
+		std::cout << "start 		: " << &_start << std::endl;
+		std::cout << "finish 		: " << &_finish << std::endl;
+		std::cout << "end_of_storage 	: " << &_end_of_storage << std::endl;
 		std::cout << "nb_elems 	: " << _nb_elems << std::endl;
 		std::cout << "capacity 	: " << _capacity << std::endl;
 		std::cout << "content 	: ";
@@ -1045,7 +1044,8 @@ namespace ft
 		std::cout << std::endl;
 		std::cout << "----------------------------------------" << std::endl;
 	};
-		};
+
+	};
 }
 
 #endif
