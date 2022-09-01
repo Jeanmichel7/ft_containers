@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/14 22:06:29 by jrasser           #+#    #+#             */
-/*   Updated: 2022/08/31 21:56:12 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/09/01 02:13:45 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,92 +43,333 @@ namespace ft
 		// 	typedef _Category	iterator_category;
 		// };
 
-		//template <class _Iter>
-		template <class _Category, class _Tp, class _Distance = ptrdiff_t,
-				  class _Pointer = _Tp *, class _Reference = _Tp &>
+		//template <class _Category, class _Tp, class _Distance = ptrdiff_t,
+		//		  class _Pointer = _Tp *, class _Reference = _Tp &>
+		template <class _Iter>
 		class my_iterator
 		{
 
 		private:
-			_Tp it;
+			_Iter it;
 
 		public:
-			typedef _Tp iterator_type;
-			typedef typename std::iterator_traits<iterator_type>::iterator_category iterator_category;
-			typedef typename std::iterator_traits<iterator_type>::value_type 		value_type;
-			typedef typename std::iterator_traits<iterator_type>::difference_type 	difference_type;
-			typedef typename std::iterator_traits<iterator_type>::pointer 			pointer;
-			typedef typename std::iterator_traits<iterator_type>::reference 		reference;
+			typedef _Iter 																iterator_type;
+			typedef typename std::iterator_traits<iterator_type>::iterator_category 	iterator_category;
+			typedef typename std::iterator_traits<iterator_type>::value_type 			value_type;
+			typedef typename std::iterator_traits<iterator_type>::difference_type 		difference_type;
+			typedef typename std::iterator_traits<iterator_type>::pointer 				pointer;
+			typedef typename std::iterator_traits<iterator_type>::reference 			reference;
 
-			bool operator!=(my_iterator &rhs)
+			my_iterator() : it() {}
+			my_iterator(iterator_type it) : it(it) {}
+			my_iterator(const my_iterator &src) : it(src.it) {}
+			~my_iterator() {}
+
+			my_iterator &operator=(const my_iterator &rhs)
 			{
-				return (it != rhs.it);
+				if (this != &rhs)
+					this->it = rhs.it;
+				return (*this);
 			}
 
-			bool operator==(my_iterator &rhs)
-			{
-				return (this.it == rhs.it);
-			}
+			reference operator*() const { return (*it); }
+			pointer operator->() const { return (&(*it)); }
 
 			my_iterator &operator++()
 			{
-				++this.it;
-				return *this;
+				++it;
+				return (*this);
+			}
+			my_iterator operator++(int)
+			{
+				my_iterator tmp(*this);
+				++it;
+				return (tmp);
 			}
 
 			my_iterator &operator--()
 			{
-				--this.it;
-				return *this;
-			}
-			my_iterator operator++(int)
-			{
-				my_iterator tmp = *this;
-				++this.it;
-				return tmp;
-			}
-			my_iterator operator--(int)
-			{
-				my_iterator tmp = *this;
-				--this.it;
-				return tmp;
-			}
-			my_iterator &operator+=(difference_type n)
-			{
-				this.it += n;
-				return *this;
-			}
-			my_iterator &operator-=(difference_type n)
-			{
-				this.it -= n;
-				return *this;
-			}
-			my_iterator operator+(difference_type n)
-			{
-				my_iterator tmp = *this;
-				tmp.it += n;
-				return tmp;
-			}
-			my_iterator operator-(difference_type n)
-			{
-				my_iterator tmp = *this;
-				tmp.it -= n;
-				return tmp;
-			}
-			reference operator*()
-			{
-				return *this.it;
-			}
-			pointer operator->()
-			{
-				return this.it;
-			}
-			reference operator[](difference_type n)
-			{
-				return this.it[n];
+				--it;
+				return (*this);
 			}
 
-			// my_iterator end()
+			my_iterator operator--(int)
+			{
+				my_iterator tmp(*this);
+				--it;
+				return (tmp);
+			}
+
+			my_iterator operator+(difference_type n) const
+			{
+				my_iterator tmp(*this);
+				tmp.it += n;
+				return (tmp);
+			}
+
+			my_iterator operator-(difference_type n) const
+			{
+				my_iterator tmp(*this);
+				tmp.it -= n;
+				return (tmp);
+			}
+
+			my_iterator &operator+=(difference_type n)
+			{
+				it += n;
+				return (*this);
+			}
+
+			my_iterator &operator-=(difference_type n)
+			{
+				it -= n;
+				return (*this);
+			}
+
+			reference operator[](difference_type n) const { return (it[n]); }
+
+			friend bool operator==(const my_iterator &lhs, const my_iterator &rhs)
+			{
+				return (lhs.it == rhs.it);
+			}
+
+			friend bool operator!=(const my_iterator &lhs, const my_iterator &rhs)
+			{
+				return (lhs.it != rhs.it);
+			}
+
+			// friend bool operator<(const my_iterator &lhs, const my_iterator &rhs)
+			// {
+			// 	return (lhs.it < rhs.it);
+			// }
+
+			// friend bool operator<=(const my_iterator &lhs, const my_iterator &rhs)
+			// {
+			// 	return (lhs.it <= rhs.it);
+			// }
+
+			// friend bool operator>(const my_iterator &lhs, const my_iterator &rhs)
+			// {
+			// 	return (lhs.it > rhs.it);
+			// }
+
+			// friend bool operator>=(const my_iterator &lhs, const my_iterator &rhs)
+			// {
+			// 	return (lhs.it >= rhs.it);
+			// }
+
+			// friend my_iterator operator+(difference_type n, const my_iterator &rhs)
+			// {
+			// 	my_iterator tmp(rhs);
+			// 	tmp.it += n;
+			// 	return (tmp);
+			// }
+
+			// friend my_iterator operator-(difference_type n, const my_iterator &rhs)
+			// {
+			// 	my_iterator tmp(rhs);
+			// 	tmp.it -= n;
+			// 	return (tmp);
+			// }
+
+			// friend difference_type operator-(const my_iterator &lhs, const my_iterator &rhs)
+			// {
+			// 	return (lhs.it - rhs.it);
+			// }
+
+			// friend std::ostream &operator<<(std::ostream &out, const my_iterator &rhs)
+			// {
+			// 	out << rhs.it;
+			// 	return (out);
+			// }
+
+			// friend std::istream &operator>>(std::istream &in, my_iterator &rhs)
+			// {
+			// 	in >> rhs.it;
+			// 	return (in);
+			// }
+
+			// friend void swap(my_iterator &lhs, my_iterator &rhs)
+			// {
+			// 	std::swap(lhs.it, rhs.it);
+			// }
+
+			// friend void iter_swap(my_iterator &lhs, my_iterator &rhs)
+			// {
+			// 	std::swap(*lhs, *rhs);
+			// }
+
+			// friend bool equal(const my_iterator &lhs, const my_iterator &rhs)
+			// {
+			// 	return (lhs.it == rhs.it);
+			// }
+
+			// friend bool equal(const my_iterator &lhs, const my_iterator &rhs, std::equal_to<value_type> &pred)
+			// {
+			// 	return (pred(*lhs, *rhs));
+			// }
+
+			// friend bool lexicographical_compare(const my_iterator &lhs, const my_iterator &rhs)
+			// {
+			// 	return (std::lexicographical_compare(lhs.it, rhs.it));
+			// }
+
+			// friend bool lexicographical_compare(const my_iterator &lhs, const my_iterator &rhs, std::less<value_type> &pred)
+			// {
+			// 	return (std::lexicographical_compare(lhs.it, rhs.it, pred));
+			// }
+
+			// friend difference_type distance(const my_iterator &first, const my_iterator &last)
+			// {
+			// 	return (std::distance(first.it, last.it));
+			// }
+
+			// friend my_iterator next(const my_iterator &it, difference_type n = 1)
+			// {
+			// 	my_iterator tmp(it);
+			// 	tmp.it += n;
+			// 	return (tmp);
+			// }
+
+			// friend my_iterator prev(const my_iterator &it, difference_type n = 1)
+			// {
+			// 	my_iterator tmp(it);
+			// 	tmp.it -= n;
+			// 	return (tmp);
+			// }
+
+			// friend my_iterator advance(const my_iterator &it, difference_type n)
+			// {
+			// 	my_iterator tmp(it);
+			// 	tmp.it += n;
+			// 	return (tmp);
+			// }
+
+			// friend my_iterator advance(const my_iterator &it, difference_type n, difference_type &res)
+			// {
+			// 	my_iterator tmp(it);
+			// 	tmp.it += n;
+			// 	res = n;
+			// 	return (tmp);
+			// }
+
+			// friend my_iterator advance(const my_iterator &it, difference_type n, difference_type &res, std::plus<difference_type> &op)
+			// {
+			// 	my_iterator tmp(it);
+			// 	tmp.it += n;
+			// 	res = op(n, 0);
+			// 	return (tmp);
+			// }
+
+			// friend my_iterator advance(const my_iterator &it, difference_type n, difference_type &res, std::minus<difference_type> &op)
+			// {
+			// 	my_iterator tmp(it);
+			// 	tmp.it += n;
+			// 	res = op(n, 0);
+			// 	return (tmp);
+			// }
+
+			// friend my_iterator advance(const my_iterator &it, difference_type n, difference_type &res, std::multiplies<difference_type> &op)
+			// {
+			// 	my_iterator tmp(it);
+			// 	tmp.it += n;
+			// 	res = op(n, 1);
+			// 	return (tmp);
+			// }
+
+			// friend my_iterator advance(const my_iterator &it, difference_type n, difference_type &res, std::divides<difference_type> &op)
+			// {
+			// 	my_iterator tmp(it);
+			// 	tmp.it += n;
+			// 	res = op(n, 1);
+			// 	return (tmp);
+			// }
+
+
+			// bool operator!=(my_iterator &rhs)
+			// {
+			// 	return (it != rhs.it);
+			// }
+
+			// bool operator!=(my_iterator const &rhs)
+			// {
+			// 	return (it != rhs.it);
+			// }
+
+			// bool operator==(my_iterator &rhs)
+			// {
+			// 	return (this.it == rhs.it);
+			// }
+
+			// my_iterator &operator++()
+			// {
+			// 	++this.it;
+			// 	return *this;
+			// }
+
+			// my_iterator &operator--()
+			// {
+			// 	--this.it;
+			// 	return *this;
+			// }
+			// my_iterator operator++(int)
+			// {
+			// 	my_iterator tmp = *this;
+			// 	++this.it;
+			// 	return tmp;
+			// }
+			// my_iterator operator--(int)
+			// {
+			// 	my_iterator tmp = *this;
+			// 	--this.it;
+			// 	return tmp;
+			// }
+			// my_iterator &operator+=(difference_type n)
+			// {
+			// 	this.it += n;
+			// 	return *this;
+			// }
+			// my_iterator &operator-=(difference_type n)
+			// {
+			// 	this.it -= n;
+			// 	return *this;
+			// }
+			// my_iterator operator+(difference_type n)
+			// {
+			// 	my_iterator tmp = *this;
+			// 	tmp.it += n;
+			// 	return tmp;
+			// }
+			// my_iterator operator-(difference_type n)
+			// {
+			// 	my_iterator tmp = *this;
+			// 	tmp.it -= n;
+			// 	return tmp;
+			// }
+			// reference operator*()
+			// {
+			// 	return *this.it;
+			// }
+			// pointer operator->()
+			// {
+			// 	return this.it;
+			// }
+			// reference operator[](difference_type n)
+			// {
+			// 	return this.it[n];
+			// }
+
+			// // my_iterator end() const
+			// // {
+			// // 	return this->end();
+			// // }
+
+			// pointer begin() const
+			// {
+			// 	return this->begin();
+			// }
+
+			// pointer end() const
 			// {
 			// 	return this->end();
 			// }
@@ -178,10 +419,12 @@ namespace ft
 			/*                                                     */
 			/* *************************************************** */
 
-			vector() : _start(NULL), _finish(NULL),
-					   _end_of_storage(NULL),
-					   _nb_elems(0),
-					   _capacity(0)
+		vector() :
+			_start(NULL),
+			_finish(NULL),
+			_end_of_storage(NULL),
+			_nb_elems(0),
+			_capacity(0)
 			{
 				std::cout << "Constructor" << std::endl;
 			};
@@ -411,7 +654,8 @@ namespace ft
 		};
 		const_iterator begin() const {
 			//std::cout << "const_begin" << std::endl;
-			return const_cast<vector*>(this)->begin();
+			return const_iterator(this->_start);
+			//return const_cast<vector*>(this)->begin();
 		};
 
 		iterator end(){
@@ -420,25 +664,30 @@ namespace ft
 		};
 		const_iterator end() const {
 			//std::cout << "const_end" << std::endl;
-			return const_cast<vector*>(this)->end();
+			return const_iterator(this->_finish);
+			//return const_cast<vector*>(this)->end();
 		};
 
 		reverse_iterator rbegin(){
 			//std::cout << "rbegin" << std::endl;
-			return reverse_iterator(end());
+			return reverse_iterator(this->_finish);
+			//return reverse_iterator(end());
 		};
 		const_reverse_iterator rbegin() const {
 			//std::cout << "const_rbegin" << std::endl;
-			return const_reverse_iterator(end());
+			return const_reverse_iterator(this->_finish);
+			//return const_reverse_iterator(end());
 		};
 
 		reverse_iterator rend() {
 			//std::cout << "rend" << std::endl;
-			return reverse_iterator(begin());
+			return reverse_iterator(this->_start);
+			//return reverse_iterator(begin());
 		};
 		const_reverse_iterator rend() const {
 			//std::cout << "const_rend" << std::endl;
-			return const_reverse_iterator(begin());
+			return const_reverse_iterator(this->_start);
+			//return const_reverse_iterator(begin());
 		};
 
 

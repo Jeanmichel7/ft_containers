@@ -6,11 +6,11 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/14 22:19:53 by jrasser           #+#    #+#             */
-/*   Updated: 2022/08/31 16:39:31 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/09/01 02:15:27 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <vector>
+//#include <vector>
 #include "Vector.hpp"
 #include "Iterator_traits.hpp"
 
@@ -83,7 +83,7 @@ int main()
 
 
 
-
+/*
 	// typedef std::iterator_traits<char> testee;
 
 	// testee t;
@@ -183,7 +183,7 @@ int main()
 	std::cout << "size : " << test.size() << std::endl;
 	std::cout << "capacity : " << test.capacity() << std::endl;
 	std::cout << "empty : " << test.empty() << std::endl;
-
+*/
 
 
 
