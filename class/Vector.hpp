@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/14 22:06:29 by jrasser           #+#    #+#             */
-/*   Updated: 2022/09/01 02:13:45 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/09/01 03:36:13 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,171 @@
 
 #include "Iterator_traits.hpp"
 
-#include <memory>
-#include <cstddef>
-#include <iterator>
-#include <iostream>
-#include <limits>
+// #include <memory>
+// #include <cstddef>
+// #include <iterator>
+// #include <iostream>
+// #include <limits>
 
 namespace ft
 {
 	template <typename T, typename Allocator = std::allocator<T> >
 	class vector
 	{
+
+		template <typename _Iterator>
+		class my_reverse_iterator
+			: public iterator<typename iterator_traits<_Iterator>::iterator_category,
+							  typename iterator_traits<_Iterator>::value_type,
+							  typename iterator_traits<_Iterator>::difference_type,
+							  typename iterator_traits<_Iterator>::pointer,
+							  typename iterator_traits<_Iterator>::reference>
+		{
+		protected:
+			_Iterator current;
+			typedef iterator_traits<_Iterator>		__traits_type;
+
+
+		public:
+			typedef _Iterator iterator_type;
+			typedef typename __traits_type::difference_type difference_type;
+			typedef typename __traits_type::pointer pointer;
+			typedef typename __traits_type::reference reference;
+
+
+
+
+			my_reverse_iterator() : current() { }
+			explicit my_reverse_iterator(iterator_type x) : current(x) { }
+			my_reverse_iterator(const my_reverse_iterator& x) : current(x.current) { }
+
+			template <typename _Iter>
+			my_reverse_iterator(const my_reverse_iterator<_Iter> &__x)
+				: current(__x.base()) {}
+
+			iterator_type base() const { return current; }
+
+			reference operator*() const
+			{
+				_Iterator tmp = current;
+				return *--tmp;
+			}
+
+			pointer operator->() const
+			{
+				return &(operator*());
+			}
+
+			my_reverse_iterator& operator++()
+			{
+				--current;
+				return *this;
+			}
+
+			my_reverse_iterator operator++(int)
+			{
+				my_reverse_iterator tmp = *this;
+				--current;
+				return tmp;
+			}
+
+			my_reverse_iterator& operator--()
+			{
+				++current;
+				return *this;
+			}
+
+			my_reverse_iterator operator--(int)
+			{
+				my_reverse_iterator tmp = *this;
+				++current;
+				return tmp;
+			}
+
+			my_reverse_iterator operator+(difference_type n) const
+			{
+				return my_reverse_iterator(current - n);
+			}
+
+			my_reverse_iterator& operator+=(difference_type n)
+			{
+				current -= n;
+				return *this;
+			}
+
+			my_reverse_iterator operator-(difference_type n) const
+			{
+				return my_reverse_iterator(current + n);
+			}
+
+			my_reverse_iterator& operator-=(difference_type n)
+			{
+				current += n;
+				return *this;
+			}
+
+			reference operator[](difference_type n) const
+			{
+				return *(*this + n);
+			}
+
+			my_reverse_iterator operator-(const my_reverse_iterator &x) const
+			{
+				return my_reverse_iterator(x.current - current);
+			}
+
+			my_reverse_iterator operator+(const my_reverse_iterator &x) const
+			{
+				return my_reverse_iterator(x.current + current);
+			}
+
+			my_reverse_iterator& operator+=(const my_reverse_iterator &x)
+			{
+				current += x.current;
+				return *this;
+			}
+
+			my_reverse_iterator& operator-=(const my_reverse_iterator &x)
+			{
+				current -= x.current;
+				return *this;
+			}
+
+			bool operator==(const my_reverse_iterator &x) const
+			{
+				return current == x.current;
+			}
+
+			bool operator!=(const my_reverse_iterator &x) const
+			{
+				return current != x.current;
+			}
+
+			bool operator<(const my_reverse_iterator &x) const
+			{
+				return current > x.current;
+			}
+
+			bool operator>(const my_reverse_iterator &x) const
+			{
+				return current < x.current;
+			}
+
+			bool operator<=(const my_reverse_iterator &x) const
+			{
+				return current >= x.current;
+			}
+
+			bool operator>=(const my_reverse_iterator &x) const
+			{
+				return current <= x.current;
+			}
+
+			
+
+
+
+		};
 
 		// template <class _Category, class _Tp, class _Distance = ptrdiff_t,
 		// 		  class _Pointer = _Tp *, class _Reference = _Tp &>
@@ -43,7 +197,7 @@ namespace ft
 		// 	typedef _Category	iterator_category;
 		// };
 
-		//template <class _Category, class _Tp, class _Distance = ptrdiff_t,
+		// template <class _Category, class _Tp, class _Distance = ptrdiff_t,
 		//		  class _Pointer = _Tp *, class _Reference = _Tp &>
 		template <class _Iter>
 		class my_iterator
@@ -53,12 +207,12 @@ namespace ft
 			_Iter it;
 
 		public:
-			typedef _Iter 																iterator_type;
-			typedef typename std::iterator_traits<iterator_type>::iterator_category 	iterator_category;
-			typedef typename std::iterator_traits<iterator_type>::value_type 			value_type;
-			typedef typename std::iterator_traits<iterator_type>::difference_type 		difference_type;
-			typedef typename std::iterator_traits<iterator_type>::pointer 				pointer;
-			typedef typename std::iterator_traits<iterator_type>::reference 			reference;
+			typedef _Iter 															iterator_type;
+			typedef typename ft::iterator_traits<iterator_type>::iterator_category 	iterator_category;
+			typedef typename ft::iterator_traits<iterator_type>::value_type 		value_type;
+			typedef typename ft::iterator_traits<iterator_type>::difference_type 	difference_type;
+			typedef typename ft::iterator_traits<iterator_type>::pointer 			pointer;
+			typedef typename ft::iterator_traits<iterator_type>::reference 			reference;
 
 			my_iterator() : it() {}
 			my_iterator(iterator_type it) : it(it) {}
@@ -400,8 +554,8 @@ namespace ft
 			typedef my_iterator<pointer>                     iterator;
 			typedef my_iterator<const_pointer>               const_iterator;
 
-			typedef std::reverse_iterator<iterator> reverse_iterator;
-			typedef std::reverse_iterator<const_iterator> const const_reverse_iterator;
+			typedef my_reverse_iterator<iterator> reverse_iterator;
+			typedef my_reverse_iterator<const_iterator> const const_reverse_iterator;
 
 		private:
 			Allocator _alloc;

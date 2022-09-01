@@ -2,13 +2,17 @@
 # define __ITERATOR_TRAIT__
 
 #include <typeinfo>
-
+#include <memory>
+#include <cstddef>
+#include <iterator>
+#include <iostream>
+#include <limits>
 
 namespace ft
 {
 
-typedef __SIZE_TYPE__ size_t;
-typedef __PTRDIFF_TYPE__ ptrdiff_t;
+typedef __SIZE_TYPE__       size_t;
+typedef __PTRDIFF_TYPE__    ptrdiff_t;
 
 template <typename _Category, typename _Tp, typename _Distance = ptrdiff_t,
           typename _Pointer = _Tp *, typename _Reference = _Tp &>
