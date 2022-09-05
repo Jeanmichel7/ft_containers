@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/14 22:19:53 by jrasser           #+#    #+#             */
-/*   Updated: 2022/09/01 04:59:13 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/09/05 21:07:46 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 
 int main()
 {
+	std::cout.imbue(std::locale("en_US.UTF-8"));
 
 
 	// std::map<std::string, int> map;
@@ -157,23 +158,24 @@ int main()
 	//test.swap(test2);
 
 
-	// std::cout << "TEST reserve : " <<  std::endl;
+	std::cout << "TEST reserve : " <<  std::endl;
 	
-	// std::vector<int> test_reserve(10, 1);
-	// std::vector<int>::iterator it404 = test_reserve.begin();
+	std::vector<int> test_reserve_real(10, 1);
+	//std::vector<int> test_reserve_real(2305843009213693952, 1);
+	std::vector<int>::iterator it404 = test_reserve_real.begin();
 
-	// for(; it404 != test_reserve.end(); it404++)
-	// 	std::cout << *it404 ;
-	// std::cout << "\n";
-	// std::cout << "capacity : " << test_reserve.capacity() << std::endl;
+	for(; it404 != test_reserve_real.end(); it404++)
+		std::cout << *it404 ;
+	std::cout << "\n";
+	std::cout << "capacity : " << test_reserve_real.capacity() << std::endl;
 
-	// test_reserve.reserve(20);
+	test_reserve_real.reserve(20);
 
-	// it404 = test_reserve.begin();
-	// for(; it404 != test_reserve.end(); it404++)
-	// 	std::cout << *it404 ;
-	// std::cout << "\n";
-	// std::cout << "capacity : " << test_reserve.capacity() << std::endl;
+	it404 = test_reserve_real.begin();
+	for(; it404 != test_reserve_real.end(); it404++)
+		std::cout << *it404 ;
+	std::cout << "\n";
+	std::cout << "capacity : " << test_reserve_real.capacity() << std::endl;
 
 
 	std::cout << "TEST clear real : " << std::endl;
@@ -276,8 +278,10 @@ int main()
 	std::cout << "TEST popback : " 	<< my_vector2.back() 	<< std::endl;
 	std::cout << "TEST empty : " 	<< my_vector2.empty() 	<< std::endl;
 	std::cout << "TEST size : " 	<< my_vector2.size() 	<< std::endl;
-	std::cout << "TEST max size : " << my_vector2.max_size() << std::endl;
 
+
+	// std::cout << "TEST max size : " << my_vector2.max_size() << std::endl;
+    std::cout << "Maximum size of a std::vector is " << my_vector2.max_size() << '\n';
 
 
 	std::cout << "TEST iterator : " << std::endl;
@@ -318,9 +322,9 @@ int main()
 	std::cout << "TEST swap : " << std::endl;
 	ft::vector<int> test_swap(10, 1);
 	ft::vector<int> test_swap2(15,2);
+	test_swap.display();
+	test_swap2.display();
 	test_swap.ft::vector<int>::swap(test_swap2);
-	//test_swap.swap(test_swap2);
-
 	test_swap.display();
 	test_swap2.display();
 
@@ -336,20 +340,19 @@ int main()
 
 
 	std::cout << "TEST reserve : " <<  std::endl;
-	
-	ft::vector<int> test_reserve(10, 1);
-	ft::vector<int>::iterator it404 = test_reserve.begin();
+	ft::vector<double> test_reserve(10, 1);
+	ft::vector<double>::iterator it4040 = test_reserve.begin();
 
-	for(; it404 != test_reserve.end(); it404++)
-		std::cout << *it404 ;
+	for(; it4040 != test_reserve.end(); it4040++)
+		std::cout << *it4040 ;
 	std::cout << "\n";
 	std::cout << "capacity : " << test_reserve.capacity() << std::endl;
 
-	test_reserve.reserve(20);
+	test_reserve.reserve(18446744073709551615);
 
-	it404 = test_reserve.begin();
-	for(; it404 != test_reserve.end(); it404++)
-		std::cout << *it404 ;
+	it4040 = test_reserve.begin();
+	for(; it4040 != test_reserve.end(); it4040++)
+		std::cout << *it4040 ;
 	std::cout << "\n";
 	std::cout << "capacity : " << test_reserve.capacity() << std::endl;
 
@@ -367,5 +370,3 @@ int main()
 
 	return 0;
 }
-
-

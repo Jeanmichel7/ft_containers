@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/14 22:06:29 by jrasser           #+#    #+#             */
-/*   Updated: 2022/09/05 19:14:58 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/09/05 21:11:01 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,9 @@
 #include "my_iterator.hpp"
 #include "my_reverse_iterator.hpp"
 
+#include <stdexcept>
+
+
 // #include <memory>
 // #include <cstddef>
 // #include <iterator>
@@ -25,20 +28,14 @@
 
 namespace ft
 {
-
-
+	
 	template <typename T, typename Allocator = std::allocator<T> >
 	class vector
 	{
-		typedef _Vector_base<T, Allocator>					_Base;
-		typedef typename _Base::_Tp_alloc_type				_Tp_alloc_type;
-		typedef __gnu_cxx::__alloc_traits<_Tp_alloc_type>	_Alloc_traits;
-
-
 		public:
 			/* Typedef */
 
-			typedef std::size_t 								size_type;
+			typedef long long unsigned 								size_type;
 			typedef Allocator 									allocator_type;
 
 			typedef T 											&reference;
@@ -52,44 +49,6 @@ namespace ft
 
 			typedef my_reverse_iterator<iterator> 				reverse_iterator;
 			typedef my_reverse_iterator<const_iterator> const	const_reverse_iterator;
-
-
-
-
-
-
-					public:
-			/* Typedef */
-			typedef std::size_t size_type;
-			typedef Allocator allocator_type;
-
-			typedef T &reference;
-			typedef const T &const_reference;
-
-			typedef T *pointer;
-			typedef const T *const_pointer;
-
-			// typedef __gnu_cxx::__normal_iterator<pointer, vector> 		iterator;
-			// typedef __gnu_cxx::__normal_iterator<const_pointer, vector> const_iterator;
-
-			//typedef std::random_access_iterator_tag iterator;
-			//typedef std::random_access_iterator_tag const const_iterator;
-
-			// typedef __wrap_iter<pointer>                     iterator;
-			// typedef __wrap_iter<const_pointer>               const_iterator;
-
-			typedef my_iterator<pointer>                     iterator;
-			typedef my_iterator<const_pointer>               const_iterator;
-
-			typedef my_reverse_iterator<iterator> reverse_iterator;
-			typedef my_reverse_iterator<const_iterator> const const_reverse_iterator;
-
-
-
-
-
-
-
 
 
 		private:
@@ -404,19 +363,36 @@ namespace ft
 		};
 
 		void reserve( size_type new_cap ) {
-			if(new_cap > _capacity) {
-				T* new_start = _alloc.allocate(new_cap);
-				for(size_type i = 0; i < _nb_elems; i++) {
-					_alloc.construct(new_start + i, _start[i]);
+			try {
+				std::cout << new_cap << " : " << max_size() << std::endl;
+				
+				if(new_cap > max_size())
+					throw (std::length_error("length"));
+
+				std::cout << "je dois pas te voir toi" << std::endl;
+
+				if(new_cap > _capacity) {
+					T* new_start = _alloc.allocate(new_cap);
+					for(size_type i = 0; i < _nb_elems; i++) {
+						_alloc.construct(new_start + i, _start[i]);
+					}
+					for(size_type i = 0; i < _nb_elems; i++) {
+						_alloc.destroy(_start + i);
+					}
+					_alloc.deallocate(_start, _capacity);
+					_start = new_start;
+					_finish = _start + _nb_elems;
+					_end_of_storage = _start + new_cap;
+					_capacity = new_cap;
 				}
-				for(size_type i = 0; i < _nb_elems; i++) {
-					_alloc.destroy(_start + i);
-				}
-				_alloc.deallocate(_start, _capacity);
-				_start = new_start;
-				_finish = _start + _nb_elems;
-				_end_of_storage = _start + new_cap;
-				_capacity = new_cap;
+			}
+			catch(const std::length_error &el) {
+				std::cerr << "error 1 : " << el.what() << '\n';
+				std::terminate();
+			}
+			catch(const std::exception& e) {
+				std::cerr << "error 2 : " << e.what() << '\n';
+				std::terminate();
 			}
 		};
 
