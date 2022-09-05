@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/14 22:06:29 by jrasser           #+#    #+#             */
-/*   Updated: 2022/09/05 21:11:01 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/09/05 22:32:06 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ namespace ft
 		public:
 			/* Typedef */
 
-			typedef long long unsigned 								size_type;
+			typedef std::size_t 								size_type;
 			typedef Allocator 									allocator_type;
 
 			typedef T 											&reference;
@@ -258,7 +258,14 @@ namespace ft
 			return const_cast<vector*>(this)->data();
 		};
 
-		void assign( size_type count, const T& value ){
+/*
+Basic guarantee: if an exception is thrown, the container is in a valid state.
+If allocator_traits::construct is not supported with the appropriate arguments 
+for the element constructions, or if the range specified by [first,last) is not valid,
+it causes undefined behavior.
+*/
+
+		void assign( size_type count, const T& value ){             /* when call ?? */
 			std::cout << "assign" << std::endl;
 
 			for(size_type i = 0; i < _nb_elems; i++) {
@@ -280,20 +287,32 @@ namespace ft
 			void assign( InputIt first, InputIt last ){
 				std::cout << "template assign" << std::endl;
 
-				for(size_type i = 0; i < _nb_elems; i++) {
-					_alloc.destroy(_start + i);
+				pointer new_start;
+				try
+				{
+					_alloc = Allocator();
+					new_start = _alloc.allocate(first);
+
+					for(size_type i = 0; i < _nb_elems; i++) {
+						_alloc.destroy(_start + i);
+					}
+					_alloc.deallocate(_start, _capacity);
+					
+					_alloc = Allocator();
+					_start = new_start;
+					_finish = _start + first;
+					_end_of_storage = _start + first;
+					_nb_elems = first;
+					_capacity = first;
+					for(InputIt i = 0; i < first; i++) {
+						_alloc.construct(_start + i, last);
+					}
 				}
-				_alloc.deallocate(_start, _capacity);
-				
-				_alloc = Allocator();
-				_start = _alloc.allocate(first);
-				_finish = _start + first;
-				_end_of_storage = _start + first;
-				_nb_elems = first;
-				_capacity = first;
-				for(InputIt i = 0; i < first; i++) {
-					_alloc.construct(_start + i, last);
+				catch(const std::exception& e)
+				{
+					std::cerr << e.what() << '\n';
 				}
+
 			};
 
 

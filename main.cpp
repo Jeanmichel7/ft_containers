@@ -6,9 +6,15 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/14 22:19:53 by jrasser           #+#    #+#             */
-/*   Updated: 2022/09/05 21:07:46 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/09/05 22:34:07 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#define BLU "\033[0;34m"
+#define GRN "\033[0;32m"
+#define RED "\033[0;31m"
+#define ERASE "\033[2K\r"
+#define END "\033[0m"
 
 #include <vector>
 #include "Vector.hpp"
@@ -24,51 +30,11 @@
 
 int main()
 {
-	std::cout.imbue(std::locale("en_US.UTF-8"));
-
-
+	//std::cout.imbue(std::locale("en_US.UTF-8"));
 	// std::map<std::string, int> map;
-
 	// map["test"] = 42;
-
 	// std::cout << map["test"] << std::endl;
 	
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -97,13 +63,19 @@ int main()
 	test.push_back(1);
 	test.push_back(2);
 	test.push_back(3);
-	//test.assign(10, 1);
 
-	std::cout << "TEST max size : " << test.max_size() << std::endl;
+	std::cout << BLU "TEST max size : " END << test.max_size() << std::endl;
 
 	std::vector<int>::iterator it = test.begin();
 	for(; it != test.end(); it++)
-		std::cout << *it << std::endl;
+		std::cout << *it << " ";
+	std::cout << std::endl;
+
+
+	std::cout << BLU "TEST assign : " END << test.max_size() << std::endl;
+	// test.assign(1000000000000000000, 1);										//SEGV
+	test.assign(10, 1);
+
 
 	//std::vector<int> test_copie = test;
 	//std::vector<int>::iterator it2 = test_copie.begin();
@@ -117,16 +89,17 @@ int main()
 
 
 
-	std::cout << *(test.rbegin()) << std::endl;
-	std::cout << "rbegin : \n";
+	std::cout << BLU "TEST rbegin derefenced : " END << *(test.rbegin()) << std::endl;
+	std::cout << BLU "TEST rbegin : \n" END;
 	std::vector<int>::reverse_iterator it2 = test.rbegin();
 
 	for(; it2 != test.rend(); it2++)
-		std::cout << *it2 << std::endl;
+		std::cout << *it2 << " ";
+	std::cout << std::endl;
 
 
 
-	std::cout << "test template swap : " << std::endl;
+	std::cout << BLU "TEST template swap : " END << std::endl;
 	std::vector<int> test2(10, 1);
 
 
@@ -158,7 +131,7 @@ int main()
 	//test.swap(test2);
 
 
-	std::cout << "TEST reserve : " <<  std::endl;
+	std::cout << BLU "TEST reserve : " END <<  std::endl;
 	
 	std::vector<int> test_reserve_real(10, 1);
 	//std::vector<int> test_reserve_real(2305843009213693952, 1);
@@ -178,7 +151,7 @@ int main()
 	std::cout << "capacity : " << test_reserve_real.capacity() << std::endl;
 
 
-	std::cout << "TEST clear real : " << std::endl;
+	std::cout << BLU "TEST clear real : " END << std::endl;
 	test.clear();
 	std::cout << "size : " << test.size() << std::endl;
 	std::cout << "capacity : " << test.capacity() << std::endl;
@@ -217,34 +190,53 @@ int main()
 	ft::vector<int> my_vector;
 
 
-	std::cout << "TEST popback real : " ;
-	// std::cout << my_vector.back() << std::endl; 					//SEGV
 
 	my_vector.push_back(1);
 	my_vector.push_back(2);
 	my_vector.push_back(3);
 	my_vector.push_back(4);
+	my_vector.display();
 
-	my_vector.get_allocator();
+	
+	std::cout << BLU "TEST popback real : " END;
+	// std::cout << my_vector.back() << std::endl; 					//SEGV
 	my_vector.pop_back();
-	std::cout << "capacity : " << my_vector.capacity() << std::endl;
-	std::cout << "at : " << my_vector.at(2) << std::endl;
+	my_vector.display();
+
+	// std::cout << "get allocator 	: " << my_vector.get_allocator() << std::endl;
+	std::cout << "capacity 	: " << my_vector.capacity() << std::endl;
+	std::cout << "at(2)		: " << my_vector.at(2)		<< std::endl;
 	my_vector.at(2) = 12000;
-	std::cout << "at : " << my_vector.at(2) << std::endl;
+	my_vector.display();
+	std::cout << "at(2)		: " << my_vector.at(2) 		<< std::endl;
+	std::cout << "ret		: " << my_vector[2] 		<< std::endl;
+	std::cout << "front		: " << my_vector.front()	<< std::endl;
+	std::cout << "back		: " << my_vector.back() 	<< std::endl;
+	std::cout << "data		: " << my_vector.data() 	<< std::endl;
 
-	std::cout << "my_vector[2]: "	<< my_vector[2] 		<< std::endl;
-	std::cout << "ret: " 			<< my_vector[2] 		<< std::endl;
-	std::cout << "front: " 			<< my_vector.front()	<< std::endl;
-	std::cout << "back: " 			<< my_vector.back() 	<< std::endl;
-	std::cout << "data: " 			<< my_vector.data() 	<< std::endl;
 
-	my_vector.assign(10,2);
+	std::cout << BLU "\n\nTEST assign(100,2) : " END << std::endl;
+	// my_vector.assign(100000000000000000000000000000000000000,2);				//SEGV
+	my_vector.assign(100,2);
 	ft::vector<int>::iterator it100 = my_vector.begin();
-
 	for(; it100 != my_vector.end(); it100++)
-		std::cout << *it100 << std::endl;
+		std::cout << *it100 << " ";
 
-	std::cout << "TEST operator real : " << std::endl;
+
+	// std::cout << "\n\nTEST assign(100) : " << std::endl;
+	// my_vector.assign(100, 1);
+	// it100 = my_vector.begin();
+	// for(; it100 != my_vector.end(); it100++)
+	// 	std::cout << *it100 << " ";
+
+
+
+
+
+
+
+
+	std::cout << BLU "\n\nTEST operator comparaison : " END << std::endl;
 	std::cout 	<< my_vector[0] << " "
 				<< (my_vector[0] > my_vector[0] ? "plus grand" : "plus petit ou egal" )
 				<< " que " << my_vector[0] << std::endl;
@@ -254,14 +246,14 @@ int main()
 
 
 	ft::vector<char> my_vector2;
-	std::cout << "TEST empty : " << my_vector2.empty() << std::endl;
-	std::cout << "TEST size : " << my_vector2.size() << std::endl;
-	std::cout << "TEST max size : " << my_vector2.max_size() << std::endl;
+	std::cout << BLU "TEST empty	: " END << my_vector2.empty() << std::endl;
+	std::cout << BLU "TEST size	: " END << my_vector2.size() << std::endl;
+	std::cout << BLU "TEST max size	: " END << my_vector2.max_size() << std::endl;
 
 
-	//std::cout << "TEST popback : " << my_vector2.back() << std::endl;	//SEGV
+	//std::cout << BLU "TEST popback : " END << my_vector2.back() << std::endl;	//SEGV
 	
-	
+	std::cout << BLU "TEST push back " END<< std::endl;
 	my_vector2.push_back('a');
 	my_vector2.push_back('b');
 	my_vector2.push_back('c');
@@ -275,16 +267,16 @@ int main()
 	my_vector2.display();
 
 
-	std::cout << "TEST popback : " 	<< my_vector2.back() 	<< std::endl;
-	std::cout << "TEST empty : " 	<< my_vector2.empty() 	<< std::endl;
-	std::cout << "TEST size : " 	<< my_vector2.size() 	<< std::endl;
+	std::cout << BLU "TEST back 	: " END << my_vector2.back() 	<< std::endl;
+	std::cout << BLU "TEST empty 	: " END << my_vector2.empty() 	<< std::endl;
+	std::cout << BLU "TEST size 	: " END << my_vector2.size() 	<< std::endl;
 
 
-	// std::cout << "TEST max size : " << my_vector2.max_size() << std::endl;
-    std::cout << "Maximum size of a std::vector is " << my_vector2.max_size() << '\n';
+	// std::cout << BLU "TEST max size : " END << my_vector2.max_size() << std::endl;
+    std::cout << BLU "TEST max_size 	: " END << my_vector2.max_size() << '\n';
 
 
-	std::cout << "TEST iterator : " << std::endl;
+	std::cout << BLU "TEST iterator : " END << std::endl;
 	ft::vector<char>::iterator it5 = my_vector2.begin();
 	for(; it5 != my_vector2.end(); it5++)
 		std::cout << *it5 << " ";
@@ -292,7 +284,7 @@ int main()
 
 	
 
-	std::cout << "TEST reverse_iterator : " << std::endl;
+	std::cout << BLU "TEST reverse_iterator : " END << std::endl;
 	ft::vector<char>::reverse_iterator it4 = my_vector2.rbegin();
 	ft::vector<char>::reverse_iterator it4e = my_vector2.rend();
 	for(; it4 != it4e; it4++)
@@ -301,25 +293,25 @@ int main()
 	my_vector2.display();
 
 
-	std::cout << "TEST popback  ";
+	std::cout << BLU "TEST popback  " END;
 	my_vector2.pop_back();
 	my_vector2.display(); 
 
 
-	std::cout << "TEST resize 15 ";
+	std::cout << BLU "TEST resize 15 " END;
 	my_vector2.resize(15);
 	my_vector2.display();
 
-	std::cout << "TEST resize 5 ";
+	std::cout << BLU "TEST resize 5 " END;
 	my_vector2.resize(5);
 	my_vector2.display();
 
-	std::cout << "TEST resize 20 ";
+	std::cout << BLU "TEST resize 20 " END;
 	my_vector2.resize(20, 's');
 	my_vector2.display();
 
 
-	std::cout << "TEST swap : " << std::endl;
+	std::cout << BLU "TEST swap : " END << std::endl;
 	ft::vector<int> test_swap(10, 1);
 	ft::vector<int> test_swap2(15,2);
 	test_swap.display();
@@ -331,7 +323,7 @@ int main()
 
 
 
-	std::cout << "TEST operator : " ;
+	std::cout << BLU "TEST operator : " ;
 	std::cout 	<< test_swap[0] << " "
 				<< (test_swap[0] > test_swap2[0] ? "plus grand" : "plus petit" )
 				<< " que " << test_swap2[0] << std::endl;
@@ -339,16 +331,16 @@ int main()
 
 
 
-	std::cout << "TEST reserve : " <<  std::endl;
-	ft::vector<double> test_reserve(10, 1);
-	ft::vector<double>::iterator it4040 = test_reserve.begin();
+	std::cout << BLU "TEST reserve : " END <<  std::endl;
+	ft::vector<long long unsigned> test_reserve(10, 1);
+	ft::vector<long long unsigned>::iterator it4040 = test_reserve.begin();
 
 	for(; it4040 != test_reserve.end(); it4040++)
 		std::cout << *it4040 ;
 	std::cout << "\n";
 	std::cout << "capacity : " << test_reserve.capacity() << std::endl;
 
-	test_reserve.reserve(18446744073709551615);
+	test_reserve.reserve(2305843009213693951);
 
 	it4040 = test_reserve.begin();
 	for(; it4040 != test_reserve.end(); it4040++)
@@ -360,7 +352,7 @@ int main()
 
 
 
-	std::cout << "TEST clear : " << std::endl;
+	std::cout << BLU "TEST clear : " END << std::endl;
 	test_reserve.clear();
 	std::cout << "size : " << test_reserve.size() << std::endl;
 	std::cout << "capacity : " << test_reserve.capacity() << std::endl;
