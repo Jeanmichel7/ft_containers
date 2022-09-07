@@ -6,12 +6,18 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/14 22:06:29 by jrasser           #+#    #+#             */
-/*   Updated: 2022/09/05 22:32:06 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/09/07 13:24:27 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef __VECTOR_HPP__
 #define __VECTOR_HPP__
+
+#define BLU "\033[0;34m"
+#define GRN "\033[0;32m"
+#define RED "\033[0;31m"
+#define ERASE "\033[2K\r"
+#define END "\033[0m"
 
 #include "Iterator_traits.hpp"
 #include "my_iterator.hpp"
@@ -378,18 +384,15 @@ it causes undefined behavior.
 		};
 
 		size_type max_size() const {
-			return (std::numeric_limits<size_type>::max());
+			return _alloc.max_size();
 		};
 
 		void reserve( size_type new_cap ) {
 			try {
-				std::cout << new_cap << " : " << max_size() << std::endl;
+				//std::cout << new_cap << " : " << max_size() << std::endl;
 				
 				if(new_cap > max_size())
-					throw (std::length_error("length"));
-
-				std::cout << "je dois pas te voir toi" << std::endl;
-
+					throw (std::length_error("length blablabli"));
 				if(new_cap > _capacity) {
 					T* new_start = _alloc.allocate(new_cap);
 					for(size_type i = 0; i < _nb_elems; i++) {
@@ -406,11 +409,11 @@ it causes undefined behavior.
 				}
 			}
 			catch(const std::length_error &el) {
-				std::cerr << "error 1 : " << el.what() << '\n';
+				std::cerr << "length_error : " << el.what() << '\n';
 				std::terminate();
 			}
 			catch(const std::exception& e) {
-				std::cerr << "error 2 : " << e.what() << '\n';
+				std::cerr << "error : " << e.what() << '\n';
 				std::terminate();
 			}
 		};
@@ -437,27 +440,66 @@ it causes undefined behavior.
 			_nb_elems = 0;
 		};
 
+
+// If an exception is thrown when inserting a single element at the end, 
+// and T is CopyInsertable or std::is_nothrow_move_constructible<T>::value is true, 
+// there are no effects (strong exception guarantee).
 		iterator insert( iterator pos, const T& value ) {
-			if(_nb_elems == _capacity) {
-				_capacity *= 2;
-				_capacity += 1;
-				T* new_start = _alloc.allocate(_capacity);
-				for(size_type i = 0; i < _nb_elems; i++) {
-					_alloc.construct(new_start + i, _start[i]);
+			try {
+				if(_nb_elems == _capacity) {
+					if (_capacity + 1 >= max_size() || _capacity * 2 >= max_size())
+						throw std::bad_alloc();
+					if (_capacity == 0)
+						_capacity += 1;
+					_capacity *= 2;
+					T* new_start = _alloc.allocate(_capacity);
+					for(size_type i = 0; i < _nb_elems; i++) {
+						_alloc.construct(new_start + i, _start[i]);
+					}
+					_alloc.deallocate(_start, _capacity);
+					_start = new_start;
+					_finish = _start + _nb_elems;
+					_end_of_storage = _start + _capacity;
 				}
-				_alloc.deallocate(_start, _capacity);
-				_start = new_start;
-				_finish = _start + _nb_elems;
-				_end_of_storage = _start + _capacity;
+				_alloc.construct(_finish, value);
+				++_finish;
+				++_nb_elems;
+			} catch(const std::length_error &el) {
+				std::cerr << "length_error : " << el.what() << '\n';
+				std::terminate();
+			
+			} catch (std::exception const &e) {
+				std::cerr << "dfddsfsdfdsfdsffsfds "<< e.what() << std::endl;
 			}
-			_alloc.construct(_finish, value);
-			++_finish;
-			++_nb_elems;
+
 			return (pos);
 		};
-		void insert( iterator pos, size_type count, const T& value ) { };
+		void insert( iterator pos, size_type count, const T& value ) { 
+			try {
+				std::cout << "max_size : " << max_size() << std::endl;
+				if (count >= max_size())
+					throw std::bad_alloc();
+				for(size_type i = 0; i < count; i++) {
+					insert(pos, value);
+				}
+			} catch(const std::length_error &el) {
+				std::cerr << "length_error : " << el.what() << '\n';
+				std::terminate();
+			
+			} catch (std::exception const &e) {
+				std::cerr << e.what() << std::endl;
+			}
+
+
+		};
 		template< class InputIt >
-			void insert( iterator pos, InputIt first, InputIt last ) { };
+			void insert( iterator pos, InputIt first, InputIt last ) { 
+				std::cout << "insert 3 " << std::endl;
+
+				for(int i = 0; i < first; i++) {
+					insert(pos, last);
+				}
+			};
 
 		iterator erase( iterator pos );
 		iterator erase( iterator first, iterator last );
@@ -556,9 +598,10 @@ it causes undefined behavior.
 	/*                                                     */
 	/* *************************************************** */
 
-	void	display() const {
+	void	display(std::string msg) const {
 
-		std::cout << "\n----------------------------------------" << std::endl;
+		std::cout << GRN << msg << END<< std::endl;
+		std::cout << "----------------------------------------" << std::endl;
 		std::cout << "start 		: " << &_start << std::endl;
 		std::cout << "finish 		: " << &_finish << std::endl;
 		std::cout << "end_of_storage 	: " << &_end_of_storage << std::endl;

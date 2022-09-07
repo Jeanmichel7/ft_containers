@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/04 16:25:38 by jrasser           #+#    #+#             */
-/*   Updated: 2022/09/05 19:18:19 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/09/07 11:42:39 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ namespace ft
 {
     template <typename _Iterator>
     class my_reverse_iterator
-        : public ft::iterator<typename ft::iterator_traits<_Iterator>::iterator_category,
+        : public std::iterator<typename ft::iterator_traits<_Iterator>::iterator_category,
                               typename ft::iterator_traits<_Iterator>::value_type,
                               typename ft::iterator_traits<_Iterator>::difference_type,
                               typename ft::iterator_traits<_Iterator>::pointer,

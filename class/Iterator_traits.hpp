@@ -14,21 +14,21 @@ namespace ft
 typedef __SIZE_TYPE__       size_t;
 typedef __PTRDIFF_TYPE__    ptrdiff_t;
 
-template <typename _Category, typename _Tp, typename _Distance = ptrdiff_t,
-          typename _Pointer = _Tp *, typename _Reference = _Tp &>
-struct iterator
-{
-    /// One of the @link iterator_tags tag types@endlink.
-    typedef _Category iterator_category;
-    /// The type "pointed to" by the iterator.
-    typedef _Tp value_type;
-    /// Distance between iterators is represented as this type.
-    typedef _Distance difference_type;
-    /// This type represents a pointer-to-value_type.
-    typedef _Pointer pointer;
-    /// This type represents a reference-to-value_type.
-    typedef _Reference reference;
-};
+// template <typename _Category, typename _Tp, typename _Distance = ptrdiff_t,
+//           typename _Pointer = _Tp *, typename _Reference = _Tp &>
+// struct iterator
+// {
+//     /// One of the @link iterator_tags tag types@endlink.
+//     typedef _Category iterator_category;
+//     /// The type "pointed to" by the iterator.
+//     typedef _Tp value_type;
+//     /// Distance between iterators is represented as this type.
+//     typedef _Distance difference_type;
+//     /// This type represents a pointer-to-value_type.
+//     typedef _Pointer pointer;
+//     /// This type represents a reference-to-value_type.
+//     typedef _Reference reference;
+// };
 
 template <typename _Iterator>
 struct iterator_traits

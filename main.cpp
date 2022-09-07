@@ -6,15 +6,11 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/14 22:19:53 by jrasser           #+#    #+#             */
-/*   Updated: 2022/09/05 22:34:07 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/09/07 13:25:16 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#define BLU "\033[0;34m"
-#define GRN "\033[0;32m"
-#define RED "\033[0;31m"
-#define ERASE "\033[2K\r"
-#define END "\033[0m"
+
 
 #include <vector>
 #include "Vector.hpp"
@@ -72,7 +68,16 @@ int main()
 	std::cout << std::endl;
 
 
-	std::cout << BLU "TEST assign : " END << test.max_size() << std::endl;
+	// ft::vector<int> test123123;
+	// test123123.push_back(1);
+	// test123123.push_back(2);
+	// test123123.push_back(3);
+	// std::cout << BLU "TEST max size ici: " END << test123123.max_size() << std::endl;
+
+
+
+
+	std::cout << BLU "TEST assign : " END << std::endl;
 	// test.assign(1000000000000000000, 1);										//SEGV
 	test.assign(10, 1);
 
@@ -142,7 +147,9 @@ int main()
 	std::cout << "\n";
 	std::cout << "capacity : " << test_reserve_real.capacity() << std::endl;
 
-	test_reserve_real.reserve(20);
+	test_reserve_real.reserve(100);
+	//test_reserve_real.reserve(test_reserve_real.max_size());
+	//libc++abi.dylib: terminating with uncaught exception of type std::bad_alloc: std::bad_alloc
 
 	it404 = test_reserve_real.begin();
 	for(; it404 != test_reserve_real.end(); it404++)
@@ -158,7 +165,18 @@ int main()
 	std::cout << "empty : " << test.empty() << std::endl;
 
 
+	std::cout << BLU "TEST Insert()" END << std::endl;
+	std::vector<int> test_insert1;
+	std::vector<int>::iterator iti;
 
+	//iti = test_insert1.begin();
+	//test_insert1.insert(iti, 42);
+
+	iti = test_insert1.begin();
+	test_insert1.insert(iti, 100000000000000, 42);
+
+	//iti = test_insert1.begin();
+	//test_insert1.insert(iti, 10000000000000, 42);
 
 
 
@@ -175,10 +193,25 @@ int main()
 	std::cout << "\n\n\n\nMy vector : \n\n\n";
 
 
+	// std::cout << BLU "TEST Insert()" END << std::endl;
+	// ft::vector<int> test_insert1;
+	// ft::vector<int>::iterator iti;
 
+	// iti = test_insert1.begin();
+	// test_insert1.insert(iti, 42);
+	// test_insert1.display("insert(iti, 42)");
 
+	// iti = test_insert1.begin();
+	// test_insert1.insert(iti, 42, 42);
+	// test_insert1.display("insert(iti, 42, 42)");
 
+	// iti = test_insert1.begin();
+	// test_insert1.insert(iti, 100000000000000, 42);
+	// test_insert1.display("insert(iti, test_insert1.max_size(), 42)");
 
+	// iti = test_insert1.begin();
+	// test_insert1.insert(iti, test_insert1.max_size(), 42);
+	// test_insert1.display("insert(iti, test_insert1.max_size(), 42)");
 
 
 
@@ -195,19 +228,19 @@ int main()
 	my_vector.push_back(2);
 	my_vector.push_back(3);
 	my_vector.push_back(4);
-	my_vector.display();
+	my_vector.display("");
 
 	
 	std::cout << BLU "TEST popback real : " END;
 	// std::cout << my_vector.back() << std::endl; 					//SEGV
 	my_vector.pop_back();
-	my_vector.display();
+	my_vector.display("");
 
 	// std::cout << "get allocator 	: " << my_vector.get_allocator() << std::endl;
 	std::cout << "capacity 	: " << my_vector.capacity() << std::endl;
 	std::cout << "at(2)		: " << my_vector.at(2)		<< std::endl;
 	my_vector.at(2) = 12000;
-	my_vector.display();
+	my_vector.display("");
 	std::cout << "at(2)		: " << my_vector.at(2) 		<< std::endl;
 	std::cout << "ret		: " << my_vector[2] 		<< std::endl;
 	std::cout << "front		: " << my_vector.front()	<< std::endl;
@@ -241,7 +274,7 @@ int main()
 				<< (my_vector[0] > my_vector[0] ? "plus grand" : "plus petit ou egal" )
 				<< " que " << my_vector[0] << std::endl;
 
-	my_vector.display();
+	my_vector.display("");
 
 
 
@@ -264,16 +297,12 @@ int main()
 	my_vector2.push_back('h');
 	my_vector2.push_back('i');
 	my_vector2.push_back('j');
-	my_vector2.display();
+	my_vector2.display("");
 
 
 	std::cout << BLU "TEST back 	: " END << my_vector2.back() 	<< std::endl;
 	std::cout << BLU "TEST empty 	: " END << my_vector2.empty() 	<< std::endl;
 	std::cout << BLU "TEST size 	: " END << my_vector2.size() 	<< std::endl;
-
-
-	// std::cout << BLU "TEST max size : " END << my_vector2.max_size() << std::endl;
-    std::cout << BLU "TEST max_size 	: " END << my_vector2.max_size() << '\n';
 
 
 	std::cout << BLU "TEST iterator : " END << std::endl;
@@ -290,43 +319,48 @@ int main()
 	for(; it4 != it4e; it4++)
 		std::cout << *it4 << " " ;
 	std::cout << std::endl;
-	my_vector2.display();
+	my_vector2.display("");
 
 
 	std::cout << BLU "TEST popback  " END;
 	my_vector2.pop_back();
-	my_vector2.display(); 
+	my_vector2.display(""); 
 
 
 	std::cout << BLU "TEST resize 15 " END;
 	my_vector2.resize(15);
-	my_vector2.display();
+	my_vector2.display("");
 
 	std::cout << BLU "TEST resize 5 " END;
 	my_vector2.resize(5);
-	my_vector2.display();
+	my_vector2.display("");
 
 	std::cout << BLU "TEST resize 20 " END;
 	my_vector2.resize(20, 's');
-	my_vector2.display();
+	my_vector2.display("");
 
 
 	std::cout << BLU "TEST swap : " END << std::endl;
 	ft::vector<int> test_swap(10, 1);
 	ft::vector<int> test_swap2(15,2);
-	test_swap.display();
-	test_swap2.display();
+	test_swap.display("");
+	test_swap2.display("");
 	test_swap.ft::vector<int>::swap(test_swap2);
-	test_swap.display();
-	test_swap2.display();
+	test_swap.display("");
+	test_swap2.display("");
 
 
 
 
-	std::cout << BLU "TEST operator : " ;
-	std::cout 	<< test_swap[0] << " "
-				<< (test_swap[0] > test_swap2[0] ? "plus grand" : "plus petit" )
-				<< " que " << test_swap2[0] << std::endl;
+
+
+
+
+
+
+
+
+
 
 
 
@@ -340,7 +374,9 @@ int main()
 	std::cout << "\n";
 	std::cout << "capacity : " << test_reserve.capacity() << std::endl;
 
-	test_reserve.reserve(2305843009213693951);
+	// test_reserve.reserve(test_reserve.max_size());
+	// test_reserve.reserve(1000000000000000000);
+	test_reserve.reserve(100);
 
 	it4040 = test_reserve.begin();
 	for(; it4040 != test_reserve.end(); it4040++)
@@ -352,11 +388,16 @@ int main()
 
 
 
+
+
+
+
+
 	std::cout << BLU "TEST clear : " END << std::endl;
 	test_reserve.clear();
-	std::cout << "size : " << test_reserve.size() << std::endl;
-	std::cout << "capacity : " << test_reserve.capacity() << std::endl;
-	std::cout << "empty : " << test_reserve.empty() << std::endl;
+	std::cout << "size 		: " << test_reserve.size() << std::endl;
+	std::cout << "capacity 	: " << test_reserve.capacity() << std::endl;
+	std::cout << "empty 	: " << test_reserve.empty() << std::endl;
 
 
 

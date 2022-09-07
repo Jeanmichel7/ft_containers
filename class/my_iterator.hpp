@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/04 16:23:50 by jrasser           #+#    #+#             */
-/*   Updated: 2022/09/05 19:17:52 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/09/07 12:44:14 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,9 +98,9 @@ namespace ft
 
         bool operator==(const my_iterator &rhs) const { return (it == rhs.it); }
         bool operator!=(const my_iterator &rhs) const { return (it != rhs.it); }
-        bool operator<(const my_iterator &rhs) const { return (it < rhs.it); }
+        bool operator<(const my_iterator &rhs)  const { return (it < rhs.it); }
         bool operator<=(const my_iterator &rhs) const { return (it <= rhs.it); }
-        bool operator>(const my_iterator &rhs) const { return (it > rhs.it); }
+        bool operator>(const my_iterator &rhs)  const { return (it > rhs.it); }
         bool operator>=(const my_iterator &rhs) const { return (it >= rhs.it); }
     };
 }
