@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/14 22:06:29 by jrasser           #+#    #+#             */
-/*   Updated: 2022/09/07 13:24:27 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/09/07 13:52:35 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,18 +118,18 @@ namespace ft
 			vector( InputIt first, InputIt last,
 				const Allocator &alloc = Allocator() ) :
 			_alloc(alloc),
-			_start(_alloc.allocate(first)),
-			_finish(_start + first),
-			_end_of_storage(_start + first),
-			_nb_elems(first),
-			_capacity(first)
+			_start(_alloc.allocate(last - first)),
+			_finish(_start + last - first),
+			_end_of_storage(_start + last - first),
+			_nb_elems(last - first),
+			_capacity(last - first)
 			{
 				std::cout << "Constructor with InputIt" << std::endl;
 
-				//std::uninitialized_copy(first, last, _start);
-				for(InputIt i = 0; i < first; i++) {
-					_alloc.construct(_start + i, last);
-				}
+				std::uninitialized_copy(first, last, _start);
+				//for(InputIt i = 0; i < first; i++) {
+				//	_alloc.construct(_start + i, last);
+				//}
 			};
 
 		vector( const vector& other ) :							//(6)

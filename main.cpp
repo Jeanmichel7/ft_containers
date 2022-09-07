@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/14 22:19:53 by jrasser           #+#    #+#             */
-/*   Updated: 2022/09/07 13:25:16 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/09/07 13:47:57 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,15 +165,15 @@ int main()
 	std::cout << "empty : " << test.empty() << std::endl;
 
 
-	std::cout << BLU "TEST Insert()" END << std::endl;
-	std::vector<int> test_insert1;
-	std::vector<int>::iterator iti;
+	//std::cout << BLU "TEST Insert()" END << std::endl;
+	//std::vector<int> test_insert1;
+	//std::vector<int>::iterator iti;
 
 	//iti = test_insert1.begin();
 	//test_insert1.insert(iti, 42);
 
-	iti = test_insert1.begin();
-	test_insert1.insert(iti, 100000000000000, 42);
+	//iti = test_insert1.begin();
+	//test_insert1.insert(iti, 100000000000000, 42);
 
 	//iti = test_insert1.begin();
 	//test_insert1.insert(iti, 10000000000000, 42);
@@ -223,13 +223,14 @@ int main()
 	ft::vector<int> my_vector;
 
 
-
 	my_vector.push_back(1);
 	my_vector.push_back(2);
 	my_vector.push_back(3);
 	my_vector.push_back(4);
 	my_vector.display("");
 
+	ft::vector<int> my_vectr(my_vector.begin(), my_vector.end());
+	my_vectr.display("");
 	
 	std::cout << BLU "TEST popback real : " END;
 	// std::cout << my_vector.back() << std::endl; 					//SEGV
