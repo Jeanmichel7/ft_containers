@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/14 22:19:53 by jrasser           #+#    #+#             */
-/*   Updated: 2022/09/10 17:36:33 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/09/10 23:40:42 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,25 @@
 
 #include <vector>
 #include "Vector.hpp"
+#include "utils.hpp"
+#include "pair.hpp"
+
 //#include "Iterator_traits.hpp"
 
-#include <map>
-#include "Map.hpp"
+// #include <map>
+// #include "Map.hpp"
 
 //using namespace ft;
 //using namespace std;
 
 #include <typeinfo>     // typeid
+
+bool mypredicate (int i, int j) {
+  return (i==j);
+}
+
+bool mycomp (char c1, char c2)
+{ return std::tolower(c1)<std::tolower(c2); }
 
 int main()
 {
@@ -34,6 +44,10 @@ int main()
 
 
 
+	std::vector<int> v(10, 10);
+	std::vector<int>::const_iterator itc = v.begin();
+
+	std::cout << "itc : " << *itc << std::endl;
 
 
 
@@ -68,7 +82,7 @@ int main()
 	std::cout << std::endl;
 
 
-	// ft::vector<int> test123123;
+	// ft::Vector<int> test123123;
 	// test123123.push_back(1);
 	// test123123.push_back(2);
 	// test123123.push_back(3);
@@ -218,7 +232,7 @@ int main()
 
 
 	std::cout << BLU "TEST constructor : " END << std::endl;
-	ft::vector<int> my_vector;
+	ft::Vector<int> my_vector;
 
 	my_vector.push_back(1);
 	my_vector.push_back(2);
@@ -226,25 +240,25 @@ int main()
 	my_vector.push_back(4);
 	my_vector.display("");
 
-	ft::vector<int> my_vectr(my_vector.begin(), my_vector.end());
+	ft::Vector<int> my_vectr(my_vector.begin(), my_vector.end());
 	my_vectr.display("my_vectr(my_vector.begin(), my_vector.end())");
 
 
 
 
 	std::cout << BLU "TEST constructor count : " END << std::endl;
-	ft::vector<int> my_vector_count(10, 3);
+	ft::Vector<int> my_vector_count(10, 3);
 	my_vector_count.display("my_vector_count(10, 1)");
 
-	ft::vector<int>::iterator it_v_count_begin = my_vector_count.begin();
-	ft::vector<int>::iterator it_v_count_end = my_vector_count.end();
+	ft::Vector<int>::iterator it_v_count_begin = my_vector_count.begin();
+	ft::Vector<int>::iterator it_v_count_end = my_vector_count.end();
 
 
 
 
 
 	std::cout << BLU "TEST constructor iterator : " END << std::endl;
-	ft::vector<int> my_vector_iterator(it_v_count_begin, it_v_count_end);
+	ft::Vector<int> my_vector_iterator(it_v_count_begin, it_v_count_end);
 	my_vector_iterator.display(" my_vector_iterator(it_v_count_begin, it_v_count_end)");
 
 
@@ -285,13 +299,13 @@ int main()
 
 
 	std::cout << BLU "TEST Insert()" END << std::endl;
-	ft::vector<int>::iterator it_insert_begin = my_vector.begin();
+	ft::Vector<int>::iterator it_insert_begin = my_vector.begin();
 
 	my_vector.insert(it_insert_begin, 42);
 	my_vector.display("insert(it_insert_begin, 42)");
 
 
-	ft::vector<int>::iterator it_insert_end = my_vector.end();
+	ft::Vector<int>::iterator it_insert_end = my_vector.end();
 
 	my_vector.insert(it_insert_end, 42);
 	my_vector.display("insert(it_insert_end, 42)");
@@ -300,14 +314,14 @@ int main()
 
 	for(int i = 0; i < 10; i++)
 	{
-		ft::vector<int>::iterator it_insert_middle = my_vector.begin() + (my_vector.size() / 2);
+		ft::Vector<int>::iterator it_insert_middle = my_vector.begin() + (my_vector.size() / 2);
 
 		my_vector.insert(it_insert_middle, 21);
 		my_vector.display("insert(it_insert_middle, 21)");
 	}
 
 
-	ft::vector<int>::iterator it_insert_middle = my_vector.begin() + (my_vector.size() / 2);
+	ft::Vector<int>::iterator it_insert_middle = my_vector.begin() + (my_vector.size() / 2);
 	my_vector.insert(it_insert_middle, 2, 2);
 	my_vector.display("insert(it_insert_middle, 2, 2)");
 
@@ -332,12 +346,12 @@ int main()
 
 	// my_vector.erase(my_vector.begin(), my_vector.end());
 
-	ft::vector<int> my_tmp_vector(5,5);
+	ft::Vector<int> my_tmp_vector(5,5);
 	my_tmp_vector.display("my_tmp_vector");
 
 
-	ft::vector<int>::iterator	it_tmp_first = my_tmp_vector.begin();
-	ft::vector<int>::iterator	it_tmp_half = my_tmp_vector.begin() + (my_tmp_vector.size() / 2);
+	ft::Vector<int>::iterator	it_tmp_first = my_tmp_vector.begin();
+	ft::Vector<int>::iterator	it_tmp_half = my_tmp_vector.begin() + (my_tmp_vector.size() / 2);
 
 
 
@@ -353,7 +367,7 @@ int main()
 
 
 	it_tmp_half = my_tmp_vector.begin() + (my_tmp_vector.size() / 2);
-	ft::vector<int>::iterator	it_tmp_end = my_tmp_vector.end();
+	ft::Vector<int>::iterator	it_tmp_end = my_tmp_vector.end();
 
 	my_vector.insert(my_vector.begin(), it_tmp_half, it_tmp_end);
 	my_vector.display("insert(my_vector.begin(), it_tmp_half, it_tmp_end)");
@@ -362,13 +376,13 @@ int main()
 
 
 
-	ft::vector<int> my_tmp_vector2(10,10);
+	ft::Vector<int> my_tmp_vector2(10,10);
 	my_tmp_vector2.display("my_tmp_vector2(10, 10)");
 
-	ft::vector<int>::iterator it_tmp2_begin = my_tmp_vector2.begin();
-	ft::vector<int>::iterator it_tmp2_end = my_tmp_vector2.end();
+	ft::Vector<int>::iterator it_tmp2_begin = my_tmp_vector2.begin();
+	ft::Vector<int>::iterator it_tmp2_end = my_tmp_vector2.end();
 
-	ft::vector<int>::iterator it_middle = my_vector.begin() + (my_vector.size() / 2);
+	ft::Vector<int>::iterator it_middle = my_vector.begin() + (my_vector.size() / 2);
 	my_vector.insert(it_middle, it_tmp2_begin, it_tmp2_end);
 	my_vector.display("insert(it_middle, it_tmp_begin, it_tmp_end)");
 
@@ -393,8 +407,8 @@ int main()
 
 
 
-	ft::vector<int> test_insert1;
-	ft::vector<int>::iterator iti;
+	ft::Vector<int> test_insert1;
+	ft::Vector<int>::iterator iti;
 
 	iti = test_insert1.begin();
 	test_insert1.insert(iti, 42);
@@ -432,7 +446,7 @@ int main()
 
 
 
-	ft::vector<char> my_vector2;
+	ft::Vector<char> my_vector2;
 	std::cout << BLU "TEST empty	: " END << my_vector2.empty() << std::endl;
 	std::cout << BLU "TEST size	: " END << my_vector2.size() << std::endl;
 	std::cout << BLU "TEST max size	: " END << my_vector2.max_size() << std::endl;
@@ -460,7 +474,7 @@ int main()
 
 
 	std::cout << BLU "TEST iterator : " END << std::endl;
-	ft::vector<char>::iterator it5 = my_vector2.begin();
+	ft::Vector<char>::iterator it5 = my_vector2.begin();
 	for(; it5 != my_vector2.end(); it5++)
 		std::cout << *it5 << " ";
 	std::cout << std::endl;
@@ -468,8 +482,8 @@ int main()
 	
 
 	std::cout << BLU "TEST reverse_iterator : " END << std::endl;
-	ft::vector<char>::reverse_iterator it4 = my_vector2.rbegin();
-	ft::vector<char>::reverse_iterator it4e = my_vector2.rend();
+	ft::Vector<char>::reverse_iterator it4 = my_vector2.rbegin();
+	ft::Vector<char>::reverse_iterator it4e = my_vector2.rend();
 	for(; it4 != it4e; it4++)
 		std::cout << *it4 << " " ;
 	std::cout << std::endl;
@@ -495,11 +509,11 @@ int main()
 
 
 	std::cout << BLU "TEST swap : " END << std::endl;
-	ft::vector<int> test_swap(10, 1);
-	ft::vector<int> test_swap2(15,2);
+	ft::Vector<int> test_swap(10, 1);
+	ft::Vector<int> test_swap2(15,2);
 	test_swap.display("");
 	test_swap2.display("");
-	test_swap.ft::vector<int>::swap(test_swap2);
+	test_swap.ft::Vector<int>::swap(test_swap2);
 	test_swap.display("");
 	test_swap2.display("");
 
@@ -515,8 +529,8 @@ int main()
 
 
 	std::cout << BLU "TEST reserve : " END <<  std::endl;
-	ft::vector<long long unsigned> test_reserve(10, 1);
-	ft::vector<long long unsigned>::iterator it4040 = test_reserve.begin();
+	ft::Vector<long long unsigned> test_reserve(10, 1);
+	ft::Vector<long long unsigned>::iterator it4040 = test_reserve.begin();
 
 	for(; it4040 != test_reserve.end(); it4040++)
 		std::cout << *it4040 ;
@@ -542,7 +556,7 @@ int main()
 
 
 	std::cout << BLU "\nTEST erase(n) : " END <<  std::endl;
-	ft::vector<int> test_erase;
+	ft::Vector<int> test_erase;
 	for(int i = 0; i < 10; i++) {
 		test_erase.push_back(i);
 	}
@@ -580,9 +594,187 @@ int main()
 	test_reserve.clear();
 	std::cout << "size 		: " << test_reserve.size() << std::endl;
 	std::cout << "capacity 	: " << test_reserve.capacity() << std::endl;
-	std::cout << "empty 		: " << test_reserve.empty() << std::endl;
+	std::cout << "empty() 	: " << test_reserve.empty() << std::endl;
 
 
 
+
+	std::cout << BLU "\nTEST const  : " END << std::endl;
+
+
+	// ft::Vector<int> vm(10, 10);
+	// ft::Vector<int>::const_iterator itc2 = vm.begin();
+
+	// std::cout << "itc : " << *itc2 << std::endl;
+
+	// ft::Vector<int> test_const(10, 1);
+	// test_const.display("test_const");
+	// ft::Vector<int>::const_iterator it_const = test_const.begin();
+	// std::cout << "const it : " << *it_const << std::endl;
+
+
+
+
+
+
+
+	std::cout << BLU "\nTEST equal() : " END << std::endl;
+	// bool mypredicate(int i, int j)
+	// {
+	// 	return (i == j);
+	// }
+
+	int myints[] = {20, 40, 60, 80, 100};		   //   myints: 20 40 60 80 100
+	std::vector<int> myvector(myints, myints + 5); // myvector: 20 40 60 80 100
+
+	// using default comparison:
+	if (std::equal(myvector.begin(), myvector.end(), myints))
+		std::cout << "The contents of both sequences are equal.\n";
+	else
+		std::cout << "The contents of both sequences differ.\n";
+
+	if (ft::equal(myvector.begin(), myvector.end(), myints))
+		std::cout << "The contents of both sequences are equal.\n";
+	else
+		std::cout << "The contents of both sequences differ.\n";
+
+	myvector[3] = 81; // myvector: 20 40 60 81 100
+
+	// using predicate comparison:
+	if (std::equal(myvector.begin(), myvector.end(), myints, mypredicate))
+		std::cout << "The contents of both sequences are equal.\n";
+	else
+		std::cout << "The contents of both sequences differ.\n";
+
+	if (ft::equal(myvector.begin(), myvector.end(), myints, mypredicate))
+		std::cout << "The contents of both sequences are equal.\n\n\n";
+	else
+		std::cout << "The contents of both sequences differ.\n\n\n";
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	std::cout << BLU "\nTEST lexicographically() : " END << std::endl;
+
+	char foo[] = "Apple";
+	char bar[] = "apartment";
+
+	std::cout << std::boolalpha;
+
+	std::cout << "Comparing foo and bar lexicographically (foo<bar):\n";
+
+	std::cout << "Using default comparison (operator<): ";
+	std::cout << std::lexicographical_compare(foo, foo + 5, bar, bar + 9);
+	std::cout << '\n';
+	std::cout << "Using default comparison (operator<): ";
+	std::cout << ft::lexicographical_compare(foo, foo + 5, bar, bar + 9);
+	std::cout << '\n';
+
+	std::cout << "Using mycomp as comparison object: ";
+	std::cout << std::lexicographical_compare(foo, foo + 5, bar, bar + 9, mycomp);
+	std::cout << '\n';
+	std::cout << "Using mycomp as comparison object: ";
+	std::cout << ft::lexicographical_compare(foo, foo + 5, bar, bar + 9, mycomp);
+	std::cout << "\n\n";
+
+
+
+
+
+
+
+	std::cout << BLU "\nTEST Pair() : " END << std::endl;
+
+	std::pair<int, char> foo1(10, 'z');
+	std::pair<int, char> bar1(90, 'a');
+
+	if (foo1 == bar1)
+		std::cout << "foo1 and bar1 are equal\n";
+	if (foo1 != bar1)
+		std::cout << "foo1 and bar1 are not equal\n";
+	if (foo1 < bar1)
+		std::cout << "foo1 is less than bar1\n";
+	if (foo1 > bar1)
+		std::cout << "foo1 is greater than bar1\n";
+	if (foo1 <= bar1)
+		std::cout << "foo1 is less than or equal to bar1\n";
+	if (foo1 >= bar1)
+		std::cout << "foo1 is greater than or equal to bar1\n";
+
+
+	ft::pair<int, char> foo2(10, 'z');
+	ft::pair<int, char> bar2(90, 'a');
+
+	if (foo2 == bar2)
+		std::cout << "foo2 and bar2 are equal\n";
+	if (foo2 != bar2)
+		std::cout << "foo2 and bar2 are not equal\n";
+	if (foo2 < bar2)
+		std::cout << "foo2 is less than bar2\n";
+	if (foo2 > bar2)
+		std::cout << "foo2 is greater than bar2\n";
+	if (foo2 <= bar2)
+		std::cout << "foo2 is less than or equal to bar2\n";
+	if (foo2 >= bar2)
+		std::cout << "foo2 is greater than or equal to bar2\n";
+
+
+
+
+
+
+
+
+	std::cout << BLU "\nTEST make_pair() : " END << std::endl;
+
+	std::pair<int, int> foo3;
+	std::pair<int, int> bar3;
+
+	foo3 = std::make_pair(10, 20);
+	bar3 = std::make_pair(10.5, 'A'); // ok: implicit conversion from pair<double,char>
+
+	std::cout << "foo3: " << foo3.first << ", " << foo3.second << '\n';
+	std::cout << "bar3: " << bar3.first << ", " << bar3.second << '\n';
+
+
+	ft::pair<int, int> foo4;
+	ft::pair<int, int> bar4;
+
+	foo4 = ft::make_pair(10, 20);
+	bar4 = ft::make_pair(10.5, 'A'); // ok: implicit conversion from pair<double,char>
+
+	std::cout << "foo4: " << foo4.first << ", " << foo4.second << '\n';
+	std::cout << "bar4: " << bar4.first << ", " << bar4.second << '\n';
+
+
+
+	std::cout << BLU "\nTEST pair swap : " END << std::endl;
+
+	std::cout << "foo1 contains: " << foo1.first << " and " << foo1.second << '\n';
+	std::cout << "bar1 contains: " << bar1.first << " and " << bar1.second << '\n';
+	std::swap(foo1,bar1);
+	std::cout << "foo1 contains: " << foo1.first << " and " << foo1.second << '\n';
+	std::cout << "bar1 contains: " << bar1.first << " and " << bar1.second << '\n';
+
+
+	// std::cout << "foo2 contains: " << foo2.first << " and " << foo2.second << '\n';
+	// std::cout << "bar2 contains: " << bar2.first << " and " << bar2.second << '\n';
+	// ft::pair<int, char>::swap(foo2,bar2);
+	// // ft::swap(foo2,bar2);
+	// std::cout << "foo2 contains: " << foo2.first << " and " << foo2.second << '\n';
+	// std::cout << "bar2 contains: " << bar2.first << " and " << bar2.second << '\n';
+
+	std::cout << "\n\n";
 	return 0;
 }

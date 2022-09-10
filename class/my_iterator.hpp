@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/04 16:23:50 by jrasser           #+#    #+#             */
-/*   Updated: 2022/09/10 17:11:03 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/09/10 21:13:15 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ namespace ft
     {
 
     protected:
-        _Iter it;
+        _Iter                                           it;
         typedef ft::iterator_traits<_Iter>              traits_type;
 
     public:
@@ -32,10 +32,23 @@ namespace ft
         typedef typename traits_type::pointer           pointer;
         typedef typename traits_type::reference         reference;
 
+
+		template <typename U> 
+        my_iterator(my_iterator<U>) {};
+
+        
+		// template <typename U> 
+        // my_iterator(my_iterator<U> const &u,
+        //            std::is_convertible<U, iterator_type>::value>) :
+        //            it(u.base()) {}
+
         my_iterator() : it() {}
         my_iterator(iterator_type it) : it(it) {}
+        // my_iterator(const my_iterator &src) : it(src.it) {}
         my_iterator(const my_iterator &src) : it(src.it) {}
         ~my_iterator() {}
+
+        iterator_type base() const { return (it); }
 
         my_iterator &operator=(const my_iterator &rhs)
         {

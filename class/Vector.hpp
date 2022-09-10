@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/14 22:06:29 by jrasser           #+#    #+#             */
-/*   Updated: 2022/09/10 17:43:47 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/09/10 23:39:19 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 #define BLU "\033[0;34m"
 #define GRN "\033[0;32m"
-#define RED "\033[0;31m"
+#define REDE "\033[0;31m"
 #define ERASE "\033[2K\r"
 #define END "\033[0m"
 
@@ -24,6 +24,7 @@
 #include "my_reverse_iterator.hpp"
 #include "enable_if.hpp"
 #include "is_integral.hpp"
+
 
 #include <stdexcept>
 
@@ -34,11 +35,16 @@
 // #include <iostream>
 // #include <limits>
 
+#include <algorithm>
+#include <utility>
+// #include <iostream>
+// #include <string_view>
+
 namespace ft
 {
 	
 	template <typename T, typename Allocator = std::allocator<T> >
-	class vector
+	class Vector
 	{
 		public:
 			/* Typedef */
@@ -60,6 +66,8 @@ namespace ft
 			typedef my_reverse_iterator<iterator> 				reverse_iterator;
 			typedef my_reverse_iterator<const_iterator> const	const_reverse_iterator;
 
+			
+
 
 		private:
 			Allocator 	_alloc;
@@ -78,7 +86,7 @@ namespace ft
 			/*                                                     */
 			/* *************************************************** */
 
-		vector() :
+		Vector() :
 			_start(NULL),
 			_finish(NULL),
 			_end_of_storage(NULL),
@@ -88,7 +96,7 @@ namespace ft
 				std::cout << "Constructor" << std::endl;
 			};
 
-		explicit vector( const Allocator &alloc ) :
+		explicit Vector( const Allocator &alloc ) :
 			_alloc(alloc),
 			_start(_alloc.allocate(0)),
 			_finish(_start),
@@ -99,7 +107,7 @@ namespace ft
 				std::cout << "Constructor with allocator" << std::endl;
 			};
 
-		explicit vector( size_type count,						//(3)
+		explicit Vector( size_type count,						//(3)
 						const T &value = T(),
 						const Allocator &alloc = Allocator() ) :
 			_alloc(alloc),
@@ -121,7 +129,7 @@ namespace ft
 		// template <class InputIt, class = typename ft::enable_if<!ft::is_integral<InputIt>::value>::type>>								//(5)
 		template <class InputIt>								//(5)
 			// typename ft::enable_if<!ft::is_integral<InputIt>::value, void>::type
-			vector( InputIt first, 
+			Vector( InputIt first, 
 					typename enable_if<!ft::is_integral<InputIt>::value, InputIt>::type last,
 					const Allocator &alloc = Allocator() ) :
 			_alloc(alloc),
@@ -135,7 +143,7 @@ namespace ft
 				std::uninitialized_copy(first, last, _start);
 			};
 
-		vector( const vector& other ) :							//(6)
+		Vector( const Vector& other ) :							//(6)
 			_alloc(Allocator()),
 			_start(_alloc.allocate(other._nb_elems)),
 			_finish(_start + other._nb_elems),
@@ -152,7 +160,7 @@ namespace ft
 			};
 
 
-		vector &operator=( const vector &other ) {
+		Vector &operator=( const Vector &other ) {
 			std::cout << "Assignment operator" << std::endl;
 			
 			//del
@@ -174,7 +182,7 @@ namespace ft
 			return *this;
 		};
 
-		~vector() {
+		~Vector() {
 			std::cout << "Destructor" << std::endl;
 			for(size_type i = 0; i < _nb_elems; i++) {
 				_alloc.destroy(_start + i);
@@ -201,7 +209,7 @@ namespace ft
 					throw std::out_of_range("out of range");
 				return _start[pos];
 			} catch(const std::exception& e) {
-				std::cerr << RED << e.what() << END "\n";
+				std::cerr << REDE << e.what() << END "\n";
 				std::terminate();
 			}
 		};
@@ -210,9 +218,9 @@ namespace ft
 			try {
 				if(pos >= _nb_elems)
 					throw std::out_of_range("out of range");
-				return const_cast<vector*>(this)->at(pos);
+				return const_cast<Vector*>(this)->at(pos);
 			} catch(const std::exception& e) {
-				std::cerr << RED << e.what() << END "\n";
+				std::cerr << REDE << e.what() << END "\n";
 				std::terminate();
 			}
 		};
@@ -224,7 +232,7 @@ namespace ft
 					throw std::out_of_range("out of range");
 				return _start[pos];
 			} catch(const std::exception& e) {
-				std::cerr << RED << e.what() << END "\n";
+				std::cerr << REDE << e.what() << END "\n";
 				std::terminate();
 			}
 		};
@@ -233,9 +241,9 @@ namespace ft
 			try {
 				if(pos >= _nb_elems)
 					throw std::out_of_range("out of range");
-				return const_cast<vector*>(this)->operator[](pos);
+				return const_cast<Vector*>(this)->operator[](pos);
 			} catch(const std::exception& e) {
-				std::cerr << RED <<  e.what() << END "\n";
+				std::cerr << REDE <<  e.what() << END "\n";
 				std::terminate();
 			}
 		};
@@ -245,7 +253,7 @@ namespace ft
 		};
 		const_reference front() const {
 			//std::cout << "const_reference front" << std::endl;
-			return const_cast<vector*>(this)->front();
+			return const_cast<Vector*>(this)->front();
 		};
 		reference back() {
 			//std::cout << "back" << std::endl;
@@ -253,7 +261,7 @@ namespace ft
 		};
 		const_reference back() const {
 			//std::cout << "const_reference back" << std::endl;
-			return const_cast<vector*>(this)->back();
+			return const_cast<Vector*>(this)->back();
 		};
 
 		T* data(){
@@ -262,7 +270,7 @@ namespace ft
 		};
 		const T* data() const{
 			//std::cout << "const_data" << std::endl;
-			return const_cast<vector*>(this)->data();
+			return const_cast<Vector*>(this)->data();
 		};
 
 /*
@@ -318,12 +326,12 @@ it causes undefined behavior.
 				}
 				catch(const std::exception& e)
 				{
-					std::cerr << RED << e.what() << END "\n";
+					std::cerr << REDE << e.what() << END "\n";
 				}
 
 			};
 
-
+			
 
 		/* *************************************************** */
 		/*                                                     */
@@ -332,11 +340,14 @@ it causes undefined behavior.
 		/* *************************************************** */
 		
 		iterator begin() {
+			std::cout << "lui laaaaaaaaaaaaaaaaaaaaaa" << std::endl;
+
 			return iterator(this->_start);
 		};
 		const_iterator begin() const {
+			// std::cout << "lui laaaaaaaaaaaaaaaaaaaaaa" << std::endl;
 			return const_iterator(this->_start);
-			//return const_cast<vector*>(this)->begin();
+			// return const_cast<Vector*>(this)->_start;
 		};
 
 		iterator end(){
@@ -344,25 +355,21 @@ it causes undefined behavior.
 		};
 		const_iterator end() const {
 			return const_iterator(this->_finish);
-			//return const_cast<vector*>(this)->end();
+			// return const_cast<Vector*>(this)->_finish;
 		};
 
 		reverse_iterator rbegin(){
 			return reverse_iterator(this->_finish);
-			//return reverse_iterator(end());
 		};
 		const_reverse_iterator rbegin() const {
 			return const_reverse_iterator(this->_finish);
-			//return const_reverse_iterator(end());
 		};
 
 		reverse_iterator rend() {
 			return reverse_iterator(this->_start);
-			//return reverse_iterator(begin());
 		};
 		const_reverse_iterator rend() const {
 			return const_reverse_iterator(this->_start);
-			//return const_reverse_iterator(begin());
 		};
 
 
@@ -408,11 +415,11 @@ it causes undefined behavior.
 				}
 			}
 			catch(const std::length_error &el) {
-				std::cerr << RED "length_error : " << el.what() << END "\n";
+				std::cerr << REDE "length_error : " << el.what() << END "\n";
 				std::terminate();
 			}
 			catch(const std::exception& e) {
-				std::cerr << RED "error : " << e.what() << END "\n";
+				std::cerr << REDE "error : " << e.what() << END "\n";
 				std::terminate();
 			}
 		};
@@ -483,11 +490,11 @@ it causes undefined behavior.
 				++_finish;
 				++_nb_elems;
 			} catch(const std::length_error &el) {
-				std::cerr << RED "length_error : " << el.what() << END "\n";
+				std::cerr << REDE "length_error : " << el.what() << END "\n";
 				std::terminate();
 			
 			} catch (std::exception const &e) {
-				std::cerr << RED "dfddsfsdfdsfdsffsfds "<< e.what() << END "\n";
+				std::cerr << REDE "dfddsfsdfdsfdsffsfds "<< e.what() << END "\n";
 			}
 
 			return (pos);
@@ -553,7 +560,7 @@ it causes undefined behavior.
 					count--;
 				}
 			} catch(const std::length_error &el) {
-				std::cerr << RED "length_error : " << el.what() << END "\n";
+				std::cerr << REDE "length_error : " << el.what() << END "\n";
 				std::terminate();
 			
 			} catch (std::exception const &e) {
@@ -633,7 +640,7 @@ it causes undefined behavior.
 						first++;
 					}
 				} catch(const std::length_error &el) {
-					std::cerr << RED "length_error : " << el.what() << END "\n";
+					std::cerr << REDE "length_error : " << el.what() << END "\n";
 					std::terminate();
 				} catch (std::exception const &e) {
 					std::cerr << e.what() << std::endl;
@@ -758,7 +765,7 @@ it causes undefined behavior.
 			}
 		};
 
-		void swap( vector& other ) {
+		void swap( Vector& other ) {
 			//std::cout << "swap" << std::endl;
 			std::swap(_start, other._start);
 			std::swap(_finish, other._finish);
@@ -778,38 +785,38 @@ it causes undefined behavior.
 		/* *************************************************** */
 
 		template <class O, class Alloc>
-		bool operator==(const vector<O, Alloc> &rhs) {
+		bool operator==(const Vector<O, Alloc> &rhs) {
 			return (this->_start == rhs._start);
 		};
 
 		template <class O, class Alloc>
-		bool operator!=(const vector<O, Alloc> &rhs) {
+		bool operator!=(const Vector<O, Alloc> &rhs) {
 			return !(rhs == *this);
 		};
 
 		template <class O, class Alloc>
-		bool operator<(const vector<O, Alloc> &rhs) {
+		bool operator<(const Vector<O, Alloc> &rhs) {
 			return (this->_start < rhs._start);
 		};
 
 		template <class O, class Alloc>
-		bool operator<=(const vector<O, Alloc> &rhs) {
+		bool operator<=(const Vector<O, Alloc> &rhs) {
 			return (this->_start <= rhs._start);
 		};
 
 		template <class O, class Alloc>
-		bool operator>(const vector<O, Alloc> &rhs) {
+		bool operator>(const Vector<O, Alloc> &rhs) {
 			return (this->_start > rhs._start);
 		};
 
 		template <class O, class Alloc>
-		bool operator>=(const vector<O, Alloc> &rhs) {
+		bool operator>=(const Vector<O, Alloc> &rhs) {
 			return (this->_start >= rhs._start);
 		};
 
 		template <class O, class Alloc>
-		void swap(vector<O, Alloc> &lhs,
-				  vector<O, Alloc> &rhs)
+		void swap(Vector<O, Alloc> &lhs,
+				  Vector<O, Alloc> &rhs)
 		{
 			lhs.swap(rhs);
 		};

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   Iterator_traits.hpp                                :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/09/10 18:24:21 by jrasser           #+#    #+#             */
+/*   Updated: 2022/09/10 18:57:35 by jrasser          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef __ITERATOR_TRAIT__
 # define __ITERATOR_TRAIT__
 
@@ -33,8 +45,8 @@ typedef __PTRDIFF_TYPE__    ptrdiff_t;
 template <typename _Iterator>
 struct iterator_traits
 {
-    // typedef typename _Iterator::iterator_category   iterator_category;
-    typedef typename std::random_access_iterator_tag    iterator_category;
+    typedef typename _Iterator::iterator_category   iterator_category;
+    // typedef typename std::random_access_iterator_tag    iterator_category;
     typedef typename _Iterator::value_type              value_type;
     typedef typename _Iterator::difference_type         difference_type;
     typedef typename _Iterator::pointer                 pointer;
