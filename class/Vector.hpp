@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/14 22:06:29 by jrasser           #+#    #+#             */
-/*   Updated: 2022/09/07 13:52:35 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/09/10 12:40:15 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,11 @@
 #include "Iterator_traits.hpp"
 #include "my_iterator.hpp"
 #include "my_reverse_iterator.hpp"
+#include "enable_if.hpp"
 
 #include <stdexcept>
 
+#include <type_traits>
 
 // #include <memory>
 // #include <cstddef>
@@ -52,6 +54,8 @@ namespace ft
 
 			typedef my_iterator<pointer>						iterator;
 			typedef my_iterator<const_pointer> const			const_iterator;
+
+			// typedef typename ft::iterator_traits<iterator>::difference_type   difference_type;
 
 			typedef my_reverse_iterator<iterator> 				reverse_iterator;
 			typedef my_reverse_iterator<const_iterator> const	const_reverse_iterator;
@@ -114,22 +118,21 @@ namespace ft
 				}
 			};
 
+		// template <class InputIt, class = typename ft::enable_if<!ft::is_integral<InputIt>::value>::type>>								//(5)
 		template <class InputIt>								//(5)
-			vector( InputIt first, InputIt last,
-				const Allocator &alloc = Allocator() ) :
+			// typename ft::enable_if<!ft::is_integral<InputIt>::value, void>::type
+			vector( InputIt first, 
+					typename enable_if<!std::is_integral<InputIt>::value, InputIt>::type last,
+					const Allocator &alloc = Allocator() ) :
 			_alloc(alloc),
 			_start(_alloc.allocate(last - first)),
-			_finish(_start + last - first),
-			_end_of_storage(_start + last - first),
+			_finish(_start + (last - first)),
+			_end_of_storage(_start + (last - first)),
 			_nb_elems(last - first),
 			_capacity(last - first)
 			{
 				std::cout << "Constructor with InputIt" << std::endl;
-
 				std::uninitialized_copy(first, last, _start);
-				//for(InputIt i = 0; i < first; i++) {
-				//	_alloc.construct(_start + i, last);
-				//}
 			};
 
 		vector( const vector& other ) :							//(6)
@@ -178,8 +181,6 @@ namespace ft
 			}
 			_alloc.deallocate(_start, _capacity);
 		};
-
-
 
 		allocator_type get_allocator() const {
 			return _alloc;
@@ -290,29 +291,30 @@ it causes undefined behavior.
 		};
 
 		template <class InputIt>
-			void assign( InputIt first, InputIt last ){
+			void assign( InputIt first,
+						 typename enable_if<!std::is_integral<InputIt>::value, InputIt>::type last )
+			{
 				std::cout << "template assign" << std::endl;
 
 				pointer new_start;
 				try
 				{
 					_alloc = Allocator();
-					new_start = _alloc.allocate(first);
+					new_start = _alloc.allocate(last - first);
 
 					for(size_type i = 0; i < _nb_elems; i++) {
 						_alloc.destroy(_start + i);
 					}
 					_alloc.deallocate(_start, _capacity);
 					
-					_alloc = Allocator();
+					// _alloc = Allocator();
 					_start = new_start;
-					_finish = _start + first;
-					_end_of_storage = _start + first;
-					_nb_elems = first;
-					_capacity = first;
-					for(InputIt i = 0; i < first; i++) {
-						_alloc.construct(_start + i, last);
-					}
+					_finish = _start + ( last - first);
+					_end_of_storage = _start + ( last - first );
+					_nb_elems = last - first;
+					_capacity = last - first;
+
+					std::uninitialized_copy(first, last, _start);
 				}
 				catch(const std::exception& e)
 				{
@@ -441,27 +443,46 @@ it causes undefined behavior.
 		};
 
 
-// If an exception is thrown when inserting a single element at the end, 
-// and T is CopyInsertable or std::is_nothrow_move_constructible<T>::value is true, 
-// there are no effects (strong exception guarantee).
+		// If an exception is thrown when inserting a single element at the end, 
+		// and T is CopyInsertable or std::is_nothrow_move_constructible<T>::value is true, 
+		// there are no effects (strong exception guarantee).
+
 		iterator insert( iterator pos, const T& value ) {
+			std::cout << "insert(pos, value) : " << value<< std::endl;
 			try {
+				iterator 	it = end();
+				size_t 		i;
+				
 				if(_nb_elems == _capacity) {
+					std::cout << "new allocation " << std::endl;
 					if (_capacity + 1 >= max_size() || _capacity * 2 >= max_size())
 						throw std::bad_alloc();
 					if (_capacity == 0)
 						_capacity += 1;
 					_capacity *= 2;
 					T* new_start = _alloc.allocate(_capacity);
+
 					for(size_type i = 0; i < _nb_elems; i++) {
 						_alloc.construct(new_start + i, _start[i]);
 					}
+
 					_alloc.deallocate(_start, _capacity);
 					_start = new_start;
-					_finish = _start + _nb_elems;
-					_end_of_storage = _start + _capacity;
+					_finish = new_start + _nb_elems;
+					_end_of_storage = new_start + _capacity;
 				}
-				_alloc.construct(_finish, value);
+
+				if (_nb_elems != 0)
+					i = _nb_elems;
+				else
+					i = 0;
+				while(it != pos && i != 0) {
+					_alloc.construct(_start + i, *(_start + i - 1));
+					_alloc.destroy(_start + i - 1);
+					it--;
+					i--;
+				}
+				_alloc.construct(_start + i, value);
 				++_finish;
 				++_nb_elems;
 			} catch(const std::length_error &el) {
@@ -474,13 +495,65 @@ it causes undefined behavior.
 
 			return (pos);
 		};
+
+
+
+
+
 		void insert( iterator pos, size_type count, const T& value ) { 
+			std::cout << "insert(pos, count, value) : " << count << std::endl;
 			try {
-				std::cout << "max_size : " << max_size() << std::endl;
+				// std::cout << "max_size : " << max_size() << std::endl;
+
+				iterator 	ite = end();
+				iterator	itb = begin();
+				size_t 		i;
+				size_t 		j;
+				size_type 	new_capacity = _capacity;
+				
 				if (count >= max_size())
 					throw std::bad_alloc();
-				for(size_type i = 0; i < count; i++) {
-					insert(pos, value);
+
+				while (new_capacity < _nb_elems + count) 
+				{
+					if (_capacity + count >= max_size() || _capacity * 2 >= max_size())
+						throw std::bad_alloc();
+					if (_capacity == 0)
+						new_capacity = _capacity + 1;
+					new_capacity = _capacity * 2;
+				}
+				T* new_start = _alloc.allocate(new_capacity);
+				i = 0;
+				while(itb != pos && i != _nb_elems)
+				{
+					_alloc.construct(new_start + i, *(_start + i));
+					itb++;
+					i++;
+				}
+				if (_nb_elems != 0)
+					j = _nb_elems + count;
+				else
+					j = 0;
+				while(ite != pos && j != i)
+				{
+					_alloc.construct(new_start + j, *(_start + j - count));
+					_alloc.destroy(new_start + j - count);
+					ite--;
+					j--;
+				}
+				_alloc.construct(new_start + j, *(_start + j - count));
+				_alloc.destroy(new_start + j - count);
+				_alloc.deallocate(_start, _capacity);
+				_start = new_start;
+				_nb_elems += count;
+				_finish = new_start + _nb_elems;
+				_end_of_storage = new_start + new_capacity;
+				_capacity = new_capacity;
+				while (count != 0)
+				{
+					_alloc.construct(_start + i, value);
+					i++;
+					count--;
 				}
 			} catch(const std::length_error &el) {
 				std::cerr << "length_error : " << el.what() << '\n';
@@ -489,20 +562,120 @@ it causes undefined behavior.
 			} catch (std::exception const &e) {
 				std::cerr << e.what() << std::endl;
 			}
-
-
 		};
-		template< class InputIt >
-			void insert( iterator pos, InputIt first, InputIt last ) { 
-				std::cout << "insert 3 " << std::endl;
 
-				for(int i = 0; i < first; i++) {
-					insert(pos, last);
+
+		template< class InputIt >
+			void insert( iterator pos,
+						 InputIt first,
+						 typename enable_if<!std::is_integral<InputIt>::value, InputIt>::type last ) { 
+				std::cout << "insert(pos, first, last) " << std::endl;
+
+				// std::cout << "it_insert_first : " << *first << std::endl;
+				// std::cout << "it_insert_half : " << *last << std::endl;
+				// std::cout << "dist : "	<< last - first << std::endl;
+
+				try {
+					// std::cout << "max_size : " << max_size() << std::endl;
+
+					iterator 	ite = end();
+					iterator	itb = begin();
+					size_t 		i;
+					size_t 		j;
+					size_type 	new_capacity = _capacity;
+					size_type	count = last - first;
+
+					if (count >= max_size())
+						throw std::bad_alloc();
+
+					// reallocate
+					while (new_capacity < _nb_elems + count) 
+					{
+						if (_capacity + count >= max_size() || _capacity * 2 >= max_size())
+							throw std::bad_alloc();
+						if (_capacity == 0)
+							new_capacity = _capacity + 1;
+						new_capacity = _capacity * 2;
+					}
+					T* new_start = _alloc.allocate(new_capacity);
+
+					// copie avant pos
+					i = 0;
+					while(itb != pos && i != _nb_elems)
+					{
+						_alloc.construct(new_start + i, *(_start + i));
+						itb++;
+						i++;
+					}
+
+					// deplace de end a pos sur une distance count
+					if (_nb_elems != 0)
+						j = _nb_elems + count;
+					else
+						j = 0;
+					while(ite != pos && j != i)
+					{
+						_alloc.construct(new_start + j, *(_start + j - count));
+						_alloc.destroy(new_start + j - count);
+						ite--;
+						j--;
+					}
+					_alloc.construct(new_start + j, *(_start + j - count));
+					_alloc.destroy(new_start + j - count);
+					_alloc.deallocate(_start, _capacity);
+					_start = new_start;
+					_nb_elems += count;
+					_finish = new_start + _nb_elems;
+					_end_of_storage = new_start + new_capacity;
+					_capacity = new_capacity;
+					while (count != 0)
+					{
+						_alloc.construct(_start + i, *first);
+						i++;
+						count--;
+						first++;
+					}
+				} catch(const std::length_error &el) {
+					std::cerr << "length_error : " << el.what() << '\n';
+					std::terminate();
+				} catch (std::exception const &e) {
+					std::cerr << e.what() << std::endl;
 				}
 			};
 
-		iterator erase( iterator pos );
-		iterator erase( iterator first, iterator last );
+
+
+		iterator erase( iterator pos ) {
+			std::cout << "erase(pos) " << std::endl;
+			iterator it = pos;
+			while (it != end() - 1)
+			{
+				// _alloc.construct(it, *(it + 1));
+				_alloc.destroy(it + 1);
+				it++;
+			}
+			_alloc.destroy(it);
+			--_finish;
+			--_nb_elems;
+			return (pos);
+		};
+
+		iterator erase( iterator first, iterator last ) {
+			std::cout << "erase(first, last) " << std::endl;
+			iterator 	it = first;
+			int			i = 0;
+			while (it != last)
+			{
+				// _alloc.construct(it, *(it + (last - first)));
+				_alloc.destroy(_start + i + (last - first));
+				it++;
+				i++;
+			}
+			_alloc.deallocate(_start, _capacity);
+			_finish -= (last - first);
+			_nb_elems -= (last - first);
+			return (first);
+		};
 
 		void push_back( const T& value ) {
 			if(_finish != _end_of_storage) {

@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/04 16:23:50 by jrasser           #+#    #+#             */
-/*   Updated: 2022/09/07 17:12:41 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/09/09 20:35:19 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,15 +22,15 @@ namespace ft
 
     protected:
         _Iter it;
-        typedef ft::iterator_traits<_Iter> traits_type;
+        typedef ft::iterator_traits<_Iter>              traits_type;
 
     public:
-        typedef _Iter iterator_type;
+        typedef _Iter                                   iterator_type;
         typedef typename traits_type::iterator_category iterator_category;
-        typedef typename traits_type::value_type value_type;
-        typedef typename traits_type::difference_type difference_type;
-        typedef typename traits_type::pointer pointer;
-        typedef typename traits_type::reference reference;
+        typedef typename traits_type::value_type        value_type;
+        typedef typename traits_type::difference_type   difference_type;
+        typedef typename traits_type::pointer           pointer;
+        typedef typename traits_type::reference         reference;
 
         my_iterator() : it() {}
         my_iterator(iterator_type it) : it(it) {}
@@ -70,15 +70,20 @@ namespace ft
             return (*this);
         }
 
-        my_iterator operator+(difference_type n) const
+        my_iterator operator+(difference_type n)
         {
             it += n;
             return (*this);
         }
 
-        // difference_type operator+(difference_type n) {
+        difference_type operator+(const my_iterator &rhs) const
+        {
+            return (this->it + rhs.it);
+        }
 
-        // }
+
+
+
 
         my_iterator operator-(difference_type n) const
         {
@@ -101,6 +106,8 @@ namespace ft
             it -= n;
             return (*this);
         }
+
+
 
         reference operator[](difference_type n) const { return (it[n]); }
 
