@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/14 22:06:29 by jrasser           #+#    #+#             */
-/*   Updated: 2022/09/10 12:51:29 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/09/10 17:43:47 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -228,7 +228,7 @@ namespace ft
 				std::terminate();
 			}
 		};
-		const_reference operator[]( size_type pos ) const {											//c'est utilise quand ?
+		const_reference operator[]( size_type pos ) const {
 			//std::cout << "const_reference operator[]" << std::endl;
 			try {
 				if(pos >= _nb_elems)
@@ -272,7 +272,7 @@ for the element constructions, or if the range specified by [first,last) is not 
 it causes undefined behavior.
 */
 
-		void assign( size_type count, const T& value ){             /* when call ?? */
+		void assign( size_type count, const T& value ){
 			std::cout << "assign" << std::endl;
 
 			for(size_type i = 0; i < _nb_elems; i++) {
@@ -325,45 +325,42 @@ it causes undefined behavior.
 
 
 
-		/* ******* ITERATOR ******* */
+		/* *************************************************** */
+		/*                                                     */
+		/*                       ITERATOR                      */
+		/*                                                     */
+		/* *************************************************** */
+		
 		iterator begin() {
-			//std::cout << "begin" << std::endl;
 			return iterator(this->_start);
 		};
 		const_iterator begin() const {
-			//std::cout << "const_begin" << std::endl;
 			return const_iterator(this->_start);
 			//return const_cast<vector*>(this)->begin();
 		};
 
 		iterator end(){
-			//std::cout << "end" << std::endl;
 			return iterator(this->_finish);
 		};
 		const_iterator end() const {
-			//std::cout << "const_end" << std::endl;
 			return const_iterator(this->_finish);
 			//return const_cast<vector*>(this)->end();
 		};
 
 		reverse_iterator rbegin(){
-			//std::cout << "rbegin" << std::endl;
 			return reverse_iterator(this->_finish);
 			//return reverse_iterator(end());
 		};
 		const_reverse_iterator rbegin() const {
-			//std::cout << "const_rbegin" << std::endl;
 			return const_reverse_iterator(this->_finish);
 			//return const_reverse_iterator(end());
 		};
 
 		reverse_iterator rend() {
-			//std::cout << "rend" << std::endl;
 			return reverse_iterator(this->_start);
 			//return reverse_iterator(begin());
 		};
 		const_reverse_iterator rend() const {
-			//std::cout << "const_rend" << std::endl;
 			return const_reverse_iterator(this->_start);
 			//return const_reverse_iterator(begin());
 		};
@@ -448,13 +445,13 @@ it causes undefined behavior.
 		// there are no effects (strong exception guarantee).
 
 		iterator insert( iterator pos, const T& value ) {
-			std::cout << "insert(pos, value) : " << value<< std::endl;
+			// std::cout << "insert(pos, value) : " << value<< std::endl;
 			try {
 				iterator 	it = end();
 				size_t 		i;
 				
 				if(_nb_elems == _capacity) {
-					std::cout << "new allocation " << std::endl;
+					// std::cout << "new allocation " << std::endl;
 					if (_capacity + 1 >= max_size() || _capacity * 2 >= max_size())
 						throw std::bad_alloc();
 					if (_capacity == 0)
@@ -501,7 +498,7 @@ it causes undefined behavior.
 
 
 		void insert( iterator pos, size_type count, const T& value ) { 
-			std::cout << "insert(pos, count, value) : " << count << std::endl;
+			// std::cout << "insert(pos, count, value) : " << count << std::endl;
 			try {
 				// std::cout << "max_size : " << max_size() << std::endl;
 
@@ -519,8 +516,8 @@ it causes undefined behavior.
 					if (_capacity + count >= max_size() || _capacity * 2 >= max_size())
 						throw std::bad_alloc();
 					if (_capacity == 0)
-						new_capacity = _capacity + 1;
-					new_capacity = _capacity * 2;
+						new_capacity += 1;
+					new_capacity *= 2;
 				}
 				T* new_start = _alloc.allocate(new_capacity);
 				i = 0;
@@ -569,7 +566,7 @@ it causes undefined behavior.
 			void insert( iterator pos,
 						 InputIt first,
 						 typename enable_if<!ft::is_integral<InputIt>::value, InputIt>::type last ) { 
-				std::cout << "insert(pos, first, last) " << std::endl;
+				// std::cout << "insert(pos, first, last) " << std::endl;
 
 				// std::cout << "it_insert_first : " << *first << std::endl;
 				// std::cout << "it_insert_half : " << *last << std::endl;
@@ -594,8 +591,8 @@ it causes undefined behavior.
 						if (_capacity + count >= max_size() || _capacity * 2 >= max_size())
 							throw std::bad_alloc();
 						if (_capacity == 0)
-							new_capacity = _capacity + 1;
-						new_capacity = _capacity * 2;
+							new_capacity += 1;
+						new_capacity *= 2;
 					}
 					T* new_start = _alloc.allocate(new_capacity);
 
@@ -646,40 +643,91 @@ it causes undefined behavior.
 
 
 		iterator erase( iterator pos ) {
-			std::cout << "erase(pos) " << std::endl;
-			iterator it = pos;
-			while (it != end() - 1)
+			std::cout << "erase(pos) : " << *pos << std::endl;
+			
+			iterator 	itb = begin();
+			size_type	i = 0;
+
+			while(itb != pos)
 			{
-				// _alloc.construct(it, *(it + 1));
-				_alloc.destroy(it + 1);
-				it++;
+				itb++;
+				i++;
 			}
-			_alloc.destroy(it);
+			// std::cout << "i : " << i << std::endl;
+			while (itb != end() - 1 && i != _nb_elems - 1)
+			{
+				_alloc.construct(_start + i, *(_start + i + 1));
+				_alloc.destroy(_start + i + 1);
+				itb++;
+				i++;
+			}
 			--_finish;
 			--_nb_elems;
-			return (pos);
-		};
 
-		iterator erase( iterator first, iterator last ) {
-			std::cout << "erase(first, last) " << std::endl;
-			iterator 	it = first;
-			int			i = 0;
-			while (it != last)
+			size_t j = 1;
+			for(; j < _nb_elems; j*=2) {}
+			_capacity = j;
+
+			T* new_start = _alloc.allocate(_capacity);
+			i = 0;
+			while (i != _nb_elems)
 			{
-				// _alloc.construct(it, *(it + (last - first)));
-				_alloc.destroy(_start + i + (last - first));
-				it++;
+				_alloc.construct(new_start + i, *(_start + i));
+				_alloc.destroy(_start + i);
 				i++;
 			}
 			_alloc.deallocate(_start, _capacity);
-			_finish -= (last - first);
-			_nb_elems -= (last - first);
+			_start = new_start;
+			_finish = new_start + _nb_elems;
+			_end_of_storage = new_start + _capacity;
+			return (pos);
+		};
+
+
+		iterator erase( iterator first, iterator last ) {
+			std::cout << "erase(first, last) : " << *first << " " << *last << std::endl;
+			iterator 	itb = begin();
+			size_type	i = 0;
+			size_type	count = last - first;
+
+			while(itb != first)
+			{
+				itb++;
+				i++;
+			}
+			// std::cout << "i : " << i << std::endl;
+			while (itb != end() - count && i != _nb_elems - count)
+			{
+				_alloc.construct(_start + i, *(_start + i + count));
+				_alloc.destroy(_start + i + count);
+				itb++;
+				i++;
+			}
+			_finish -= count;
+			_nb_elems -= count;
+
+			size_t j = 1;
+			for(; j < _nb_elems; j*=2) {}
+			_capacity = j;
+
+			T* new_start = _alloc.allocate(_capacity);
+			i = 0;
+			while (i != _nb_elems)
+			{
+				_alloc.construct(new_start + i, *(_start + i));
+				_alloc.destroy(_start + i);
+				i++;
+			}
+			_alloc.deallocate(_start, _capacity);
+			_start = new_start;
+			_finish = new_start + _nb_elems;
+			_end_of_storage = new_start + _capacity;
 			return (first);
 		};
 
+
 		void push_back( const T& value ) {
 			if(_finish != _end_of_storage) {
-				//std::cout << "	construct() nb elem : " << _nb_elems << std::endl;
 				_alloc.construct(_finish, value);
 				++_finish;
 				++_nb_elems;
@@ -718,6 +766,9 @@ it causes undefined behavior.
 			std::swap(_nb_elems, other._nb_elems);
 			std::swap(_capacity, other._capacity);
 		};
+
+
+
 
 
 		/* *************************************************** */

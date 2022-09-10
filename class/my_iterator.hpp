@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/04 16:23:50 by jrasser           #+#    #+#             */
-/*   Updated: 2022/09/09 20:35:19 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/09/10 17:11:03 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,13 +83,12 @@ namespace ft
 
 
 
-
-
-        my_iterator operator-(difference_type n) const
+        my_iterator operator-(difference_type n)
         {
             it -= n;
             return (*this);
         }
+
         difference_type operator-(const my_iterator &rhs) const
         {
             return (it - rhs.it);

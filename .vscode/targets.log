@@ -6,7 +6,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Sat Sep 10 12:41:15 2022
+# Make data base, printed on Sat Sep 10 17:35:16 2022
 
 # Variables
 
@@ -33,7 +33,6 @@ CURDIR := /home/jrasser/42/ft_containers
 # makefile
 SHELL = /bin/sh
 # makefile (from 'Makefile', line 24)
- 
 RM = @rm -rf
 # environment
 VSCODE_NLS_CONFIG = {"locale":"en","availableLanguages":{}}
@@ -188,7 +187,7 @@ TERM = xterm-256color
 # environment
 WSL_DISTRO_NAME = Ubuntu
 # variable set hash-table stats:
-# Load=88/1024=9%, Rehash=0, Collisions=11/132=8%
+# Load=88/1024=9%, Rehash=0, Collisions=11/119=9%
 
 # Pattern-specific Variable Values
 
@@ -196,10 +195,10 @@ WSL_DISTRO_NAME = Ubuntu
 
 # Directories
 
-# . (device 2080, inode 350623): 13 files, no impossibilities.
+# . (device 2080, inode 350623): 14 files, no impossibilities.
 # srcs (device 2080, inode 350711): 2 files, no impossibilities.
 
-# 15 files, no impossibilities in 2 directories.
+# 16 files, no impossibilities in 2 directories.
 
 # Implicit Rules
 
@@ -222,27 +221,9 @@ objs/%.o: srcs/**%.cpp
 objs/main.o: main.cpp
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: 'main'
-#  File does not exist.
+#  Last modified 2022-09-10 17:35:11.755908
 #  File has been updated.
-#  Needs to be updated (-q is set).
-# automatic
-# @ := objs/main.o
-# automatic
-# % := 
-# automatic
-# * := main
-# automatic
-# + := main.cpp
-# automatic
-# | := 
-# automatic
-# < := main.cpp
-# automatic
-# ^ := main.cpp
-# automatic
-# ? := main.cpp
-# variable set hash-table stats:
-# Load=8/32=25%, Rehash=0, Collisions=4/24=17%
+#  Successfully updated.
 #  recipe to execute (from 'Makefile', line 31):
 			@mkdir -p $(OBJS_DIR)
 			@${CC} $(CPPFLAGS) -o $@ -c $< ${CFLAGS} ${DEBEUG}
@@ -254,9 +235,7 @@ all: prog
 #  Implicit rule search has not been done.
 #  File does not exist.
 #  File has been updated.
-#  Needs to be updated (-q is set).
-# variable set hash-table stats:
-# Load=0/32=0%, Rehash=0, Collisions=0/13=0%
+#  Successfully updated.
 
 .PHONY: all clean fclean re
 #  Implicit rule search has not been done.
@@ -266,24 +245,22 @@ all: prog
 # Not a target:
 Makefile:
 #  Implicit rule search has been done.
-#  Last modified 2022-09-10 12:40:56.59426
+#  Last modified 2022-09-10 17:35:08.845908
 #  File has been updated.
 #  Successfully updated.
 
 # Not a target:
 main.cpp:
 #  Implicit rule search has been done.
-#  Last modified 2022-09-10 12:33:57.109705
+#  Last modified 2022-09-10 17:34:48.963209
 #  File has been updated.
 #  Successfully updated.
 
 prog: objs/main.o
 #  Implicit rule search has not been done.
-#  File does not exist.
+#  Last modified 2022-09-10 17:35:11.905908
 #  File has been updated.
-#  Needs to be updated (-q is set).
-# variable set hash-table stats:
-# Load=0/32=0%, Rehash=0, Collisions=0/13=0%
+#  Successfully updated.
 #  recipe to execute (from 'Makefile', line 41):
 			@${CC} ${OBJS} -o $(NAME) ${CFLAGS} ${DEBEUG}
 			@echo "$(ERASE)$(GRN) [Successfully compiled]$(END)	$(CHECK) \n"
@@ -298,6 +275,7 @@ fclean: clean
 			${RM} ${NAME}
 			@echo "$(GRN) [Fclean]$(END) 			$(CHECK)"
 
+ 
 # Not a target:
 .DEFAULT:
 #  Implicit rule search has not been done.
@@ -316,7 +294,6 @@ clean:
 #  File does not exist.
 #  File has not been updated.
 #  recipe to execute (from 'Makefile', line 48):
- 
 			${RM} $(OBJS)
 			@echo "$(GRN) [Clean]$(END) 			$(CHECK)"
 
@@ -331,9 +308,9 @@ clean:
 # strcache buffers: 1 (0) / strings = 28 / storage = 226 B / avg = 8 B
 # current buf: size = 8162 B / used = 226 B / count = 28 / avg = 8 B
 
-# strcache performance: lookups = 53 / hit rate = 47%
+# strcache performance: lookups = 54 / hit rate = 48%
 # hash-table stats:
-# Load=28/8192=0%, Rehash=0, Collisions=2/53=4%
-# Finished Make data base on Sat Sep 10 12:41:15 2022
+# Load=28/8192=0%, Rehash=0, Collisions=2/54=4%
+# Finished Make data base on Sat Sep 10 17:35:16 2022
 
  
