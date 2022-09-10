@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/14 22:06:29 by jrasser           #+#    #+#             */
-/*   Updated: 2022/09/10 12:40:15 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/09/10 12:51:29 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,11 @@
 #include "my_iterator.hpp"
 #include "my_reverse_iterator.hpp"
 #include "enable_if.hpp"
+#include "is_integral.hpp"
 
 #include <stdexcept>
 
-#include <type_traits>
-
+// #include <type_traits>
 // #include <memory>
 // #include <cstddef>
 // #include <iterator>
@@ -122,7 +122,7 @@ namespace ft
 		template <class InputIt>								//(5)
 			// typename ft::enable_if<!ft::is_integral<InputIt>::value, void>::type
 			vector( InputIt first, 
-					typename enable_if<!std::is_integral<InputIt>::value, InputIt>::type last,
+					typename enable_if<!ft::is_integral<InputIt>::value, InputIt>::type last,
 					const Allocator &alloc = Allocator() ) :
 			_alloc(alloc),
 			_start(_alloc.allocate(last - first)),
@@ -201,7 +201,7 @@ namespace ft
 					throw std::out_of_range("out of range");
 				return _start[pos];
 			} catch(const std::exception& e) {
-				std::cerr << e.what() << "'\n";
+				std::cerr << RED << e.what() << END "\n";
 				std::terminate();
 			}
 		};
@@ -212,7 +212,7 @@ namespace ft
 					throw std::out_of_range("out of range");
 				return const_cast<vector*>(this)->at(pos);
 			} catch(const std::exception& e) {
-				std::cerr << e.what() << '\n';
+				std::cerr << RED << e.what() << END "\n";
 				std::terminate();
 			}
 		};
@@ -224,7 +224,7 @@ namespace ft
 					throw std::out_of_range("out of range");
 				return _start[pos];
 			} catch(const std::exception& e) {
-				std::cerr << e.what() << '\n';
+				std::cerr << RED << e.what() << END "\n";
 				std::terminate();
 			}
 		};
@@ -235,7 +235,7 @@ namespace ft
 					throw std::out_of_range("out of range");
 				return const_cast<vector*>(this)->operator[](pos);
 			} catch(const std::exception& e) {
-				std::cerr << e.what() << '\n';
+				std::cerr << RED <<  e.what() << END "\n";
 				std::terminate();
 			}
 		};
@@ -292,7 +292,7 @@ it causes undefined behavior.
 
 		template <class InputIt>
 			void assign( InputIt first,
-						 typename enable_if<!std::is_integral<InputIt>::value, InputIt>::type last )
+						 typename enable_if<!ft::is_integral<InputIt>::value, InputIt>::type last )
 			{
 				std::cout << "template assign" << std::endl;
 
@@ -318,7 +318,7 @@ it causes undefined behavior.
 				}
 				catch(const std::exception& e)
 				{
-					std::cerr << e.what() << '\n';
+					std::cerr << RED << e.what() << END "\n";
 				}
 
 			};
@@ -411,11 +411,11 @@ it causes undefined behavior.
 				}
 			}
 			catch(const std::length_error &el) {
-				std::cerr << "length_error : " << el.what() << '\n';
+				std::cerr << RED "length_error : " << el.what() << END "\n";
 				std::terminate();
 			}
 			catch(const std::exception& e) {
-				std::cerr << "error : " << e.what() << '\n';
+				std::cerr << RED "error : " << e.what() << END "\n";
 				std::terminate();
 			}
 		};
@@ -486,11 +486,11 @@ it causes undefined behavior.
 				++_finish;
 				++_nb_elems;
 			} catch(const std::length_error &el) {
-				std::cerr << "length_error : " << el.what() << '\n';
+				std::cerr << RED "length_error : " << el.what() << END "\n";
 				std::terminate();
 			
 			} catch (std::exception const &e) {
-				std::cerr << "dfddsfsdfdsfdsffsfds "<< e.what() << std::endl;
+				std::cerr << RED "dfddsfsdfdsfdsffsfds "<< e.what() << END "\n";
 			}
 
 			return (pos);
@@ -556,7 +556,7 @@ it causes undefined behavior.
 					count--;
 				}
 			} catch(const std::length_error &el) {
-				std::cerr << "length_error : " << el.what() << '\n';
+				std::cerr << RED "length_error : " << el.what() << END "\n";
 				std::terminate();
 			
 			} catch (std::exception const &e) {
@@ -568,7 +568,7 @@ it causes undefined behavior.
 		template< class InputIt >
 			void insert( iterator pos,
 						 InputIt first,
-						 typename enable_if<!std::is_integral<InputIt>::value, InputIt>::type last ) { 
+						 typename enable_if<!ft::is_integral<InputIt>::value, InputIt>::type last ) { 
 				std::cout << "insert(pos, first, last) " << std::endl;
 
 				// std::cout << "it_insert_first : " << *first << std::endl;
@@ -636,7 +636,7 @@ it causes undefined behavior.
 						first++;
 					}
 				} catch(const std::length_error &el) {
-					std::cerr << "length_error : " << el.what() << '\n';
+					std::cerr << RED "length_error : " << el.what() << END "\n";
 					std::terminate();
 				} catch (std::exception const &e) {
 					std::cerr << e.what() << std::endl;
