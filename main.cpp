@@ -6,26 +6,25 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/14 22:19:53 by jrasser           #+#    #+#             */
-/*   Updated: 2022/09/10 23:40:42 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/09/11 22:41:16 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 
-#include <vector>
-#include "Vector.hpp"
 #include "utils.hpp"
 #include "pair.hpp"
 
-//#include "Iterator_traits.hpp"
+#include <vector>
+#include "vector.hpp"
 
-// #include <map>
-// #include "Map.hpp"
-
-//using namespace ft;
-//using namespace std;
+#include <map>
+// #include "map.hpp"
 
 #include <typeinfo>     // typeid
+#include <iostream>
+
+
 
 bool mypredicate (int i, int j) {
   return (i==j);
@@ -36,27 +35,16 @@ bool mycomp (char c1, char c2)
 
 int main()
 {
-	//std::cout.imbue(std::locale("en_US.UTF-8"));
-	// std::map<std::string, int> map;
-	// map["test"] = 42;
-	// std::cout << map["test"] << std::endl;
-	
+{
+	std::vector<int> v;
+	v.push_back(1);
+	v.push_back(2);
+	v.push_back(3);
 
-
-
-	std::vector<int> v(10, 10);
 	std::vector<int>::const_iterator itc = v.begin();
-
 	std::cout << "itc : " << *itc << std::endl;
-
-
-
-
-
-
-
-
-
+	itc++;
+	std::cout << "itc : " << *itc << std::endl;
 
 
 	// typedef std::iterator_traits<char> testee;
@@ -601,59 +589,63 @@ int main()
 
 	std::cout << BLU "\nTEST const  : " END << std::endl;
 
-
 	// ft::Vector<int> vm(10, 10);
 	// ft::Vector<int>::const_iterator itc2 = vm.begin();
-
 	// std::cout << "itc : " << *itc2 << std::endl;
 
-	// ft::Vector<int> test_const(10, 1);
-	// test_const.display("test_const");
-	// ft::Vector<int>::const_iterator it_const = test_const.begin();
-	// std::cout << "const it : " << *it_const << std::endl;
 
 
 
+	ft::Vector<int> test_const;
+	test_const.push_back(1);
+	test_const.push_back(2);
+	test_const.push_back(3);
 
+	test_const.display("test_const");
+	ft::Vector<int>::const_iterator it_const  = test_const.begin();
+	std::cout << "const it : " << *it_const << std::endl;
+	std::cout << "const it : " << *(it_const + 1) << std::endl;
+	it_const++;
+	std::cout << "const it : " << *(it_const) << std::endl;
 
 
 
-	std::cout << BLU "\nTEST equal() : " END << std::endl;
-	// bool mypredicate(int i, int j)
-	// {
-	// 	return (i == j);
-	// }
 
-	int myints[] = {20, 40, 60, 80, 100};		   //   myints: 20 40 60 80 100
-	std::vector<int> myvector(myints, myints + 5); // myvector: 20 40 60 80 100
 
-	// using default comparison:
-	if (std::equal(myvector.begin(), myvector.end(), myints))
-		std::cout << "The contents of both sequences are equal.\n";
-	else
-		std::cout << "The contents of both sequences differ.\n";
 
-	if (ft::equal(myvector.begin(), myvector.end(), myints))
-		std::cout << "The contents of both sequences are equal.\n";
-	else
-		std::cout << "The contents of both sequences differ.\n";
 
-	myvector[3] = 81; // myvector: 20 40 60 81 100
+	// std::cout << BLU "\nTEST equal() : " END << std::endl;
+	// // bool mypredicate(int i, int j)
+	// // {
+	// // 	return (i == j);
+	// // }
 
-	// using predicate comparison:
-	if (std::equal(myvector.begin(), myvector.end(), myints, mypredicate))
-		std::cout << "The contents of both sequences are equal.\n";
-	else
-		std::cout << "The contents of both sequences differ.\n";
+	// int myints[] = {20, 40, 60, 80, 100};		   //   myints: 20 40 60 80 100
+	// std::vector<int> myvector(myints, myints + 5); // myvector: 20 40 60 80 100
 
-	if (ft::equal(myvector.begin(), myvector.end(), myints, mypredicate))
-		std::cout << "The contents of both sequences are equal.\n\n\n";
-	else
-		std::cout << "The contents of both sequences differ.\n\n\n";
+	// // using default comparison:
+	// if (std::equal(myvector.begin(), myvector.end(), myints))
+	// 	std::cout << "The contents of both sequences are equal.\n";
+	// else
+	// 	std::cout << "The contents of both sequences differ.\n";
 
+	// if (ft::equal(myvector.begin(), myvector.end(), myints))
+	// 	std::cout << "The contents of both sequences are equal.\n";
+	// else
+	// 	std::cout << "The contents of both sequences differ.\n";
 
+	// myvector[3] = 81; // myvector: 20 40 60 81 100
 
+	// // using predicate comparison:
+	// if (std::equal(myvector.begin(), myvector.end(), myints, mypredicate))
+	// 	std::cout << "The contents of both sequences are equal.\n";
+	// else
+	// 	std::cout << "The contents of both sequences differ.\n";
 
+	// if (ft::equal(myvector.begin(), myvector.end(), myints, mypredicate))
+	// 	std::cout << "The contents of both sequences are equal.\n\n\n";
+	// else
+	// 	std::cout << "The contents of both sequences differ.\n\n\n";
 
 
 
@@ -665,116 +657,142 @@ int main()
 
 
 
-	std::cout << BLU "\nTEST lexicographically() : " END << std::endl;
 
-	char foo[] = "Apple";
-	char bar[] = "apartment";
 
-	std::cout << std::boolalpha;
 
-	std::cout << "Comparing foo and bar lexicographically (foo<bar):\n";
 
-	std::cout << "Using default comparison (operator<): ";
-	std::cout << std::lexicographical_compare(foo, foo + 5, bar, bar + 9);
-	std::cout << '\n';
-	std::cout << "Using default comparison (operator<): ";
-	std::cout << ft::lexicographical_compare(foo, foo + 5, bar, bar + 9);
-	std::cout << '\n';
+	// std::cout << BLU "\nTEST lexicographically() : " END << std::endl;
 
-	std::cout << "Using mycomp as comparison object: ";
-	std::cout << std::lexicographical_compare(foo, foo + 5, bar, bar + 9, mycomp);
-	std::cout << '\n';
-	std::cout << "Using mycomp as comparison object: ";
-	std::cout << ft::lexicographical_compare(foo, foo + 5, bar, bar + 9, mycomp);
-	std::cout << "\n\n";
+	// char foo[] = "Apple";
+	// char bar[] = "apartment";
 
+	// std::cout << std::boolalpha;
 
+	// std::cout << "Comparing foo and bar lexicographically (foo<bar):\n";
 
+	// std::cout << "Using default comparison (operator<): ";
+	// std::cout << std::lexicographical_compare(foo, foo + 5, bar, bar + 9);
+	// std::cout << '\n';
+	// std::cout << "Using default comparison (operator<): ";
+	// std::cout << ft::lexicographical_compare(foo, foo + 5, bar, bar + 9);
+	// std::cout << '\n';
 
+	// std::cout << "Using mycomp as comparison object: ";
+	// std::cout << std::lexicographical_compare(foo, foo + 5, bar, bar + 9, mycomp);
+	// std::cout << '\n';
+	// std::cout << "Using mycomp as comparison object: ";
+	// std::cout << ft::lexicographical_compare(foo, foo + 5, bar, bar + 9, mycomp);
+	// std::cout << "\n\n";
 
 
 
-	std::cout << BLU "\nTEST Pair() : " END << std::endl;
 
-	std::pair<int, char> foo1(10, 'z');
-	std::pair<int, char> bar1(90, 'a');
 
-	if (foo1 == bar1)
-		std::cout << "foo1 and bar1 are equal\n";
-	if (foo1 != bar1)
-		std::cout << "foo1 and bar1 are not equal\n";
-	if (foo1 < bar1)
-		std::cout << "foo1 is less than bar1\n";
-	if (foo1 > bar1)
-		std::cout << "foo1 is greater than bar1\n";
-	if (foo1 <= bar1)
-		std::cout << "foo1 is less than or equal to bar1\n";
-	if (foo1 >= bar1)
-		std::cout << "foo1 is greater than or equal to bar1\n";
 
 
-	ft::pair<int, char> foo2(10, 'z');
-	ft::pair<int, char> bar2(90, 'a');
+	// std::cout << BLU "\nTEST Pair() : " END << std::endl;
 
-	if (foo2 == bar2)
-		std::cout << "foo2 and bar2 are equal\n";
-	if (foo2 != bar2)
-		std::cout << "foo2 and bar2 are not equal\n";
-	if (foo2 < bar2)
-		std::cout << "foo2 is less than bar2\n";
-	if (foo2 > bar2)
-		std::cout << "foo2 is greater than bar2\n";
-	if (foo2 <= bar2)
-		std::cout << "foo2 is less than or equal to bar2\n";
-	if (foo2 >= bar2)
-		std::cout << "foo2 is greater than or equal to bar2\n";
+	// std::pair<int, char> foo1(10, 'z');
+	// std::pair<int, char> bar1(90, 'a');
 
+	// if (foo1 == bar1)
+	// 	std::cout << "foo1 and bar1 are equal\n";
+	// if (foo1 != bar1)
+	// 	std::cout << "foo1 and bar1 are not equal\n";
+	// if (foo1 < bar1)
+	// 	std::cout << "foo1 is less than bar1\n";
+	// if (foo1 > bar1)
+	// 	std::cout << "foo1 is greater than bar1\n";
+	// if (foo1 <= bar1)
+	// 	std::cout << "foo1 is less than or equal to bar1\n";
+	// if (foo1 >= bar1)
+	// 	std::cout << "foo1 is greater than or equal to bar1\n";
 
 
+	// ft::pair<int, char> foo2(10, 'z');
+	// ft::pair<int, char> bar2(90, 'a');
 
+	// if (foo2 == bar2)
+	// 	std::cout << "foo2 and bar2 are equal\n";
+	// if (foo2 != bar2)
+	// 	std::cout << "foo2 and bar2 are not equal\n";
+	// if (foo2 < bar2)
+	// 	std::cout << "foo2 is less than bar2\n";
+	// if (foo2 > bar2)
+	// 	std::cout << "foo2 is greater than bar2\n";
+	// if (foo2 <= bar2)
+	// 	std::cout << "foo2 is less than or equal to bar2\n";
+	// if (foo2 >= bar2)
+	// 	std::cout << "foo2 is greater than or equal to bar2\n";
 
 
 
 
-	std::cout << BLU "\nTEST make_pair() : " END << std::endl;
 
-	std::pair<int, int> foo3;
-	std::pair<int, int> bar3;
 
-	foo3 = std::make_pair(10, 20);
-	bar3 = std::make_pair(10.5, 'A'); // ok: implicit conversion from pair<double,char>
 
-	std::cout << "foo3: " << foo3.first << ", " << foo3.second << '\n';
-	std::cout << "bar3: " << bar3.first << ", " << bar3.second << '\n';
 
+	// std::cout << BLU "\nTEST make_pair() : " END << std::endl;
 
-	ft::pair<int, int> foo4;
-	ft::pair<int, int> bar4;
+	// std::pair<int, int> foo3;
+	// std::pair<int, int> bar3;
 
-	foo4 = ft::make_pair(10, 20);
-	bar4 = ft::make_pair(10.5, 'A'); // ok: implicit conversion from pair<double,char>
+	// foo3 = std::make_pair(10, 20);
+	// bar3 = std::make_pair(10.5, 'A'); // ok: implicit conversion from pair<double,char>
 
-	std::cout << "foo4: " << foo4.first << ", " << foo4.second << '\n';
-	std::cout << "bar4: " << bar4.first << ", " << bar4.second << '\n';
+	// std::cout << "foo3: " << foo3.first << ", " << foo3.second << '\n';
+	// std::cout << "bar3: " << bar3.first << ", " << bar3.second << '\n';
 
 
+	// ft::pair<int, int> foo4;
+	// ft::pair<int, int> bar4;
 
-	std::cout << BLU "\nTEST pair swap : " END << std::endl;
+	// foo4 = ft::make_pair(10, 20);
+	// bar4 = ft::make_pair(10.5, 'A'); // ok: implicit conversion from pair<double,char>
 
-	std::cout << "foo1 contains: " << foo1.first << " and " << foo1.second << '\n';
-	std::cout << "bar1 contains: " << bar1.first << " and " << bar1.second << '\n';
-	std::swap(foo1,bar1);
-	std::cout << "foo1 contains: " << foo1.first << " and " << foo1.second << '\n';
-	std::cout << "bar1 contains: " << bar1.first << " and " << bar1.second << '\n';
+	// std::cout << "foo4: " << foo4.first << ", " << foo4.second << '\n';
+	// std::cout << "bar4: " << bar4.first << ", " << bar4.second << '\n';
+
+
+	// C++ 11
+	// std::cout << BLU "\nTEST pair swap : " END << std::endl;
+
+	// std::cout << "foo1 contains: " << foo1.first << " and " << foo1.second << '\n';
+	// std::cout << "bar1 contains: " << bar1.first << " and " << bar1.second << '\n';
+	// std::swap(foo1,bar1);
+	// std::cout << "foo1 contains: " << foo1.first << " and " << foo1.second << '\n';
+	// std::cout << "bar1 contains: " << bar1.first << " and " << bar1.second << '\n';
 
 
 	// std::cout << "foo2 contains: " << foo2.first << " and " << foo2.second << '\n';
 	// std::cout << "bar2 contains: " << bar2.first << " and " << bar2.second << '\n';
-	// ft::pair<int, char>::swap(foo2,bar2);
-	// // ft::swap(foo2,bar2);
+	// // ft::pair<int, char>::swap(foo2,bar2);
+	// ft::swap(foo2,bar2);
 	// std::cout << "foo2 contains: " << foo2.first << " and " << foo2.second << '\n';
 	// std::cout << "bar2 contains: " << bar2.first << " and " << bar2.second << '\n';
+}
+{
+	// std::map<std::string, int> std_map();
 
-	std::cout << "\n\n";
+	// // (1) Default constructor
+	// std::map<std::string, int> map1;
+	// map1["something"] = 69;
+	// map1["anything"] = 199;
+	// map1["that thing"] = 50;
+	// std::cout << "map1 = " << map1;
+
+	// // (4) Range constructor
+	// std::map<std::string, int> iter(map1.find("anything"), map1.end());
+	// std::cout << "\niter = " << iter;
+	// std::cout << "map1 = " << map1;
+
+	// // (6) Copy constructor
+	// std::map<std::string, int> copied(map1);
+	// std::cout << "\ncopied = " << copied;
+	// std::cout << "map1 = " << map1;
+
+
+
+}
 	return 0;
 }

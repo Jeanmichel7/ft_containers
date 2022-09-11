@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/10 22:40:08 by jrasser           #+#    #+#             */
-/*   Updated: 2022/09/10 23:28:36 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/09/11 17:20:13 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,12 @@ struct pair
 
     T1 first;
     T2 second;
+
+    /* ************************************************************************** */
+    /*                                                                            */
+    /*                                MEMBER FUNCTION                             */
+    /*                                                                            */
+    /* ************************************************************************** */
 
     pair() : first(T1()), second(T2()) {}
 
@@ -46,13 +52,21 @@ struct pair
     //     T c(a); a=b; b=c;
     // };
 
+    // C++ 11
+    // void swap (pair& pr) 
+    // noexcept ( noexcept(swap(first,pr.first)) && noexcept(swap(second,pr.second)) ) 
+    // {
+    //     std::swap(first, pr.first);
+    //     std::swap(second, pr.second);
+    // }
 
-    void swap (pair& pr) 
-    noexcept ( noexcept(swap(first,pr.first)) && noexcept(swap(second,pr.second)) ) 
-    {
-        std::swap(first, pr.first);
-        std::swap(second, pr.second);
-    }
+
+    /* ************************************************************************** */
+    /*                                                                            */
+    /*                                    OPERATOR                                */
+    /*                                                                            */
+    /* ************************************************************************** */
+
 
     template <class T_1, class T_2>
     bool operator==(const pair<T_1, T_2> &rhs)
@@ -90,11 +104,13 @@ struct pair
         return !(*this <= rhs);
     }
 
-    template <class T_1, class T_2>
-    void swap(pair<T_1, T_2> &x, pair<T_1, T_2> &y) noexcept(noexcept(x.swap(y)))
-    {
-        x.swap(y);
-    };
+    // C++ 11
+    // template <class T_1, class T_2>
+    // void swap(pair<T_1, T_2> &x, pair<T_1, T_2> &y) noexcept(noexcept(x.swap(y)))
+    // {
+    //     x.swap(y);
+    // };
+
 };
 
 template <class T1, class T2>
@@ -102,7 +118,6 @@ pair<T1, T2> make_pair(T1 x, T2 y)
 {
     return (pair<T1, T2>(x, y));
 }
-
 
 } // namespace ft
 
