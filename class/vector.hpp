@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   vector.hpp                                         :+:      :+:    :+:   */
+/*   Vector.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/14 22:06:29 by jrasser           #+#    #+#             */
-/*   Updated: 2022/09/11 22:40:54 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/09/12 13:48:57 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,10 +56,9 @@ public:
 	typedef T 											*pointer;
 	typedef const T 									*const_pointer;
 	typedef my_iterator<pointer>						iterator;
-	typedef my_iterator<const_pointer> const			const_iterator;
-	// typedef typename ft::iterator_traits<iterator>::difference_type   difference_type;
+	typedef my_iterator<const_pointer>					const_iterator;
 	typedef my_reverse_iterator<iterator> 				reverse_iterator;
-	typedef my_reverse_iterator<const_iterator> const	const_reverse_iterator;
+	typedef my_reverse_iterator<const_iterator> 		const_reverse_iterator;
 
 
 private:
@@ -276,7 +275,7 @@ for the element constructions, or if the range specified by [first,last) is not 
 it causes undefined behavior.
 */
 void assign( size_type count, const T& value ){
-	std::cout << "assign" << std::endl;
+	std::cout << "assign()" << std::endl;
 	for(size_type i = 0; i < _nb_elems; i++) {
 		_alloc.destroy(_start + i);
 	}
@@ -297,7 +296,7 @@ template <class InputIt>
 	void assign( InputIt first,
 				 typename enable_if<!ft::is_integral<InputIt>::value, InputIt>::type last )
 	{
-		std::cout << "template assign" << std::endl;
+		std::cout << "template assign()" << std::endl;
 		pointer new_start;
 		try
 		{
@@ -329,12 +328,12 @@ template <class InputIt>
 /* *************************************************** */
 
 iterator begin() {
-	std::cout << "iterator begin()" << std::endl;
+	// std::cout << "iterator begin()" << std::endl;
 	return iterator(this->_start);
 };
 
 const_iterator begin() const {
-	std::cout << "const_iterator begin()" << std::endl;
+	// std::cout << "const_iterator begin()" << std::endl;
 	return const_iterator(this->_start);
 	// return const_cast<Vector*>(this)->_start;
 };

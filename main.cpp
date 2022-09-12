@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/14 22:19:53 by jrasser           #+#    #+#             */
-/*   Updated: 2022/09/11 22:41:16 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/09/12 13:48:12 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -614,40 +614,38 @@ int main()
 
 
 
-	// std::cout << BLU "\nTEST equal() : " END << std::endl;
-	// // bool mypredicate(int i, int j)
-	// // {
-	// // 	return (i == j);
-	// // }
+	std::cout << BLU "\nTEST equal() : " END << std::endl;
+	// bool mypredicate(int i, int j)
+	// {
+	// 	return (i == j);
+	// }
 
-	// int myints[] = {20, 40, 60, 80, 100};		   //   myints: 20 40 60 80 100
-	// std::vector<int> myvector(myints, myints + 5); // myvector: 20 40 60 80 100
+	int myints[] = {20, 40, 60, 80, 100};		   //   myints: 20 40 60 80 100
+	std::vector<int> myvector(myints, myints + 5); // myvector: 20 40 60 80 100
 
-	// // using default comparison:
-	// if (std::equal(myvector.begin(), myvector.end(), myints))
-	// 	std::cout << "The contents of both sequences are equal.\n";
-	// else
-	// 	std::cout << "The contents of both sequences differ.\n";
+	// using default comparison:
+	if (std::equal(myvector.begin(), myvector.end(), myints))
+		std::cout << "The contents of both sequences are equal.\n";
+	else
+		std::cout << "The contents of both sequences differ.\n";
 
-	// if (ft::equal(myvector.begin(), myvector.end(), myints))
-	// 	std::cout << "The contents of both sequences are equal.\n";
-	// else
-	// 	std::cout << "The contents of both sequences differ.\n";
+	if (ft::equal(myvector.begin(), myvector.end(), myints))
+		std::cout << "The contents of both sequences are equal.\n";
+	else
+		std::cout << "The contents of both sequences differ.\n";
 
-	// myvector[3] = 81; // myvector: 20 40 60 81 100
+	myvector[3] = 81; // myvector: 20 40 60 81 100
 
-	// // using predicate comparison:
-	// if (std::equal(myvector.begin(), myvector.end(), myints, mypredicate))
-	// 	std::cout << "The contents of both sequences are equal.\n";
-	// else
-	// 	std::cout << "The contents of both sequences differ.\n";
+	// using predicate comparison:
+	if (std::equal(myvector.begin(), myvector.end(), myints, mypredicate))
+		std::cout << "The contents of both sequences are equal.\n";
+	else
+		std::cout << "The contents of both sequences differ.\n";
 
-	// if (ft::equal(myvector.begin(), myvector.end(), myints, mypredicate))
-	// 	std::cout << "The contents of both sequences are equal.\n\n\n";
-	// else
-	// 	std::cout << "The contents of both sequences differ.\n\n\n";
-
-
+	if (ft::equal(myvector.begin(), myvector.end(), myints, mypredicate))
+		std::cout << "The contents of both sequences are equal.\n\n\n";
+	else
+		std::cout << "The contents of both sequences differ.\n\n\n";
 
 
 
@@ -661,69 +659,30 @@ int main()
 
 
 
-	// std::cout << BLU "\nTEST lexicographically() : " END << std::endl;
-
-	// char foo[] = "Apple";
-	// char bar[] = "apartment";
-
-	// std::cout << std::boolalpha;
-
-	// std::cout << "Comparing foo and bar lexicographically (foo<bar):\n";
-
-	// std::cout << "Using default comparison (operator<): ";
-	// std::cout << std::lexicographical_compare(foo, foo + 5, bar, bar + 9);
-	// std::cout << '\n';
-	// std::cout << "Using default comparison (operator<): ";
-	// std::cout << ft::lexicographical_compare(foo, foo + 5, bar, bar + 9);
-	// std::cout << '\n';
-
-	// std::cout << "Using mycomp as comparison object: ";
-	// std::cout << std::lexicographical_compare(foo, foo + 5, bar, bar + 9, mycomp);
-	// std::cout << '\n';
-	// std::cout << "Using mycomp as comparison object: ";
-	// std::cout << ft::lexicographical_compare(foo, foo + 5, bar, bar + 9, mycomp);
-	// std::cout << "\n\n";
 
 
+	std::cout << BLU "\nTEST lexicographically() : " END << std::endl;
 
+	char foo[] = "Apple";
+	char bar[] = "apartment";
 
+	std::cout << std::boolalpha;
 
+	std::cout << "Comparing foo and bar lexicographically (foo<bar):\n";
 
+	std::cout << "Using default comparison (operator<): ";
+	std::cout << std::lexicographical_compare(foo, foo + 5, bar, bar + 9);
+	std::cout << '\n';
+	std::cout << "Using default comparison (operator<): ";
+	std::cout << ft::lexicographical_compare(foo, foo + 5, bar, bar + 9);
+	std::cout << '\n';
 
-	// std::cout << BLU "\nTEST Pair() : " END << std::endl;
-
-	// std::pair<int, char> foo1(10, 'z');
-	// std::pair<int, char> bar1(90, 'a');
-
-	// if (foo1 == bar1)
-	// 	std::cout << "foo1 and bar1 are equal\n";
-	// if (foo1 != bar1)
-	// 	std::cout << "foo1 and bar1 are not equal\n";
-	// if (foo1 < bar1)
-	// 	std::cout << "foo1 is less than bar1\n";
-	// if (foo1 > bar1)
-	// 	std::cout << "foo1 is greater than bar1\n";
-	// if (foo1 <= bar1)
-	// 	std::cout << "foo1 is less than or equal to bar1\n";
-	// if (foo1 >= bar1)
-	// 	std::cout << "foo1 is greater than or equal to bar1\n";
-
-
-	// ft::pair<int, char> foo2(10, 'z');
-	// ft::pair<int, char> bar2(90, 'a');
-
-	// if (foo2 == bar2)
-	// 	std::cout << "foo2 and bar2 are equal\n";
-	// if (foo2 != bar2)
-	// 	std::cout << "foo2 and bar2 are not equal\n";
-	// if (foo2 < bar2)
-	// 	std::cout << "foo2 is less than bar2\n";
-	// if (foo2 > bar2)
-	// 	std::cout << "foo2 is greater than bar2\n";
-	// if (foo2 <= bar2)
-	// 	std::cout << "foo2 is less than or equal to bar2\n";
-	// if (foo2 >= bar2)
-	// 	std::cout << "foo2 is greater than or equal to bar2\n";
+	std::cout << "Using mycomp as comparison object: ";
+	std::cout << std::lexicographical_compare(foo, foo + 5, bar, bar + 9, mycomp);
+	std::cout << '\n';
+	std::cout << "Using mycomp as comparison object: ";
+	std::cout << ft::lexicographical_compare(foo, foo + 5, bar, bar + 9, mycomp);
+	std::cout << "\n\n";
 
 
 
@@ -731,27 +690,68 @@ int main()
 
 
 
+	std::cout << BLU "\nTEST Pair() : " END << std::endl;
 
-	// std::cout << BLU "\nTEST make_pair() : " END << std::endl;
+	std::pair<int, char> foo1(10, 'z');
+	std::pair<int, char> bar1(90, 'a');
 
-	// std::pair<int, int> foo3;
-	// std::pair<int, int> bar3;
+	if (foo1 == bar1)
+		std::cout << "foo1 and bar1 are equal\n";
+	if (foo1 != bar1)
+		std::cout << "foo1 and bar1 are not equal\n";
+	if (foo1 < bar1)
+		std::cout << "foo1 is less than bar1\n";
+	if (foo1 > bar1)
+		std::cout << "foo1 is greater than bar1\n";
+	if (foo1 <= bar1)
+		std::cout << "foo1 is less than or equal to bar1\n";
+	if (foo1 >= bar1)
+		std::cout << "foo1 is greater than or equal to bar1\n";
 
-	// foo3 = std::make_pair(10, 20);
-	// bar3 = std::make_pair(10.5, 'A'); // ok: implicit conversion from pair<double,char>
 
-	// std::cout << "foo3: " << foo3.first << ", " << foo3.second << '\n';
-	// std::cout << "bar3: " << bar3.first << ", " << bar3.second << '\n';
+	ft::pair<int, char> foo2(10, 'z');
+	ft::pair<int, char> bar2(90, 'a');
+
+	if (foo2 == bar2)
+		std::cout << "foo2 and bar2 are equal\n";
+	if (foo2 != bar2)
+		std::cout << "foo2 and bar2 are not equal\n";
+	if (foo2 < bar2)
+		std::cout << "foo2 is less than bar2\n";
+	if (foo2 > bar2)
+		std::cout << "foo2 is greater than bar2\n";
+	if (foo2 <= bar2)
+		std::cout << "foo2 is less than or equal to bar2\n";
+	if (foo2 >= bar2)
+		std::cout << "foo2 is greater than or equal to bar2\n";
 
 
-	// ft::pair<int, int> foo4;
-	// ft::pair<int, int> bar4;
 
-	// foo4 = ft::make_pair(10, 20);
-	// bar4 = ft::make_pair(10.5, 'A'); // ok: implicit conversion from pair<double,char>
 
-	// std::cout << "foo4: " << foo4.first << ", " << foo4.second << '\n';
-	// std::cout << "bar4: " << bar4.first << ", " << bar4.second << '\n';
+
+
+
+
+	std::cout << BLU "\nTEST make_pair() : " END << std::endl;
+
+	std::pair<int, int> foo3;
+	std::pair<int, int> bar3;
+
+	foo3 = std::make_pair(10, 20);
+	bar3 = std::make_pair(10.5, 'A'); // ok: implicit conversion from pair<double,char>
+
+	std::cout << "foo3: " << foo3.first << ", " << foo3.second << '\n';
+	std::cout << "bar3: " << bar3.first << ", " << bar3.second << '\n';
+
+
+	ft::pair<int, int> foo4;
+	ft::pair<int, int> bar4;
+
+	foo4 = ft::make_pair(10, 20);
+	bar4 = ft::make_pair(10.5, 'A'); // ok: implicit conversion from pair<double,char>
+
+	std::cout << "foo4: " << foo4.first << ", " << foo4.second << '\n';
+	std::cout << "bar4: " << bar4.first << ", " << bar4.second << '\n';
 
 
 	// C++ 11
