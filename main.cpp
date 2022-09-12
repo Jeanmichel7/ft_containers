@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/14 22:19:53 by jrasser           #+#    #+#             */
-/*   Updated: 2022/09/12 13:51:29 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/09/12 18:01:01 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,31 @@
 #include <iostream>
 
 
-{ // function pair 
+// function pair 
 // bool mypredicate (int i, int j) {
 //   return (i==j);
 // }
 
 // bool mycomp (char c1, char c2)
 // { return std::tolower(c1)<std::tolower(c2); }
-}
+
+
+// display content of a map
+// template<typename Key, typename Value>
+// std::ostream& operator<<(std::ostream& os, std::map<Key, Value> const& m)
+// {
+//    os << "{ ";
+//    for(auto const& p: m)
+//         os << '(' << p.first << ':' << p.second << ") ";
+//    return os << "}\n";
+// }
+ 
+// struct Point { double x, y; };
+// struct PointCmp {
+//     bool operator()(const Point& lhs, const Point& rhs) const {
+//         return lhs.x < rhs.x; // NB. intentionally ignores y
+//     }
+// };
 
 int main()
 {
@@ -773,27 +790,45 @@ int main()
 	// // std::cout << "bar2 contains: " << bar2.first << " and " << bar2.second << '\n';
 }
 {
-	std::map<std::string, int> std_map();
-
 	// (1) Default constructor
 	std::map<std::string, int> map1;
 	map1["something"] = 69;
-	map1["anything"] = 199;
-	map1["that thing"] = 50;
-	std::cout << "map1 = " << map1;
+	std::cout << "map1[\"something\"] = " << map1["something"] << std::endl;
 
 	// (4) Range constructor
-	std::map<std::string, int> iter(map1.find("anything"), map1.end());
-	std::cout << "\niter = " << iter;
-	std::cout << "map1 = " << map1;
+	// std::map<std::string, int> iter(map1.find("anything"), map1.end());
+	// std::cout << "\niter = " << iter;
+	// std::cout << "map1 = " << map1;
 
-	// (6) Copy constructor
-	std::map<std::string, int> copied(map1);
-	std::cout << "\ncopied = " << copied;
-	std::cout << "map1 = " << map1;
+	// // (6) Copy constructor
+	// std::map<std::string, int> copied(map1);
+	// std::cout << "\ncopied = " << copied;
+	// std::cout << "map1 = " << map1;
+
+
+
+
+
+
+
+	ft::map<std::string, int> map2;
+	// map2["something"] = 69;
+	// std::cout << "map1[\"something\"] = " << map2["something"] << std::endl;
+
+
+
+
+
 
 
 
 }
+
+	
+
+	
+
+
+
 	return 0;
 }
