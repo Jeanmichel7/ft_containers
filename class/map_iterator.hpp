@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 15:27:13 by jrasser           #+#    #+#             */
-/*   Updated: 2022/09/12 16:08:07 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/09/13 14:33:22 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ namespace ft
 {
 
 template <class _TreeIterator>
-class __map_iterator
+class map_iterator
 {
     typedef typename _TreeIterator::_NodeTypes                   _NodeTypes;
     typedef typename _TreeIterator::__pointer_traits             __pointer_traits;
@@ -31,38 +31,38 @@ public:
     typedef value_type&                                          reference;
     typedef typename _NodeTypes::__map_value_type_pointer        pointer;
 
-    __map_iterator() : __i_() {}
-    __map_iterator(const _TreeIterator& __x) : __i_(__x) {}
+    map_iterator() : __i_() {}
+    map_iterator(const _TreeIterator& __x) : __i_(__x) {}
 
     reference operator*() const {return __i_->__get_value();}
     pointer operator->() const {return std::pointer_traits<pointer>::pointer_to(__i_->__get_value());}
 
-    __map_iterator& operator++() 
+    map_iterator& operator++() 
     {
         ++__i_;
         return *this;
     }
-    __map_iterator operator++(int)
+    map_iterator operator++(int)
     {
-        __map_iterator __t(*this);
+        map_iterator __t(*this);
         ++(*this);
         return __t;
     }
-    __map_iterator& operator--() 
+    map_iterator& operator--() 
     {
         --__i_;
         return *this;
     }
-    __map_iterator operator--(int)
+    map_iterator operator--(int)
     {
-        __map_iterator __t(*this);
+        map_iterator __t(*this);
         --(*this);
         return __t;
     }
 
-    friend bool operator==(const __map_iterator& __x, const __map_iterator& __y)
+    friend bool operator==(const map_iterator& __x, const map_iterator& __y)
         {return __x.__i_ == __y.__i_;}
-    friend bool operator!=(const __map_iterator& __x, const __map_iterator& __y)
+    friend bool operator!=(const map_iterator& __x, const map_iterator& __y)
         {return __x.__i_ != __y.__i_;}
 
     template <class, class, class, class> friend class map;
@@ -80,7 +80,7 @@ class  __map_const_iterator
     _TreeIterator __i_;
 
 public:
-    typedef std::bidirectional_iterator_tag                           iterator_category;
+    typedef std::bidirectional_iterator_tag                      iterator_category;
     typedef typename _NodeTypes::__map_value_type                value_type;
     typedef typename _TreeIterator::difference_type              difference_type;
     typedef const value_type&                                    reference;
@@ -90,7 +90,7 @@ public:
     // __map_const_iterator(const _TreeIterator& __x) : __i_(__x) {}
     __map_const_iterator(_TreeIterator __i) : __i_(__i) {}
 
-    __map_const_iterator(__map_iterator<
+    __map_const_iterator(map_iterator<
         typename _TreeIterator::__non_const_iterator> __i)
         : __i_(__i.__i_) {}
 

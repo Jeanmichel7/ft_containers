@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Vector.hpp                                         :+:      :+:    :+:   */
+/*   vector.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/14 22:06:29 by jrasser           #+#    #+#             */
-/*   Updated: 2022/09/12 13:48:57 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/09/12 22:28:59 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ public:
 	typedef my_iterator<const_pointer>					const_iterator;
 	typedef my_reverse_iterator<iterator> 				reverse_iterator;
 	typedef my_reverse_iterator<const_iterator> 		const_reverse_iterator;
+
 
 
 private:

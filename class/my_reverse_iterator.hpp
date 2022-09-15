@@ -6,12 +6,14 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/04 16:25:38 by jrasser           #+#    #+#             */
-/*   Updated: 2022/09/10 21:02:05 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/09/12 22:47:28 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MY_REVERE_ITERATOR
 # define MY_REVERE_ITERATOR
+
+#include "Iterator_traits.hpp"
 
 namespace ft
 {
