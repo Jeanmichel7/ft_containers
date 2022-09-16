@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 18:14:05 by jrasser           #+#    #+#             */
-/*   Updated: 2022/09/16 23:30:40 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/09/17 01:20:39 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ class map
 
 
 
-	class node
+	struct node
 	{
 	// private:
 		node						*_parent;
@@ -88,7 +88,8 @@ class map
 	
 private:
 	allocator_type	_alloc;
-	node			_root;
+	key_compare		_comp;
+	node			*_root;
 
 
 
@@ -99,32 +100,21 @@ public:
 	/*                                                     */
 	/* *************************************************** */
 
-	// map() :
-	// _alloc()
-	// {
-	// 	std::cout << "Constructor map()" << std::endl;
-	// };
-
-	explicit map(const Compare &comp,
+	explicit map(const Compare &comp = Compare(),
 				 const Allocator &alloc = Allocator())
-	:
-		_alloc(alloc)
+		: _alloc(alloc), _comp(comp), _root(NULL)
 	{
-		std::cout << "Constructor map(comp, alloc)" << std::endl;
-		_root._child_left = NULL;
-		_root._child_right = NULL;
-		_root._parent = NULL;
-		_root._content = NULL;
-	
+		std::cout << "CONSTRUCTOR map()" << std::endl;
 	};
 
 	template <class InputIt>
 	map(InputIt first, InputIt last,
 		const Compare &comp = Compare(),
 		const Allocator &alloc = Allocator()) 
-	{
-		std::cout << "Constructor map(first, last, comp, alloc)" << std::endl;
+		: _alloc(alloc), _comp(comp), _root(NULL)
 
+	{
+		std::cout << "CONSTRUCTOR map(first, last)" << std::endl;
 	};
 
 	map(const map &other)
@@ -164,7 +154,10 @@ public:
 
 	const T& at( const Key& key ) const;
 
-	T& operator[]( const Key& key );
+	T& operator[]( const Key& key )
+	{
+		
+	};
 
 
 
