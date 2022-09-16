@@ -6,14 +6,14 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/14 22:19:53 by jrasser           #+#    #+#             */
-/*   Updated: 2022/09/15 14:55:26 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/09/16 23:52:41 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 
-#include "utils.hpp"
-#include "pair.hpp"
+// #include "utils.hpp"
+// #include "pair.hpp"
 
 // #include <vector>
 // #include "vector.hpp"
@@ -35,14 +35,14 @@
 
 
 // display content of a map
-template<typename Key, typename Value>
-std::ostream& operator<<(std::ostream& os, std::map<Key, Value> const& m)
-{
-   os << "{ ";
-   for(auto const& p: m)
-        os << '(' << p.first << ':' << p.second << ") ";
-   return os << "}\n";
-}
+// template<typename Key, typename Value>
+// std::ostream& operator<<(std::ostream& os, std::map<Key, Value> const& m)
+// {
+//    os << "{ ";
+//    for(auto const& p: m)
+//         os << '(' << p.first << ':' << p.second << ") ";
+//    return os << "}\n";
+// }
  
 // struct Point { double x, y; };
 // struct PointCmp {
@@ -799,8 +799,8 @@ int main()
 
 	// (4) Range constructor
 	std::map<std::string, int> iter(map1.find("anything"), map1.end());
-	std::cout << "\niter = " << iter;
-	std::cout << "map1 = " << map1;
+	// std::cout << "\niter = " << iter;
+	// std::cout << "map1 = " << map1;
 
 	// // (6) Copy constructor
 	// std::map<std::string, int> copied(map1);
@@ -813,8 +813,10 @@ int main()
 
 
 
+
+
 	ft::map<std::string, int> map2;
-	map2["something"] = 69;
+	// map2["something"] = 69;
 	// std::cout << "map1[\"something\"] = " << map2["something"] << std::endl;
 
 
