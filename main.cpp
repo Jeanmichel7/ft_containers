@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/14 22:19:53 by jrasser           #+#    #+#             */
-/*   Updated: 2022/09/15 14:55:26 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/09/16 23:56:48 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -814,7 +814,7 @@ int main()
 
 
 	ft::map<std::string, int> map2;
-	map2["something"] = 69;
+	// map2["something"] = 69;
 	// std::cout << "map1[\"something\"] = " << map2["something"] << std::endl;
 
 

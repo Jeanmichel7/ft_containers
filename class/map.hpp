@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 18:14:05 by jrasser           #+#    #+#             */
-/*   Updated: 2022/09/15 15:00:47 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/09/16 23:59:28 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -343,295 +343,295 @@ public:
 		
 	};
 
-	/* *************************************************** */
-	/*                                                     */
-	/*                     ITERATORS                       */
-	/*                                                     */
-	/* *************************************************** */
+	// /* *************************************************** */
+	// /*                                                     */
+	// /*                     ITERATORS                       */
+	// /*                                                     */
+	// /* *************************************************** */
 	
 
-	iterator begin()
-	{
-		return (iterator(_begin));
-	}
+	// iterator begin()
+	// {
+	// 	return (iterator(_begin));
+	// }
 
-	const_iterator begin() const
-	{
-		return (const_iterator(_begin));
-	}
+	// const_iterator begin() const
+	// {
+	// 	return (const_iterator(_begin));
+	// }
 
-	iterator end()
-	{
-		return (iterator(_end));
-	}
+	// iterator end()
+	// {
+	// 	return (iterator(_end));
+	// }
 
-	const_iterator end() const
-	{
-		return (const_iterator(_end));
-	}
+	// const_iterator end() const
+	// {
+	// 	return (const_iterator(_end));
+	// }
 
-	reverse_iterator rbegin()
-	{
-		return (reverse_iterator(end()));
-	}
+	// reverse_iterator rbegin()
+	// {
+	// 	return (reverse_iterator(end()));
+	// }
 
-	const_reverse_iterator rbegin() const
-	{
-		return (const_reverse_iterator(end()));
-	}
+	// const_reverse_iterator rbegin() const
+	// {
+	// 	return (const_reverse_iterator(end()));
+	// }
 
-	reverse_iterator rend()
-	{
-		return (reverse_iterator(begin()));
-	}
+	// reverse_iterator rend()
+	// {
+	// 	return (reverse_iterator(begin()));
+	// }
 
-	const_reverse_iterator rend() const
-	{
-		return (const_reverse_iterator(begin()));
-	}
+	// const_reverse_iterator rend() const
+	// {
+	// 	return (const_reverse_iterator(begin()));
+	// }
 
-	bool empty() const
-	{
-		return (_size == 0);
-	}
+	// bool empty() const
+	// {
+	// 	return (_size == 0);
+	// }
 
-	size_type size() const
-	{
-		return (_size);
-	}
+	// size_type size() const
+	// {
+	// 	return (_size);
+	// }
 
-	size_type max_size() const
-	{
-		return (_alloc_value_type.max_size());
-	}
+	// size_type max_size() const
+	// {
+	// 	return (_alloc_value_type.max_size());
+	// }
+
+
+
+	// // /* *************************************************** */
+	// // /*                                                     */
+	// // /*                     ELEMENT ACCESS                  */
+	// // /*                                                     */
+	// // /* *************************************************** */
+
+	// T& at( const Key& key )
+	// {
+	// 	iterator it = find(key);
+	// 	if (it == end())
+	// 		throw std::out_of_range("map::at");
+	// 	return (*it);
+	// };
+
+	// mapped_type &operator[](const key_type &__k)
+	// {
+	// 	iterator it = lower_bound(__k);
+	// 	if (it == end() || _comp(__k, (*it).first))
+	// 		it = insert(it, value_type(__k, mapped_type()));
+	// 	return ((*it).second);
+	// }
+
+	// // /* *************************************************** */
+	// // /*                                                     */
+	// // /*                     MODIFIERS                       */
+	// // /*                                                     */
+	// // /* *************************************************** */
+
 
 
 
 	// /* *************************************************** */
 	// /*                                                     */
-	// /*                     ELEMENT ACCESS                  */
-	// /*                                                     */
-	// /* *************************************************** */
-
-	T& at( const Key& key )
-	{
-		iterator it = find(key);
-		if (it == end())
-			throw std::out_of_range("map::at");
-		return (*it);
-	};
-
-	mapped_type &operator[](const key_type &__k)
-	{
-		iterator it = lower_bound(__k);
-		if (it == end() || _comp(__k, (*it).first))
-			it = insert(it, value_type(__k, mapped_type()));
-		return ((*it).second);
-	}
-
-	// /* *************************************************** */
-	// /*                                                     */
-	// /*                     MODIFIERS                       */
+	// /*                     OBSERVERS                       */
 	// /*                                                     */
 	// /* *************************************************** */
 
 
+	// key_compare key_comp() const
+	// {
+	// 	return (_comp);
+	// }
 
-
-	/* *************************************************** */
-	/*                                                     */
-	/*                     OBSERVERS                       */
-	/*                                                     */
-	/* *************************************************** */
-
-
-	key_compare key_comp() const
-	{
-		return (_comp);
-	}
-
-	value_compare value_comp() const
-	{
-		return (value_compare(_comp));
-	}
+	// value_compare value_comp() const
+	// {
+	// 	return (value_compare(_comp));
+	// }
 
 
 
-	/* *************************************************** */
-	/*                                                     */
-	/*                       LOOKUP                        */
-	/*                                                     */
-	/* *************************************************** */
+	// /* *************************************************** */
+	// /*                                                     */
+	// /*                       LOOKUP                        */
+	// /*                                                     */
+	// /* *************************************************** */
 
 
-	iterator find(const key_type &__k)
-	{
-		node_ptr_type tmp = _root;
+	// iterator find(const key_type &__k)
+	// {
+	// 	node_ptr_type tmp = _root;
 
-		while (tmp != nullptr)
-		{
-			if (_comp(__k, tmp->_M_valptr()->first))
-				tmp = tmp->_M_left;
-			else if (_comp(tmp->_M_valptr()->first, __k))
-				tmp = tmp->_M_right;
-			else
-				return (iterator(tmp));
-		}
-		return (end());
-	}
+	// 	while (tmp != nullptr)
+	// 	{
+	// 		if (_comp(__k, tmp->_M_valptr()->first))
+	// 			tmp = tmp->_M_left;
+	// 		else if (_comp(tmp->_M_valptr()->first, __k))
+	// 			tmp = tmp->_M_right;
+	// 		else
+	// 			return (iterator(tmp));
+	// 	}
+	// 	return (end());
+	// }
 
-	const_iterator find(const key_type &__k) const
-	{
-		node_ptr_type tmp = _root;
+	// const_iterator find(const key_type &__k) const
+	// {
+	// 	node_ptr_type tmp = _root;
 
-		while (tmp != nullptr)
-		{
-			if (_comp(__k, tmp->_M_valptr()->first))
-				tmp = tmp->_M_left;
-			else if (_comp(tmp->_M_valptr()->first, __k))
-				tmp = tmp->_M_right;
-			else
-				return (const_iterator(tmp));
-		}
-		return (end());
-	}
+	// 	while (tmp != nullptr)
+	// 	{
+	// 		if (_comp(__k, tmp->_M_valptr()->first))
+	// 			tmp = tmp->_M_left;
+	// 		else if (_comp(tmp->_M_valptr()->first, __k))
+	// 			tmp = tmp->_M_right;
+	// 		else
+	// 			return (const_iterator(tmp));
+	// 	}
+	// 	return (end());
+	// }
 
-	size_type count(const key_type &__k) const
-	{
-		if (find(__k) == end())
-			return (0);
-		return (1);
-	}
+	// size_type count(const key_type &__k) const
+	// {
+	// 	if (find(__k) == end())
+	// 		return (0);
+	// 	return (1);
+	// }
 
-	iterator lower_bound(const key_type &__k)
-	{
-		iterator it = begin();
+	// iterator lower_bound(const key_type &__k)
+	// {
+	// 	iterator it = begin();
 
-		while (it != end())
-		{
-			if (!_comp(it->first, __k))
-				return (it);
-			it++;
-		}
-		return (end());
-	}
+	// 	while (it != end())
+	// 	{
+	// 		if (!_comp(it->first, __k))
+	// 			return (it);
+	// 		it++;
+	// 	}
+	// 	return (end());
+	// }
 
-	const_iterator lower_bound(const key_type &__k) const
-	{
-		const_iterator it = begin();
+	// const_iterator lower_bound(const key_type &__k) const
+	// {
+	// 	const_iterator it = begin();
 
-		while (it != end())
-		{
-			if (!_comp(it->first, __k))
-				return (it);
-			it++;
-		}
-		return (end());
-	}
+	// 	while (it != end())
+	// 	{
+	// 		if (!_comp(it->first, __k))
+	// 			return (it);
+	// 		it++;
+	// 	}
+	// 	return (end());
+	// }
 
-	iterator upper_bound(const key_type &__k)
-	{
-		iterator it = begin();
+	// iterator upper_bound(const key_type &__k)
+	// {
+	// 	iterator it = begin();
 
-		while (it != end())
-		{
-			if (_comp(__k, it->first))
-				return (it);
-			it++;
-		}
-		return (end());
-	}
+	// 	while (it != end())
+	// 	{
+	// 		if (_comp(__k, it->first))
+	// 			return (it);
+	// 		it++;
+	// 	}
+	// 	return (end());
+	// }
 
-	const_iterator upper_bound(const key_type &__k) const
-	{
-		const_iterator it = begin();
+	// const_iterator upper_bound(const key_type &__k) const
+	// {
+	// 	const_iterator it = begin();
 
-		while (it != end())
-		{
-			if (_comp(__k, it->first))
-				return (it);
-			it++;
-		}
-		return (end());
-	}
+	// 	while (it != end())
+	// 	{
+	// 		if (_comp(__k, it->first))
+	// 			return (it);
+	// 		it++;
+	// 	}
+	// 	return (end());
+	// }
 
-	pair<const_iterator, const_iterator> equal_range(const key_type &__k) const
-	{
-		return (make_pair(lower_bound(__k), upper_bound(__k)));
-	}
+	// pair<const_iterator, const_iterator> equal_range(const key_type &__k) const
+	// {
+	// 	return (make_pair(lower_bound(__k), upper_bound(__k)));
+	// }
 
-	pair<iterator, iterator> equal_range(const key_type &__k)
-	{
-		return (make_pair(lower_bound(__k), upper_bound(__k)));
-	}
+	// pair<iterator, iterator> equal_range(const key_type &__k)
+	// {
+	// 	return (make_pair(lower_bound(__k), upper_bound(__k)));
+	// }
 
 
-	/* *************************************************** */
-	/*                                                     */
-	/*                     OPERATOR                        */
-	/*                                                     */
-	/* *************************************************** */
+	// /* *************************************************** */
+	// /*                                                     */
+	// /*                     OPERATOR                        */
+	// /*                                                     */
+	// /* *************************************************** */
 
-	template <class O_Key, class O_T, class  O_Compare, class  O_Alloc>
-	bool operator==( const std::map<O_Key, O_T,  O_Compare,  O_Alloc> &rhs )
-	{
-		if (size() != rhs.size())
-			return (false);
-		typename std::map<O_Key, O_T,  O_Compare,  O_Alloc>::const_iterator it = begin();
-		typename std::map<O_Key, O_T,  O_Compare,  O_Alloc>::const_iterator ite = end();
-		typename std::map<O_Key, O_T,  O_Compare,  O_Alloc>::const_iterator it2 = rhs.begin();
-		while (it != ite)
-		{
-			if (*it != *it2)
-				return (false);
-			it++;
-			it2++;
-		}
-		return (true);
-	};
+	// template <class O_Key, class O_T, class  O_Compare, class  O_Alloc>
+	// bool operator==( const std::map<O_Key, O_T,  O_Compare,  O_Alloc> &rhs )
+	// {
+	// 	if (size() != rhs.size())
+	// 		return (false);
+	// 	typename std::map<O_Key, O_T,  O_Compare,  O_Alloc>::const_iterator it = begin();
+	// 	typename std::map<O_Key, O_T,  O_Compare,  O_Alloc>::const_iterator ite = end();
+	// 	typename std::map<O_Key, O_T,  O_Compare,  O_Alloc>::const_iterator it2 = rhs.begin();
+	// 	while (it != ite)
+	// 	{
+	// 		if (*it != *it2)
+	// 			return (false);
+	// 		it++;
+	// 		it2++;
+	// 	}
+	// 	return (true);
+	// };
 
-	template <class O_Key, class O_T, class  O_Compare, class  O_Alloc>
-	bool operator!=(const std::map<O_Key, O_T,  O_Compare,  O_Alloc> &rhs)
-	{
-		return (!(*this == rhs));
-	};
+	// template <class O_Key, class O_T, class  O_Compare, class  O_Alloc>
+	// bool operator!=(const std::map<O_Key, O_T,  O_Compare,  O_Alloc> &rhs)
+	// {
+	// 	return (!(*this == rhs));
+	// };
 
-	template <class O_Key, class O_T, class  O_Compare, class  O_Alloc>
-	bool operator<( const std::map<O_Key, O_T,  O_Compare,  O_Alloc> &rhs )
-	{
-		typename std::map<O_Key, O_T,  O_Compare,  O_Alloc>::const_iterator it = begin();
-		typename std::map<O_Key, O_T,  O_Compare,  O_Alloc>::const_iterator ite = end();
-		typename std::map<O_Key, O_T,  O_Compare,  O_Alloc>::const_iterator it2 = rhs.begin();
-		while (it != ite)
-		{
-			if (it2 == rhs.end() || *it2 < *it)
-				return (false);
-			else if (*it < *it2)
-				return (true);
-			it++;
-			it2++;
-		}
-		return (it2 != rhs.end());
-	};
+	// template <class O_Key, class O_T, class  O_Compare, class  O_Alloc>
+	// bool operator<( const std::map<O_Key, O_T,  O_Compare,  O_Alloc> &rhs )
+	// {
+	// 	typename std::map<O_Key, O_T,  O_Compare,  O_Alloc>::const_iterator it = begin();
+	// 	typename std::map<O_Key, O_T,  O_Compare,  O_Alloc>::const_iterator ite = end();
+	// 	typename std::map<O_Key, O_T,  O_Compare,  O_Alloc>::const_iterator it2 = rhs.begin();
+	// 	while (it != ite)
+	// 	{
+	// 		if (it2 == rhs.end() || *it2 < *it)
+	// 			return (false);
+	// 		else if (*it < *it2)
+	// 			return (true);
+	// 		it++;
+	// 		it2++;
+	// 	}
+	// 	return (it2 != rhs.end());
+	// };
 
-	template <class O_Key, class O_T, class  O_Compare, class  O_Alloc>
-	bool operator<=( const std::map<O_Key, O_T,  O_Compare,  O_Alloc> &rhs )
+	// template <class O_Key, class O_T, class  O_Compare, class  O_Alloc>
+	// bool operator<=( const std::map<O_Key, O_T,  O_Compare,  O_Alloc> &rhs )
 
-	{
-		return (!(rhs < *this));
-	};
+	// {
+	// 	return (!(rhs < *this));
+	// };
 
-	template <class O_Key, class O_T, class  O_Compare, class  O_Alloc>
-	bool operator>(const std::map<O_Key, O_T,  O_Compare,  O_Alloc> &rhs)
-	{
-		return (rhs < *this);
-	};
+	// template <class O_Key, class O_T, class  O_Compare, class  O_Alloc>
+	// bool operator>(const std::map<O_Key, O_T,  O_Compare,  O_Alloc> &rhs)
+	// {
+	// 	return (rhs < *this);
+	// };
 
-	template <class O_Key, class O_T, class  O_Compare, class  O_Alloc>
-	bool operator>=( const std::map<O_Key, O_T,  O_Compare,  O_Alloc> &rhs )
-	{
-		return (!(*this < rhs));
-	};
+	// template <class O_Key, class O_T, class  O_Compare, class  O_Alloc>
+	// bool operator>=( const std::map<O_Key, O_T,  O_Compare,  O_Alloc> &rhs )
+	// {
+	// 	return (!(*this < rhs));
+	// };
 
 
 

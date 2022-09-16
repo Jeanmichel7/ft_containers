@@ -6,7 +6,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Tue Sep 13 14:09:42 2022
+# Make data base, printed on Sat Sep 17 00:00:40 2022
 
 # Variables
 
@@ -16,6 +16,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 ?F = $(notdir $?)
 # environment
 WSLENV = ELECTRON_RUN_AS_NODE/w:WT_SESSION::WT_PROFILE_ID
+ 
 # default
 .SHELLFLAGS := -c
 # environment
@@ -55,7 +56,7 @@ VSCODE_CWD = /mnt/c/Users/michm/AppData/Local/Programs/Microsoft VS Code
 # default
 MAKE_HOST := x86_64-pc-linux-gnu
 # environment
-PATH = /home/jrasser/.vscode-server/bin/784b0177c56c607789f9638da7b6bf3230d47a8c/bin/remote-cli:/home/jrasser/.local/bin:/home/jrasser/bin:/home/jrasser/.nvm/versions/node/v16.14.2/bin:/home/jrasser/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/lib/wsl/lib:/mnt/c/Program Files (x86)/Common Files/Oracle/Java/javapath:/mnt/c/Windows/system32:/mnt/c/Windows:/mnt/c/Windows/System32/Wbem:/mnt/c/Windows/System32/WindowsPowerShell/v1.0/:/mnt/c/Windows/System32/OpenSSH/:/mnt/c/Program Files/NVIDIA Corporation/NVIDIA NvDLISR:/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common:/mnt/c/Program Files/Git/cmd:/mnt/c/Program Files/Docker/Docker/resources/bin:/mnt/c/ProgramData/DockerDesktop/version-bin:/mnt/c/WINDOWS/system32:/mnt/c/WINDOWS:/mnt/c/WINDOWS/System32/Wbem:/mnt/c/WINDOWS/System32/WindowsPowerShell/v1.0/:/mnt/c/WINDOWS/System32/OpenSSH/:/mnt/c/Program Files/Git LFS:/mnt/c/Program Files (x86)/Windows Kits/10/Windows Performance Toolkit/:/mnt/c/Program Files/dotnet/:/mnt/c/Users/michm/AppData/Local/Microsoft/WindowsApps:/mnt/c/Users/michm/AppData/Local/GitHubDesktop/bin:/mnt/c/Users/michm/AppData/Local/Programs/Microsoft VS Code/bin:/mnt/c/Users/michm/.dotnet/tools:/snap/bin
+PATH = /home/jrasser/.vscode-server/bin/74b1f979648cc44d385a2286793c226e611f59e7/bin/remote-cli:/home/jrasser/.local/bin:/home/jrasser/bin:/home/jrasser/.nvm/versions/node/v16.14.2/bin:/home/jrasser/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/lib/wsl/lib:/mnt/c/Program Files (x86)/Common Files/Oracle/Java/javapath:/mnt/c/Windows/system32:/mnt/c/Windows:/mnt/c/Windows/System32/Wbem:/mnt/c/Windows/System32/WindowsPowerShell/v1.0/:/mnt/c/Windows/System32/OpenSSH/:/mnt/c/Program Files/NVIDIA Corporation/NVIDIA NvDLISR:/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common:/mnt/c/Program Files/Git/cmd:/mnt/c/Program Files/Docker/Docker/resources/bin:/mnt/c/ProgramData/DockerDesktop/version-bin:/mnt/c/WINDOWS/system32:/mnt/c/WINDOWS:/mnt/c/WINDOWS/System32/Wbem:/mnt/c/WINDOWS/System32/WindowsPowerShell/v1.0/:/mnt/c/WINDOWS/System32/OpenSSH/:/mnt/c/Program Files/Git LFS:/mnt/c/Program Files (x86)/Windows Kits/10/Windows Performance Toolkit/:/mnt/c/Program Files/dotnet/:/mnt/c/Users/michm/AppData/Local/Microsoft/WindowsApps:/mnt/c/Users/michm/AppData/Local/GitHubDesktop/bin:/mnt/c/Users/michm/AppData/Local/Programs/Microsoft VS Code/bin:/mnt/c/Users/michm/.dotnet/tools:/snap/bin
 # makefile (from 'Makefile', line 21)
 NAME = prog
 # makefile (from 'Makefile', line 17)
@@ -67,7 +68,7 @@ NVM_BIN = /home/jrasser/.nvm/versions/node/v16.14.2/bin
 # environment
 ELECTRON_RUN_AS_NODE = 1
 # environment
-VSCODE_IPC_HOOK_CLI = /mnt/wslg/runtime-dir/vscode-ipc-09b64b57-11ed-4db4-b5c1-1fca32e8b328.sock
+VSCODE_IPC_HOOK_CLI = /mnt/wslg/runtime-dir/vscode-ipc-b2331dd4-c2fa-4658-bdd9-4d9892474f09.sock
 # default
 .FEATURES := target-specific order-only second-expansion else-if shortest-stem undefine oneshell archives jobserver output-sync check-symlink load
 # makefile (from 'Makefile', line 14)
@@ -83,13 +84,13 @@ PWD = /home/jrasser/42/ft_containers
 # default
 .LOADED := 
 # environment
-WSL_INTEROP = /run/WSL/9_interop
+WSL_INTEROP = /run/WSL/20198_interop
 # environment
 PULSE_SERVER = /mnt/wslg/PulseServer
 # makefile (from 'Makefile', line 13)
 BLU = \033[0;34m
 # environment
-WT_SESSION = 2457acf8-e61f-40e1-a4e5-47e55c1b24dc
+WT_SESSION = 2ed0cca6-d59f-4b94-9acc-51ec24a76b0d
 # environment
 VSCODE_AMD_ENTRYPOINT = vs/workbench/api/node/extensionHostProcess
 # environment
@@ -99,7 +100,7 @@ LESSCLOSE = /usr/bin/lesspipe %s %s
 # environment
 LOGNAME = jrasser
 # environment
-APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = 1
+APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = true
 # environment
 NVM_CD_FLAGS = 
 # environment
@@ -186,10 +187,8 @@ LANG = C
 TERM = xterm-256color
 # environment
 WSL_DISTRO_NAME = Ubuntu
-# environment
-MOTD_SHOWN = update-motd
 # variable set hash-table stats:
-# Load=89/1024=9%, Rehash=0, Collisions=11/133=8%
+# Load=88/1024=9%, Rehash=0, Collisions=11/119=9%
 
 # Pattern-specific Variable Values
 
@@ -197,10 +196,10 @@ MOTD_SHOWN = update-motd
 
 # Directories
 
-# . (device 2112, inode 350623): 14 files, no impossibilities.
-# srcs (device 2112, inode 350711): 2 files, no impossibilities.
+# . (device 2080, inode 350623): 15 files, no impossibilities.
+# srcs (device 2080, inode 350711): 2 files, no impossibilities.
 
-# 16 files, no impossibilities in 2 directories.
+# 17 files, no impossibilities in 2 directories.
 
 # Implicit Rules
 
@@ -223,27 +222,9 @@ objs/%.o: srcs/**%.cpp
 objs/main.o: main.cpp
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: 'main'
-#  File does not exist.
+#  Last modified 2022-09-17 00:00:08.250022
 #  File has been updated.
-#  Needs to be updated (-q is set).
-# automatic
-# @ := objs/main.o
-# automatic
-# % := 
-# automatic
-# * := main
-# automatic
-# + := main.cpp
-# automatic
-# | := 
-# automatic
-# < := main.cpp
-# automatic
-# ^ := main.cpp
-# automatic
-# ? := main.cpp
-# variable set hash-table stats:
-# Load=8/32=25%, Rehash=0, Collisions=4/24=17%
+#  Successfully updated.
 #  recipe to execute (from 'Makefile', line 31):
 			@mkdir -p $(OBJS_DIR)
 			@${CC} $(CPPFLAGS) -o $@ -c $< ${CFLAGS} ${DEBEUG}
@@ -255,9 +236,7 @@ all: prog
 #  Implicit rule search has not been done.
 #  File does not exist.
 #  File has been updated.
-#  Needs to be updated (-q is set).
-# variable set hash-table stats:
-# Load=0/32=0%, Rehash=0, Collisions=0/13=0%
+#  Successfully updated.
 
 .PHONY: all clean fclean re
 #  Implicit rule search has not been done.
@@ -267,25 +246,23 @@ all: prog
 # Not a target:
 Makefile:
 #  Implicit rule search has been done.
-#  Last modified 2022-09-10 19:09:20.290691
+#  Last modified 2022-09-17 00:00:06.300022
 #  File has been updated.
 #  Successfully updated.
 
 # Not a target:
 main.cpp:
 #  Implicit rule search has been done.
-#  Last modified 2022-09-12 22:41:32.188177
-#  File has been updated.
  
+#  Last modified 2022-09-16 23:56:48.618939
+#  File has been updated.
 #  Successfully updated.
 
 prog: objs/main.o
 #  Implicit rule search has not been done.
-#  File does not exist.
+#  Last modified 2022-09-17 00:00:08.410022
 #  File has been updated.
-#  Needs to be updated (-q is set).
-# variable set hash-table stats:
-# Load=0/32=0%, Rehash=0, Collisions=0/13=0%
+#  Successfully updated.
 #  recipe to execute (from 'Makefile', line 41):
 			@${CC} ${OBJS} -o $(NAME) ${CFLAGS} ${DEBEUG}
 			@echo "$(ERASE)$(GRN) [Successfully compiled]$(END)	$(CHECK) \n"
@@ -332,9 +309,9 @@ clean:
 # strcache buffers: 1 (0) / strings = 29 / storage = 243 B / avg = 8 B
 # current buf: size = 8162 B / used = 243 B / count = 29 / avg = 8 B
 
-# strcache performance: lookups = 54 / hit rate = 46%
+# strcache performance: lookups = 55 / hit rate = 47%
 # hash-table stats:
-# Load=29/8192=0%, Rehash=0, Collisions=2/54=4%
-# Finished Make data base on Tue Sep 13 14:09:42 2022
+# Load=29/8192=0%, Rehash=0, Collisions=2/55=4%
+# Finished Make data base on Sat Sep 17 00:00:40 2022
 
  

@@ -6,7 +6,7 @@
 #    By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/01 15:24:21 by jrasser           #+#    #+#              #
-#    Updated: 2022/09/15 13:09:50 by jrasser          ###   ########.fr        #
+#    Updated: 2022/09/17 00:00:06 by jrasser          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ NAME		= prog
 OBJS_DIR	= objs/
 OBJS		= $(addprefix $(OBJS_DIR), $(notdir $(SRCS:.cpp=.o)))
 RM			= @rm -rf
-CC			= g++ -std=c++98
+CC			= g++
 CFLAGS		= -Wall -Wextra
 CPPFLAGS	= -I. -I./class -I./includes
 DEBEUG		= -g -fsanitize=address

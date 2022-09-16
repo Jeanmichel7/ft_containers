@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 15:27:13 by jrasser           #+#    #+#             */
-/*   Updated: 2022/09/13 14:33:22 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/09/16 23:59:55 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ public:
     map_iterator(const _TreeIterator& __x) : __i_(__x) {}
 
     reference operator*() const {return __i_->__get_value();}
-    pointer operator->() const {return std::pointer_traits<pointer>::pointer_to(__i_->__get_value());}
+    // pointer operator->() const {return std::pointer_traits<pointer>::pointer_to(__i_->__get_value());}
 
     map_iterator& operator++() 
     {
@@ -75,7 +75,7 @@ template <class _TreeIterator>
 class  __map_const_iterator
 {
     typedef typename _TreeIterator::_NodeTypes                   _NodeTypes;
-    typedef typename _TreeIterator::__pointer_traits             __pointer_traits;
+    // typedef typename _TreeIterator::__pointer_traits             __pointer_traits;
 
     _TreeIterator __i_;
 
