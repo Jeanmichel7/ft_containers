@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 18:14:05 by jrasser           #+#    #+#             */
-/*   Updated: 2022/09/29 10:48:28 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/09/29 14:16:22 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,53 +56,57 @@ class map
 	typedef typename Allocator::const_pointer				const_pointer;
 
 
+	/* ************************************ */
+	/* 										*/
+	/* 					NODE 				*/
+	/* 										*/
+	/* ************************************ */
 
-		/* 					NODE 				*/
 	class node
 	{
 	public:
 		node						*_parent;
-		node						*_child_right;
-		node						*_child_left;
-		std::pair<const Key, T> 	_content;
+		node						*_right;
+		node						*_left;
+		ft::pair<const Key, T> 		_content;
 
 		node()
 		:
-			_parent(NULL), _child_right(NULL), _child_left(NULL), _content()
+			_parent(NULL), _right(NULL), _left(NULL), _content()
 		{
 			return ;
 		}
 
 		node(const node &src)
 		:
-			_parent(src._parent), _child_right(src._child_right), _child_left(src._child_left), _content(src._content)
+			_parent(src._parent), _right(src._right), _left(src._left), _content(src._content)
 		{
 			return ;
 		}
 
 		node(const ft::pair<const Key, T> &content)
 		:
-			_parent(NULL), _child_right(NULL), _child_left(NULL), _content(content)
+			_parent(NULL), _right(NULL), _left(NULL), _content(content)
 		{
 			return ;
 		}
 		
 		node(const ft::pair<const Key, T> &content, node *parent)
 		:
-			_parent(parent), _child_right(NULL), _child_left(NULL), _content(content)
+			_parent(parent), _right(NULL), _left(NULL), _content(content)
 		{
 			if (parent)
 			{
 				if (this->_content.first < parent->_content.first)
-					parent->_child_left = this;
+					parent->_left = this;
 				else
-					parent->_child_right = this;
+					parent->_right = this;
 			}
 		}
 
 		node(const ft::pair<const Key, T> &content, node *parent, node *child_right, node *child_left)
 		:
-			_parent(parent), _child_right(child_right), _child_left(child_left), _content(content)
+			_parent(parent), _right(child_right), _left(child_left), _content(content)
 		{
 
 		}
@@ -117,8 +121,8 @@ class map
 			if (this != &rhs)
 			{
 				this->_parent = rhs._parent;
-				this->_child_right = rhs._child_right;
-				this->_child_left = rhs._child_left;
+				this->_right = rhs._right;
+				this->_left = rhs._left;
 				this->_content = rhs._content;
 			}
 			return (*this);
@@ -153,7 +157,6 @@ class map
 		{
 			return (this->_content >= rhs._content);
 		}
-
 	};
 
 	class value_compare
@@ -172,7 +175,7 @@ class map
 
 
 	// typedef typename Allocator::template rebind<value_type>::other		value_alloc_type;
-	// typedef typename Allocator::template rebind<node>::other			node_alloc_type;
+	typedef typename Allocator::template rebind<node>::other			node_alloc_type;
 
 	// typedef typename node_alloc_type::pointer				node_pointer;
 	// typedef typename node_alloc_type::const_pointer			const_node_pointer;
@@ -196,10 +199,6 @@ class map
 	// 	key_compare			_comp;
 	// 	allocator_type		_alloc;
 
-
-
-
-
 template <class _TreeIterator>
 class map_iterator
 {
@@ -221,8 +220,15 @@ public:
 	typedef value_type											&reference;
 	typedef value_type        									*pointer;
 
+	map_iterator(node *node)
+	{
+		this->it = node;
+	}
 	map_iterator() : it() {}
-	map_iterator(const _TreeIterator& __x) : it(__x) {}
+	map_iterator(_TreeIterator const &src) : it(src) {}
+	~map_iterator() {}
+
+	// map_iterator(const _TreeIterator& __x) : it(__x) {}
 
 	reference operator*() const {return it->__get_value();}
 	pointer operator->() const {
@@ -324,9 +330,13 @@ public:
 	typedef typename std::reverse_iterator<const_iterator>	const_reverse_iterator;
 	
 private:
-	allocator_type	_alloc;
-	key_compare		_comp;
-	node			*_root;
+	allocator_type			_alloc;
+	node_alloc_type			_node_alloc;
+
+	key_compare				_comp;
+	size_type				_size;
+	node					*_root;
+	node					*_end;
 
 
 
@@ -342,6 +352,7 @@ public:
 		: _alloc(alloc), _comp(comp), _root(NULL)
 	{
 		std::cout << "CONSTRUCTOR map()" << std::endl;
+
 	};
 
 	template <class InputIt>
@@ -373,6 +384,7 @@ public:
 	{
 		
 	};
+
 
 
 
@@ -433,14 +445,11 @@ public:
 	/*                                                     */
 	/* *************************************************** */
 
-
 	bool empty() const;
 
 	size_type size() const;
 
 	size_type max_size() const;
-
-
 
 
 
@@ -456,11 +465,30 @@ public:
 	ft::pair<iterator, bool> insert( const value_type& value )
 	{
 		std::cout << "insert(value)" << std::endl;
+	
+		node *new_node = _node_alloc.allocate(1);
+		_node_alloc.construct(new_node, node(value));
+		new_node->_parent = NULL;
+		new_node->_left = NULL;
+		new_node->_right = NULL;
+		new_node->_content = value;
 
-		// node *new_node = new node(value);
+		_root = new_node;
+		
+		// return ft::make_pair(iterator(_root), true);
+		return ft::pair<iterator, bool>(iterator(new_node), true);
+		
+
+
+
+
+		// node *new_node = new node(value); //illegal instruction !
 		// node *tmp = _root;
 		// node *parent = NULL;
-		
+
+		// _root = new node(value);
+
+
 		// while (tmp != NULL)
 		// {
 		// 	parent = tmp;
@@ -471,10 +499,8 @@ public:
 		// 	else
 		// 		return ft::make_pair(iterator(tmp), false);
 		// }
-
-		return ft::make_pair(iterator(), true);
-
 	}
+
 
 	iterator insert( iterator hint, const value_type& value )
 	{

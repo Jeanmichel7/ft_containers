@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/10 22:40:08 by jrasser           #+#    #+#             */
-/*   Updated: 2022/09/29 10:42:43 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/09/29 12:30:22 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ struct pair
     
     template <class U, class V>
     pair(const pair<U, V>& pr) : first(pr.first), second(pr.second) {}
+
     pair& operator=(const pair& pr)
     {
         first = pr.first;

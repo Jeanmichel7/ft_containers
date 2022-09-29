@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/14 22:19:53 by jrasser           #+#    #+#             */
-/*   Updated: 2022/09/29 09:59:50 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/09/29 10:54:34 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -816,22 +816,12 @@ int main()
 
 
 
-
-
 	ft::map<std::string, int> map2;
 	map2.insert(ft::pair<std::string, int>("a", 1));
 	// std::cout << "map2[\"a\"] : " << map1["a"] << std::endl;
 
 	// map2["something"] = 69;
 	// std::cout << "map1[\"something\"] = " << map2["something"] << std::endl;
-
-
-
-
-
-
-
-
 }
 
 	

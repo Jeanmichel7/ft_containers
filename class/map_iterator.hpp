@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 15:27:13 by jrasser           #+#    #+#             */
-/*   Updated: 2022/09/29 09:20:31 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/09/29 12:25:08 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,9 @@ public:
 	// typedef value_type											&reference;
 	// typedef value_type        									*pointer;
 
-	map_iterator() : it() {}
+	map_iterator() : it() {
+		return ;
+	}
 	map_iterator(const _TreeIterator& __x) : it(__x) {}
 
 	reference operator*() const {return it->__get_value();}
