@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   map.hpp                                            :+:      :+:    :+:   */
+/*   Map.hpp                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 18:14:05 by jrasser           #+#    #+#             */
-/*   Updated: 2022/09/17 01:20:39 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/09/29 10:48:28 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,11 @@
 #ifndef __MAP_HPP__
 # define __MAP_HPP__
 
-#include "map_iterator.hpp"
+// #include "map_iterator.hpp"
 // #include "my_reverse_iterator.hpp"
 #include "enable_if.hpp"
 #include "is_integral.hpp"
+#include "pair.hpp"
 
 // #include <memory>
 // #include <cstddef>
@@ -43,7 +44,7 @@ class map
 
 	typedef Key												key_type;
 	typedef T												mapped_type;
-	typedef typename std::pair<const Key, T>				value_type;
+	typedef typename ft::pair<const Key, T>					value_type;
 	typedef typename std::size_t							size_type;
 	typedef typename std::ptrdiff_t							difference_type;
 	typedef Compare											key_compare;
@@ -54,20 +55,105 @@ class map
 	typedef typename Allocator::pointer						pointer;
 	typedef typename Allocator::const_pointer				const_pointer;
 
-	typedef map_iterator<value_type>						iterator;
-	typedef map_const_iterator<const value_type>			const_iterator;
-	typedef typename std::reverse_iterator<iterator>		reverse_iterator;
-	typedef typename std::reverse_iterator<const_iterator>	const_reverse_iterator;
 
 
-
-	struct node
+		/* 					NODE 				*/
+	class node
 	{
-	// private:
+	public:
 		node						*_parent;
 		node						*_child_right;
 		node						*_child_left;
 		std::pair<const Key, T> 	_content;
+
+		node()
+		:
+			_parent(NULL), _child_right(NULL), _child_left(NULL), _content()
+		{
+			return ;
+		}
+
+		node(const node &src)
+		:
+			_parent(src._parent), _child_right(src._child_right), _child_left(src._child_left), _content(src._content)
+		{
+			return ;
+		}
+
+		node(const ft::pair<const Key, T> &content)
+		:
+			_parent(NULL), _child_right(NULL), _child_left(NULL), _content(content)
+		{
+			return ;
+		}
+		
+		node(const ft::pair<const Key, T> &content, node *parent)
+		:
+			_parent(parent), _child_right(NULL), _child_left(NULL), _content(content)
+		{
+			if (parent)
+			{
+				if (this->_content.first < parent->_content.first)
+					parent->_child_left = this;
+				else
+					parent->_child_right = this;
+			}
+		}
+
+		node(const ft::pair<const Key, T> &content, node *parent, node *child_right, node *child_left)
+		:
+			_parent(parent), _child_right(child_right), _child_left(child_left), _content(content)
+		{
+
+		}
+
+		~node()
+		{
+			return;
+		}
+
+		node &operator=(const node &rhs)
+		{
+			if (this != &rhs)
+			{
+				this->_parent = rhs._parent;
+				this->_child_right = rhs._child_right;
+				this->_child_left = rhs._child_left;
+				this->_content = rhs._content;
+			}
+			return (*this);
+		}
+
+		bool operator==(const node &rhs) const
+		{
+			return (this->_content == rhs._content);
+		}
+
+		bool operator!=(const node &rhs) const
+		{
+			return (this->_content != rhs._content);
+		}
+
+		bool operator<(const node &rhs) const
+		{
+			return (this->_content < rhs._content);
+		}
+
+		bool operator<=(const node &rhs) const
+		{
+			return (this->_content <= rhs._content);
+		}
+
+		bool operator>(const node &rhs) const
+		{
+			return (this->_content > rhs._content);
+		}
+
+		bool operator>=(const node &rhs) const
+		{
+			return (this->_content >= rhs._content);
+		}
+
 	};
 
 	class value_compare
@@ -85,6 +171,157 @@ class map
 	};
 
 
+	// typedef typename Allocator::template rebind<value_type>::other		value_alloc_type;
+	// typedef typename Allocator::template rebind<node>::other			node_alloc_type;
+
+	// typedef typename node_alloc_type::pointer				node_pointer;
+	// typedef typename node_alloc_type::const_pointer			const_node_pointer;
+
+	// typedef typename value_alloc_type::pointer				value_pointer;
+	// typedef typename value_alloc_type::const_pointer		const_value_pointer;
+
+	// // typedef typename ft::map_iterator<value_type, node_pointer>			iterator;
+	// // typedef typename ft::map_iterator<value_type, const_node_pointer>	const_iterator;
+	// typedef typename ft::map_iterator<value_type>			iterator;
+	// typedef typename ft::map_iterator<value_type>	const_iterator;
+	// typedef typename ft::reverse_iterator<iterator>						reverse_iterator;
+	// typedef typename ft::reverse_iterator<const_iterator>				const_reverse_iterator;
+
+	// /* ATTRIBUTES */
+
+	// private:
+	// 	node_pointer		_root;
+	// 	node_pointer		_end;
+	// 	size_type			_size;
+	// 	key_compare			_comp;
+	// 	allocator_type		_alloc;
+
+
+
+
+
+template <class _TreeIterator>
+class map_iterator
+{
+protected:
+	_TreeIterator                                       	it;
+	// typedef ft::iterator_traits<_TreeIterator>          	traits_type;
+
+public:
+	// typedef _TreeIterator                                   iterator_type;
+	// typedef typename traits_type::iterator_category         iterator_category;
+	// typedef typename traits_type::value_type                value_type;
+	// typedef typename traits_type::difference_type           difference_type;
+	// typedef typename traits_type::pointer                   pointer;
+	// typedef typename traits_type::reference                 reference;
+
+	typedef std::bidirectional_iterator_tag                     iterator_category;
+	typedef value_type               							value_type;
+	typedef difference_type              						difference_type;
+	typedef value_type											&reference;
+	typedef value_type        									*pointer;
+
+	map_iterator() : it() {}
+	map_iterator(const _TreeIterator& __x) : it(__x) {}
+
+	reference operator*() const {return it->__get_value();}
+	pointer operator->() const {
+		return std::addressof(it->__get_value());
+	};
+
+	map_iterator& operator++() 
+	{
+		++it;
+		return *this;
+	}
+	map_iterator operator++(int)
+	{
+		map_iterator __t(*this);
+		++(*this);
+		return __t;
+	}
+	map_iterator& operator--() 
+	{
+		--it;
+		return *this;
+	}
+	map_iterator operator--(int)
+	{
+		map_iterator __t(*this);
+		--(*this);
+		return __t;
+	}
+
+	friend bool operator==(const map_iterator& __x, const map_iterator& __y)
+		{return __x.it == __y.it;}
+	friend bool operator!=(const map_iterator& __x, const map_iterator& __y)
+		{return __x.it != __y.it;}
+
+	template <class, class, class, class> friend class map;
+	template <class> friend class map_const_iterator;
+};
+
+template <class _TreeIterator>
+class  map_const_iterator
+{
+	// typedef typename _TreeIterator::_NodeTypes                   _NodeTypes;
+	// typedef typename _TreeIterator::__pointer_traits             __pointer_traits;
+	_TreeIterator it;
+
+public:
+	typedef std::bidirectional_iterator_tag                     iterator_category;
+	typedef value_type               							value_type;
+	typedef difference_type              						difference_type;
+	typedef value_type const									&reference;
+	typedef value_type const        							*pointer;
+
+	map_const_iterator() {}
+	// map_const_iterator(const _TreeIterator& __x) : it(__x) {}
+	map_const_iterator(_TreeIterator __i) : it(__i) {}
+
+	map_const_iterator(map_iterator<
+		typename _TreeIterator::__non_const_iterator> __i)
+		: it(__i.it) {}
+
+	reference operator*() const {return it->__get_value();}
+
+	pointer operator->() const {
+		return std::addressof(it->__get_value());
+	};
+	// pointer operator->() const {return std::pointer_traits<pointer>::pointer_to(it->__get_value());}
+
+	map_const_iterator& operator++() {++it; return *this;}
+	map_const_iterator operator++(int)
+	{
+		map_const_iterator __t(*this);
+		++(*this);
+		return __t;
+	}
+
+	
+	map_const_iterator& operator--() {--it; return *this;}
+	map_const_iterator operator--(int)
+	{
+		map_const_iterator __t(*this);
+		--(*this);
+		return __t;
+	}
+
+	friend bool operator==(const map_const_iterator& __x, const map_const_iterator& __y)
+		{return __x.it == __y.it;}
+	friend bool operator!=(const map_const_iterator& __x, const map_const_iterator& __y)
+		{return __x.it != __y.it;}
+
+	template <class, class, class, class> friend class map;
+	template <class, class, class, class> friend class multimap;
+	template <class, class, class> friend class __tree_const_iterator;
+};
+
+
+	typedef map_iterator<value_type>						iterator;
+	typedef map_const_iterator<const value_type>			const_iterator;
+	typedef typename std::reverse_iterator<iterator>		reverse_iterator;
+	typedef typename std::reverse_iterator<const_iterator>	const_reverse_iterator;
 	
 private:
 	allocator_type	_alloc;
@@ -112,7 +349,6 @@ public:
 		const Compare &comp = Compare(),
 		const Allocator &alloc = Allocator()) 
 		: _alloc(alloc), _comp(comp), _root(NULL)
-
 	{
 		std::cout << "CONSTRUCTOR map(first, last)" << std::endl;
 	};
@@ -130,7 +366,7 @@ public:
 
 	map& operator=( const map& other )
 	{
-
+		
 	};
 
 	allocator_type get_allocator() const
@@ -157,7 +393,7 @@ public:
 	T& operator[]( const Key& key )
 	{
 		
-	};
+	}
 
 
 
@@ -217,9 +453,34 @@ public:
 
 	void clear();
 
-	std::pair<iterator, bool> insert( const value_type& value );
+	ft::pair<iterator, bool> insert( const value_type& value )
+	{
+		std::cout << "insert(value)" << std::endl;
 
-	iterator insert( iterator hint, const value_type& value );
+		// node *new_node = new node(value);
+		// node *tmp = _root;
+		// node *parent = NULL;
+		
+		// while (tmp != NULL)
+		// {
+		// 	parent = tmp;
+		// 	if (_comp(value.first, tmp->_value.first))
+		// 		tmp = tmp->_left;
+		// 	else if (_comp(tmp->_value.first, value.first))
+		// 		tmp = tmp->_right;
+		// 	else
+		// 		return ft::make_pair(iterator(tmp), false);
+		// }
+
+		return ft::make_pair(iterator(), true);
+
+	}
+
+	iterator insert( iterator hint, const value_type& value )
+	{
+		std::cout << "insert(hint, value)" << std::endl;
+		return iterator();
+	}
 
 	template< class InputIt >
 	void insert( InputIt first, InputIt last );

@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/14 22:19:53 by jrasser           #+#    #+#             */
-/*   Updated: 2022/09/16 23:52:41 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/09/29 09:59:50 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -792,13 +792,16 @@ int main()
 {
 	// (1) Default constructor
 	std::map<std::string, int> map1;
-	map1["something"] = 69;
-	map1["anything"] = 199;
-  	map1["that thing"] = 50;
-	std::cout << "map1[\"something\"] = " << map1["something"] << std::endl;
+
+	map1.insert(std::pair<std::string, int>("a", 1));
+	// map1["something"] = 69;
+	// map1["anything"] = 199;
+  	// map1["that thing"] = 50;
+	// std::cout << "map1[\"something\"] = " << map1["something"] << std::endl;
+	std::cout << "map1[\"a\"] : " << map1["a"] << std::endl;
 
 	// (4) Range constructor
-	std::map<std::string, int> iter(map1.find("anything"), map1.end());
+	// std::map<std::string, int> iter(map1.find("anything"), map1.end());
 	// std::cout << "\niter = " << iter;
 	// std::cout << "map1 = " << map1;
 
@@ -816,6 +819,9 @@ int main()
 
 
 	ft::map<std::string, int> map2;
+	map2.insert(ft::pair<std::string, int>("a", 1));
+	// std::cout << "map2[\"a\"] : " << map1["a"] << std::endl;
+
 	// map2["something"] = 69;
 	// std::cout << "map1[\"something\"] = " << map2["something"] << std::endl;
 
