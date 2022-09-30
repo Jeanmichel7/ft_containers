@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/14 22:19:53 by jrasser           #+#    #+#             */
-/*   Updated: 2022/09/30 12:49:02 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/09/30 14:16:01 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -798,7 +798,7 @@ int main()
 	// map1["anything"] = 199;
   	// map1["that thing"] = 50;
 	// std::cout << "map1[\"something\"] = " << map1["something"] << std::endl;
-	std::cout << "map1[\"a\"] : " << map1["a"] << std::endl;
+	// std::cout << "map1[\"a\"] : " << map1["a"] << std::endl;
 
 	// (4) Range constructor
 	// std::map<std::string, int> iter(map1.find("anything"), map1.end());

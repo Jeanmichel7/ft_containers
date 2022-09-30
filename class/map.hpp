@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 18:14:05 by jrasser           #+#    #+#             */
-/*   Updated: 2022/09/30 12:49:31 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/09/30 14:38:59 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,15 @@
 #include "is_integral.hpp"
 #include "pair.hpp"
 
+#include "rbtree.hpp"
+
 // #include <memory>
 // #include <cstddef>
 // #include <iterator>
 #include <iostream>
 #include <exception>
-
 // #include <limits>
+
 
 namespace ft
 {
@@ -39,6 +41,7 @@ template <
 >
 class map
 {
+	
 
 	/* DEFINITION */
 
@@ -56,109 +59,6 @@ class map
 	typedef typename Allocator::const_pointer				const_pointer;
 
 
-	/* ************************************ */
-	/* 										*/
-	/* 					NODE 				*/
-	/* 										*/
-	/* ************************************ */
-
-	class node
-	{
-	public:
-		node						*_parent;
-		node						*_right;
-		node						*_left;
-		ft::pair<const Key, T> 		_content;
-
-		node()
-		:
-			_parent(NULL), _right(NULL), _left(NULL), _content()
-		{
-			return ;
-		}
-
-		node(const node &src)
-		:
-			_parent(src._parent), _right(src._right), _left(src._left), _content(src._content)
-		{
-			return ;
-		}
-
-		node(const ft::pair<const Key, T> &content)
-		:
-			_parent(NULL), _right(NULL), _left(NULL), _content(content)
-		{
-			return ;
-		}
-		
-		node(const ft::pair<const Key, T> &content, node *parent)
-		:
-			_parent(parent), _right(NULL), _left(NULL), _content(content)
-		{
-			if (parent)
-			{
-				if (this->_content.first < parent->_content.first)
-					parent->_left = this;
-				else
-					parent->_right = this;
-			}
-		}
-
-		node(const ft::pair<const Key, T> &content, node *parent, node *child_right, node *child_left)
-		:
-			_parent(parent), _right(child_right), _left(child_left), _content(content)
-		{
-
-		}
-
-		~node()
-		{
-			return;
-		}
-
-		node &operator=(const node &rhs)
-		{
-			if (*this != rhs)
-			{
-				this->_parent = rhs._parent;
-				this->_right = rhs._right;
-				this->_left = rhs._left;
-				this->_content = rhs._content;
-			}
-			return (*this);
-		}
-
-		bool operator==(const node &rhs) const
-		{
-			return (this->_content == rhs._content);
-		}
-
-		bool operator!=(const node &rhs) const
-		{
-			return (this->_content != rhs._content);
-		}
-
-		bool operator<(const node &rhs) const
-		{
-			return (this->_content < rhs._content);
-		}
-
-		bool operator<=(const node &rhs) const
-		{
-			return (this->_content <= rhs._content);
-		}
-
-		bool operator>(const node &rhs) const
-		{
-			return (this->_content > rhs._content);
-		}
-
-		bool operator>=(const node &rhs) const
-		{
-			return (this->_content >= rhs._content);
-		}
-	};
-
 	class value_compare
 	{
 		typedef bool 			result_type;
@@ -172,145 +72,23 @@ class map
 		value_compare( Compare c );
 		bool operator()( const value_type& lhs, const value_type& rhs ) const;
 	};
+	// typedef typename Allocator::template rebind<Node>::other			node_alloc_type;
 
-	typedef typename Allocator::template rebind<value_type>::other		value_alloc_type;
-	typedef typename Allocator::template rebind<node>::other			node_alloc_type;
+	typedef typename ft::RedBlackTree<value_type, key_compare>::iterator 		iterator;
+	typedef typename ft::RedBlackTree<value_type, key_compare>::const_iterator 	const_iterator;
 
-	// typedef typename node_alloc_type::pointer				node_pointer;
-	// typedef typename node_alloc_type::const_pointer			const_node_pointer;
 
-	typedef typename value_alloc_type::pointer				value_pointer;
-	// typedef typename value_alloc_type::const_pointer		const_value_pointer;
-
-template <class _TreeIterator>
-class map_iterator
-{
-protected:
-	_TreeIterator										it;
-
-public:
-	typedef std::bidirectional_iterator_tag				iterator_category;
-	typedef value_type               					value_type;
-	typedef difference_type              				difference_type;
-	typedef value_type									&reference;
-	typedef value_type        							*pointer;
-
-	map_iterator() : it() {}
-	map_iterator(node *node) : it(node->_content.first, node->_content.second) { }
-	map_iterator(_TreeIterator const &src) : it(src) {}
-	~map_iterator() {}
-
-	reference operator*() const {
-		return it->__get_value();
-	}
-	pointer operator->() const {
-		return std::addressof(it->__get_value());
-	};
-
-	map_iterator& operator++()  {
-		++it;
-		return *this;
-	}
-	map_iterator operator++(int) {
-		map_iterator __t(*this);
-		++(*this);
-		return __t;
-	}
-	map_iterator& operator--()  {
-		--it;
-		return *this;
-	}
-	map_iterator operator--(int) {
-		map_iterator __t(*this);
-		--(*this);
-		return __t;
-	}
-
-	friend bool operator==(const map_iterator& __x, const map_iterator& __y)
-		{return __x.it == __y.it;}
-	friend bool operator!=(const map_iterator& __x, const map_iterator& __y)
-		{return __x.it != __y.it;}
-
-	template <class, class, class, class> friend class map;
-	template <class> friend class map_const_iterator;
-};
-
-template <class _TreeIterator>
-class  map_const_iterator
-{
-	// typedef typename _TreeIterator::_NodeTypes                   _NodeTypes;
-	// typedef typename _TreeIterator::__pointer_traits             __pointer_traits;
-	_TreeIterator it;
-
-public:
-	typedef std::bidirectional_iterator_tag                     iterator_category;
-	typedef value_type               							value_type;
-	typedef difference_type              						difference_type;
-	typedef value_type const									&reference;
-	typedef value_type const        							*pointer;
-
-	map_const_iterator() {}
-	// map_const_iterator(const _TreeIterator& __x) : it(__x) {}
-	map_const_iterator(_TreeIterator __i) : it(__i) {}
-
-	map_const_iterator(map_iterator<
-		typename _TreeIterator::__non_const_iterator> __i)
-		: it(__i.it) {}
-
-	reference operator*() const {return it->__get_value();}
-
-	pointer operator->() const {
-		return std::addressof(it->__get_value());
-	};
-	// pointer operator->() const {return std::pointer_traits<pointer>::pointer_to(it->__get_value());}
-
-	map_const_iterator& operator++() {++it; return *this;}
-	map_const_iterator operator++(int)
-	{
-		map_const_iterator __t(*this);
-		++(*this);
-		return __t;
-	}
-
-	
-	map_const_iterator& operator--() {--it; return *this;}
-	map_const_iterator operator--(int)
-	{
-		map_const_iterator __t(*this);
-		--(*this);
-		return __t;
-	}
-
-	friend bool operator==(const map_const_iterator& __x, const map_const_iterator& __y)
-		{return __x.it == __y.it;}
-	friend bool operator!=(const map_const_iterator& __x, const map_const_iterator& __y)
-		{return __x.it != __y.it;}
-
-	template <class, class, class, class> friend class map;
-	template <class, class, class, class> friend class multimap;
-	template <class, class, class> friend class __tree_const_iterator;
-};
-
-	// // typedef typename ft::map_iterator<value_type, node_pointer>			iterator;
-	// // typedef typename ft::map_iterator<value_type, const_node_pointer>	const_iterator;
-	// typedef typename ft::map_iterator<value_type>			iterator;
-	// typedef typename ft::map_iterator<value_type>	const_iterator;
-	// typedef typename ft::reverse_iterator<iterator>						reverse_iterator;
-	// typedef typename ft::reverse_iterator<const_iterator>				const_reverse_iterator;
-	
-	typedef map_iterator<value_type>						iterator;
-	typedef map_const_iterator<const value_type>			const_iterator;
-	typedef typename std::reverse_iterator<iterator>		reverse_iterator;
-	typedef typename std::reverse_iterator<const_iterator>	const_reverse_iterator;
 
 private:
 	allocator_type			_alloc;
-	node_alloc_type			_node_alloc;
+	// node_alloc_type			_node_alloc;
 
-	key_compare				_comp;
-	size_type				_size;
-	node					*_root;
-	node					*_end;
+	key_compare								_comp;
+	// size_type							_size;
+	RedBlackTree<value_type, key_compare>	_tree;
+	
+	// Node					*_root;
+	// Node					*_end;
 
 
 public:
@@ -322,7 +100,7 @@ public:
 
 	explicit map(const Compare &comp = Compare(),
 				 const Allocator &alloc = Allocator())
-		: _alloc(alloc), _comp(comp), _root(NULL), _size(0)
+		: _alloc(alloc), _comp(comp), _size(0)
 	{
 		std::cout << "CONSTRUCTOR map()" << std::endl;
 	};
@@ -331,7 +109,7 @@ public:
 	map(InputIt first, InputIt last,
 		const Compare &comp = Compare(),
 		const Allocator &alloc = Allocator()) 
-		: _alloc(alloc), _comp(comp), _root(NULL), _size(0)
+		: _alloc(alloc), _comp(comp), _size(0)
 	{
 		std::cout << "CONSTRUCTOR map(first, last)" << std::endl;
 	};
@@ -440,19 +218,19 @@ public:
 	{
 		// std::cout << "insert(value)" << std::endl;
 	
-		if (_size == 0)
-		{
-			node *new_node = _node_alloc.allocate(1);
-			_node_alloc.construct(new_node, node(value));
-			_root = new_node;
-			_size++;
-			return ft::make_pair(iterator(new_node), true);
-		}
-		else
-		{
-			// verifie pas de double key
-			std::cout << "insert(value) else" << std::endl;
-		}
+		// if (_size == 0)
+		// {
+		// 	Node *new_node = _node_alloc.allocate(1);
+		// 	_node_alloc.construct(new_node, node(value));
+		// 	_root = new_node;
+		// 	_size++;
+		// 	return ft::make_pair(iterator(new_node), true);
+		// }
+		// else
+		// {
+		// 	// verifie pas de double key
+		// 	std::cout << "insert(value) else" << std::endl;
+		// }
 		// return ft::pair<iterator, bool>(iterator(new_node), true);
 
 
