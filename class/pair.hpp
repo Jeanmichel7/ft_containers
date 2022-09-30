@@ -6,12 +6,13 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/10 22:40:08 by jrasser           #+#    #+#             */
-/*   Updated: 2022/09/11 17:20:13 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/09/30 10:24:30 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PAIR_HPP
 #define PAIR_HPP
+#include <utility>
 
 namespace ft
 {
@@ -33,12 +34,16 @@ struct pair
 
     pair() : first(T1()), second(T2()) {}
 
-    pair(const T1& a, const T2& b) : first(a), second(b) {}
     
     template <class U, class V>
     pair(const pair<U, V>& pr) : first(pr.first), second(pr.second) {}
+
+    pair(const T1& a, const T2& b) : first(a), second(b) {}
+    
     pair& operator=(const pair& pr)
     {
+        if (*this == pr)
+            return *this;
         first = pr.first;
         second = pr.second;
         return *this;
@@ -112,6 +117,38 @@ struct pair
     // };
 
 };
+
+
+
+// template <class _Tp>
+// struct decay
+// {
+// private:
+//     typedef typename std::remove_reference<_Tp>::type _Up;
+// public:
+//     typedef typename std::__decay<_Up, std::__is_referenceable<_Up>::value>::type type;
+// };
+
+// template <class _Tp>
+// struct __unwrap_ref_decay: std::__unwrap_reference<typename decay<_Tp>::type>
+// { };
+
+// template <class _T1, class _T2>
+// inline pair<typename decay<_T1>::type, typename decay<_T2>::type>
+// make_pair(_T1 __x, _T2 __y)
+// {
+//     typedef typename decay<_T1>::type __decay_t1;
+//     typedef typename decay<_T2>::type __decay_t2;
+//     return pair<__decay_t1, __decay_t2>(std::forward<_T1>(__x),
+//                                         std::forward<_T2>(__y));
+// }
+
+// pair<typename __unwrap_ref_decay<_T1>::type, typename __unwrap_ref_decay<_T2>::type>
+// make_pair(_T1&& __t1, _T2&& __t2)
+// {
+//     return pair<typename __unwrap_ref_decay<_T1>::type, typename __unwrap_ref_decay<_T2>::type>
+//                (_VSTD::forward<_T1>(__t1), _VSTD::forward<_T2>(__t2));
+// }
 
 template <class T1, class T2>
 pair<T1, T2> make_pair(T1 x, T2 y)
