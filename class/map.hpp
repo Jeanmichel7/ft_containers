@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Map.hpp                                            :+:      :+:    :+:   */
+/*   map.hpp                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 18:14:05 by jrasser           #+#    #+#             */
-/*   Updated: 2022/09/30 14:38:59 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/09/30 19:15:33 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,20 +15,18 @@
 # define __MAP_HPP__
 
 // #include "map_iterator.hpp"
-// #include "my_reverse_iterator.hpp"
+#include "my_reverse_iterator.hpp"
 #include "enable_if.hpp"
 #include "is_integral.hpp"
 #include "pair.hpp"
 
 #include "rbtree.hpp"
-
 // #include <memory>
 // #include <cstddef>
 // #include <iterator>
 #include <iostream>
 #include <exception>
 // #include <limits>
-
 
 namespace ft
 {
@@ -41,8 +39,6 @@ template <
 >
 class map
 {
-	
-
 	/* DEFINITION */
 
 	typedef Key												key_type;
@@ -76,8 +72,8 @@ class map
 
 	typedef typename ft::RedBlackTree<value_type, key_compare>::iterator 		iterator;
 	typedef typename ft::RedBlackTree<value_type, key_compare>::const_iterator 	const_iterator;
-
-
+	typedef typename ft::my_reverse_iterator<iterator>    						reverse_iterator;
+	typedef typename ft::my_reverse_iterator<const_iterator> 					const_reverse_iterator;
 
 private:
 	allocator_type			_alloc;
@@ -100,7 +96,7 @@ public:
 
 	explicit map(const Compare &comp = Compare(),
 				 const Allocator &alloc = Allocator())
-		: _alloc(alloc), _comp(comp), _size(0)
+		: _alloc(alloc), _comp(comp)
 	{
 		std::cout << "CONSTRUCTOR map()" << std::endl;
 	};
@@ -109,7 +105,7 @@ public:
 	map(InputIt first, InputIt last,
 		const Compare &comp = Compare(),
 		const Allocator &alloc = Allocator()) 
-		: _alloc(alloc), _comp(comp), _size(0)
+		: _alloc(alloc), _comp(comp)
 	{
 		std::cout << "CONSTRUCTOR map(first, last)" << std::endl;
 	};
@@ -197,9 +193,7 @@ public:
 
 	bool empty() const;
 
-	size_type size() const {
-		return _size;
-	}
+	size_type size() const;
 
 	size_type max_size() const;
 
@@ -216,42 +210,7 @@ public:
 
 	ft::pair<iterator, bool> insert( const value_type& value )
 	{
-		// std::cout << "insert(value)" << std::endl;
-	
-		// if (_size == 0)
-		// {
-		// 	Node *new_node = _node_alloc.allocate(1);
-		// 	_node_alloc.construct(new_node, node(value));
-		// 	_root = new_node;
-		// 	_size++;
-		// 	return ft::make_pair(iterator(new_node), true);
-		// }
-		// else
-		// {
-		// 	// verifie pas de double key
-		// 	std::cout << "insert(value) else" << std::endl;
-		// }
-		// return ft::pair<iterator, bool>(iterator(new_node), true);
-
-
-
-		// node *new_node = new node(value); //illegal instruction !
-		// node *tmp = _root;
-		// node *parent = NULL;
-
-		// _root = new node(value);
-
-
-		// while (tmp != NULL)
-		// {
-		// 	parent = tmp;
-		// 	if (_comp(value.first, tmp->_value.first))
-		// 		tmp = tmp->_left;
-		// 	else if (_comp(tmp->_value.first, value.first))
-		// 		tmp = tmp->_right;
-		// 	else
-		// 		return ft::make_pair(iterator(tmp), false);
-		// }
+		return (_tree.insert_node(value));
 	}
 
 

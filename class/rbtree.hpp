@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 12:54:45 by jrasser           #+#    #+#             */
-/*   Updated: 2022/09/30 14:39:28 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/09/30 19:22:42 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,32 +14,59 @@
 #define RBTREE_HPP
 
 #include <iostream>
+#include "utils.hpp"
+#include "rbtree_iterator.hpp"
 
 using namespace std;
 
 namespace ft
 {
 
+// struct Node
+// {
+// 	int     _content;
+// 	Node 	*_parent;
+// 	Node 	*_left;
+// 	Node 	*_right;
+// 	int 	_color;
+// };
 
-struct Node
-{
-	int     _content;
-	Node 	*_parent;
-	Node 	*_left;
-	Node 	*_right;
-	int 	_color;
-};
 
-typedef Node *NodePtr;
-
-template <class T, class Compare = std::less<T>, class Node = ft::BST_Node<T>,
+template <class T, class Compare = std::less<T>, class Node = ft::Node<T>,
 			class Type_Alloc = std::allocator<T>, class Node_Alloc = std::allocator<Node> >
 class RedBlackTree
 {
+public:
+
+	/* Self type */
+	typedef RedBlackTree  self;
+
+	/* A reference to the self type */
+	typedef self&   self_reference;
+	
+	/* The first template argument */
+	typedef T   value_type;
+
+	/* Stored Node type */
+	typedef Node node_type;
+
+	/* Pointer to stored node */
+	typedef Node *  NodePtr;
+	
+	/* Node allocator */
+	typedef Node_Alloc  node_alloc;
+
+	/* Size_t */
+	typedef size_t size_type;
+
+	typedef ft::RB_iterator<Node, Compare> 			iterator;
+	typedef ft::RB_const_iterator<Node, Compare> 	const_iterator;
+
 private:
 	NodePtr root;
 	NodePtr TNULL;
 
+public:
 	void initializeNULLNode(NodePtr node, NodePtr _parent)
 	{
 		node->_content = 0;
@@ -470,11 +497,12 @@ public:
 	}
 
 	// Inserting a node
-	void insert(int key)
+	// void insert(int key)
+	ft::pair<iterator, bool> insert_node( const value_type& value )
 	{
 		NodePtr node = new Node;
 		node->_parent = nullptr;
-		node->_content = key;
+		node->_content = value;
 		node->_left = TNULL;
 		node->_right = TNULL;
 		node->_color = 1;
@@ -512,15 +540,16 @@ public:
 		if (node->_parent == nullptr)
 		{
 			node->_color = 0;
-			return;
+			return ft::make_pair(iterator(node), true);;
 		}
 
 		if (node->_parent->_parent == nullptr)
 		{
-			return;
+			return ft::make_pair(iterator(node), true);;
 		}
 
 		insertFix(node);
+		return ft::make_pair(iterator(node), true);
 	}
 
 	NodePtr getRoot()

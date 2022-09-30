@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/10 22:40:08 by jrasser           #+#    #+#             */
-/*   Updated: 2022/09/30 10:24:30 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/09/30 19:26:59 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,7 +153,7 @@ struct pair
 template <class T1, class T2>
 pair<T1, T2> make_pair(T1 x, T2 y)
 {
-    return (pair<T1, T2>(x, y));
+    return (ft::pair<T1, T2>(x, y));
 }
 
 } // namespace ft

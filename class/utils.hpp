@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/10 21:23:15 by jrasser           #+#    #+#             */
-/*   Updated: 2022/09/10 21:32:49 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/09/30 18:53:07 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,38 @@ namespace ft
         }
         return first2 != last2;
     }
+
+    template <typename T>
+    struct Node
+    {
+    public:
+        typedef T   value_type;
+        
+        T _content;
+        Node<T> *_parent;
+        Node<T> *_left;
+        Node<T> *_right;
+        int _color;
+
+        Node() : _content(), _parent(NULL), _left(NULL), _right(NULL), _color(0) {}
+        Node(T content) : _content(content), _parent(NULL), _left(NULL), _right(NULL), _color(0) {}
+        Node(T content, Node<T> *parent, Node<T> *left, Node<T> *right, int color) : _content(content), _parent(parent), _left(left), _right(right), _color(color) {}
+        Node(Node<T> const &src) { *this = src; }
+        ~Node() {}
+
+        Node<T> &operator=(Node<T> const &rhs)
+        {
+            if (this != &rhs)
+            {
+                this->_content = rhs._content;
+                this->_parent = rhs._parent;
+                this->_left = rhs._left;
+                this->_right = rhs._right;
+                this->_color = rhs._color;
+            }
+            return (*this);
+        }
+    };
 }
 
 #endif
