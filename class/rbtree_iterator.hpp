@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 16:58:53 by jrasser           #+#    #+#             */
-/*   Updated: 2022/09/30 19:23:15 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/01 17:29:48 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -383,26 +383,27 @@ template <typename T, class Compare >
 			{
 				T * cursor = _node;
 
-				if (_node->right == _last_node)
+				std::cout << "la ok" << std::endl;
+				if (_node->_right == _last_node)
 				{
-					cursor = _node->parent;
+					cursor = _node->_parent;
 					while (cursor != _last_node
-						&& _comp(cursor->value.first, _node->value.first))
-						cursor = cursor->parent;
+						&& _comp(cursor->_content.first, _node->_content.first))
+						cursor = cursor->_parent;
 					_node = cursor;
 				}
 				else if (cursor == _last_node)
-					_node = _last_node->right;
+					_node = _last_node->_right;
 				else
 				{
-					cursor = _node->right;
-					if (cursor == _last_node->parent
-						&& cursor->right == _last_node)
+					cursor = _node->_right;
+					if (cursor == _last_node->_parent
+						&& cursor->_right == _last_node)
 						_node = cursor;
 					else
 					{
-						while (cursor->left != _last_node)
-							cursor = cursor->left;
+						while (cursor->_left != _last_node)
+							cursor = cursor->_left;
 					}
 					_node = cursor;
 				}

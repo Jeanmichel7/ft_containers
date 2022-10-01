@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/10 21:23:15 by jrasser           #+#    #+#             */
-/*   Updated: 2022/09/30 18:53:07 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/01 16:18:56 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,19 +87,27 @@ namespace ft
     public:
         typedef T   value_type;
         
-        T _content;
-        Node<T> *_parent;
-        Node<T> *_left;
-        Node<T> *_right;
-        int _color;
+        value_type           _content;
+        Node<value_type>     *_parent;
+        Node<value_type>     *_left;
+        Node<value_type>     *_right;
+        int         _color;
 
-        Node() : _content(), _parent(NULL), _left(NULL), _right(NULL), _color(0) {}
-        Node(T content) : _content(content), _parent(NULL), _left(NULL), _right(NULL), _color(0) {}
-        Node(T content, Node<T> *parent, Node<T> *left, Node<T> *right, int color) : _content(content), _parent(parent), _left(left), _right(right), _color(color) {}
-        Node(Node<T> const &src) { *this = src; }
+        Node() 
+        : _content(), _parent(NULL), _left(NULL), _right(NULL), _color(0) {}
+
+        Node(value_type content) 
+        : _content(content), _parent(NULL), _left(NULL), _right(NULL), _color(0) {}
+
+        Node(value_type content, Node<value_type> *parent, Node<value_type> *left, Node<value_type> *right, int color) 
+        : _content(content), _parent(parent), _left(left), _right(right), _color(color) {}
+        
+        Node(Node<value_type> const &src) 
+        : _content(src._content), _parent(src._parent), _left(src._left), _right(src._right), _color(src._color) {}
+
         ~Node() {}
 
-        Node<T> &operator=(Node<T> const &rhs)
+        Node<value_type> &operator=(Node<value_type> const &rhs)
         {
             if (this != &rhs)
             {
@@ -111,7 +119,10 @@ namespace ft
             }
             return (*this);
         }
+
     };
+
+    
 }
 
 #endif

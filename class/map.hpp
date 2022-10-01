@@ -6,13 +6,14 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 18:14:05 by jrasser           #+#    #+#             */
-/*   Updated: 2022/09/30 19:15:33 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/01 16:20:50 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #ifndef __MAP_HPP__
 # define __MAP_HPP__
+
+
 
 // #include "map_iterator.hpp"
 #include "my_reverse_iterator.hpp"
@@ -21,6 +22,7 @@
 #include "pair.hpp"
 
 #include "rbtree.hpp"
+#include "utils.hpp"
 // #include <memory>
 // #include <cstddef>
 // #include <iterator>
@@ -96,7 +98,7 @@ public:
 
 	explicit map(const Compare &comp = Compare(),
 				 const Allocator &alloc = Allocator())
-		: _alloc(alloc), _comp(comp)
+		: _alloc(alloc), _comp(comp), _tree()
 	{
 		std::cout << "CONSTRUCTOR map()" << std::endl;
 	};
@@ -193,7 +195,10 @@ public:
 
 	bool empty() const;
 
-	size_type size() const;
+	size_type size() const
+	{
+		return (_tree.size());
+	};
 
 	size_type max_size() const;
 
@@ -210,7 +215,7 @@ public:
 
 	ft::pair<iterator, bool> insert( const value_type& value )
 	{
-		return (_tree.insert_node(value));
+		return (_tree.insert_pair(value));
 	}
 
 

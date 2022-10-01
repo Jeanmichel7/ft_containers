@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/10 22:40:08 by jrasser           #+#    #+#             */
-/*   Updated: 2022/09/30 19:26:59 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/01 14:11:19 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,8 @@ struct pair
     {
         if (*this == pr)
             return *this;
-        first = pr.first;
-        second = pr.second;
+        this->first = pr.first;
+        this->second = pr.second;
         return *this;
     }
 
