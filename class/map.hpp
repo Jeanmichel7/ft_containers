@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 18:14:05 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/01 16:20:50 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/02 09:13:02 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ template <
 >
 class map
 {
+public:
 	/* DEFINITION */
 
 	typedef Key												key_type;
@@ -67,8 +68,11 @@ class map
 		Compare _comp;
 
 	public:
+		// value_compare( Compare c ) : comp(c) {}
 		value_compare( Compare c );
-		bool operator()( const value_type& lhs, const value_type& rhs ) const;
+		// bool operator() (const value_type& x, const value_type& y) const
+		// { return (comp(x.first, y.first)); }
+		bool operator() (const value_type& x, const value_type& y) const;
 	};
 	// typedef typename Allocator::template rebind<Node>::other			node_alloc_type;
 
@@ -78,7 +82,7 @@ class map
 	typedef typename ft::my_reverse_iterator<const_iterator> 					const_reverse_iterator;
 
 private:
-	allocator_type			_alloc;
+	allocator_type				_alloc;
 	// node_alloc_type			_node_alloc;
 
 	key_compare								_comp;
@@ -98,7 +102,8 @@ public:
 
 	explicit map(const Compare &comp = Compare(),
 				 const Allocator &alloc = Allocator())
-		: _alloc(alloc), _comp(comp), _tree()
+	:
+		_alloc(alloc), _comp(comp), _tree()
 	{
 		std::cout << "CONSTRUCTOR map()" << std::endl;
 	};
@@ -120,7 +125,7 @@ public:
 
 	~map()
 	{
-
+		
 	};
 
 	map& operator=( const map& other )
@@ -150,10 +155,7 @@ public:
 
 	const T& at( const Key& key ) const;
 
-	T& operator[]( const Key& key )
-	{
-		
-	}
+	T& operator[]( const Key& key );
 
 
 
@@ -215,15 +217,15 @@ public:
 
 	ft::pair<iterator, bool> insert( const value_type& value )
 	{
+		std::cout << "value [" << value.first << "] = " << value.second << std::endl;
 		return (_tree.insert_pair(value));
 	}
 
-
-	iterator insert( iterator hint, const value_type& value )
-	{
-		std::cout << "insert(hint, value)" << std::endl;
-		return iterator();
-	}
+	iterator insert( iterator hint, const value_type& value );
+	// {
+	// 	std::cout << "insert(hint, value)" << std::endl;
+	// 	return iterator();
+	// }
 
 	template< class InputIt >
 	void insert( InputIt first, InputIt last );
@@ -249,7 +251,10 @@ public:
 
 	size_type count( const Key& key ) const;
 
-	iterator find( const Key& key );
+	iterator find( const Key& key )
+	{
+		return (_tree.find(key));
+	};
 	
 	const_iterator find( const Key& key ) const;
 
@@ -287,12 +292,6 @@ public:
 
 
 
-
-
-
-
-
-
 	/* *************************************************** */
 	/*                                                     */
 	/*                      OPERATOR                       */
@@ -323,6 +322,17 @@ public:
 	// bool operator>=(const map<O_Key, O_T, O_Compare, O_Alloc> &lhs,
 	// 				const map<O_Key, O_T, O_Compare, O_Alloc> &rhs);
 
+
+
+	/* *************************************************** */
+	/*                                                     */
+	/*                       DISPLAY                       */
+	/*                                                     */
+	/* *************************************************** */
+	void display_tree()
+	{
+		_tree.display_tree();
+	}
 
 };
 
@@ -362,6 +372,10 @@ public:
 	template <class Key, class T, class Compare, class Alloc>
 	void swap(std::map<Key, T, Compare, Alloc> &lhs,
 			  std::map<Key, T, Compare, Alloc> &rhs);
+
+
+
+	
 
 }	// namespace ft
 

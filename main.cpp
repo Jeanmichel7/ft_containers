@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/14 22:19:53 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/01 17:20:45 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/02 09:11:15 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -794,6 +794,11 @@ int main()
 	std::map<std::string, int> map1;
 
 	map1.insert(std::pair<std::string, int>("a", 1));
+
+	// find
+	std::map<std::string, int>::iterator it = map1.find("a");
+	std::cout << it->first << " " << it->second << std::endl;
+
 	// map1["something"] = 69;
 	// map1["anything"] = 199;
   	// map1["that thing"] = 50;
@@ -817,14 +822,29 @@ int main()
 
 
 	ft::map<std::string, int> map2;
+	map2.insert(ft::pair<std::string, int>("e", 1));
+	map2.insert(ft::pair<std::string, int>("c", 1));
+	map2.insert(ft::pair<std::string, int>("g", 1));
 	map2.insert(ft::pair<std::string, int>("a", 1));
-	std::cout << "size : " << map2.size() << std::endl;
+	map2.insert(ft::pair<std::string, int>("h", 1));
+	map2.insert(ft::pair<std::string, int>("d", 1));
+	map2.insert(ft::pair<std::string, int>("f", 1));
+
+	map2.display_tree();
+
+	// map2.insert(ft::pair<std::string, int>("c", 3));
+	// std::cout << "size : " << map2.size() << std::endl;
 	// std::cout << "map2[\"a\"] : " << map2["a"] << std::endl;
+	// std::cout << "map2[\"b\"] : " << map2.at("a") << std::endl;
+
+	// find
+	// ft::map<std::string, int>::iterator it2 = map2.find("a");
 
 	// map2.insert(ft::pair<std::string, int>("b", 2));
 	// std::cout << "size : " << map2.size() << std::endl;
 
-
+	// ft::map<std::string, int>::iterator it2 = map2.find("a");
+	// std::cout << it2->first << " " << it2->second << std::endl;
 
 	// std::cout << "map2[\"a\"] : " << map1["a"] << std::endl;
 

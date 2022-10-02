@@ -6,14 +6,19 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/10 21:23:15 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/01 16:18:56 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/02 08:47:02 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef UTILS_HPP
 #define UTILS_HPP
 
+#define BLACK 0
+#define RED 1
+
 #include "enable_if.hpp"
+#include <math.h>
+
 
 namespace ft
 {
@@ -87,17 +92,22 @@ namespace ft
     public:
         typedef T   value_type;
         
+    // private:
         value_type           _content;
         Node<value_type>     *_parent;
         Node<value_type>     *_left;
         Node<value_type>     *_right;
-        int         _color;
+        int                  _color;
 
+    public:
         Node() 
-        : _content(), _parent(NULL), _left(NULL), _right(NULL), _color(0) {}
+        : _content(), _parent(NULL), _left(NULL), _right(NULL), _color(BLACK) {}
 
-        Node(value_type content) 
-        : _content(content), _parent(NULL), _left(NULL), _right(NULL), _color(0) {}
+        // Node(value_type content) 
+        // : _content(content), _parent(NULL), _left(NULL), _right(NULL), _color(BLACK) {}
+
+        Node(value_type const &content) 
+        : _content(content), _parent(NULL), _left(NULL), _right(NULL), _color(RED) {}
 
         Node(value_type content, Node<value_type> *parent, Node<value_type> *left, Node<value_type> *right, int color) 
         : _content(content), _parent(parent), _left(left), _right(right), _color(color) {}
@@ -120,9 +130,19 @@ namespace ft
             return (*this);
         }
 
+        
+
     };
 
+    template <typename T>
+    std::ostream& operator<<(std::ostream& os, const Node<T>& node)
+    {
+        os << "test : " << node->_content.first << " " << node->_content.second << std::endl;
+        return os;
+    }
     
 }
+
+
 
 #endif

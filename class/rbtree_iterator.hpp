@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 16:58:53 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/01 17:29:48 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/02 00:39:03 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ template <typename T, class Compare >
 			RB_iterator(const RB_iterator& bst_it)
 			:
 				_node(bst_it._node),
-				_last_node(bst_it._last_node),
+				// _last_node(bst_it._last_node),
 				_comp()
 			{}
 
@@ -137,7 +137,7 @@ template <typename T, class Compare >
 			** @return the const pointer.
 			*/
 			pointer operator->() const
-			{ return (&this->_node->value); }
+			{ return (&this->_node->_content); }
 
 			/*
 			** @brief Increment the iterator to the next value
@@ -279,11 +279,11 @@ template <typename T, class Compare >
 			/*
 			** @brief Create an iterator on "node_p".
 			*/
-			RB_const_iterator(T * node_p, T * last_node,
+			RB_const_iterator(T * node_p,
 						const Compare& comp = Compare())
 			:
 				_node(node_p),
-				_last_node(last_node),
+				// _last_node(last_node),
 				_comp(comp)
 			{}
 

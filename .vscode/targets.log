@@ -6,7 +6,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Sat Sep 17 00:00:40 2022
+# Make data base, printed on Sun Oct  2 00:25:04 2022
 
 # Variables
 
@@ -16,7 +16,6 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 ?F = $(notdir $?)
 # environment
 WSLENV = ELECTRON_RUN_AS_NODE/w:WT_SESSION::WT_PROFILE_ID
- 
 # default
 .SHELLFLAGS := -c
 # environment
@@ -40,7 +39,7 @@ VSCODE_NLS_CONFIG = {"locale":"en","availableLanguages":{}}
 # environment
 _ = /mnt/c/Users/michm/AppData/Local/Programs/Microsoft VS Code/bin/code
 # makefile (from 'Makefile', line 26)
-CFLAGS = -Wall -Wextra
+CFLAGS = -Wall -Wextra -std=c++98
 # makefile (from 'Makefile', line 1)
 MAKEFILE_LIST :=  Makefile
 # 'override' directive
@@ -56,7 +55,7 @@ VSCODE_CWD = /mnt/c/Users/michm/AppData/Local/Programs/Microsoft VS Code
 # default
 MAKE_HOST := x86_64-pc-linux-gnu
 # environment
-PATH = /home/jrasser/.vscode-server/bin/74b1f979648cc44d385a2286793c226e611f59e7/bin/remote-cli:/home/jrasser/.local/bin:/home/jrasser/bin:/home/jrasser/.nvm/versions/node/v16.14.2/bin:/home/jrasser/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/lib/wsl/lib:/mnt/c/Program Files (x86)/Common Files/Oracle/Java/javapath:/mnt/c/Windows/system32:/mnt/c/Windows:/mnt/c/Windows/System32/Wbem:/mnt/c/Windows/System32/WindowsPowerShell/v1.0/:/mnt/c/Windows/System32/OpenSSH/:/mnt/c/Program Files/NVIDIA Corporation/NVIDIA NvDLISR:/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common:/mnt/c/Program Files/Git/cmd:/mnt/c/Program Files/Docker/Docker/resources/bin:/mnt/c/ProgramData/DockerDesktop/version-bin:/mnt/c/WINDOWS/system32:/mnt/c/WINDOWS:/mnt/c/WINDOWS/System32/Wbem:/mnt/c/WINDOWS/System32/WindowsPowerShell/v1.0/:/mnt/c/WINDOWS/System32/OpenSSH/:/mnt/c/Program Files/Git LFS:/mnt/c/Program Files (x86)/Windows Kits/10/Windows Performance Toolkit/:/mnt/c/Program Files/dotnet/:/mnt/c/Users/michm/AppData/Local/Microsoft/WindowsApps:/mnt/c/Users/michm/AppData/Local/GitHubDesktop/bin:/mnt/c/Users/michm/AppData/Local/Programs/Microsoft VS Code/bin:/mnt/c/Users/michm/.dotnet/tools:/snap/bin
+PATH = /home/jrasser/.local/bin:/home/jrasser/bin:/home/jrasser/.nvm/versions/node/v16.14.2/bin:/home/jrasser/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/lib/wsl/lib:/mnt/c/Program Files (x86)/Common Files/Oracle/Java/javapath:/mnt/c/Windows/system32:/mnt/c/Windows:/mnt/c/Windows/System32/Wbem:/mnt/c/Windows/System32/WindowsPowerShell/v1.0/:/mnt/c/Windows/System32/OpenSSH/:/mnt/c/Program Files/NVIDIA Corporation/NVIDIA NvDLISR:/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common:/mnt/c/Program Files/Git/cmd:/mnt/c/Program Files/Docker/Docker/resources/bin:/mnt/c/ProgramData/DockerDesktop/version-bin:/mnt/c/WINDOWS/system32:/mnt/c/WINDOWS:/mnt/c/WINDOWS/System32/Wbem:/mnt/c/WINDOWS/System32/WindowsPowerShell/v1.0/:/mnt/c/WINDOWS/System32/OpenSSH/:/mnt/c/Program Files/Git LFS:/mnt/c/Program Files (x86)/Windows Kits/10/Windows Performance Toolkit/:/mnt/c/Program Files/dotnet/:/mnt/c/Users/michm/AppData/Local/Microsoft/WindowsApps:/mnt/c/Users/michm/AppData/Local/GitHubDesktop/bin:/mnt/c/Users/michm/AppData/Local/Programs/Microsoft VS Code/bin:/mnt/c/Users/michm/.dotnet/tools:/snap/bin
 # makefile (from 'Makefile', line 21)
 NAME = prog
 # makefile (from 'Makefile', line 17)
@@ -68,7 +67,7 @@ NVM_BIN = /home/jrasser/.nvm/versions/node/v16.14.2/bin
 # environment
 ELECTRON_RUN_AS_NODE = 1
 # environment
-VSCODE_IPC_HOOK_CLI = /mnt/wslg/runtime-dir/vscode-ipc-b2331dd4-c2fa-4658-bdd9-4d9892474f09.sock
+VSCODE_IPC_HOOK_CLI = /mnt/wslg/runtime-dir/vscode-ipc-cbd38c9a-723d-4a75-8fa8-6d375013190d.sock
 # default
 .FEATURES := target-specific order-only second-expansion else-if shortest-stem undefine oneshell archives jobserver output-sync check-symlink load
 # makefile (from 'Makefile', line 14)
@@ -84,13 +83,13 @@ PWD = /home/jrasser/42/ft_containers
 # default
 .LOADED := 
 # environment
-WSL_INTEROP = /run/WSL/20198_interop
+WSL_INTEROP = /run/WSL/503_interop
 # environment
 PULSE_SERVER = /mnt/wslg/PulseServer
 # makefile (from 'Makefile', line 13)
 BLU = \033[0;34m
 # environment
-WT_SESSION = 2ed0cca6-d59f-4b94-9acc-51ec24a76b0d
+WT_SESSION = 060a239d-dfc7-4bb7-a834-0790f18ae721
 # environment
 VSCODE_AMD_ENTRYPOINT = vs/workbench/api/node/extensionHostProcess
 # environment
@@ -222,7 +221,7 @@ objs/%.o: srcs/**%.cpp
 objs/main.o: main.cpp
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: 'main'
-#  Last modified 2022-09-17 00:00:08.250022
+#  Last modified 2022-10-02 00:24:52.4451287
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'Makefile', line 31):
@@ -246,21 +245,20 @@ all: prog
 # Not a target:
 Makefile:
 #  Implicit rule search has been done.
-#  Last modified 2022-09-17 00:00:06.300022
+#  Last modified 2022-10-02 00:24:50.2551287
 #  File has been updated.
 #  Successfully updated.
 
 # Not a target:
 main.cpp:
 #  Implicit rule search has been done.
- 
-#  Last modified 2022-09-16 23:56:48.618939
+#  Last modified 2022-10-01 23:22:11.9951287
 #  File has been updated.
 #  Successfully updated.
 
 prog: objs/main.o
 #  Implicit rule search has not been done.
-#  Last modified 2022-09-17 00:00:08.410022
+#  Last modified 2022-10-02 00:24:52.5651287
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'Makefile', line 41):
@@ -294,6 +292,7 @@ clean:
 #  Implicit rule search has not been done.
 #  File does not exist.
 #  File has not been updated.
+ 
 #  recipe to execute (from 'Makefile', line 48):
 			${RM} $(OBJS)
 			@echo "$(GRN) [Clean]$(END) 			$(CHECK)"
@@ -312,6 +311,6 @@ clean:
 # strcache performance: lookups = 55 / hit rate = 47%
 # hash-table stats:
 # Load=29/8192=0%, Rehash=0, Collisions=2/55=4%
-# Finished Make data base on Sat Sep 17 00:00:40 2022
+# Finished Make data base on Sun Oct  2 00:25:04 2022
 
  

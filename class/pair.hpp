@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/10 22:40:08 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/01 14:11:19 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/02 06:58:13 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,6 +116,13 @@ struct pair
     //     x.swap(y);
     // };
 
+};
+
+template <class T1, class T2>
+std::ostream& operator<<(std::ostream& os, const pair<T1, T2>& pair)
+{
+    os << pair.first << " " << pair.second;
+    return os;
 };
 
 
