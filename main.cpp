@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/14 22:19:53 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/02 09:11:15 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/02 17:55:56 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -822,13 +822,26 @@ int main()
 
 
 	ft::map<std::string, int> map2;
+	map2.insert(ft::pair<std::string, int>("a", 1));
+	map2.insert(ft::pair<std::string, int>("b", 1));
+	map2.insert(ft::pair<std::string, int>("c", 1));
+	map2.insert(ft::pair<std::string, int>("d", 1));
 	map2.insert(ft::pair<std::string, int>("e", 1));
+
+
 	map2.insert(ft::pair<std::string, int>("c", 1));
 	map2.insert(ft::pair<std::string, int>("g", 1));
 	map2.insert(ft::pair<std::string, int>("a", 1));
 	map2.insert(ft::pair<std::string, int>("h", 1));
 	map2.insert(ft::pair<std::string, int>("d", 1));
 	map2.insert(ft::pair<std::string, int>("f", 1));
+	map2.insert(ft::pair<std::string, int>("t", 1));
+	map2.insert(ft::pair<std::string, int>("y", 1));
+	map2.insert(ft::pair<std::string, int>("q", 1));
+	map2.insert(ft::pair<std::string, int>("z", 1));
+	map2.insert(ft::pair<std::string, int>("x", 1));
+	map2.insert(ft::pair<std::string, int>("l", 1));
+	map2.insert(ft::pair<std::string, int>("r", 1));
 
 	map2.display_tree();
 

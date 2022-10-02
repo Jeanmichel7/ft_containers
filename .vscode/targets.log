@@ -6,7 +6,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Sun Oct  2 00:25:04 2022
+# Make data base, printed on Sun Oct  2 17:41:26 2022
 
 # Variables
 
@@ -221,7 +221,7 @@ objs/%.o: srcs/**%.cpp
 objs/main.o: main.cpp
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: 'main'
-#  Last modified 2022-10-02 00:24:52.4451287
+#  Last modified 2022-10-02 17:41:20.1782471
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'Makefile', line 31):
@@ -245,20 +245,20 @@ all: prog
 # Not a target:
 Makefile:
 #  Implicit rule search has been done.
-#  Last modified 2022-10-02 00:24:50.2551287
+#  Last modified 2022-10-02 17:41:18.4782471
 #  File has been updated.
 #  Successfully updated.
 
 # Not a target:
 main.cpp:
 #  Implicit rule search has been done.
-#  Last modified 2022-10-01 23:22:11.9951287
+#  Last modified 2022-10-02 17:16:52.5182471
 #  File has been updated.
 #  Successfully updated.
 
 prog: objs/main.o
 #  Implicit rule search has not been done.
-#  Last modified 2022-10-02 00:24:52.5651287
+#  Last modified 2022-10-02 17:41:20.3082471
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'Makefile', line 41):
@@ -275,6 +275,7 @@ fclean: clean
 			${RM} ${NAME}
 			@echo "$(GRN) [Fclean]$(END) 			$(CHECK)"
 
+ 
 # Not a target:
 .DEFAULT:
 #  Implicit rule search has not been done.
@@ -292,7 +293,6 @@ clean:
 #  Implicit rule search has not been done.
 #  File does not exist.
 #  File has not been updated.
- 
 #  recipe to execute (from 'Makefile', line 48):
 			${RM} $(OBJS)
 			@echo "$(GRN) [Clean]$(END) 			$(CHECK)"
@@ -311,6 +311,6 @@ clean:
 # strcache performance: lookups = 55 / hit rate = 47%
 # hash-table stats:
 # Load=29/8192=0%, Rehash=0, Collisions=2/55=4%
-# Finished Make data base on Sun Oct  2 00:25:04 2022
+# Finished Make data base on Sun Oct  2 17:41:26 2022
 
  

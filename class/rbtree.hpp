@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 12:54:45 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/02 10:00:09 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/02 17:58:17 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,8 @@ private:
 	Compare         _comp;
 	size_type       _size;
 
+	node_pointer	TNULL;
+
 
 public:
 	/* Default constructor */
@@ -108,7 +110,7 @@ public:
 	{
 		node_pointer current = _root;
 		node_pointer prev = NULL;
-		node_pointer parent = NULL;
+		// node_pointer parent = NULL;
 		while (current != NULL)
 		{
 			// std::cout << "current avant: " << current->_content << std::endl;
@@ -132,21 +134,19 @@ public:
 					current->_left = NULL;
 				else if (current->_right == prev)
 					current->_right = NULL;
-				std::cout << "deallocte : " << prev->_content << std::endl;
+				// std::cout << "deallocte : " << prev->_content << std::endl;
 				_node_alloc.destroy(prev);
 				_node_alloc.deallocate(prev, 1);
 			}
 		}
 	}
 
-
-
 	ft::pair<iterator, bool> insert_pair(const value_type& val)
 	{
 		if (_size == 0)
 		{
 			node_pointer new_node = _node_alloc.allocate(1);
-			_node_alloc.construct(new_node, Node(val));
+			_node_alloc.construct(new_node, Node(val, BLACK));
 			_root = new_node;
 			_size++;
 			return ft::make_pair(iterator(_root), true);
@@ -160,15 +160,15 @@ public:
 		node_pointer parent = NULL;
 		while (current != NULL)
 		{
-			std::cout << "test key comp : " << val.first << " < " << current->_content.first << "? "
-					  <<  _comp(val.first , val.first) << std::endl;
+			// std::cout << "test key comp : " << val.first << " < " << current->_content.first << "? "
+					//   <<  _comp(val.first , val.first) << std::endl;
 			parent = current;
 			if (_comp(val.first, current->_content.first)) {
-				std::cout << " -> left" << std::endl;
+				// std::cout << " -> left" << std::endl;
 				current = current->_left;
 			}
 			else if (_comp(current->_content.first, val.first)){
-				std::cout << " -> right" << std::endl;
+				// std::cout << " -> right" << std::endl;
 				current = current->_right;
 			}
 			else
@@ -184,41 +184,146 @@ public:
 		else
 			parent->_right = current;
 		_size++;
+
+
+		// display_tree("after insert");
+
 		// fix tree
-		// fix_tree(new_node);
+		fix_tree(current);
+
 		return ft::make_pair(iterator(current), true);
-
-
-		// // insert
-		// node_pointer new_node = _node_alloc.allocate(1);
-		// _node_alloc.construct(new_node, Node(val));
-		// new_node->_parent = parent;
-		// if (_comp(val.first, parent->_content.first))
-		// 	parent->_left = new_node;
-		// else
-		// 	parent->_right = new_node;
-		// _size++;
-		// // fix tree
-		// // fix_tree(new_node);
-		// return ft::make_pair(iterator(new_node), true);
-
 	}
 
-
-
-	void display_tree()
+	void leftRotate(node_pointer x)
 	{
-		std::cout << "\n**********  Display tree  ************\n" << std::endl;
+		std::cout << "left rotate" << std::endl;
+		node_pointer y = x->_right;
+		x->_right = y->_left;
+
+		// display_tree("befor left rotate");
+		
+		if (y->_left != TNULL)
+		{
+			if (y->_left && y->_left->_parent) {
+				y->_left->_parent = x;
+			}
+		}
+		y->_parent = x->_parent;
+		if (x->_parent == u_nullptr)
+		{
+			this->_root = y;
+		}
+		else if (x == x->_parent->_left)
+		{
+			x->_parent->_left = y;
+		}
+		else
+		{
+			x->_parent->_right = y;
+		}
+		y->_left = x;
+		x->_parent = y;
+	}
+
+	void rightRotate(node_pointer x)
+	{
+		std::cout << "right rotate" << std::endl;
+		node_pointer y = x->_left;
+		x->_left = y->_right;
+		if (y->_right != TNULL)
+		{
+			if (y->_right && y->_right->_parent) {
+				y->_right->_parent = x;
+			}
+		}
+		y->_parent = x->_parent;
+		if (x->_parent == u_nullptr)
+		{
+			this->_root = y;
+		}
+		else if (x == x->_parent->_right)
+		{
+			x->_parent->_right = y;
+		}
+		else
+		{
+			x->_parent->_left = y;
+		}
+		y->_right = x;
+		x->_parent = y;
+	}
+
+	//fixe tree
+	void fix_tree(node_pointer k)
+	{
+		node_pointer u;
+		while (k->_parent && k->_parent->_color == 1)
+		{
+			if (k->_parent == k->_parent->_parent->_right)
+			{
+				u = k->_parent->_parent->_left;
+				std::cout << "test : " << u << std::endl;
+				if (u && u->_color == 1)
+				{
+					u->_color = 0;
+					k->_parent->_color = 0;
+					k->_parent->_parent->_color = 1;
+					k = k->_parent->_parent;
+				}
+				else
+				{
+					if (k == k->_parent->_left)
+					{
+						k = k->_parent;
+						rightRotate(k);
+					}
+					k->_parent->_color = 0;
+					k->_parent->_parent->_color = 1;
+					leftRotate(k->_parent->_parent);
+				}
+			}
+			else
+			{
+				std::cout << "left" << std::endl;
+				u = k->_parent->_parent->_right;
+
+				if (u && u->_color == 1)
+				{
+					u->_color = 0;
+					k->_parent->_color = 0;
+					k->_parent->_parent->_color = 1;
+					k = k->_parent->_parent;
+				}
+				else
+				{
+					if (k == k->_parent->_right)
+					{
+						k = k->_parent;
+						leftRotate(k);
+					}
+					k->_parent->_color = 0;
+					k->_parent->_parent->_color = 1;
+					rightRotate(k->_parent->_parent);
+				}
+			}
+			if (k == _root)
+			{
+				break;
+			}
+		}
+		_root->_color = 0;
+	}
+
+	void display_tree(std::string msg)
+	{
+		std::cout << "\n**********  Display tree (" << msg << ") ************\n" << std::endl;
 		// std::cout << "len tree : " << _size << std::endl << std::endl;
 		node_pointer current = _root;
 		node_pointer parent = NULL;
 
-
-		int space_root = 50;
+		int space_root = 100;
 		int level = 0;
 		int node_in_line = 0;
-
-
 
 		if (current == NULL)
 			std::cout << "Tree is empty" << std::endl;
@@ -252,11 +357,17 @@ public:
 		if (parent == NULL)
 			return;
 		space_root -= 10;
+		
 		display_tree(parent->_left, space_root, level + 1, node_in_line);
 		std::cout << std::endl;
-		for (int i = 5; i < space_root; i++)
+		for (int i = 10; i < space_root; i++)
 			std::cout << " ";
+		if (parent->_color == RED)
+			std::cout << C_RED;
 		std::cout << parent->_content.first << " : " << parent->_content.second << std::endl;
+		// std::cout << parent->_content.first << " : " << parent->_content.second << " c: " << parent->_color << std::endl;
+		std::cout << END << std::endl;
+
 		display_tree(parent->_right, space_root, level + 1, node_in_line);
 	}
 	// {
