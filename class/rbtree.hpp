@@ -6,14 +6,13 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 12:54:45 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/02 17:58:17 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/03 00:10:53 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef RBTREE_HPP
 #define RBTREE_HPP
 
-#include <iostream>
 #include "utils.hpp"
 #include "rbtree_iterator.hpp"
 
@@ -74,6 +73,7 @@ private:
 	node_alloc      _node_alloc;
 	node_pointer	_root;
 	node_pointer    _node;
+	node_pointer	_last_node;
 	Compare         _comp;
 	size_type       _size;
 
@@ -81,12 +81,19 @@ private:
 
 
 public:
-	/* Default constructor */
+
+	/* *************************************************** */
+	/*                                                     */
+	/*                     CONSTRUCTOR                     */
+	/*                                                     */
+	/* *************************************************** */
+
 	RedBlackTree(const node_alloc &node_alloc_init = node_alloc())
 	:
 		_node_alloc(node_alloc_init),
 		_root(NULL),
 		_node(NULL),
+		_last_node(NULL),
 		_size(0)
 	{
 		// _node = _node_alloc.allocate(1);
@@ -94,16 +101,19 @@ public:
 	}
 
 	/* Copy constructor */
-	// RedBlackTree(const self& x) : _node(_node_alloc.allocate(1))
-	// {
-	// 	_node_alloc.construct(_node, Node());
-	// 	_node->_content = x._node->_content;
-	// 	_node->_parent = x._node->_parent;
-	// 	_node->_left = x._node->_left;
-	// 	_node->_right = x._node->right;
-	// 	_node->_color = x._node->_color;
-	// 	// *this = x;
-	// }
+	RedBlackTree(const self& x) : _node(_node_alloc.allocate(1))
+	{
+		_node_alloc.construct(_node, Node());
+		_node->_content = x._node->_content;
+		_node->_parent = x._node->_parent;
+		_node->_left = x._node->_left;
+		_node->_right = x._node->right;
+		_node->_color = x._node->_color;
+		// *this = x;
+	}
+
+
+	RedBlackTree &operator=(const RedBlackTree &x);
 
 	/* Destructor */
 	~RedBlackTree()
@@ -141,6 +151,93 @@ public:
 		}
 	}
 
+
+
+
+
+
+	/* *************************************************** */
+	/*                                                     */
+	/*                     ELEMENT ACCESS                  */
+	/*                                                     */
+	/* *************************************************** */
+
+
+
+
+
+
+
+
+	/* *************************************************** */
+	/*                                                     */
+	/*                     ITERATORS                       */
+	/*                                                     */
+	/* *************************************************** */
+
+	iterator begin()
+	{
+		node_pointer current = _root;
+		while (current->_left != NULL)
+			current = current->_left;
+
+		return iterator(current);
+	}
+
+	iterator end()
+	{
+		node_pointer current = _root;
+		// node_pointer tmp;
+
+		while (current->_right != NULL)
+			current = current->_right;
+		// tmp = current;
+		// _last_node = current;
+		current = current->_right;
+		// current->_parent = tmp;
+		
+		// std::cout << "test end()" << std::endl;
+		// std::cout << " current: " << current->_content << std::endl;
+		// std::cout << " current->_right: " << current->_right << std::endl;
+		// std::cout << " current->_left: " << current->_left << std::endl;
+		// std::cout << " current->_parent: " << current->_parent << std::endl;
+		
+		// return iterator(_last_node);
+		return iterator(current, _last_node);
+	}
+	
+	const_iterator begin() const;
+
+	const_iterator end() const;
+
+
+
+
+
+
+
+	/* *************************************************** */
+	/*                                                     */
+	/*                     CAPACITY                        */
+	/*                                                     */
+	/* *************************************************** */
+
+	size_type size() const;
+
+	bool empty() const;
+
+
+
+
+
+
+
+	/* *************************************************** */
+	/*                                                     */
+	/*                       MODIFY                        */
+	/*                                                     */
+	/* *************************************************** */
+
 	ft::pair<iterator, bool> insert_pair(const value_type& val)
 	{
 		if (_size == 0)
@@ -149,6 +246,7 @@ public:
 			_node_alloc.construct(new_node, Node(val, BLACK));
 			_root = new_node;
 			_size++;
+			_last_node = new_node;
 			return ft::make_pair(iterator(_root), true);
 			// return ft::pair<iterator, bool>(iterator(_node), true);
 		}
@@ -184,14 +282,119 @@ public:
 		else
 			parent->_right = current;
 		_size++;
-
-
 		// display_tree("after insert");
-
 		// fix tree
 		fix_tree(current);
-
+		_last_node = set_last_node();
 		return ft::make_pair(iterator(current), true);
+	}
+
+
+
+	iterator insert(value_type to_insert);
+
+	void clear();
+
+	void erase(iterator position);
+
+	void erase(iterator first, iterator last);
+
+	void erase(value_type to_erase);
+
+	void swap(RedBlackTree &x);
+
+
+
+
+
+
+
+
+
+	/* *************************************************** */
+	/*                                                     */
+	/*                       LOOKUP                        */
+	/*                                                     */
+	/* *************************************************** */
+
+
+	iterator find(value_type to_find)
+	{
+		iterator it = begin();
+		while (it != end())
+		{
+			if (*it == to_find)
+				return it;
+			it++;
+		}
+		return it;
+	}
+
+	const_iterator find(value_type to_find) const;
+
+
+
+
+	/* *************************************************** */
+	/*                                                     */
+	/*                      OBSERVER                       */
+	/*                                                     */
+	/* *************************************************** */
+
+
+
+
+	
+
+
+
+
+	/* *************************************************** */
+	/*                                                     */
+	/*                      OPERATOR                       */
+	/*                                                     */
+	/* *************************************************** */
+
+
+
+
+	/* Comparison operators */
+	bool operator==(const self& x) const;
+	bool operator!=(const self& x) const;
+
+	bool operator<(const self& x) const;
+	bool operator<=(const self& x) const;
+
+	bool operator>(const self& x) const;
+	bool operator>=(const self& x) const;
+	/* Allocator */
+
+	// allocator_type get_allocator() const
+	// {
+	// 	return (_node_alloc);
+	// }
+
+
+
+
+
+	
+	/* *************************************************** */
+	/*                                                     */
+	/*                       UTILS                         */
+	/*                                                     */
+	/* *************************************************** */
+
+	node_pointer set_last_node()
+	{
+		node_pointer current = _root;
+		node_pointer tmp;
+		while (current->_right != NULL)
+			current = current->_right;
+		// current = current->_right;
+		// tmp = current;
+		// current->_parent = current;
+		return current;
 	}
 
 	void leftRotate(node_pointer x)
@@ -314,6 +517,16 @@ public:
 		_root->_color = 0;
 	}
 
+
+
+
+
+	/* *************************************************** */
+	/*                                                     */
+	/*                      DISPLAY                        */
+	/*                                                     */
+	/* *************************************************** */
+
 	void display_tree(std::string msg)
 	{
 		std::cout << "\n**********  Display tree (" << msg << ") ************\n" << std::endl;
@@ -321,7 +534,7 @@ public:
 		node_pointer current = _root;
 		node_pointer parent = NULL;
 
-		int space_root = 100;
+		int space_root = 80;
 		int level = 0;
 		int node_in_line = 0;
 
@@ -359,14 +572,14 @@ public:
 		space_root -= 10;
 		
 		display_tree(parent->_left, space_root, level + 1, node_in_line);
-		std::cout << std::endl;
+		// std::cout << std::endl;
 		for (int i = 10; i < space_root; i++)
 			std::cout << " ";
 		if (parent->_color == RED)
 			std::cout << C_RED;
 		std::cout << parent->_content.first << " : " << parent->_content.second << std::endl;
 		// std::cout << parent->_content.first << " : " << parent->_content.second << " c: " << parent->_color << std::endl;
-		std::cout << END << std::endl;
+		std::cout << END ;
 
 		display_tree(parent->_right, space_root, level + 1, node_in_line);
 	}
@@ -417,81 +630,6 @@ public:
 	// 		level++;
 	// 	}
 			
-	// }
-
-	/* Assignation operator */
-
-
-	/* Iterators */
-
-
-	/* Capacity */
-
-
-	/* Element access */
-
-
-
-	iterator insert(value_type to_insert);
-
-	iterator begin()
-	{
-		return iterator(_node->_left);
-	}
-
-	iterator end()
-	{
-		return iterator(_node);
-	}
-	
-	const_iterator begin() const;
-
-	const_iterator end() const;
-
-	iterator find(value_type to_find)
-	{
-		iterator it = begin();
-		while (it != end())
-		{
-			if (*it == to_find)
-				return it;
-			it++;
-		}
-		return it;
-	}
-
-	const_iterator find(value_type to_find) const;
-
-	size_type size() const;
-
-	bool empty() const;
-
-	void clear();
-
-	void erase(iterator position);
-
-	void erase(iterator first, iterator last);
-
-	void erase(value_type to_erase);
-
-	void swap(RedBlackTree &x);
-
-	RedBlackTree &operator=(const RedBlackTree &x);
-
-	/* Comparison operators */
-	bool operator==(const self& x) const;
-	bool operator!=(const self& x) const;
-
-	bool operator<(const self& x) const;
-	bool operator<=(const self& x) const;
-
-	bool operator>(const self& x) const;
-	bool operator>=(const self& x) const;
-	/* Allocator */
-
-	// allocator_type get_allocator() const
-	// {
-	// 	return (_node_alloc);
 	// }
 
 };

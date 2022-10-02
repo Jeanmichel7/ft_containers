@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 16:58:53 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/02 00:39:03 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/03 00:12:01 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,18 +24,16 @@ template <typename T, class Compare >
 			typedef typename T::value_type    value_type;
 
 			/* The iterator category */
-			typedef typename std::iterator<std::bidirectional_iterator_tag, value_type>::iterator_category iterator_category;
-
-			/* The value_type pointed by the iterator (BST)*/
+			typedef typename std::iterator<std::bidirectional_iterator_tag, value_type>::iterator_category 	iterator_category;
 
 			/* The difference type */
-			typedef typename std::iterator<std::bidirectional_iterator_tag, value_type>::difference_type   difference_type;
+			typedef typename std::iterator<std::bidirectional_iterator_tag, value_type>::difference_type 	difference_type;
 
 			/* The pointer to the value */
-			typedef typename std::iterator<std::bidirectional_iterator_tag, value_type>::pointer   pointer;
+			typedef typename std::iterator<std::bidirectional_iterator_tag, value_type>::pointer			pointer;
 
 			/* The reference to the value */
-			typedef typename std::iterator<std::bidirectional_iterator_tag, value_type>::reference reference;
+			typedef typename std::iterator<std::bidirectional_iterator_tag, value_type>::reference 			reference;
 
 			/*
 			** @brief Default.
@@ -56,9 +54,22 @@ template <typename T, class Compare >
 						const Compare& comp = Compare())
 			:
 				_node(node_p),
-				// _last_node(last_node),
+				_last_node(),
 				_comp(comp)
 			{}
+
+
+			/*
+			** @brief Create an iterator on "node_p".
+			*/
+			RB_iterator(T * node_p, T * last_node,
+						const Compare& comp = Compare())
+			:
+				_node(node_p),
+				_last_node(last_node),
+				_comp(comp)
+			{}
+
 
 			/*
 			** @brief Copy constructor.
@@ -70,7 +81,7 @@ template <typename T, class Compare >
 			RB_iterator(const RB_iterator& bst_it)
 			:
 				_node(bst_it._node),
-				// _last_node(bst_it._last_node),
+				_last_node(bst_it._last_node),
 				_comp()
 			{}
 
@@ -127,7 +138,7 @@ template <typename T, class Compare >
 			** @return the const reference.
 			*/
 			reference operator*() const
-			{ return (this->_node->value); }
+			{ return (this->_node->_content); }
 
 			/*
 			** @brief Give a pointer to the value that contain
@@ -147,32 +158,53 @@ template <typename T, class Compare >
 			*/
 			RB_iterator& operator++(void)
 			{
-				T* cursor = _node;
+				// std::cout << "++" << std::endl;
+				// std::cout << "this->_node->_right = " << this->_node->_content << std::endl;
 
-				if (_node->right == _last_node)
+
+				if (this->_node->_right != NULL)
 				{
-					cursor = _node->parent;
-					while (cursor != _last_node
-						&& _comp(cursor->value.first, _node->value.first))
-						cursor = cursor->parent;
-					_node = cursor;
+					this->_node = this->_node->_right;
+					while (this->_node->_left != NULL)
+						this->_node = this->_node->_left;
 				}
-				else if (cursor == _last_node)
-					_node = _last_node->right;
 				else
 				{
-					cursor = _node->right;
-					if (cursor == _last_node->parent
-						&& cursor->right == _last_node)
-						_node = cursor;
-					else
-					{
-						while (cursor->left != _last_node)
-							cursor = cursor->left;
-					}
-					_node = cursor;
+					while (this->_node->_parent != NULL && this->_node->_parent->_right == this->_node)
+						this->_node = this->_node->_parent;
+					this->_node = this->_node->_parent;
 				}
 				return (*this);
+				
+
+
+
+				// T* cursor = _node;
+
+				// if (_node->right == _last_node)
+				// {
+				// 	cursor = _node->parent;
+				// 	while (cursor != _last_node
+				// 		&& _comp(cursor->_content.first, _node->_content.first))
+				// 		cursor = cursor->parent;
+				// 	_node = cursor;
+				// }
+				// else if (cursor == _last_node)
+				// 	_node = _last_node->right;
+				// else
+				// {
+				// 	cursor = _node->right;
+				// 	if (cursor == _last_node->parent
+				// 		&& cursor->right == _last_node)
+				// 		_node = cursor;
+				// 	else
+				// 	{
+				// 		while (cursor->left != _last_node)
+				// 			cursor = cursor->left;
+				// 	}
+				// 	_node = cursor;
+				// }
+				// return (*this);
 			}
 
 			/*
@@ -196,32 +228,55 @@ template <typename T, class Compare >
 			*/
 			RB_iterator& operator--(void)
 			{
-				T* cursor = _node;
-
-				if (_node->left == _last_node)
-				{
-					cursor = _node->parent;
-					while (cursor != _last_node
-						&& !_comp(cursor->value.first, _node->value.first))
-						cursor = cursor->parent;
-					_node = cursor;
+				T* tmp;
+				if (this->_node == NULL && this->_node->_parent == _node) {
+					// tmp = _last_node->_parent;
+					this->_node = this->_last_node->_parent;
+					std::cout << "last node : " << _node->_content << std::endl;
+					return (*this);
 				}
-				else if (cursor == _last_node)
-					_node = _last_node->right;
+				if (this->_node->_left != NULL)
+				{
+					this->_node = this->_node->_left;
+					while (this->_node->_right != NULL)
+						this->_node = this->_node->_right;
+				}
 				else
 				{
-					cursor = _node->left;
-					if (cursor == _last_node->parent
-						&& cursor->left == _last_node)
-						_node = cursor;
-					else
-					{
-						while (cursor->right != _last_node)
-							cursor = cursor->right;
-					}
-					_node = cursor;
+					while (this->_node->_parent != NULL && this->_node->_parent->_left == this->_node)
+						this->_node = this->_node->_parent;
+					this->_node = this->_node->_parent;
 				}
 				return (*this);
+
+
+
+				// T* cursor = _node;
+
+				// if (_node->_left && _node->_left == _last_node)
+				// {
+				// 	cursor = _node->_parent;
+				// 	while (cursor != _last_node
+				// 		&& !_comp(cursor->_content.first, _node->_content.first))
+				// 		cursor = cursor->_parent;
+				// 	_node = cursor;
+				// }
+				// else if (cursor == _last_node)
+				// 	_node = _last_node->_right;
+				// else
+				// {
+				// 	cursor = _node->_left;
+				// 	if (cursor == _last_node->_parent
+				// 		&& cursor->_left == _last_node)
+				// 		_node = cursor;
+				// 	else
+				// 	{
+				// 		while (cursor->_right != _last_node)
+				// 			cursor = cursor->_right;
+				// 	}
+				// 	_node = cursor;
+				// }
+				// return (*this);
 			}
 
 			/*
@@ -250,18 +305,16 @@ template <typename T, class Compare >
 			typedef typename T::value_type    value_type;
 
 			/* The iterator category */
-			typedef typename std::iterator<std::bidirectional_iterator_tag, value_type>::iterator_category iterator_category;
-
-			/* The value_type pointed by the iterator (BST)*/
+			typedef typename std::iterator<std::bidirectional_iterator_tag, value_type>::iterator_category 	iterator_category;
 
 			/* The difference type */
-			typedef typename std::iterator<std::bidirectional_iterator_tag, value_type>::difference_type   difference_type;
+			typedef typename std::iterator<std::bidirectional_iterator_tag, value_type>::difference_type	difference_type;
 
 			/* The pointer to the value */
-			typedef typename std::iterator<std::bidirectional_iterator_tag, value_type>::pointer   pointer;
+			typedef typename std::iterator<std::bidirectional_iterator_tag, value_type>::pointer			pointer;
 
 			/* The reference to the value */
-			typedef typename std::iterator<std::bidirectional_iterator_tag, value_type>::reference reference;
+			typedef typename std::iterator<std::bidirectional_iterator_tag, value_type>::reference			reference;
 
 			
 			/*
@@ -361,7 +414,7 @@ template <typename T, class Compare >
 			** @return the const reference.
 			*/
 			reference operator*() const
-			{ return (this->_node->value); }
+			{ return (this->_node->_content); }
 
 			/*
 			** @brief Give a pointer to the value that contain
@@ -371,7 +424,7 @@ template <typename T, class Compare >
 			** @return the const pointer.
 			*/
 			pointer operator->() const
-			{ return (&this->_node->value); }
+			{ return (&this->_node->_content); }
 
 			/*
 			** @brief Increment the iterator to the next value
@@ -437,7 +490,7 @@ template <typename T, class Compare >
 				{
 					cursor = _node->parent;
 					while (cursor != _last_node
-						&& !_comp(cursor->value.first, _node->value.first))
+						&& !_comp(cursor->_content.first, _node->_content.first))
 						cursor = cursor->parent;
 					_node = cursor;
 				}

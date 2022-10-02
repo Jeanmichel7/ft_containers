@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/14 22:19:53 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/02 17:55:56 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/03 00:10:26 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,16 +34,6 @@
 // { return std::tolower(c1)<std::tolower(c2); }
 
 
-// display content of a map
-// template<typename Key, typename Value>
-// std::ostream& operator<<(std::ostream& os, std::map<Key, Value> const& m)
-// {
-//    os << "{ ";
-//    for(auto const& p: m)
-//         os << '(' << p.first << ':' << p.second << ") ";
-//    return os << "}\n";
-// }
- 
 // struct Point { double x, y; };
 // struct PointCmp {
 //     bool operator()(const Point& lhs, const Point& rhs) const {
@@ -790,14 +780,14 @@ int main()
 	// // std::cout << "bar2 contains: " << bar2.first << " and " << bar2.second << '\n';
 }
 {
+	std::cout << "REAL map : " << std::endl;
 	// (1) Default constructor
 	std::map<std::string, int> map1;
 
-	map1.insert(std::pair<std::string, int>("a", 1));
 
 	// find
-	std::map<std::string, int>::iterator it = map1.find("a");
-	std::cout << it->first << " " << it->second << std::endl;
+	// std::map<std::string, int>::iterator it = map1.find("a");
+	// std::cout << it->first << " " << it->second << std::endl;
 
 	// map1["something"] = 69;
 	// map1["anything"] = 199;
@@ -815,11 +805,52 @@ int main()
 	// std::cout << "\ncopied = " << copied;
 	// std::cout << "map1 = " << map1;
 
+	std::cout << "TEST insert(pair) : " << std::endl;
+
+	map1.insert(std::pair<std::string, int>("a", 1));
+	map1.insert(std::pair<std::string, int>("b", 1));
+	map1.insert(std::pair<std::string, int>("c", 1));
+	map1.insert(std::pair<std::string, int>("d", 1));
+	map1.insert(std::pair<std::string, int>("e", 1));
+
+
+	std::cout << "DISPLAY MAP : " << std::endl;
+	for(std::map<string, int>::iterator it = map1.begin();
+    it != map1.end(); ++it)
+	{
+		std::cout << it->first << " : " << it->second << "\n";
+	}
+
+
+
+	std::cout << "TEST iterator : " << std::endl;
+
+	std::map<std::string, int>::iterator r_it = map1.begin();
+	std::cout << r_it->first << " " << r_it->second << std::endl;
+	
+	std::map<std::string, int>::iterator r_it2 = map1.end();
+	r_it2--;
+	std::cout << r_it2->first << " " << r_it2->second << std::endl;
+
+	// std::cout << "TEST const iterator : " << std::endl;
+
+	// std::map<std::string, int>::const_iterator r_it3 = map1.begin();
+	// std::cout << r_it3->first << " " << r_it3->second << std::endl;
+	// std::map<std::string, int>::const_iterator r_it4 = map1.end();
+	// std::cout << r_it4->first << " " << r_it4->second << std::endl;
+
+
+	
+	// std::cout << "TEST insert(hint, pair) : " << std::endl;
+	// map1.insert(map1.begin(), std::pair<std::string, int>("b", 2));
 
 
 
 
 
+
+
+	std::cout << "\n\nMy map : " << std::endl;
 
 	ft::map<std::string, int> map2;
 	map2.insert(ft::pair<std::string, int>("a", 1));
@@ -827,21 +858,83 @@ int main()
 	map2.insert(ft::pair<std::string, int>("c", 1));
 	map2.insert(ft::pair<std::string, int>("d", 1));
 	map2.insert(ft::pair<std::string, int>("e", 1));
-
-
-	map2.insert(ft::pair<std::string, int>("c", 1));
-	map2.insert(ft::pair<std::string, int>("g", 1));
-	map2.insert(ft::pair<std::string, int>("a", 1));
-	map2.insert(ft::pair<std::string, int>("h", 1));
-	map2.insert(ft::pair<std::string, int>("d", 1));
 	map2.insert(ft::pair<std::string, int>("f", 1));
-	map2.insert(ft::pair<std::string, int>("t", 1));
-	map2.insert(ft::pair<std::string, int>("y", 1));
-	map2.insert(ft::pair<std::string, int>("q", 1));
-	map2.insert(ft::pair<std::string, int>("z", 1));
-	map2.insert(ft::pair<std::string, int>("x", 1));
-	map2.insert(ft::pair<std::string, int>("l", 1));
-	map2.insert(ft::pair<std::string, int>("r", 1));
+	map2.insert(ft::pair<std::string, int>("g", 1));
+	map2.insert(ft::pair<std::string, int>("h", 1));
+	map2.insert(ft::pair<std::string, int>("i", 1));
+
+
+	// map2.insert(ft::pair<std::string, int>("f", 1));
+	// map2.insert(ft::pair<std::string, int>("g", 1));
+	// map2.insert(ft::pair<std::string, int>("h", 1));
+	// map2.insert(ft::pair<std::string, int>("i", 1));
+	// map2.insert(ft::pair<std::string, int>("j", 1));
+	// map2.insert(ft::pair<std::string, int>("k", 1));
+	// map2.insert(ft::pair<std::string, int>("l", 1));
+	// map2.insert(ft::pair<std::string, int>("m", 1));
+	// map2.insert(ft::pair<std::string, int>("n", 1));
+	// map2.insert(ft::pair<std::string, int>("o", 1));
+	// map2.insert(ft::pair<std::string, int>("p", 1));
+	// map2.insert(ft::pair<std::string, int>("q", 1));
+	// map2.insert(ft::pair<std::string, int>("r", 1));
+	// map2.insert(ft::pair<std::string, int>("s", 1));
+	// map2.insert(ft::pair<std::string, int>("t", 1));
+	// map2.insert(ft::pair<std::string, int>("u", 1));
+	// map2.insert(ft::pair<std::string, int>("v", 1));
+	// map2.insert(ft::pair<std::string, int>("w", 1));
+	// map2.insert(ft::pair<std::string, int>("x", 1));
+	// map2.insert(ft::pair<std::string, int>("y", 1));
+	// map2.insert(ft::pair<std::string, int>("z", 1));
+	// map2.insert(ft::pair<std::string, int>("aa", 1));
+	// map2.insert(ft::pair<std::string, int>("ab", 1));
+	// map2.insert(ft::pair<std::string, int>("za", 1));
+	// map2.insert(ft::pair<std::string, int>("zaa", 1));
+	// map2.insert(ft::pair<std::string, int>("zab", 1));
+	// map2.insert(ft::pair<std::string, int>("zac", 1));
+	// map2.insert(ft::pair<std::string, int>("zad", 1));
+	// map2.insert(ft::pair<std::string, int>("zae", 1));
+	// map2.insert(ft::pair<std::string, int>("zaf", 1));
+	// map2.insert(ft::pair<std::string, int>("zag", 1));
+	// map2.insert(ft::pair<std::string, int>("zah", 1));
+	// map2.insert(ft::pair<std::string, int>("zai", 1));
+	// map2.insert(ft::pair<std::string, int>("zaj", 1));
+	// map2.insert(ft::pair<std::string, int>("zak", 1));
+	// map2.insert(ft::pair<std::string, int>("zal", 1));
+	// map2.insert(ft::pair<std::string, int>("zb", 1));
+	// map2.insert(ft::pair<std::string, int>("zbq", 1));
+	// map2.insert(ft::pair<std::string, int>("zs", 1));
+	// map2.insert(ft::pair<std::string, int>("zs", 1));
+	// map2.insert(ft::pair<std::string, int>("zsa", 1));
+	// map2.insert(ft::pair<std::string, int>("zsb", 1));
+	// map2.insert(ft::pair<std::string, int>("zsc", 1));
+	// map2.insert(ft::pair<std::string, int>("zsd", 1));
+	// map2.insert(ft::pair<std::string, int>("zse", 1));
+	// map2.insert(ft::pair<std::string, int>("zsf", 1));
+	// map2.insert(ft::pair<std::string, int>("zsg", 1));
+	// map2.insert(ft::pair<std::string, int>("zsh", 1));
+	// map2.insert(ft::pair<std::string, int>("zsha", 1));
+	// map2.insert(ft::pair<std::string, int>("zshb", 1));
+	// map2.insert(ft::pair<std::string, int>("zshc", 1));
+	// map2.insert(ft::pair<std::string, int>("zshd", 1));
+	// map2.insert(ft::pair<std::string, int>("zshq", 1));
+	// map2.insert(ft::pair<std::string, int>("zshw", 1));
+	// map2.insert(ft::pair<std::string, int>("zshe", 1));
+	// map2.insert(ft::pair<std::string, int>("zshr", 1));
+	// map2.insert(ft::pair<std::string, int>("zsht", 1));
+	// map2.insert(ft::pair<std::string, int>("zshy", 1));
+	// map2.insert(ft::pair<std::string, int>("zshu", 1));
+	// map2.insert(ft::pair<std::string, int>("zshi", 1));
+	// map2.insert(ft::pair<std::string, int>("zsho", 1));
+	// map2.insert(ft::pair<std::string, int>("zshp", 1));
+	// map2.insert(ft::pair<std::string, int>("zsha", 1));
+	// map2.insert(ft::pair<std::string, int>("zshs", 1));
+	// map2.insert(ft::pair<std::string, int>("zshd", 1));
+	// map2.insert(ft::pair<std::string, int>("zshf", 1));
+	// map2.insert(ft::pair<std::string, int>("zshg", 1));
+	// map2.insert(ft::pair<std::string, int>("zshh", 1));
+	// map2.insert(ft::pair<std::string, int>("zshj", 1));
+	// map2.insert(ft::pair<std::string, int>("zshk", 1));
+	// map2.insert(ft::pair<std::string, int>("zci", 1));
 
 	map2.display_tree();
 
@@ -849,6 +942,22 @@ int main()
 	// std::cout << "size : " << map2.size() << std::endl;
 	// std::cout << "map2[\"a\"] : " << map2["a"] << std::endl;
 	// std::cout << "map2[\"b\"] : " << map2.at("a") << std::endl;
+
+
+	std::cout << "TEST iterator : " << std::endl;
+
+	ft::map<std::string, int>::iterator m_it = map2.begin();
+	std::cout << m_it->first << " " << m_it->second << std::endl;
+	ft::map<std::string, int>::iterator m_it2 = map2.end();
+	// m_it2--;
+	// m_it2--;
+	// m_it2--;
+	std::cout << m_it2->first << " " << m_it2->second << std::endl;
+
+	std::cout << "TEST const iterator : " << std::endl;
+
+
+
 
 	// find
 	// ft::map<std::string, int>::iterator it2 = map2.find("a");

@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 18:14:05 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/02 17:46:41 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/02 23:58:04 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@
 // #include <memory>
 // #include <cstddef>
 // #include <iterator>
-#include <iostream>
 #include <exception>
 // #include <limits>
 
@@ -168,11 +167,18 @@ public:
 	/*                                                     */
 	/* *************************************************** */
 
-	iterator begin();
+	iterator begin() {
+		return (_tree.begin());
+	}
 
 	const_iterator begin() const;
 
-	iterator end();
+	iterator end() {
+		// iterator tmp = _tree.end();
+		// // tmp++;
+		// return (tmp);
+		return (_tree.end());
+	}
 
 	const_iterator end() const;
 
@@ -221,11 +227,11 @@ public:
 		return (_tree.insert_pair(value));
 	}
 
-	iterator insert( iterator hint, const value_type& value );
-	// {
-	// 	std::cout << "insert(hint, value)" << std::endl;
-	// 	return iterator();
-	// }
+	iterator insert( iterator hint, const value_type& value )
+	{
+		(void)hint;
+		return (insert(value).first);
+	}
 
 	template< class InputIt >
 	void insert( InputIt first, InputIt last );

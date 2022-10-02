@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/10 21:23:15 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/02 17:30:14 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/02 18:19:27 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,13 @@
 
 #define BLACK 0
 #define RED 1
-
 #define C_RED "\033[0;31m"
 #define END "\033[0m"
 
-#include "enable_if.hpp"
+#include <iostream>
 #include <math.h>
+
+#include "enable_if.hpp"
 
 static class nullptr_t
 {
