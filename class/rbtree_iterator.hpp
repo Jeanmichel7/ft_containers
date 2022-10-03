@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 16:58:53 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/03 14:33:41 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/03 14:37:55 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ template <typename T, class Compare >
 	class RB_iterator : std::iterator<std::bidirectional_iterator_tag, T>
 	{
 		public :
-
 			typedef typename T::value_type    value_type;
 
 			/* The iterator category */
@@ -289,11 +288,11 @@ template <typename T, class Compare >
 				RB_iterator tmp(*this);
 				operator--();
 				return (tmp);
-			}            
+			}
 
 			T *			_node;
 			T *			_last_node;
-			Compare     _comp;
+			Compare		_comp;
 	};
 
 	template <typename T, class Compare >
