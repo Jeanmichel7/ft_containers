@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 12:54:45 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/03 00:10:53 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/03 14:33:28 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ private:
 	// last_node parent = root of tree, last_node right = last node, last_node left = first node
 	node_alloc      _node_alloc;
 	node_pointer	_root;
-	node_pointer    _node;
+	// node_pointer    _node;
 	node_pointer	_last_node;
 	Compare         _comp;
 	size_type       _size;
@@ -92,7 +92,7 @@ public:
 	:
 		_node_alloc(node_alloc_init),
 		_root(NULL),
-		_node(NULL),
+		// _node(NULL),
 		_last_node(NULL),
 		_size(0)
 	{
@@ -101,16 +101,16 @@ public:
 	}
 
 	/* Copy constructor */
-	RedBlackTree(const self& x) : _node(_node_alloc.allocate(1))
-	{
-		_node_alloc.construct(_node, Node());
-		_node->_content = x._node->_content;
-		_node->_parent = x._node->_parent;
-		_node->_left = x._node->_left;
-		_node->_right = x._node->right;
-		_node->_color = x._node->_color;
-		// *this = x;
-	}
+	// RedBlackTree(const self& x) : _node(_node_alloc.allocate(1))
+	// {
+	// 	_node_alloc.construct(_node, Node());
+	// 	_node->_content = x._node->_content;
+	// 	_node->_parent = x._node->_parent;
+	// 	_node->_left = x._node->_left;
+	// 	_node->_right = x._node->right;
+	// 	_node->_color = x._node->_color;
+	// 	// *this = x;
+	// }
 
 
 	RedBlackTree &operator=(const RedBlackTree &x);
@@ -193,7 +193,7 @@ public:
 			current = current->_right;
 		// tmp = current;
 		// _last_node = current;
-		current = current->_right;
+		// current = current->_right;
 		// current->_parent = tmp;
 		
 		// std::cout << "test end()" << std::endl;
@@ -203,7 +203,7 @@ public:
 		// std::cout << " current->_parent: " << current->_parent << std::endl;
 		
 		// return iterator(_last_node);
-		return iterator(current, _last_node);
+		return iterator(_last_node);
 	}
 	
 	const_iterator begin() const;
@@ -246,7 +246,13 @@ public:
 			_node_alloc.construct(new_node, Node(val, BLACK));
 			_root = new_node;
 			_size++;
-			_last_node = new_node;
+
+
+			_last_node = _node_alloc.allocate(1);
+			_node_alloc.construct(_last_node, Node());
+			_last_node->_parent = _root;
+
+
 			return ft::make_pair(iterator(_root), true);
 			// return ft::pair<iterator, bool>(iterator(_node), true);
 		}
@@ -388,13 +394,11 @@ public:
 	node_pointer set_last_node()
 	{
 		node_pointer current = _root;
-		node_pointer tmp;
+		
 		while (current->_right != NULL)
 			current = current->_right;
-		// current = current->_right;
-		// tmp = current;
-		// current->_parent = current;
-		return current;
+		_last_node->_parent = current;
+		return _last_node;
 	}
 
 	void leftRotate(node_pointer x)

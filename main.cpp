@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/14 22:19:53 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/03 00:10:26 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/03 14:34:02 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -949,7 +949,7 @@ int main()
 	ft::map<std::string, int>::iterator m_it = map2.begin();
 	std::cout << m_it->first << " " << m_it->second << std::endl;
 	ft::map<std::string, int>::iterator m_it2 = map2.end();
-	// m_it2--;
+	m_it2--;
 	// m_it2--;
 	// m_it2--;
 	std::cout << m_it2->first << " " << m_it2->second << std::endl;

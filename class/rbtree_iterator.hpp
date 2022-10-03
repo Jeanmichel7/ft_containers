@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 16:58:53 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/03 00:12:01 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/03 14:33:41 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -228,13 +228,12 @@ template <typename T, class Compare >
 			*/
 			RB_iterator& operator--(void)
 			{
-				T* tmp;
-				if (this->_node == NULL && this->_node->_parent == _node) {
-					// tmp = _last_node->_parent;
-					this->_node = this->_last_node->_parent;
-					std::cout << "last node : " << _node->_content << std::endl;
-					return (*this);
-				}
+				// if (this->_node == NULL && this->_node->_parent == _node) {
+				// 	// tmp = _last_node->_parent;
+				// 	this->_node = this->_last_node->_parent;
+				// 	std::cout << "last node : " << _node->_content << std::endl;
+				// 	return (*this);
+				// }
 				if (this->_node->_left != NULL)
 				{
 					this->_node = this->_node->_left;
