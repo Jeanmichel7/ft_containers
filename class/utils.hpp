@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/10 21:23:15 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/02 18:19:27 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/03 15:54:43 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,7 +170,7 @@ namespace ft
     template <typename T>
     std::ostream& operator<<(std::ostream& os, const Node<T>& node)
     {
-        os << "test : " << node->_content.first << " " << node->_content.second << std::endl;
+        os << "ostream node : " << node->_content.first << " " << node->_content.second << std::endl;
         return os;
     }
     

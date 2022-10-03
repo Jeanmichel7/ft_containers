@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 18:14:05 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/02 23:58:04 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/03 15:53:33 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,16 +171,17 @@ public:
 		return (_tree.begin());
 	}
 
-	const_iterator begin() const;
+	const_iterator begin() const {
+		return (_tree.begin());
+	}
 
 	iterator end() {
-		// iterator tmp = _tree.end();
-		// // tmp++;
-		// return (tmp);
 		return (_tree.end());
 	}
 
-	const_iterator end() const;
+	const_iterator end() const {
+		return (_tree.end());
+	}
 
 	reverse_iterator rbegin();
 
@@ -223,7 +224,7 @@ public:
 
 	ft::pair<iterator, bool> insert( const value_type& value )
 	{
-		std::cout << "value [" << value.first << "] = " << value.second << std::endl;
+		// std::cout << "value [" << value.first << "] = " << value.second << std::endl;
 		return (_tree.insert_pair(value));
 	}
 

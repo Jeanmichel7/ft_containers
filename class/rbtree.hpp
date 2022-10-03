@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 12:54:45 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/03 14:33:28 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/03 19:31:42 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -192,6 +192,39 @@ public:
 		while (current->_right != NULL)
 			current = current->_right;
 		// tmp = current;
+		// current = current->_right;
+		// _last_node->_parent = current;
+		// _last_node->_right = NULL;
+		// _last_node->_left = NULL;
+		// _last_node->_color = 0;
+		// _last_node->_content = ft::make_pair(0, 0);
+		// current->_parent = tmp;
+		
+		// std::cout << "test end()" << std::endl;
+		// std::cout << " current: " << current->_content << std::endl;
+		// std::cout << " current->_right: " << current->_right << std::endl;
+		// std::cout << " current->_left: " << current->_left << std::endl;
+		std::cout << " current->_parent: " << _last_node->_parent->_content << std::endl;
+		
+		return iterator(_last_node);
+		// return iterator(current);
+	}
+	
+	const_iterator begin() const {
+		node_pointer current = _root;
+		while (current->_left != NULL)
+			current = current->_left;
+
+		return const_iterator(current);
+	}
+
+	const_iterator end() const {
+		node_pointer current = _root;
+		// node_pointer tmp;
+
+		while (current->_right != NULL)
+			current = current->_right;
+		// tmp = current;
 		// _last_node = current;
 		// current = current->_right;
 		// current->_parent = tmp;
@@ -202,13 +235,9 @@ public:
 		// std::cout << " current->_left: " << current->_left << std::endl;
 		// std::cout << " current->_parent: " << current->_parent << std::endl;
 		
-		// return iterator(_last_node);
-		return iterator(_last_node);
+		// return const_iterator(current);
+		return const_iterator(_last_node);
 	}
-	
-	const_iterator begin() const;
-
-	const_iterator end() const;
 
 
 
@@ -403,7 +432,7 @@ public:
 
 	void leftRotate(node_pointer x)
 	{
-		std::cout << "left rotate" << std::endl;
+		// std::cout << "left rotate" << std::endl;
 		node_pointer y = x->_right;
 		x->_right = y->_left;
 
@@ -434,7 +463,7 @@ public:
 
 	void rightRotate(node_pointer x)
 	{
-		std::cout << "right rotate" << std::endl;
+		// std::cout << "right rotate" << std::endl;
 		node_pointer y = x->_left;
 		x->_left = y->_right;
 		if (y->_right != TNULL)
@@ -469,7 +498,7 @@ public:
 			if (k->_parent == k->_parent->_parent->_right)
 			{
 				u = k->_parent->_parent->_left;
-				std::cout << "test : " << u << std::endl;
+				// std::cout << "test : " << u << std::endl;
 				if (u && u->_color == 1)
 				{
 					u->_color = 0;
@@ -491,7 +520,7 @@ public:
 			}
 			else
 			{
-				std::cout << "left" << std::endl;
+				// std::cout << "left" << std::endl;
 				u = k->_parent->_parent->_right;
 
 				if (u && u->_color == 1)
