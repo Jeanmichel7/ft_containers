@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 12:54:45 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/03 19:31:42 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/04 11:12:26 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,10 +120,11 @@ public:
 	{
 		node_pointer current = _root;
 		node_pointer prev = NULL;
-		// node_pointer parent = NULL;
+
+		
+				
 		while (current != NULL)
 		{
-			// std::cout << "current avant: " << current->_content << std::endl;
 			if (current->_left) {
 				current = current->_left;
 			}
@@ -134,9 +135,11 @@ public:
 			{
 				_node_alloc.destroy(_root);
 				_node_alloc.deallocate(_root, 1);
+
+				// _node_alloc.destroy(_last_node);
+				// _node_alloc.deallocate(_last_node, 1);
 				return;
 			}
-
 			if ((current->_left == NULL && current->_right == NULL)) {
 				prev = current;
 				current = current->_parent;
@@ -144,7 +147,6 @@ public:
 					current->_left = NULL;
 				else if (current->_right == prev)
 					current->_right = NULL;
-				// std::cout << "deallocte : " << prev->_content << std::endl;
 				_node_alloc.destroy(prev);
 				_node_alloc.deallocate(prev, 1);
 			}
@@ -181,62 +183,31 @@ public:
 		while (current->_left != NULL)
 			current = current->_left;
 
-		return iterator(current);
+		return iterator(current, _last_node);
 	}
 
 	iterator end()
 	{
 		node_pointer current = _root;
-		// node_pointer tmp;
-
 		while (current->_right != NULL)
 			current = current->_right;
-		// tmp = current;
-		// current = current->_right;
-		// _last_node->_parent = current;
-		// _last_node->_right = NULL;
-		// _last_node->_left = NULL;
-		// _last_node->_color = 0;
-		// _last_node->_content = ft::make_pair(0, 0);
-		// current->_parent = tmp;
-		
-		// std::cout << "test end()" << std::endl;
-		// std::cout << " current: " << current->_content << std::endl;
-		// std::cout << " current->_right: " << current->_right << std::endl;
-		// std::cout << " current->_left: " << current->_left << std::endl;
-		std::cout << " current->_parent: " << _last_node->_parent->_content << std::endl;
-		
-		return iterator(_last_node);
-		// return iterator(current);
+		current = current->_right;
+		return iterator(current, _last_node);
 	}
 	
 	const_iterator begin() const {
 		node_pointer current = _root;
 		while (current->_left != NULL)
 			current = current->_left;
-
-		return const_iterator(current);
+		return const_iterator(current, _last_node);
 	}
 
 	const_iterator end() const {
 		node_pointer current = _root;
-		// node_pointer tmp;
-
 		while (current->_right != NULL)
 			current = current->_right;
-		// tmp = current;
-		// _last_node = current;
-		// current = current->_right;
-		// current->_parent = tmp;
-		
-		// std::cout << "test end()" << std::endl;
-		// std::cout << " current: " << current->_content << std::endl;
-		// std::cout << " current->_right: " << current->_right << std::endl;
-		// std::cout << " current->_left: " << current->_left << std::endl;
-		// std::cout << " current->_parent: " << current->_parent << std::endl;
-		
-		// return const_iterator(current);
-		return const_iterator(_last_node);
+		current = current->_right;
+		return const_iterator(current, _last_node);
 	}
 
 
@@ -272,17 +243,18 @@ public:
 		if (_size == 0)
 		{
 			node_pointer new_node = _node_alloc.allocate(1);
-			_node_alloc.construct(new_node, Node(val, BLACK));
+			_node_alloc.construct(new_node, Node(val, N_BLACK));
 			_root = new_node;
 			_size++;
 
 
-			_last_node = _node_alloc.allocate(1);
-			_node_alloc.construct(_last_node, Node());
-			_last_node->_parent = _root;
+			// _last_node = _node_alloc.allocate(1);
+			// _node_alloc.construct(_last_node, Node());
+			// _last_node->_parent = _root;
+			_last_node = _root;
 
 
-			return ft::make_pair(iterator(_root), true);
+			return ft::make_pair(iterator(_root, _last_node), true);
 			// return ft::pair<iterator, bool>(iterator(_node), true);
 		}
 
@@ -305,7 +277,7 @@ public:
 				current = current->_right;
 			}
 			else
-				return ft::make_pair(iterator(current), false);
+				return ft::make_pair(iterator(current, _last_node), false);
 		}
 
 		// insert
@@ -320,8 +292,14 @@ public:
 		// display_tree("after insert");
 		// fix tree
 		fix_tree(current);
-		_last_node = set_last_node();
-		return ft::make_pair(iterator(current), true);
+
+		// set last node
+		while (current->_right != NULL)
+			current = current->_right;
+		_last_node = current;
+		// _last_node->_parent = current;
+		
+		return ft::make_pair(iterator(current,_last_node), true);
 	}
 
 
@@ -419,16 +397,6 @@ public:
 	/*                       UTILS                         */
 	/*                                                     */
 	/* *************************************************** */
-
-	node_pointer set_last_node()
-	{
-		node_pointer current = _root;
-		
-		while (current->_right != NULL)
-			current = current->_right;
-		_last_node->_parent = current;
-		return _last_node;
-	}
 
 	void leftRotate(node_pointer x)
 	{
@@ -608,8 +576,8 @@ public:
 		// std::cout << std::endl;
 		for (int i = 10; i < space_root; i++)
 			std::cout << " ";
-		if (parent->_color == RED)
-			std::cout << C_RED;
+		if (parent->_color == N_RED)
+			std::cout << RED;
 		std::cout << parent->_content.first << " : " << parent->_content.second << std::endl;
 		// std::cout << parent->_content.first << " : " << parent->_content.second << " c: " << parent->_color << std::endl;
 		std::cout << END ;

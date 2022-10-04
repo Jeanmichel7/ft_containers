@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/14 22:19:53 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/03 19:30:13 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/04 11:10:25 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -874,6 +874,10 @@ int main()
 	ft::map<std::string, int>::iterator ft_it = ft_map.begin();
 	std::cout << ft_it->first << " " << ft_it->second << std::endl;
 
+
+
+
+
 	/* end() */
 	std::map<std::string, int>::iterator it_end = map.end();
 	it_end--;
@@ -882,40 +886,45 @@ int main()
 	ft_it_end--;
 	std::cout << ft_it_end->first << " " << ft_it_end->second << std::endl;
 
+
+
+
+
+
 	/* begin() -> end() */
 	std::cout << BLU "\nTEST begin() -> end() : " END << std::endl;
 	for (std::map<std::string, int>::iterator it = map.begin(); it != map.end(); it++)
 		std::cout << it->first << " " << it->second << std::endl;
+	for (ft::map<std::string, int>::iterator it2 = ft_map.begin(); it2 != ft_map.end(); it2++)
+			std::cout << it2->first << " " << it2->second << std::endl;
 
 
-	ft::map<std::string, int>::iterator it2 = ft_map.begin();
-	std::cout << it2->first << " " << it2->second << std::endl;
-	it2++;
-	std::cout << it2->first << " " << it2->second << std::endl;
-	it2++;
-	std::cout << it2->first << " " << it2->second << std::endl;
-	it2++;
-	std::cout << it2->first << " " << it2->second << std::endl;
-	it2++;
-	std::cout << it2->first << " " << it2->second << std::endl;
-	it2++;
+	// ft::map<std::string, int>::iterator it2 = ft_map.begin();
 	// std::cout << it2->first << " " << it2->second << std::endl;
+	// it2++;
+	// std::cout << it2->first << " " << it2->second << std::endl;
+	// it2++;
+	// std::cout << it2->first << " " << it2->second << std::endl;
+	// it2++;
+	// std::cout << it2->first << " " << it2->second << std::endl;
+	// it2++;
+	// std::cout << it2->first << " " << it2->second << std::endl;
+	// it2++;
+	// // std::cout << it2->first << " " << it2->second << std::endl;
 
 
-	ft::map<std::string, int>::iterator it2f = ft_map.end();
-	std::cout << "test : " << it2f->first << " " << it2f->second << std::endl;
+	// ft::map<std::string, int>::iterator it2f = ft_map.end();
+	// std::cout << "test : " << it2f->first << " " << it2f->second << std::endl;
 
-	if (it2 == it2f)
-		std::cout << "it2 == it2f" << std::endl;
-	else
-		std::cout << "it2 != it2f" << std::endl;
-
-
+	// if (it2 == it2f)
+	// 	std::cout << "it2 == it2f" << std::endl;
+	// else
+	// 	std::cout << "it2 != it2f" << std::endl;
 
 
 
-	// for (ft::map<std::string, int>::iterator it2 = ft_map.begin(); it2 != ft_map.end(); it2++)
-	// 		std::cout << it2->first << " " << it2->second << std::endl;
+
+
 
 
 

@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 16:58:53 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/03 19:29:32 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/04 11:10:46 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,36 +173,6 @@ template <typename T, class Compare >
 					this->_node = this->_node->_parent;
 				}
 				return (*this);
-				
-
-
-
-				// T* cursor = _node;
-
-				// if (_node->right == _last_node)
-				// {
-				// 	cursor = _node->parent;
-				// 	while (cursor != _last_node
-				// 		&& _comp(cursor->_content.first, _node->_content.first))
-				// 		cursor = cursor->parent;
-				// 	_node = cursor;
-				// }
-				// else if (cursor == _last_node)
-				// 	_node = _last_node->right;
-				// else
-				// {
-				// 	cursor = _node->right;
-				// 	if (cursor == _last_node->parent
-				// 		&& cursor->right == _last_node)
-				// 		_node = cursor;
-				// 	else
-				// 	{
-				// 		while (cursor->left != _last_node)
-				// 			cursor = cursor->left;
-				// 	}
-				// 	_node = cursor;
-				// }
-				// return (*this);
 			}
 
 			/*
@@ -226,12 +196,10 @@ template <typename T, class Compare >
 			*/
 			RB_iterator& operator--(void)
 			{
-				// if (this->_node == NULL && this->_node->_parent == _node) {
-				// 	// tmp = _last_node->_parent;
-				// 	this->_node = this->_last_node->_parent;
-				// 	std::cout << "last node : " << _node->_content << std::endl;
-				// 	return (*this);
-				// }
+				if (this->_node == NULL) {
+					this->_node = this->_last_node;
+					return (*this);
+				}
 				if (this->_node->_left != NULL)
 				{
 					this->_node = this->_node->_left;
@@ -245,36 +213,8 @@ template <typename T, class Compare >
 					this->_node = this->_node->_parent;
 				}
 				return (*this);
-
-
-
-				// T* cursor = _node;
-
-				// if (_node->_left && _node->_left == _last_node)
-				// {
-				// 	cursor = _node->_parent;
-				// 	while (cursor != _last_node
-				// 		&& !_comp(cursor->_content.first, _node->_content.first))
-				// 		cursor = cursor->_parent;
-				// 	_node = cursor;
-				// }
-				// else if (cursor == _last_node)
-				// 	_node = _last_node->_right;
-				// else
-				// {
-				// 	cursor = _node->_left;
-				// 	if (cursor == _last_node->_parent
-				// 		&& cursor->_left == _last_node)
-				// 		_node = cursor;
-				// 	else
-				// 	{
-				// 		while (cursor->_right != _last_node)
-				// 			cursor = cursor->_right;
-				// 	}
-				// 	_node = cursor;
-				// }
-				// return (*this);
 			}
+
 
 			/*
 			** @brief Post decrement the iterator to the previous value
