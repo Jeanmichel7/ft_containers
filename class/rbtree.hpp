@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 12:54:45 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/04 14:53:58 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/04 17:42:29 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,22 +179,19 @@ public:
 	/*                                                     */
 	/* *************************************************** */
 
-	iterator begin()
-	{
+	iterator begin() {
 		node_pointer current = _root;
 		while (current->_left != NULL)
 			current = current->_left;
-
 		return iterator(current, _last_node);
 	}
 
-	iterator end()
-	{
+	iterator end() {
 		node_pointer current = _root;
 		while (current->_right != NULL)
 			current = current->_right;
-		current = current->_right;
-		return iterator(current, _last_node);
+		_last_node = current;
+		return iterator(TNULL, _last_node);
 	}
 	
 	const_iterator begin() const {
@@ -208,21 +205,25 @@ public:
 		node_pointer current = _root;
 		while (current->_right != NULL)
 			current = current->_right;
-		current = current->_right;
-		return const_iterator(current, _last_node);
+		_last_node = current;
+		return const_iterator(TNULL, _last_node);
 	}
 
-	reverse_iterator rbegin()
-	{
+	reverse_iterator rbegin() {
 		return reverse_iterator(end());
 	}
 
-	reverse_iterator rend()
-	{
+	reverse_iterator rend() {
 		return reverse_iterator(begin());
 	}
 	
+	const_reverse_iterator rbegin() const {
+		return const_reverse_iterator(end());
+	}
 
+	const_reverse_iterator rend() const {
+		return const_reverse_iterator(begin());
+	}
 
 
 
@@ -546,7 +547,7 @@ public:
 		node_pointer current = _root;
 		node_pointer parent = NULL;
 
-		int space_root = 80;
+		int space_root = 150;
 		int level = 0;
 		int node_in_line = 0;
 

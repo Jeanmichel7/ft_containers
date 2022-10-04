@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 18:14:05 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/04 15:08:03 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/04 17:24:26 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,23 +73,24 @@ public:
 		// { return (comp(x.first, y.first)); }
 		bool operator() (const value_type& x, const value_type& y) const;
 	};
-	// typedef typename Allocator::template rebind<Node>::other			node_alloc_type;
 
-	typedef typename ft::RedBlackTree<value_type, key_compare>::iterator 		iterator;
-	typedef typename ft::RedBlackTree<value_type, key_compare>::const_iterator 	const_iterator;
-	typedef typename ft::my_reverse_iterator<iterator>    						reverse_iterator;
-	typedef typename ft::my_reverse_iterator<const_iterator> 					const_reverse_iterator;
+
+
+	// typedef typename Allocator::template rebind<Node>::other			node_alloc_type;
+	typedef typename ft::RedBlackTree<value_type, key_compare>			tree_type;
+
+	typedef typename tree_type::iterator 								iterator;
+	typedef typename tree_type::const_iterator 							const_iterator;
+	typedef typename ft::my_reverse_iterator<iterator>    				reverse_iterator;
+	typedef typename ft::my_reverse_iterator<const_iterator> 			const_reverse_iterator;
+
+
 
 private:
-	allocator_type				_alloc;
-	// node_alloc_type			_node_alloc;
-
+	allocator_type							_alloc;
 	key_compare								_comp;
-	// size_type							_size;
 	RedBlackTree<value_type, key_compare>	_tree;
 	
-	// Node					*_root;
-	// Node					*_end;
 
 
 public:
@@ -104,22 +105,20 @@ public:
 	:
 		_alloc(alloc), _comp(comp), _tree()
 	{
-		std::cout << "CONSTRUCTOR map()" << std::endl;
+		// std::cout << "CONSTRUCTOR map()" << std::endl;
 	};
 
 	template <class InputIt>
 	map(InputIt first, InputIt last,
 		const Compare &comp = Compare(),
 		const Allocator &alloc = Allocator()) 
-		: _alloc(alloc), _comp(comp)
+		: _alloc(alloc), _comp(comp), _tree()
 	{
-		std::cout << "CONSTRUCTOR map(first, last)" << std::endl;
+		// std::cout << "CONSTRUCTOR map(first, last)" << std::endl;
 	};
 
-	map(const map &other)
-	{
-		std::cout << "Constructor map(&other)" << std::endl;
-
+	map(const map &other) {
+		*this = other;
 	};
 
 	~map()
@@ -129,12 +128,18 @@ public:
 
 	map& operator=( const map& other )
 	{
-		
+		// delete other;
+
+		// reaffection
+		this->_alloc = other._alloc;
+		this->_comp = other._comp;
+		this->_tree = other._tree;
+		return (*this);
 	};
 
 	allocator_type get_allocator() const
 	{
-		
+		return (this->_alloc);
 	};
 
 

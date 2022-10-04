@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/14 22:19:53 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/04 15:29:03 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/04 17:42:52 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,51 +17,43 @@
 #define CYA "\033[0;36m"
 #define END "\033[0m"
 
-// #include "utils.hpp"
-// #include "pair.hpp"
+/* include vector
+#include "utils.hpp"
+#include "pair.hpp"
 
-// #include <vector>
-// #include "vector.hpp"
+#include <vector>
+#include "vector.hpp"
 
+// #include <typeinfo>     // typeid
+// #include <iostream>
+
+*/
+
+/* include map */
 #include <map>
 #include "map.hpp"
 
-#include <typeinfo>     // typeid
-#include <iostream>
-
-
-// test
+// tester
 #include <sstream>
 #include <string>
 
-
-// function pair 
-// bool mypredicate (int i, int j) {
-//   return (i==j);
-// }
-
-// bool mycomp (char c1, char c2)
-// { return std::tolower(c1)<std::tolower(c2); }
-
-
-// struct Point { double x, y; };
-// struct PointCmp {
-//     bool operator()(const Point& lhs, const Point& rhs) const {
-//         return lhs.x < rhs.x; // NB. intentionally ignores y
-//     }
-// };
-
-void comp_str(std::string str, std::string ft_str, std::string msg) {
-	if (str.compare(ft_str) != 0)
-	{
-		std::cout << RED << msg << " [KO]" END << std::endl;
-		std::cout << "std::map : " << str << std::endl;
-		std::cout << "ft::map  : " << ft_str << std::endl;
+/*	function prediction for vector
+	function pair
+	bool mypredicate (int i, int j) {
+	return (i==j);
 	}
-	else
-		std::cout << GRN "[OK] " END ;
-	std::cout << str << "		" << ft_str << "		" << msg << std::endl;
-}
+
+	bool mycomp (char c1, char c2)
+	{ return std::tolower(c1)<std::tolower(c2); }
+
+
+	struct Point { double x, y; };
+	struct PointCmp {
+		bool operator()(const Point& lhs, const Point& rhs) const {
+			return lhs.x < rhs.x; // NB. intentionally ignores y
+		}
+	};
+*/
 
 template <typename T>
 std::string to_string(T value)
@@ -71,6 +63,19 @@ std::string to_string(T value)
 	return os.str() ;
 }
 
+
+void comp_str(std::string str, std::string ft_str, std::string msg) {
+	if (str.compare(ft_str) != 0)
+	{
+		std::cout << RED "[KO] " END << msg << std::endl;
+		std::cout << "std::map : " << str << std::endl;
+		std::cout << "ft::map  : " << ft_str << std::endl << std::endl;
+	}
+	else {
+		std::cout << GRN "[OK] " END ;
+		// std::cout << str << std::endl << ft_str << std::endl << msg << std::endl;
+	}
+}
 
 
 template<class T1, class T2>
@@ -82,24 +87,84 @@ void comp_stream(T1 it, T2 ft_it, std::string msg) {
 	sstr << it->first << " " << it->second;
 	ft_sstr << ft_it->first << " " << ft_it->second;
 	comp_str(sstr.str(), ft_sstr.str(), msg);
-
 }
 
-// void reset_sstr(std::stringstream sstr, std::stringstream ft_sstr) {
-
-// 	sstr.str("");
-// 	sstr.clear();
-// 	ft_sstr.str("");
-// 	ft_sstr.clear();
-// }
-
-
-
+template < class T_map, class T_pair>
+void fill_map(T_map *map) {
+	map->insert(T_pair("g", 1));
+	map->insert(T_pair("h", 1));
+	map->insert(T_pair("i", 1));
+	map->insert(T_pair("j", 1));
+	map->insert(T_pair("k", 1));
+	map->insert(T_pair("l", 1));
+	map->insert(T_pair("m", 1));
+	map->insert(T_pair("n", 1));
+	map->insert(T_pair("o", 1));
+	map->insert(T_pair("p", 1));
+	map->insert(T_pair("q", 1));
+	map->insert(T_pair("r", 1));
+	map->insert(T_pair("s", 1));
+	map->insert(T_pair("t", 1));
+	map->insert(T_pair("u", 1));
+	map->insert(T_pair("v", 1));
+	map->insert(T_pair("w", 1));
+	map->insert(T_pair("x", 1));
+	map->insert(T_pair("y", 1));
+	map->insert(T_pair("z", 1));
+	map->insert(T_pair("aa", 1));
+	map->insert(T_pair("ab", 1));
+	map->insert(T_pair("za", 1));
+	map->insert(T_pair("zaa", 1));
+	map->insert(T_pair("zab", 1));
+	map->insert(T_pair("zac", 1));
+	map->insert(T_pair("zad", 1));
+	map->insert(T_pair("zae", 1));
+	map->insert(T_pair("zaf", 1));
+	map->insert(T_pair("zag", 1));
+	map->insert(T_pair("zah", 1));
+	map->insert(T_pair("zai", 1));
+	map->insert(T_pair("zaj", 1));
+	map->insert(T_pair("zak", 1));
+	map->insert(T_pair("zal", 1));
+	map->insert(T_pair("zb", 1));
+	map->insert(T_pair("zbq", 1));
+	map->insert(T_pair("zs", 1));
+	map->insert(T_pair("zs", 1));
+	map->insert(T_pair("zsa", 1));
+	map->insert(T_pair("zsb", 1));
+	map->insert(T_pair("zsc", 1));
+	map->insert(T_pair("zsd", 1));
+	map->insert(T_pair("zse", 1));
+	map->insert(T_pair("zsf", 1));
+	map->insert(T_pair("zsg", 1));
+	map->insert(T_pair("zsh", 1));
+	map->insert(T_pair("zsha", 1));
+	map->insert(T_pair("zshb", 1));
+	map->insert(T_pair("zshc", 1));
+	map->insert(T_pair("zshd", 1));
+	map->insert(T_pair("zshq", 1));
+	map->insert(T_pair("zshw", 1));
+	map->insert(T_pair("zshe", 1));
+	map->insert(T_pair("zshr", 1));
+	map->insert(T_pair("zsht", 1));
+	map->insert(T_pair("zshy", 1));
+	map->insert(T_pair("zshu", 1));
+	map->insert(T_pair("zshi", 1));
+	map->insert(T_pair("zsho", 1));
+	map->insert(T_pair("zshp", 1));
+	map->insert(T_pair("zsha", 1));
+	map->insert(T_pair("zshs", 1));
+	map->insert(T_pair("zshd", 1));
+	map->insert(T_pair("zshf", 1));
+	map->insert(T_pair("zshg", 1));
+	map->insert(T_pair("zshh", 1));
+	map->insert(T_pair("zshj", 1));
+	map->insert(T_pair("zshk", 1));
+	map->insert(T_pair("zci", 1));
+}
 
 int main()
 {
-
-	
 	std::stringstream sstr;
 	std::stringstream ft_sstr;
 
@@ -844,46 +909,9 @@ int main()
 {
 	/* ***************************************************** */
 	/*                                                       */
-	/*                     CREATION MAPS                     */
-	/*                   pair<string, int>                   */
+	/*                          MAPS                         */
 	/*                                                       */
 	/* ***************************************************** */
-	// std::cout << BLU "\nTEST map() : " END << std::endl;
-
-	std::map<std::string, int> map;
-	ft::map<std::string, int> ft_map;
-
-	// std::cout << BLU "\nTEST insert(value) : " END << std::endl;
-	map.insert(std::pair<std::string, int>("a", 1));
-	map.insert(std::pair<std::string, int>("b", 2));
-	map.insert(std::pair<std::string, int>("c", 3));
-	map.insert(std::pair<std::string, int>("d", 4));
-	map.insert(std::pair<std::string, int>("e", 5));
-
-	ft_map.insert(ft::pair<std::string, int>("a", 1));
-	ft_map.insert(ft::pair<std::string, int>("b", 2));
-	ft_map.insert(ft::pair<std::string, int>("c", 3));
-	ft_map.insert(ft::pair<std::string, int>("d", 4));
-	ft_map.insert(ft::pair<std::string, int>("e", 5));
-
-
-	std::map<int, int> map2;
-	ft::map<int, int> ft_map2;
-
-	// std::cout << BLU "\nTEST insert(value) : " END << std::endl;
-	map2.insert(std::pair<int, int>(1, 1));
-	map2.insert(std::pair<int, int>(2, 2));
-	map2.insert(std::pair<int, int>(3, 3));
-	map2.insert(std::pair<int, int>(4, 4));
-	map2.insert(std::pair<int, int>(5, 5));
-
-	ft_map2.insert(ft::pair<int, int>(1, 1));
-	ft_map2.insert(ft::pair<int, int>(2, 2));
-	ft_map2.insert(ft::pair<int, int>(3, 3));
-	ft_map2.insert(ft::pair<int, int>(4, 4));
-	ft_map2.insert(ft::pair<int, int>(5, 5));
-
-	
 
 /*
 	std::cout << BLU "\nTEST insert(first, last) : " END << std::endl;
@@ -949,16 +977,105 @@ int main()
 
 
 
-/* ***************************************************** */
-/*                                                       */
-/*                 pair< STRING, INT >                   */
-/*                                                       */
-/* ***************************************************** */
+	/* ***************************************************** */
+	/*                                                       */
+	/*                          MAP                          */
+	/*                   pair< STRING, INT>                  */
+	/*                                                       */
+	/* ***************************************************** */
+	std::cout << BLU "Create map<string, int> " END << std::endl;
+
+	/* Creation de map, ca devrait pas merde ca */
+	std::map<std::string, int> map;
+	 ft::map<std::string, int> ft_map;
 
 
 
-	std::cout << MAG "\nTEST iterator\n" END << std::endl;
+	/* ***************************************************** */
+	/*                     INSERT(value)                     */
+	/*                  pair< string, int >                  */
+	/* ***************************************************** */
+	std::cout << MAG "\nTEST insert( value )" END << std::endl;
 
+	typedef std::pair<std::string, int> pair;
+	typedef ft::pair<std::string, int> ft_pair;
+
+	map.insert(pair("b", 2));
+	map.insert(pair("a", 1));
+	map.insert(pair("c", 3));
+	map.insert(pair("e", 5));
+	map.insert(pair("d", 4));
+	map.insert(pair("f", 1));
+	// fill_map< std::map<std::string, int>, pair >(&map);
+
+	ft_map.insert(ft_pair("b", 2));
+	ft_map.insert(ft_pair("a", 1));
+	ft_map.insert(ft_pair("c", 3));
+	ft_map.insert(ft_pair("e", 5));
+	ft_map.insert(ft_pair("d", 4));
+	ft_map.insert(ft_pair("f", 1));
+	// fill_map< ft::map<std::string, int>, ft_pair >(&ft_map);
+	// ft_map.display_tree();
+
+	/* Affichage de map */
+	for (std::map<std::string, int>::iterator it = map.begin(); it != map.end(); it++)
+		sstr << it->first << ":" << it->second << " ";
+	for (ft::map<std::string, int>::iterator it = ft_map.begin(); it != ft_map.end(); it++)
+		ft_sstr << it->first << ":" << it->second << " ";
+	
+	comp_str(sstr.str(), ft_sstr.str(), "insert(values)");
+	sstr.str(""); sstr.clear(); ft_sstr.str(""); ft_sstr.clear();
+
+
+
+
+
+
+	/* ***************************************************** */
+	/*                  INSERT(first, last)                  */
+	/*                  pair< string, int >                  */
+	/* ***************************************************** */
+	std::cout << MAG "\nTEST insert( first, last )\n" END << std::endl;
+
+
+
+
+
+
+
+
+
+
+
+
+	/* ***************************************************** */
+	/*                                                       */
+	/*                         MAP                           */
+	/*                   pair< INT, INT >                    */
+	/*                                                       */
+	/* ***************************************************** */
+	std::cout << BLU "Create map<int, int> " END << std::endl;
+
+	std::map<int, int> map2;
+	 ft::map<int, int> ft_map2;
+
+	// std::cout << BLU "\nTEST insert(value) : " END << std::endl;
+	map2.insert(std::pair<int, int>(1, 1));
+	map2.insert(std::pair<int, int>(2, 2));
+	map2.insert(std::pair<int, int>(3, 3));
+	map2.insert(std::pair<int, int>(4, 4));
+	map2.insert(std::pair<int, int>(5, 5));
+
+	ft_map2.insert(ft::pair<int, int>(1, 1));
+	ft_map2.insert(ft::pair<int, int>(2, 2));
+	ft_map2.insert(ft::pair<int, int>(3, 3));
+	ft_map2.insert(ft::pair<int, int>(4, 4));
+	ft_map2.insert(ft::pair<int, int>(5, 5));
+	
+
+
+
+std::cout << MAG "\nTEST iterator\n" END << std::endl;
 	/* ***************************************************** */
 	/*                       ITERATOR                        */
 	/*                  pair< string, int >                  */
@@ -1100,14 +1217,30 @@ int main()
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /* ***************************************************** */
 /*                                                       */
 /*                     pair<INT, INT>                    */
 /*                                                       */
 /* ***************************************************** */
+std::cout << MAG "\nTEST iterator\n" END << std::endl;
 
 
-	std::cout << MAG "\nTEST iterator\n" END << std::endl;
 	/* ***************************************************** */
 	/*                       ITERATOR                        */
 	/*                    pair< int, int >                   */
@@ -1468,6 +1601,6 @@ int main()
 	
 
 
-
+	std::cout << std::endl;
 	return 0;
 }
