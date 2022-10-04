@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/14 22:19:53 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/04 11:10:25 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/04 13:36:39 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,11 @@
 #include <iostream>
 
 
+// test
+#include <sstream>
+#include <string>
+
+
 // function pair 
 // bool mypredicate (int i, int j) {
 //   return (i==j);
@@ -46,8 +51,60 @@
 //     }
 // };
 
+void comp_str(std::string str, std::string ft_str, std::string msg) {
+	std::cout << str << "		" << ft_str << "		" << msg << "		";
+	if (str.compare(ft_str) != 0)
+	{
+		std::cout << RED << msg << " [KO]" END << std::endl;
+		std::cout << "std::map : " << str << std::endl;
+		std::cout << "ft::map  : " << ft_str << std::endl;
+	}
+	else
+		std::cout << GRN "[OK] " END << std::endl; ;
+}
+
+template <typename T>
+std::string to_string(T value)
+{
+	std::ostringstream os ;
+	os << value ;
+	return os.str() ;
+}
+
+
+
+template<class T1, class T2>
+void comp_stream(T1 it, T2 ft_it, std::string msg) {
+
+	std::stringstream sstr;
+	std::stringstream ft_sstr;
+
+	sstr << it->first << " " << it->second;
+	ft_sstr << ft_it->first << " " << ft_it->second;
+	comp_str(sstr.str(), ft_sstr.str(), msg);
+
+}
+
+// void reset_sstr(std::stringstream sstr, std::stringstream ft_sstr) {
+
+// 	sstr.str("");
+// 	sstr.clear();
+// 	ft_sstr.str("");
+// 	ft_sstr.clear();
+// }
+
+
+
+
 int main()
 {
+
+	
+	std::stringstream sstr;
+	std::stringstream ft_sstr;
+
+	std::string str;
+	std::string ft_str;
 {
 	// std::vector<int> v;
 	// v.push_back(1);
@@ -866,37 +923,45 @@ int main()
 */
 
 	std::cout << BLU "\nTEST iterator : " END << std::endl;
+	
+	/* typedef iterator */
+	typedef std::map<std::string, int>::iterator it_type;
+	typedef ft::map<std::string, int>::iterator ft_it_type;
 
 	/* begin() */
-	std::map<std::string, int>::iterator it = map.begin();
-	std::cout << it->first << " " << it->second << std::endl;
-	
-	ft::map<std::string, int>::iterator ft_it = ft_map.begin();
-	std::cout << ft_it->first << " " << ft_it->second << std::endl;
-
-
-
-
+	it_type it = map.begin();
+	ft_it_type ft_it = ft_map.begin();
+	comp_stream< it_type, ft_it_type >(it, ft_it, "begin()");
 
 	/* end() */
-	std::map<std::string, int>::iterator it_end = map.end();
-	it_end--;
-	std::cout << it_end->first << " " << it_end->second << std::endl;
-	ft::map<std::string, int>::iterator ft_it_end = ft_map.end();
-	ft_it_end--;
-	std::cout << ft_it_end->first << " " << ft_it_end->second << std::endl;
+	it = map.end(); it--;
+	ft_it = ft_map.end(); ft_it--;
+	comp_stream< it_type, ft_it_type >(it, ft_it, "end()--");
 
+	it = map.end(); it++;
+	ft_it = ft_map.end(); ft_it++;
+	comp_stream< it_type, ft_it_type >(it, ft_it, "end()++");
 
-
-
+																						// gerer test segfault
+	// it = map.end(); it++; it++;
+	// ft_it = ft_map.end(); ft_it++; ft_it++;
+	// comp_stream< it_type, ft_it_type >(it, ft_it, "end()++");
 
 
 	/* begin() -> end() */
 	std::cout << BLU "\nTEST begin() -> end() : " END << std::endl;
-	for (std::map<std::string, int>::iterator it = map.begin(); it != map.end(); it++)
-		std::cout << it->first << " " << it->second << std::endl;
-	for (ft::map<std::string, int>::iterator it2 = ft_map.begin(); it2 != ft_map.end(); it2++)
-			std::cout << it2->first << " " << it2->second << std::endl;
+	for (it = map.begin(); it != map.end(); it++)
+		sstr << it->first << " " << it->second << std::endl;
+	for (ft_it = ft_map.begin(); ft_it != ft_map.end(); ft_it++)
+		ft_sstr << ft_it->first << " " << ft_it->second << std::endl;
+
+	comp_str(sstr.str(), ft_sstr.str(), "begin() -> end()");
+	sstr.str(""); sstr.clear(); ft_sstr.str(""); ft_sstr.clear();
+
+
+
+
+	
 
 
 	// ft::map<std::string, int>::iterator it2 = ft_map.begin();

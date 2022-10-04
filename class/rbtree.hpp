@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 12:54:45 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/04 11:12:26 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/04 13:25:00 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -216,6 +216,8 @@ public:
 
 
 
+
+
 	/* *************************************************** */
 	/*                                                     */
 	/*                     CAPACITY                        */
@@ -246,7 +248,6 @@ public:
 			_node_alloc.construct(new_node, Node(val, N_BLACK));
 			_root = new_node;
 			_size++;
-
 
 			// _last_node = _node_alloc.allocate(1);
 			// _node_alloc.construct(_last_node, Node());

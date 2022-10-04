@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 16:58:53 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/04 11:10:46 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/04 11:29:24 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,9 +100,9 @@ template <typename T, class Compare >
 			{
 				if (*this == bst_it)
 					return (*this);
-				this->_node = bst_it._node;
-				this->_last_node = bst_it._last_node;
-				this->_comp = bst_it._comp;
+				_node = bst_it._node;
+				_last_node = bst_it._last_node;
+				_comp = bst_it._comp;
 				return (*this);
 			}
 
@@ -116,7 +116,7 @@ template <typename T, class Compare >
 			** tree, otherwise false.
 			*/
 			bool operator==(const RB_iterator& bst_it)
-			{ return (this->_node == bst_it._node); }
+			{ return (_node == bst_it._node); }
 
 			/*
 			** @brief Different operator.
@@ -128,7 +128,7 @@ template <typename T, class Compare >
 			** tree, otherwise false.
 			*/
 			bool operator!=(const RB_iterator& bst_it)
-			{ return (this->_node != bst_it._node); }
+			{ return (_node != bst_it._node); }
 
 			/*
 			** @brief Give a reference to the value that contains
@@ -138,7 +138,7 @@ template <typename T, class Compare >
 			** @return the const reference.
 			*/
 			reference operator*() const
-			{ return (this->_node->_content); }
+			{ return (_node->_content); }
 
 			/*
 			** @brief Give a pointer to the value that contain
@@ -148,7 +148,7 @@ template <typename T, class Compare >
 			** @return the const pointer.
 			*/
 			pointer operator->() const
-			{ return (&this->_node->_content); }
+			{ return (&_node->_content); }
 
 			/*
 			** @brief Increment the iterator to the next value
@@ -158,19 +158,21 @@ template <typename T, class Compare >
 			*/
 			RB_iterator& operator++(void)
 			{
-				// std::cout << "++" << std::endl;
-				// std::cout << this->_node->_content << std::endl;
-				if (this->_node->_right != NULL)
+				if (_node == NULL) {
+					_node = _last_node;
+					return (*this);
+				}
+				if (_node->_right != NULL)
 				{
-					this->_node = this->_node->_right;
-					while (this->_node->_left != NULL)
-						this->_node = this->_node->_left;
+					_node = _node->_right;
+					while (_node->_left != NULL)
+						_node = _node->_left;
 				}
 				else
 				{
-					while (this->_node->_parent != NULL && this->_node->_parent->_right == this->_node)
-						this->_node = this->_node->_parent;
-					this->_node = this->_node->_parent;
+					while (_node->_parent != NULL && _node->_parent->_right == _node)
+						_node = _node->_parent;
+					_node = _node->_parent;
 				}
 				return (*this);
 			}
@@ -196,25 +198,24 @@ template <typename T, class Compare >
 			*/
 			RB_iterator& operator--(void)
 			{
-				if (this->_node == NULL) {
-					this->_node = this->_last_node;
+				if (_node == NULL) {
+					_node = _last_node;
 					return (*this);
 				}
-				if (this->_node->_left != NULL)
+				if (_node->_left != NULL)
 				{
-					this->_node = this->_node->_left;
-					while (this->_node->_right != NULL)
-						this->_node = this->_node->_right;
+					_node = _node->_left;
+					while (_node->_right != NULL)
+						_node = _node->_right;
 				}
 				else
 				{
-					while (this->_node->_parent != NULL && this->_node->_parent->_left == this->_node)
-						this->_node = this->_node->_parent;
-					this->_node = this->_node->_parent;
+					while (_node->_parent != NULL && _node->_parent->_left == _node)
+						_node = _node->_parent;
+					_node = _node->_parent;
 				}
 				return (*this);
 			}
-
 
 			/*
 			** @brief Post decrement the iterator to the previous value
@@ -324,9 +325,9 @@ template <typename T, class Compare >
 			{
 				if (*this == bst_it)
 					return (*this);
-				this->_node = bst_it._node;
-				this->_last_node = bst_it._last_node;
-				this->_comp = bst_it._comp;
+				_node = bst_it._node;
+				_last_node = bst_it._last_node;
+				_comp = bst_it._comp;
 				return (*this);
 			}
 			
@@ -340,7 +341,7 @@ template <typename T, class Compare >
 			** tree, otherwise false.
 			*/
 			bool operator==(const RB_const_iterator& bst_it)
-			{ return (this->_node == bst_it._node); }
+			{ return (_node == bst_it._node); }
 
 			/*
 			** @brief Different operator.
@@ -352,7 +353,7 @@ template <typename T, class Compare >
 			** tree, otherwise false.
 			*/
 			bool operator!=(const RB_const_iterator& bst_it)
-			{ return (this->_node != bst_it._node); }
+			{ return (_node != bst_it._node); }
 
 			/*
 			** @brief Give a reference to the value that contains
@@ -362,7 +363,7 @@ template <typename T, class Compare >
 			** @return the const reference.
 			*/
 			reference operator*() const
-			{ return (this->_node->_content); }
+			{ return (_node->_content); }
 
 			/*
 			** @brief Give a pointer to the value that contain
@@ -372,7 +373,7 @@ template <typename T, class Compare >
 			** @return the const pointer.
 			*/
 			pointer operator->() const
-			{ return (&this->_node->_content); }
+			{ return (&_node->_content); }
 
 			/*
 			** @brief Increment the iterator to the next value
@@ -382,17 +383,17 @@ template <typename T, class Compare >
 			*/
 			RB_const_iterator& operator++(void)
 			{
-				if (this->_node->_right != NULL)
+				if (_node->_right != NULL)
 				{
-					this->_node = this->_node->_right;
-					while (this->_node->_left != NULL)
-						this->_node = this->_node->_left;
+					_node = _node->_right;
+					while (_node->_left != NULL)
+						_node = _node->_left;
 				}
 				else
 				{
-					while (this->_node->_parent != NULL && this->_node->_parent->_right == this->_node)
-						this->_node = this->_node->_parent;
-					this->_node = this->_node->_parent;
+					while (_node->_parent != NULL && _node->_parent->_right == _node)
+						_node = _node->_parent;
+					_node = _node->_parent;
 				}
 				return (*this);
 			}
@@ -418,17 +419,17 @@ template <typename T, class Compare >
 			*/
 			RB_const_iterator& operator--(void)
 			{
-				if (this->_node->_left != NULL)
+				if (_node->_left != NULL)
 				{
-					this->_node = this->_node->_left;
-					while (this->_node->_right != NULL)
-						this->_node = this->_node->_right;
+					_node = _node->_left;
+					while (_node->_right != NULL)
+						_node = _node->_right;
 				}
 				else
 				{
-					while (this->_node->_parent != NULL && this->_node->_parent->_left == this->_node)
-						this->_node = this->_node->_parent;
-					this->_node = this->_node->_parent;
+					while (_node->_parent != NULL && _node->_parent->_left == _node)
+						_node = _node->_parent;
+					_node = _node->_parent;
 				}
 				return (*this);
 			}

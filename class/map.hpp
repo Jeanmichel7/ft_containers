@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 18:14:05 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/03 15:53:33 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/04 13:24:27 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -183,13 +183,21 @@ public:
 		return (_tree.end());
 	}
 
-	reverse_iterator rbegin();
+	reverse_iterator rbegin() {
+		return (_tree.rbegin());
+	}
 
-	const_reverse_iterator rbegin() const;
+	const_reverse_iterator rbegin() const {
+		return (_tree.rbegin());
+	}
 
-	reverse_iterator rend();
+	reverse_iterator rend() {
+		return (_tree.rend());
+	}
 
-	const_reverse_iterator rend() const;
+	const_reverse_iterator rend() const {
+		return (_tree.rend());
+	}
 
 
 
