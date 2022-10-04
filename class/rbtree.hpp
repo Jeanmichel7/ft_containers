@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 12:54:45 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/04 17:42:29 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/04 23:31:09 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -235,7 +235,9 @@ public:
 	/*                                                     */
 	/* *************************************************** */
 
-	size_type size() const;
+	size_type size() const {
+		return _size;
+	}
 
 	bool empty() const;
 
@@ -316,7 +318,154 @@ public:
 
 
 
-	iterator insert(value_type to_insert);
+	iterator insert( iterator hint, const value_type &to_insert) {
+		std::cout << "insert hint : " << hint->first << std::endl;
+		std::cout << "to insert : " << to_insert.first << std::endl;
+		
+		node_pointer current = hint._node;
+		node_pointer parent = NULL;
+
+		int i = 0;
+
+		if (current == _root) {
+			std::cout << "root" << std::endl;
+			return insert_pair(to_insert).first;
+		}
+
+		if (current == _root->_left || current == _root->_right) {
+			std::cout << "root child" << std::endl;
+			return insert_pair(to_insert).first;
+		}
+
+		
+		while (current != NULL && i < 20)
+		{
+			std::cout << "operation n°" << i << std::endl;
+			// return insert_pair(to_insert).first;
+
+
+		/* V3 */
+			// tant que insert plus petit que parent && insert plus petit que grand parent
+				// current = fils gauche du grand parent
+			while (current != _root 
+				&& current != _root->_left && current != _root->_right
+				&& _comp(to_insert.first, current->_parent->_content.first)
+				&& _comp(to_insert.first, current->_parent->_parent->_content.first)
+				// && current->_parent == current->_parent->_parent->_right) {
+				&& current == current->_parent->_right) {
+				// ) {
+					current = current->_parent->_parent->_left;
+					std::cout << "up diagonal gauche" << std::endl;
+			}
+
+			// tant que insert plus grand que parent && insert plus grand que grand parent
+				// current = fils droit du grand parent
+			while (current != _root 
+				&& current != _root->_left && current != _root->_right
+				&& _comp(current->_parent->_content.first, to_insert.first)
+				&& _comp(current->_parent->_parent->_content.first, to_insert.first)
+				// && current->_parent == current->_parent->_parent->_left) {
+				&& current == current->_parent->_left) {
+				// ) {
+					current = current->_parent->_parent->_right;
+					std::cout << "up diagonal droite" << std::endl;
+			}
+
+
+			if (current == _root || current == _root->_left || current == _root->_right) {
+				current = _root;
+			}
+
+			// std::cout << "test key comp : " << to_insert.first << " < " << current->_content.first << "? "
+			// 		  <<  _comp(to_insert.first , to_insert.first) << std::endl;
+			
+
+
+
+			// si je suis fils gauche
+				// si insert plus grand que parent && insert plus petit que grand parent
+				// ||
+				// si insert plus petit que parent && insert plus petit que grand parent
+					// on cherche dans les enfants de current
+
+			// si je suis fils droit
+				// si insert plus grand que parent && insert plus petit que grand parent 
+					// on cherche dans les enfants de current
+
+			// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+			// !!!!!!!!!!!!!!!!!!!!!!!!!!!! il faut comparer avec le parent et l'enfant pour savoir si je suis entre
+			// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+					
+			if ((	_comp(current->_parent->_content.first, to_insert.first)
+					&& _comp(to_insert.first, current->_parent->_parent->_content.first))){
+					std::cout << "check dans enfants" << std::endl;
+					while (current != NULL)
+					{
+						parent = current;
+						if (_comp(to_insert.first, current->_content.first)) {
+							current = current->_left;
+							std::cout << " -> left" << std::endl;
+						}
+						else if (_comp(current->_content.first, to_insert.first)){
+							current = current->_right;
+							std::cout << " -> right" << std::endl;
+						}
+						else
+							return iterator(current, _last_node);
+					}
+
+					// insert
+					std::cout << "insert fdffsdfsdfsdfdfsdfddfsdfsdffsddfsdfsffdsffdfsfsdfdfsdf" << std::endl;
+					current = _node_alloc.allocate(1);
+					_node_alloc.construct(current, Node(to_insert));
+					current->_parent = parent;
+					if (_comp(to_insert.first, parent->_content.first))
+						parent->_left = current;
+					else
+						parent->_right = current;
+					_size++;
+					// display_tree("after insert");
+					// fix tree
+					fix_tree(current);
+
+					// set last node
+					while (current->_right != NULL)
+						current = current->_right;
+					_last_node = current;
+					// _last_node->_parent = current;
+
+					return iterator(current,_last_node);
+			
+				
+				}
+
+
+
+				i++;
+			}
+
+		// insert
+		current = _node_alloc.allocate(1);
+		_node_alloc.construct(current, Node(to_insert));
+		current->_parent = parent;
+		if (_comp(to_insert.first, parent->_content.first))
+			parent->_left = current;
+		else
+			parent->_right = current;
+		_size++;
+		// display_tree("after insert");
+		// fix tree
+		fix_tree(current);
+
+		// set last node
+		while (current->_right != NULL)
+			current = current->_right;
+		_last_node = current;
+		// _last_node->_parent = current;
+
+		return iterator(current,_last_node);
+	}
 
 	void clear();
 
@@ -547,7 +696,7 @@ public:
 		node_pointer current = _root;
 		node_pointer parent = NULL;
 
-		int space_root = 150;
+		int space_root = 50 + _size;
 		int level = 0;
 		int node_in_line = 0;
 

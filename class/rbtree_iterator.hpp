@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 16:58:53 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/04 14:26:04 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/04 17:58:51 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -229,6 +229,26 @@ template <typename T, class Compare >
 				operator--();
 				return (tmp);
 			}
+
+			RB_iterator& operator+=(difference_type n)
+			{
+				if (n < 0)
+					return (*this += n);
+				while (n--)
+					operator++();
+				return (*this);
+			}
+
+			RB_iterator& operator-=(difference_type n)
+			{
+				if (n < 0)
+					return (*this -= n);
+				while (n--)
+					operator--();
+				return (*this);
+			}
+
+
 
 			T *			_node;
 			T *			_last_node;
