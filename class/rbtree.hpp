@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 12:54:45 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/04 13:25:00 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/04 14:53:58 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,8 @@ public:
 
 	typedef ft::RB_iterator<Node, Compare> 			iterator;
 	typedef ft::RB_const_iterator<Node, Compare> 	const_iterator;
+	typedef ft::my_reverse_iterator<iterator> 		reverse_iterator;
+	typedef ft::my_reverse_iterator<const_iterator> const_reverse_iterator;
 
 private:
 	// last_node parent = root of tree, last_node right = last node, last_node left = first node
@@ -101,9 +103,9 @@ public:
 	}
 
 	/* Copy constructor */
-	// RedBlackTree(const self& x) : _node(_node_alloc.allocate(1))
+	// RedBlackTree(const self& x) : _node_a(_node_alloc.allocate(1))
 	// {
-	// 	_node_alloc.construct(_node, Node());
+	// 	_node_alloc.construct(_node_alloc, Node());
 	// 	_node->_content = x._node->_content;
 	// 	_node->_parent = x._node->_parent;
 	// 	_node->_left = x._node->_left;
@@ -210,8 +212,16 @@ public:
 		return const_iterator(current, _last_node);
 	}
 
+	reverse_iterator rbegin()
+	{
+		return reverse_iterator(end());
+	}
 
-
+	reverse_iterator rend()
+	{
+		return reverse_iterator(begin());
+	}
+	
 
 
 

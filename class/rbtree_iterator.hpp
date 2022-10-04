@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 16:58:53 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/04 11:29:24 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/04 14:26:04 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -383,6 +383,10 @@ template <typename T, class Compare >
 			*/
 			RB_const_iterator& operator++(void)
 			{
+				if (_node == NULL) {
+					_node = _last_node;
+					return (*this);
+				}
 				if (_node->_right != NULL)
 				{
 					_node = _node->_right;
@@ -419,6 +423,10 @@ template <typename T, class Compare >
 			*/
 			RB_const_iterator& operator--(void)
 			{
+				if (_node == NULL) {
+					_node = _last_node;
+					return (*this);
+				}
 				if (_node->_left != NULL)
 				{
 					_node = _node->_left;

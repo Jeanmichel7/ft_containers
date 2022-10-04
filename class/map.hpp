@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 18:14:05 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/04 13:24:27 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/04 15:08:03 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -230,14 +230,11 @@ public:
 
 	void clear();
 
-	ft::pair<iterator, bool> insert( const value_type& value )
-	{
-		// std::cout << "value [" << value.first << "] = " << value.second << std::endl;
+	ft::pair<iterator, bool> insert( const value_type& value ) {
 		return (_tree.insert_pair(value));
 	}
 
-	iterator insert( iterator hint, const value_type& value )
-	{
+	iterator insert( iterator hint, const value_type& value ) {
 		(void)hint;
 		return (insert(value).first);
 	}
@@ -274,6 +271,7 @@ public:
 	const_iterator find( const Key& key ) const;
 
 	std::pair<iterator,iterator> equal_range( const Key& key );
+
 	std::pair<const_iterator,const_iterator> equal_range( const Key& key ) const;
 
 	iterator lower_bound( const Key& key );
