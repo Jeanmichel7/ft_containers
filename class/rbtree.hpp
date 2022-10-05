@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 12:54:45 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/06 01:29:53 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/06 01:52:57 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -352,6 +352,13 @@ public:
 		}
 	}
 
+	template< class InputIt >
+	void insert( InputIt first, InputIt last ) {
+		while (first != last) {
+			insert_pair(*first);
+			first++;
+		}
+	};
 
 	void clear();
 

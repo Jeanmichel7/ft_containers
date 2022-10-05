@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/14 22:19:53 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/06 01:29:39 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/06 01:52:39 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -984,8 +984,8 @@ int main()
 	typedef  ft::map<std::string, int>::reverse_iterator 			ft_r_it_type;
 	typedef  ft::map<std::string, int>::const_reverse_iterator 		const_ft_r_it_type;
 
-	typedef std::pair<std::string, int> 			pair;
-	typedef  ft::pair<std::string, int> 			ft_pair;
+	typedef std::pair<std::string, int> 					pair;
+	typedef  ft::pair<std::string, int> 					ft_pair;
 
 
 
@@ -999,8 +999,8 @@ int main()
 	typedef  ft::map<int, int>::reverse_iterator 					ft_r_it_type2;
 	typedef  ft::map<int, int>::const_reverse_iterator 				const_ft_r_it_type2;
 
-	typedef std::pair<int, int> 			pair2;
-	typedef  ft::pair<int, int> 			ft_pair2;
+	typedef std::pair<int, int> 							pair2;
+	typedef  ft::pair<int, int> 							ft_pair2;
 
 
 
@@ -1186,6 +1186,35 @@ int main()
 	/* ***************************************************** */
 	std::cout << MAG "\n\nTEST insert( first, last )" END << std::endl;
 
+	std::map<std::string, int> map_insert_f_l;
+	ft::map<std::string, int> ft_map_insert_f_l;
+
+	map_insert_f_l.insert(map.begin(), map.end());
+	ft_map_insert_f_l.insert(ft_map.begin(), ft_map.end());
+
+	/* insert(first, last) */
+	for (it_type it = map_insert_f_l.begin(); it != map_insert_f_l.end(); it++)
+		sstr << it->first << ":" << it->second << " ";
+	for (ft_it_type it = ft_map_insert_f_l.begin(); it != ft_map_insert_f_l.end(); it++)
+		ft_sstr << it->first << ":" << it->second << " ";
+
+	str_comp(sstr.str(), ft_sstr.str(), "insert( first, last )");
+	sstr.str(""); sstr.clear(); ft_sstr.str(""); ft_sstr.clear();
+
+
+
+
+	it_type it_insert_f_l 		= map_insert_f_l.begin();
+	ft_it_type ft_it_insert_f_l = ft_map_insert_f_l.begin();
+
+	int n = 3;
+	for(int i = 0; i < n; i++)
+	{
+		str_comp(it_insert_f_l->first, ft_it_insert_f_l->first, "insert( first, last ) -> first");
+		str_comp(to_string(it_insert_f_l->second), to_string(ft_it_insert_f_l->second), "insert( first, last ) -> second");
+		it_insert_f_l++;
+		ft_it_insert_f_l++;
+	}
 
 
 
@@ -1197,29 +1226,18 @@ int main()
 
 
 
-	/* ***************************************************** */
-	/*                                                       */
-	/*                         MAP                           */
-	/*                   pair< INT, INT >                    */
-	/*                                                       */
-	/* ***************************************************** */
-	std::cout << BLU "Create map<int, int> " END << std::endl;
 
-	std::map<int, int> map2;
-	 ft::map<int, int> ft_map2;
 
-	// std::cout << BLU "\nTEST insert(value) : " END << std::endl;
-	map2.insert(pair2(1, 1));
-	map2.insert(pair2(2, 2));
-	map2.insert(pair2(3, 3));
-	map2.insert(pair2(4, 4));
-	map2.insert(pair2(5, 5));
 
-	ft_map2.insert(ft_pair2(1, 1));
-	ft_map2.insert(ft_pair2(2, 2));
-	ft_map2.insert(ft_pair2(3, 3));
-	ft_map2.insert(ft_pair2(4, 4));
-	ft_map2.insert(ft_pair2(5, 5));
+
+
+
+
+
+
+
+
+
 	
 
 
@@ -1368,6 +1386,29 @@ std::cout << MAG "\n\nTEST iterator" END << std::endl;
 
 
 
+	/* ***************************************************** */
+	/*                                                       */
+	/*                         MAP                           */
+	/*                   pair< INT, INT >                    */
+	/*                                                       */
+	/* ***************************************************** */
+	std::cout << BLU "\n\n\nCreate map<int, int> " END << std::endl;
+
+	std::map<int, int> map2;
+	 ft::map<int, int> ft_map2;
+
+	// std::cout << BLU "\nTEST insert(value) : " END << std::endl;
+	map2.insert(pair2(1, 1));
+	map2.insert(pair2(2, 2));
+	map2.insert(pair2(3, 3));
+	map2.insert(pair2(4, 4));
+	map2.insert(pair2(5, 5));
+
+	ft_map2.insert(ft_pair2(1, 1));
+	ft_map2.insert(ft_pair2(2, 2));
+	ft_map2.insert(ft_pair2(3, 3));
+	ft_map2.insert(ft_pair2(4, 4));
+	ft_map2.insert(ft_pair2(5, 5));
 
 
 
