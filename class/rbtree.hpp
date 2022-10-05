@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 12:54:45 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/05 14:43:29 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/05 23:07:32 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,9 @@ private:
 
 	node_pointer	TNULL;
 
+	node_pointer 	_current;
+	node_pointer 	_parent;
+
 
 public:
 
@@ -95,7 +98,10 @@ public:
 		_root(NULL),
 		// _node(NULL),
 		_last_node(NULL),
-		_size(0)
+		_size(0),
+		TNULL(NULL),
+		_current(NULL),
+		_parent(NULL)
 	{
 		// _node = _node_alloc.allocate(1);
 		// _node_alloc.construct(_node, Node());
@@ -250,6 +256,53 @@ public:
 	/*                                                     */
 	/* *************************************************** */
 
+
+
+	// node_alloc      _node_alloc;
+	// node_pointer	_root;
+	// node_pointer	_last_node;
+
+	// Compare         _comp;
+	// size_type       _size;
+	// node_pointer	TNULL;
+
+
+
+
+	void insert_node(const value_type& val) {
+		_current = _node_alloc.allocate(1);
+		_node_alloc.construct(_current, Node(val));
+		_current->_parent = _parent;
+
+		if (_comp(val.first, _parent->_content.first))
+			_parent->_left = _current;
+		else
+			_parent->_right = _current;
+
+		_size++;
+		// display_tree("insert before fixed");
+		fix_tree(_current);
+		// return _current;
+		// display_tree("insert after fixed");
+	}
+
+	void find_to_insert(const value_type& val) {
+		_current = _root;
+		_parent = NULL;
+		while (_current != NULL)
+		{
+			// std:cout << "current: " << _current->_content.first << std::endl;
+			_parent = _current;
+			if (_comp(val.first, _current->_content.first))
+				_current = _current->_left;
+			else if (_comp(_current->_content.first, val.first))
+				_current = _current->_right;
+			else
+				break ;
+				// return ft::make_pair(iterator(current, _last_node), false);
+		}
+	}
+
 	ft::pair<iterator, bool> insert_pair(const value_type& val)
 	{
 		if (_size == 0)
@@ -258,226 +311,90 @@ public:
 			_node_alloc.construct(new_node, Node(val, N_BLACK));
 			_root = new_node;
 			_size++;
-
-			// _last_node = _node_alloc.allocate(1);
-			// _node_alloc.construct(_last_node, Node());
-			// _last_node->_parent = _root;
 			_last_node = _root;
-
-
 			return ft::make_pair(iterator(_root, _last_node), true);
-			// return ft::pair<iterator, bool>(iterator(_node), true);
 		}
 
-		// std::cout << "test comp : " << _comp(val.first , val.first) << std::endl;
 
 		// cherche position natuelle
-		node_pointer current = _root;
-		node_pointer parent = NULL;
-		while (current != NULL)
-		{
-			// std::cout << "test key comp : " << val.first << " < " << current->_content.first << "? "
-					//   <<  _comp(val.first , val.first) << std::endl;
-			parent = current;
-			if (_comp(val.first, current->_content.first)) {
-				// std::cout << " -> left" << std::endl;
-				current = current->_left;
-			}
-			else if (_comp(current->_content.first, val.first)){
-				// std::cout << " -> right" << std::endl;
-				current = current->_right;
-			}
-			else
-				return ft::make_pair(iterator(current, _last_node), false);
-		}
+		// node_pointer current = _root;
+		// node_pointer parent = NULL;
+		// while (current != NULL)
+		// {
+		// 	parent = current;
+		// 	if (_comp(val.first, current->_content.first))
+		// 		current = current->_left;
+		// 	else if (_comp(current->_content.first, val.first))
+		// 		current = current->_right;
+		// 	else
+		// 		return ft::make_pair(iterator(current, _last_node), false);
+		// }
 
-		// insert
-		current = _node_alloc.allocate(1);
-		_node_alloc.construct(current, Node(val));
-		current->_parent = parent;
-		if (_comp(val.first, parent->_content.first))
-			parent->_left = current;
-		else
-			parent->_right = current;
-		_size++;
-		// display_tree("after insert");
-		// fix tree
-		fix_tree(current);
+		find_to_insert(val);
 
-		// set last node
-		while (current->_right != NULL)
-			current = current->_right;
-		_last_node = current;
-		// _last_node->_parent = current;
-		
-		return ft::make_pair(iterator(current,_last_node), true);
+		insert_node(val);
+
+		return ft::make_pair(iterator(_current,_last_node), true);
 	}
 
 
 
 	iterator insert( iterator hint, const value_type &to_insert) {
-		std::cout << "insert hint : " << hint->first << std::endl;
-		std::cout << "to insert : " << to_insert.first << std::endl;
-		
-		node_pointer current = hint._node;
-		node_pointer parent = NULL;
+		if (hint._node == _root || hint._node == _root->_left || hint._node == _root->_right)
+			return insert_pair(to_insert).first;
+
+		node_pointer gp = hint._node->_parent->_parent;
+		node_pointer p = hint._node->_parent;
+
+		_current = hint._node;
+		_parent = NULL;
+
+		// si to_insert est compri entre parent et grand parent
+		if ( p && gp &&
+			(( gp > p && _comp(p->_content.first, to_insert.first) 
+				&& _comp(to_insert.first, gp->_content.first)) 
+			||
+			(p < gp && _comp(gp->_content.first, to_insert.first) 
+				&& _comp(to_insert.first, p->_content.first)))) {
+			std::cout << "hint is good" << std::endl;
+
+			find_to_insert(to_insert);
+
+			insert_node(to_insert);
+
+			// while (_current != NULL)
+			// {
+			// 	_parent = _current;
+			// 	if (_comp(to_insert.first, _current->_content.first))
+			// 		_current = _current->_left;
+			// 	else if (_comp(_current->_content.first, to_insert.first))
+			// 		_current = _current->_right;
+			// 	else 
+			// 		return iterator(_current, _last_node);
+			// }
+
+			// // insert
+			// _current = _node_alloc.allocate(1);
+			// _node_alloc.construct(_current, Node(to_insert));
+			// _current->_parent = _parent;
+
+			// if (_comp(to_insert.first, _parent->_content.first))
+			// 	_parent->_left = _current;
+			// else
+			// 	_parent->_right = _current;
+
+			// _size++;
+			// // display_tree("after insert");
+			// fix_tree(_current);
+			// // display_tree("after insert");
+
+			return iterator(_current, _last_node);
+		} else {
+			std::cout << "sdfsdfsfdsfdsfsfsdf" << std::endl;
+						return insert_pair(to_insert).first;
 
 
-		ft::pair <iterator, bool> ret = insert_pair(to_insert);
-		if (ret.second == false)
-			return ret.first;
-		return ret.first;
-
-
-
-		// insert_pair(to_insert);
-		// return iterator(find(to_insert), _last_node);
-
-
-
-
-
-
-		// int i = 0;
-
-		// if (current == _root) {
-		// 	std::cout << "root" << std::endl;
-		// 	return insert_pair(to_insert).first;
-		// }
-
-		// if (current == _root->_left || current == _root->_right) {
-		// 	std::cout << "root child" << std::endl;
-		// 	return insert_pair(to_insert).first;
-		// }
-
-		
-		// while (current != NULL && i < 20)
-		// {
-		// 	std::cout << "operation n°" << i << std::endl;
-		// 	// return insert_pair(to_insert).first;
-
-
-		// /* V3 */
-		// 	// tant que insert plus petit que parent && insert plus petit que grand parent
-		// 		// current = fils gauche du grand parent
-		// 	while (current != _root 
-		// 		&& current != _root->_left && current != _root->_right
-		// 		&& _comp(to_insert.first, current->_parent->_content.first)
-		// 		&& _comp(to_insert.first, current->_parent->_parent->_content.first)
-		// 		// && current->_parent == current->_parent->_parent->_right) {
-		// 		&& current == current->_parent->_right) {
-		// 		// ) {
-		// 			current = current->_parent->_parent->_left;
-		// 			std::cout << "up diagonal gauche" << std::endl;
-		// 	}
-
-		// 	// tant que insert plus grand que parent && insert plus grand que grand parent
-		// 		// current = fils droit du grand parent
-		// 	while (current != _root 
-		// 		&& current != _root->_left && current != _root->_right
-		// 		&& _comp(current->_parent->_content.first, to_insert.first)
-		// 		&& _comp(current->_parent->_parent->_content.first, to_insert.first)
-		// 		// && current->_parent == current->_parent->_parent->_left) {
-		// 		&& current == current->_parent->_left) {
-		// 		// ) {
-		// 			current = current->_parent->_parent->_right;
-		// 			std::cout << "up diagonal droite" << std::endl;
-		// 	}
-
-
-		// 	if (current == _root || current == _root->_left || current == _root->_right) {
-		// 		current = _root;
-		// 	}
-
-		// 	// std::cout << "test key comp : " << to_insert.first << " < " << current->_content.first << "? "
-		// 	// 		  <<  _comp(to_insert.first , to_insert.first) << std::endl;
-			
-
-
-
-		// 	// si je suis fils gauche
-		// 		// si insert plus grand que parent && insert plus petit que grand parent
-		// 		// ||
-		// 		// si insert plus petit que parent && insert plus petit que grand parent
-		// 			// on cherche dans les enfants de current
-
-		// 	// si je suis fils droit
-		// 		// si insert plus grand que parent && insert plus petit que grand parent 
-		// 			// on cherche dans les enfants de current
-
-		// 	// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-		// 	// !!!!!!!!!!!!!!!!!!!!!!!!!!!! il faut comparer avec le parent et l'enfant pour savoir si je suis entre
-		// 	// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
-					
-		// 	if ((	_comp(current->_parent->_content.first, to_insert.first)
-		// 			&& _comp(to_insert.first, current->_parent->_parent->_content.first))){
-		// 			std::cout << "check dans enfants" << std::endl;
-		// 			while (current != NULL)
-		// 			{
-		// 				parent = current;
-		// 				if (_comp(to_insert.first, current->_content.first)) {
-		// 					current = current->_left;
-		// 					std::cout << " -> left" << std::endl;
-		// 				}
-		// 				else if (_comp(current->_content.first, to_insert.first)){
-		// 					current = current->_right;
-		// 					std::cout << " -> right" << std::endl;
-		// 				}
-		// 				else
-		// 					return iterator(current, _last_node);
-		// 			}
-
-		// 			// insert
-		// 			std::cout << "insert fdffsdfsdfsdfdfsdfddfsdfsdffsddfsdfsffdsffdfsfsdfdfsdf" << std::endl;
-		// 			current = _node_alloc.allocate(1);
-		// 			_node_alloc.construct(current, Node(to_insert));
-		// 			current->_parent = parent;
-		// 			if (_comp(to_insert.first, parent->_content.first))
-		// 				parent->_left = current;
-		// 			else
-		// 				parent->_right = current;
-		// 			_size++;
-		// 			// display_tree("after insert");
-		// 			// fix tree
-		// 			fix_tree(current);
-
-		// 			// set last node
-		// 			while (current->_right != NULL)
-		// 				current = current->_right;
-		// 			_last_node = current;
-		// 			// _last_node->_parent = current;
-
-		// 			return iterator(current,_last_node);
-			
-				
-		// 		}
-
-
-
-		// 		i++;
-		// 	}
-
-		// // insert
-		// current = _node_alloc.allocate(1);
-		// _node_alloc.construct(current, Node(to_insert));
-		// current->_parent = parent;
-		// if (_comp(to_insert.first, parent->_content.first))
-		// 	parent->_left = current;
-		// else
-		// 	parent->_right = current;
-		// _size++;
-		// // display_tree("after insert");
-		// // fix tree
-		// fix_tree(current);
-
-		// // set last node
-		// while (current->_right != NULL)
-		// 	current = current->_right;
-		// _last_node = current;
-		// // _last_node->_parent = current;
-
-		// return iterator(current,_last_node);
+		}
 	}
 
 	void clear();
@@ -632,64 +549,69 @@ public:
 	}
 
 	//fixe tree
-	void fix_tree(node_pointer k)
+	void fix_tree(node_pointer c)
 	{
 		node_pointer u;
-		while (k->_parent && k->_parent->_color == 1)
+		while (c->_parent && c->_parent->_color == 1)
 		{
-			if (k->_parent == k->_parent->_parent->_right)
+			if (c->_parent == c->_parent->_parent->_right)
 			{
-				u = k->_parent->_parent->_left;
+				u = c->_parent->_parent->_left;
 				// std::cout << "test : " << u << std::endl;
 				if (u && u->_color == 1)
 				{
 					u->_color = 0;
-					k->_parent->_color = 0;
-					k->_parent->_parent->_color = 1;
-					k = k->_parent->_parent;
+					c->_parent->_color = 0;
+					c->_parent->_parent->_color = 1;
+					c = c->_parent->_parent;
 				}
 				else
 				{
-					if (k == k->_parent->_left)
+					if (c == c->_parent->_left)
 					{
-						k = k->_parent;
-						rightRotate(k);
+						c = c->_parent;
+						rightRotate(c);
 					}
-					k->_parent->_color = 0;
-					k->_parent->_parent->_color = 1;
-					leftRotate(k->_parent->_parent);
+					c->_parent->_color = 0;
+					c->_parent->_parent->_color = 1;
+					leftRotate(c->_parent->_parent);
 				}
 			}
 			else
 			{
 				// std::cout << "left" << std::endl;
-				u = k->_parent->_parent->_right;
+				u = c->_parent->_parent->_right;
 
 				if (u && u->_color == 1)
 				{
 					u->_color = 0;
-					k->_parent->_color = 0;
-					k->_parent->_parent->_color = 1;
-					k = k->_parent->_parent;
+					c->_parent->_color = 0;
+					c->_parent->_parent->_color = 1;
+					c = c->_parent->_parent;
 				}
 				else
 				{
-					if (k == k->_parent->_right)
+					if (c == c->_parent->_right)
 					{
-						k = k->_parent;
-						leftRotate(k);
+						c = c->_parent;
+						leftRotate(c);
 					}
-					k->_parent->_color = 0;
-					k->_parent->_parent->_color = 1;
-					rightRotate(k->_parent->_parent);
+					c->_parent->_color = 0;
+					c->_parent->_parent->_color = 1;
+					rightRotate(c->_parent->_parent);
 				}
 			}
-			if (k == _root)
+			if (c == _root)
 			{
 				break;
 			}
 		}
 		_root->_color = 0;
+
+		// set last node
+		while (c->_right != NULL)
+			c = c->_right;
+		_last_node = c;
 	}
 
 
