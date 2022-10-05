@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/14 22:19:53 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/04 23:20:48 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/05 18:27:46 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -1135,9 +1135,9 @@ std::cout << MAG "\nTEST iterator\n" END << std::endl;
 	ft_it 	= ft_map.end(); ft_it--;
 	comp_stream< it_type, ft_it_type >(it, ft_it, "end()--");
 
-	it 		= map.end(); it++;
-	ft_it 	= ft_map.end(); ft_it++;
-	comp_stream< it_type, ft_it_type >(it, ft_it, "end()++");
+	// it 		= map.end(); it++;
+	// ft_it 	= ft_map.end(); ft_it++;
+	// comp_stream< it_type, ft_it_type >(it, ft_it, "end()++");
 
 																						// gerer test segfault
 	// it = map.end(); it++; it++;
@@ -1172,9 +1172,9 @@ std::cout << MAG "\nTEST iterator\n" END << std::endl;
 	comp_stream< r_it_type, ft_r_it_type >(r_it, ft_r_it, "rend()--");
 
 	/* rend()++ */
-	r_it 	= map.rend(); r_it++;
-	ft_r_it = ft_map.rend(); ft_r_it++;
-	comp_stream< r_it_type, ft_r_it_type >(r_it, ft_r_it, "rend()++");
+	// r_it 	= map.rend(); r_it++;
+	// ft_r_it = ft_map.rend(); ft_r_it++;
+	// comp_stream< r_it_type, ft_r_it_type >(r_it, ft_r_it, "rend()++");
 
 	/* rbegin() -> rend() */
 	for (r_it = map.rbegin(); r_it != map.rend(); r_it++)
@@ -1206,9 +1206,9 @@ std::cout << MAG "\nTEST iterator\n" END << std::endl;
 	const_ft_it = ft_map.end(); const_ft_it--;
 	comp_stream< const_it_type, const_ft_it_type >(const_it, const_ft_it, "const end()--");
 
-	const_it 	= map.end(); const_it++;
-	const_ft_it = ft_map.end(); const_ft_it++;
-	comp_stream< const_it_type, const_ft_it_type >(const_it, const_ft_it, "const end()++");
+	// const_it 	= map.end(); const_it++;
+	// const_ft_it = ft_map.end(); const_ft_it++;
+	// comp_stream< const_it_type, const_ft_it_type >(const_it, const_ft_it, "const end()++");
 
 	/* begin() -> end() */
 	for (const_it = map.begin(); const_it != map.end(); const_it++)
@@ -1238,10 +1238,10 @@ std::cout << MAG "\nTEST iterator\n" END << std::endl;
 	const_ft_r_it 	= ft_map.rend(); const_ft_r_it--;
 	comp_stream< const_r_it_type, const_ft_r_it_type >(const_r_it, const_ft_r_it, "const rend()--");
 
-	/* rend()++ */
-	const_r_it 		= map.rend(); const_r_it++;
-	const_ft_r_it 	= ft_map.rend(); const_ft_r_it++;
-	comp_stream< const_r_it_type, const_ft_r_it_type >(const_r_it, const_ft_r_it, "const rend()++");
+	// /* rend()++ */
+	// const_r_it 		= map.rend(); const_r_it++;
+	// const_ft_r_it 	= ft_map.rend(); const_ft_r_it++;
+	// comp_stream< const_r_it_type, const_ft_r_it_type >(const_r_it, const_ft_r_it, "const rend()++");
 
 	/* rbegin() -> rend() */
 	for (const_r_it = map.rbegin(); const_r_it != map.rend(); const_r_it++)
@@ -1301,9 +1301,9 @@ std::cout << MAG "\nTEST iterator\n" END << std::endl;
 	comp_stream< it_type2, ft_it_type2 >(it2, ft_it2, "end()--");
 
 	/* end()++ */
-	it2 = map2.end(); it2++;
-	ft_it2 = ft_map2.end(); ft_it2++;
-	comp_stream< it_type2, ft_it_type2 >(it2, ft_it2, "end()++");
+	// it2 = map2.end(); it2++;
+	// ft_it2 = ft_map2.end(); ft_it2++;
+	// comp_stream< it_type2, ft_it_type2 >(it2, ft_it2, "end()++");
 
 																						// gerer test segfault
 	// it2 = map2.end(); it2++; it2++;
@@ -1343,9 +1343,9 @@ std::cout << MAG "\nTEST iterator\n" END << std::endl;
 	comp_stream< r_it_type2, ft_r_it_type2 >(r_it2, ft_r_it2, "rend()--");
 
 	/* rend()++ */
-	r_it2 		= map2.rend(); r_it2++;
-	ft_r_it2 	= ft_map2.rend(); ft_r_it2++;
-	comp_stream< r_it_type2, ft_r_it_type2 >(r_it2, ft_r_it2, "rend()++");
+	// r_it2 		= map2.rend(); r_it2++;
+	// ft_r_it2 	= ft_map2.rend(); ft_r_it2++;
+	// comp_stream< r_it_type2, ft_r_it_type2 >(r_it2, ft_r_it2, "rend()++");
 
 	/* rbegin() -> rend() */
 	for (r_it2 = map2.rbegin(); r_it2 != map2.rend(); r_it2++)
@@ -1385,9 +1385,9 @@ std::cout << MAG "\nTEST iterator\n" END << std::endl;
 	comp_stream< const_it_type2, const_ft_it_type2 >(const_it2, const_ft_it2, "const end()--");
 
 	/* end()++ */
-	const_it2 		= map2.end(); const_it2++;
-	const_ft_it2 	= ft_map2.end(); const_ft_it2++;
-	comp_stream< const_it_type2, const_ft_it_type2 >(const_it2, const_ft_it2, "const end()++");
+	// const_it2 		= map2.end(); const_it2++;
+	// const_ft_it2 	= ft_map2.end(); const_ft_it2++;
+	// comp_stream< const_it_type2, const_ft_it_type2 >(const_it2, const_ft_it2, "const end()++");
 
 	/* begin() -> end() */
 	for (const_it2 = map2.begin(); const_it2 != map2.end(); const_it2++)
@@ -1420,9 +1420,9 @@ std::cout << MAG "\nTEST iterator\n" END << std::endl;
 	comp_stream< const_r_it_type2, const_ft_r_it_type2 >(const_r_it2, const_ft_r_it2, "const rend()--");
 
 	/* rend()++ */
-	const_r_it2 	= map2.rend(); const_r_it2++;
-	const_ft_r_it2 	= ft_map2.rend(); const_ft_r_it2++;
-	comp_stream< const_r_it_type2, const_ft_r_it_type2 >(const_r_it2, const_ft_r_it2, "const rend()++");
+	// const_r_it2 	= map2.rend(); const_r_it2++;
+	// const_ft_r_it2 	= ft_map2.rend(); const_ft_r_it2++;
+	// comp_stream< const_r_it_type2, const_ft_r_it_type2 >(const_r_it2, const_ft_r_it2, "const rend()++");
 
 	/* rbegin() -> rend() */
 	for (const_r_it2 = map2.rbegin(); const_r_it2 != map2.rend(); const_r_it2++)
@@ -1646,3 +1646,35 @@ std::cout << MAG "\nTEST iterator\n" END << std::endl;
 	std::cout << std::endl;
 	return 0;
 }
+
+
+/*
+
+	REGLEMENT FABLAB
+
+	L'acces au FabLab se fait par l'adhesion au club DIY
+
+	Les horaires d'ouvertures sont du lundi au vendredi 
+	de 8h a 17h sans responsable
+	de 17h a 22-23h avec responsable car pas de gerant
+	horaire weekend ?
+
+	Le soir l'acces n'est autorise que si un responsable est present
+	Certaine machine ne sont utilisable qu'apres une formation (decoupe laser, CNC)
+
+	Les responsables auront une formation sur ces machines pour superviser les membres du club.
+
+	Des creneaux peuvent etre pris sur le site de la bidouille pour reserver des machines, 
+	mais n'est pas obligatoire.
+
+	Les membres ont obligation de s'inscrire sur le site de la bidouille (pour accepter les termes et conditions)
+
+	La capacite du FabLab est de 7-8 personnes dont les gerants. 
+	Il est donc conseiller de faire des groupes de 2-4 personnes dans la journee.
+
+	L'utilisation de la decoupe laser et CNC est facturer a l'heure, (montant ?) 
+	Les consommables tel que le filament 3D est a la charge des membres (cagnotte)
+
+
+
+*/
