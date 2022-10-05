@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/14 22:19:53 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/05 22:57:00 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/06 01:29:39 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,6 @@ void fill_map(T_map *map) {
 	map->insert(T_pair("w", 1));
 	map->insert(T_pair("x", 1));
 	map->insert(T_pair("y", 1));
-	map->insert(T_pair("z", 1));
 	// map->insert(T_pair("aa", 1));
 	// map->insert(T_pair("ab", 1));
 	// map->insert(T_pair("za", 1));
@@ -980,25 +979,30 @@ int main()
 	typedef std::map<std::string, int>::reverse_iterator 			r_it_type;
 	typedef std::map<std::string, int>::const_reverse_iterator 		const_r_it_type;
 
+	typedef  ft::map<std::string, int>::iterator 					ft_it_type;
+	typedef  ft::map<std::string, int>::const_iterator 				const_ft_it_type;
+	typedef  ft::map<std::string, int>::reverse_iterator 			ft_r_it_type;
+	typedef  ft::map<std::string, int>::const_reverse_iterator 		const_ft_r_it_type;
+
+	typedef std::pair<std::string, int> 			pair;
+	typedef  ft::pair<std::string, int> 			ft_pair;
+
+
+
 	typedef std::map<int, int>::iterator 							it_type2;
 	typedef std::map<int, int>::const_iterator 						const_it_type2;
 	typedef std::map<int, int>::reverse_iterator 					r_it_type2;
 	typedef std::map<int, int>::const_reverse_iterator 				const_r_it_type2;
 
-
-	typedef  ft::map<std::string, int>::iterator 					ft_it_type;
-	typedef  ft::map<std::string, int>::const_iterator 				const_ft_it_type;
-	typedef  ft::map<std::string, int>::reverse_iterator 			ft_r_it_type;
-	typedef  ft::map<std::string, int>::const_reverse_iterator 		const_ft_r_it_type;
-	
 	typedef  ft::map<int, int>::iterator 							ft_it_type2;
 	typedef  ft::map<int, int>::const_iterator 						const_ft_it_type2;
 	typedef  ft::map<int, int>::reverse_iterator 					ft_r_it_type2;
 	typedef  ft::map<int, int>::const_reverse_iterator 				const_ft_r_it_type2;
 
+	typedef std::pair<int, int> 			pair2;
+	typedef  ft::pair<int, int> 			ft_pair2;
 
-	typedef std::pair<std::string, int> 			pair;
-	typedef  ft::pair<std::string, int> 			ft_pair;
+
 
 	/* ***************************************************** */
 	/*                                                       */
@@ -1019,23 +1023,15 @@ int main()
 	/*                     INSERT(value)                     */
 	/*                  pair< string, int >                  */
 	/* ***************************************************** */
+	// ft_map.display_tree();
 	std::cout << MAG "\n\nTEST insert( value )" END << std::endl;
 
 	/* insert ("b", 2) */
 	std::pair< it_type, bool > ret_insert_value = map.insert(pair("b", 2));
-	// map.insert(pair("f", 1));
-	// map.insert(pair("g", 1));
-	// map.insert(pair("h", 1));
-
 	ft::pair< ft_it_type, bool > ft_ret_insert_value = ft_map.insert(ft_pair("b", 2));
-	// ft_map.insert(ft_pair("f", 1));
-	// ft_map.insert(ft_pair("g", 1));
-	// ft_map.insert(ft_pair("h", 1));
 
 	str_comp(ret_insert_value.first->first, ft_ret_insert_value.first->first, "insert(value(ft_pair(\"b\", 2)))");
 	str_comp(to_string(ret_insert_value.first->second), to_string(ft_ret_insert_value.first->second), "insert(value(ft_pair(\"b\", 2)))");
-
-
 
 	/* insert ("a", 1) */
 	ret_insert_value 	= map.insert(pair("a", 1));
@@ -1065,7 +1061,13 @@ int main()
 	str_comp(ret_insert_value.first->first, ft_ret_insert_value.first->first, "insert(value(ft_pair(\"d\", 4))) -> first");
 	str_comp(to_string(ret_insert_value.first->second), to_string(ft_ret_insert_value.first->second), "insert(value(ft_pair(\"d\", 4))) -> second");
 
-	// ft_map.display_tree();
+	/* insert ("d", 4) */
+	ret_insert_value 	= map.insert(pair("d", 4));
+	ft_ret_insert_value = ft_map.insert(ft_pair("d", 4));
+
+	str_comp(ret_insert_value.first->first, ft_ret_insert_value.first->first, "test doublon insert(value(ft_pair(\"d\", 4))) -> first");
+	str_comp(to_string(ret_insert_value.first->second), to_string(ft_ret_insert_value.first->second), "test doublon insert(value(ft_pair(\"d\", 4))) -> second");
+
 
 	/* insert many value */
 	fill_map< std::map<std::string, int>, pair >(&map);
@@ -1082,7 +1084,6 @@ int main()
 
 
 
-	//test doublon !
 
 
 
@@ -1093,36 +1094,90 @@ int main()
 	/* ***************************************************** */
 	std::cout << MAG "\n\nTEST insert( hint, value )" END << std::endl;
 
-	std::string val_to_insert = "g";
-	int 		pos_to_insert = 4;
 
 
+	/* insert(begin(), 1) */
+	it_type it_insert_hint = map.insert(map.begin()++, pair("A", 1));
+	ft_it_type ft_it_insert_hint = ft_map.insert(ft_map.begin()++, ft_pair("A", 1));
+
+	str_comp(it_insert_hint->first, ft_it_insert_hint->first, "insert(begin(), value(ft_pair(\"A\", 1))) -> first");
+	str_comp(to_string(it_insert_hint->second), to_string(ft_it_insert_hint->second), "insert(begin(), value(ft_pair(\"A\", 1))) -> second");
+
+
+	/* insert(begin(), 1) */
+	it_insert_hint = map.insert(map.begin(), pair("AA", 1));
+	ft_it_insert_hint = ft_map.insert(ft_map.begin(), ft_pair("AA", 1));
+
+	str_comp(it_insert_hint->first, ft_it_insert_hint->first, "insert(begin(), value(ft_pair(\"z\", 1))) -> first");
+	str_comp(to_string(it_insert_hint->second), to_string(ft_it_insert_hint->second), "insert(begin(), value(ft_pair(\"z\", 1))) -> second");
+
+	/* insert(begin(), "z") */
+	it_insert_hint = map.insert(map.begin(), pair("yz", 1));
+	ft_it_insert_hint = ft_map.insert(ft_map.begin(), ft_pair("yz", 1));
+
+	str_comp(it_insert_hint->first, ft_it_insert_hint->first, "insert(begin(), value(ft_pair(\"z\", 1))) -> first");
+	str_comp(to_string(it_insert_hint->second), to_string(ft_it_insert_hint->second), "insert(begin(), value(ft_pair(\"z\", 1))) -> second");
+
+
+
+
+	/* insert(end(), 1) */
+	it_insert_hint = map.insert(map.end(), pair("z", 1));
+	ft_it_insert_hint = ft_map.insert(ft_map.end(), ft_pair("z", 1));
+
+	str_comp(it_insert_hint->first, ft_it_insert_hint->first, "insert(end(), value(ft_pair(\"z\", 1))) -> first");
+	str_comp(to_string(it_insert_hint->second), to_string(ft_it_insert_hint->second), "insert(end(), value(ft_pair(\"z\", 1))) -> second");
+
+	
+	/* insert(end(), "a") */
+	it_insert_hint = map.insert(map.end(), pair("za", 1));
+	ft_it_insert_hint = ft_map.insert(ft_map.end(), ft_pair("za", 1));
+
+	str_comp(it_insert_hint->first, ft_it_insert_hint->first, "insert(end(), value(ft_pair(\"za\", 1))) -> first");
+	str_comp(to_string(it_insert_hint->second), to_string(ft_it_insert_hint->second), "insert(end(), value(ft_pair(\"za\", 1))) -> second");
+
+	/* insert(end(), "z") */
+	it_insert_hint = map.insert(map.end(), pair("c", 1));
+	ft_it_insert_hint = ft_map.insert(ft_map.end(), ft_pair("c", 1));
+
+	str_comp(it_insert_hint->first, ft_it_insert_hint->first, "insert(end(), value(ft_pair(\"c\", 1))) -> first");
+	str_comp(to_string(it_insert_hint->second), to_string(ft_it_insert_hint->second), "insert(end(), value(ft_pair(\"c\", 1))) -> second");
+
+
+
+	/* insert begin()+5, "e" */
+	std::string val_to_insert = "e";
+	int 		pos_to_insert = 5;
 
 	it_type it_test = map.begin();
 	for(int i = 0; i < pos_to_insert; i++)
 		it_test++;
-	it_type it_test2 = map.insert(it_test, pair(val_to_insert, 26));
-	sstr << "ret_insert(hint, value) " << it_test2->first << std::endl;
-
-
-
 	ft_it_type ft_it_test = ft_map.begin();
 	for(int i = 0; i < pos_to_insert; i++)
 		ft_it_test++;
-	// std::cout << "it_test = " << ft_it_test->first << std::endl;
+
+	it_type it_test2 = map.insert(it_test, pair(val_to_insert, 26));
+	sstr << "ret_insert(hint, value) " << it_test2->first << std::endl;
+
 	ft_it_type ft_it_test2 = ft_map.insert(ft_it_test, ft_pair(val_to_insert, 26));
 	ft_sstr << "ret_insert(hint, value) " << ft_it_test2->first << std::endl;
-	// ft_map.display_tree();
-
 
 	str_comp(sstr.str(), ft_sstr.str(), "begin() -> end()");
 	sstr.str(""); sstr.clear(); ft_sstr.str(""); ft_sstr.clear();
 
 
 
+	/* insert many value */
+	for (it_type it = map.begin(); it != map.end(); it++)
+		sstr << it->first << ":" << it->second << " ";
+	for (ft_it_type it = ft_map.begin(); it != ft_map.end(); it++)
+		ft_sstr << it->first << ":" << it->second << " ";
+	
+	str_comp(sstr.str(), ft_sstr.str(), "insert many values");
+	sstr.str(""); sstr.clear(); ft_sstr.str(""); ft_sstr.clear();
 
 
-
+	// ft_map.display_tree();
 
 
 	/* ***************************************************** */
@@ -1154,17 +1209,17 @@ int main()
 	 ft::map<int, int> ft_map2;
 
 	// std::cout << BLU "\nTEST insert(value) : " END << std::endl;
-	map2.insert(std::pair<int, int>(1, 1));
-	map2.insert(std::pair<int, int>(2, 2));
-	map2.insert(std::pair<int, int>(3, 3));
-	map2.insert(std::pair<int, int>(4, 4));
-	map2.insert(std::pair<int, int>(5, 5));
+	map2.insert(pair2(1, 1));
+	map2.insert(pair2(2, 2));
+	map2.insert(pair2(3, 3));
+	map2.insert(pair2(4, 4));
+	map2.insert(pair2(5, 5));
 
-	ft_map2.insert(ft::pair<int, int>(1, 1));
-	ft_map2.insert(ft::pair<int, int>(2, 2));
-	ft_map2.insert(ft::pair<int, int>(3, 3));
-	ft_map2.insert(ft::pair<int, int>(4, 4));
-	ft_map2.insert(ft::pair<int, int>(5, 5));
+	ft_map2.insert(ft_pair2(1, 1));
+	ft_map2.insert(ft_pair2(2, 2));
+	ft_map2.insert(ft_pair2(3, 3));
+	ft_map2.insert(ft_pair2(4, 4));
+	ft_map2.insert(ft_pair2(5, 5));
 	
 
 

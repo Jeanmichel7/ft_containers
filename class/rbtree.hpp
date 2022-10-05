@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 12:54:45 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/05 23:42:39 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/06 01:29:53 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -252,32 +252,6 @@ public:
 	/*                                                     */
 	/* *************************************************** */
 
-
-
-	// node_alloc      _node_alloc;
-	// node_pointer	_root;
-	// node_pointer	_last_node;
-
-	// Compare         _comp;
-	// size_type       _size;
-	// node_pointer	TNULL;
-
-
-
-	// node_pointer find_pos(node_pointer current, node_pointer parent, const value_type &val) {
-	// 	while (current != NULL)
-	// 	{
-	// 		parent = current;
-	// 		if (_comp(val.first, current->_content.first))
-	// 			current = current->_left;
-	// 		else if (_comp(current->_content.first, val.first))
-	// 			current = current->_right;
-	// 		else
-	// 			return current;
-	// 	}
-	// 	return current;
-	// }
-
 	node_pointer insert_node(node_pointer current, const value_type &val)
 	{
 		node_pointer parent = NULL;
@@ -311,6 +285,7 @@ public:
 		return current;
 	}
 
+
 	ft::pair<iterator, bool> insert_pair(const value_type& val)
 	{
 		if (_size == 0)
@@ -328,14 +303,38 @@ public:
 	}
 
 
+	iterator insert( iterator hint, const value_type &to_insert ) {
+		
 
-	iterator insert( iterator hint, const value_type &to_insert) {
 		if (hint._node == _root || hint._node == _root->_left || hint._node == _root->_right)
 			return insert_pair(to_insert).first;
 
-		node_pointer gp = hint._node->_parent->_parent;
-		node_pointer p = hint._node->_parent;
+		if (hint == end()) {
+			if (_comp(_last_node->_content.first, to_insert.first)) {
+				// std::cout << "hint is good";
+				return iterator(insert_node(_last_node, to_insert), _last_node);
+			}
+			else {
+				// std::cout << "hint not good";
+				return insert_pair(to_insert).first;
+			}
+		}
 		
+		node_pointer p = hint._node->_parent;
+		node_pointer gp = p->_parent;
+
+		if (hint == begin()) {
+			if (_comp(to_insert.first, p->_content.first)) {
+				// std::cout << "hint is good";
+				return iterator(insert_node(hint._node, to_insert), _last_node);
+			}
+			else {
+				// std::cout << "hint not good";
+				return insert_pair(to_insert).first;
+			}
+		}
+
+
 		// si to_insert est compri entre parent et grand parent
 		if ( p && gp &&
 			(( gp > p && _comp(p->_content.first, to_insert.first) 
@@ -343,11 +342,12 @@ public:
 			||
 			(p < gp && _comp(gp->_content.first, to_insert.first) 
 				&& _comp(to_insert.first, p->_content.first)))) {
-			std::cout << "hint is good" << std::endl;
+			std::cout << "hint is good";
 
 			// node_pointer current = insert_node(hint._node, to_insert);
 			return iterator(insert_node(hint._node, to_insert), _last_node);
 		} else {
+			std::cout << "hint not good";
 			return insert_pair(to_insert).first;
 		}
 	}
