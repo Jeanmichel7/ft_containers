@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 12:54:45 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/05 23:07:32 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/05 23:42:39 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,8 +80,6 @@ private:
 
 	node_pointer	TNULL;
 
-	node_pointer 	_current;
-	node_pointer 	_parent;
 
 
 public:
@@ -99,9 +97,7 @@ public:
 		// _node(NULL),
 		_last_node(NULL),
 		_size(0),
-		TNULL(NULL),
-		_current(NULL),
-		_parent(NULL)
+		TNULL(NULL)
 	{
 		// _node = _node_alloc.allocate(1);
 		// _node_alloc.construct(_node, Node());
@@ -268,39 +264,51 @@ public:
 
 
 
+	// node_pointer find_pos(node_pointer current, node_pointer parent, const value_type &val) {
+	// 	while (current != NULL)
+	// 	{
+	// 		parent = current;
+	// 		if (_comp(val.first, current->_content.first))
+	// 			current = current->_left;
+	// 		else if (_comp(current->_content.first, val.first))
+	// 			current = current->_right;
+	// 		else
+	// 			return current;
+	// 	}
+	// 	return current;
+	// }
 
-	void insert_node(const value_type& val) {
-		_current = _node_alloc.allocate(1);
-		_node_alloc.construct(_current, Node(val));
-		_current->_parent = _parent;
+	node_pointer insert_node(node_pointer current, const value_type &val)
+	{
+		node_pointer parent = NULL;
 
-		if (_comp(val.first, _parent->_content.first))
-			_parent->_left = _current;
+		while (current != NULL)
+		{
+			parent = current;
+			if (_comp(val.first, current->_content.first))
+				current = current->_left;
+			else if (_comp(current->_content.first, val.first))
+				current = current->_right;
+			else
+				return current;
+		}
+
+		current = _node_alloc.allocate(1);
+		_node_alloc.construct(current, Node(val));
+		current->_parent = parent;
+		
+		if (_comp(val.first, parent->_content.first))
+			parent->_left = current;
 		else
-			_parent->_right = _current;
+			parent->_right = current;
 
 		_size++;
-		// display_tree("insert before fixed");
-		fix_tree(_current);
-		// return _current;
-		// display_tree("insert after fixed");
-	}
 
-	void find_to_insert(const value_type& val) {
-		_current = _root;
-		_parent = NULL;
-		while (_current != NULL)
-		{
-			// std:cout << "current: " << _current->_content.first << std::endl;
-			_parent = _current;
-			if (_comp(val.first, _current->_content.first))
-				_current = _current->_left;
-			else if (_comp(_current->_content.first, val.first))
-				_current = _current->_right;
-			else
-				break ;
-				// return ft::make_pair(iterator(current, _last_node), false);
-		}
+		// display_tree("insert before fixed");
+		fix_tree(current);
+		// display_tree("insert after fixed");
+
+		return current;
 	}
 
 	ft::pair<iterator, bool> insert_pair(const value_type& val)
@@ -315,26 +323,8 @@ public:
 			return ft::make_pair(iterator(_root, _last_node), true);
 		}
 
-
-		// cherche position natuelle
-		// node_pointer current = _root;
-		// node_pointer parent = NULL;
-		// while (current != NULL)
-		// {
-		// 	parent = current;
-		// 	if (_comp(val.first, current->_content.first))
-		// 		current = current->_left;
-		// 	else if (_comp(current->_content.first, val.first))
-		// 		current = current->_right;
-		// 	else
-		// 		return ft::make_pair(iterator(current, _last_node), false);
-		// }
-
-		find_to_insert(val);
-
-		insert_node(val);
-
-		return ft::make_pair(iterator(_current,_last_node), true);
+		// node_pointer current = insert_node(_root, val);
+		return ft::make_pair(iterator(insert_node(_root, val), _last_node), true);
 	}
 
 
@@ -345,10 +335,7 @@ public:
 
 		node_pointer gp = hint._node->_parent->_parent;
 		node_pointer p = hint._node->_parent;
-
-		_current = hint._node;
-		_parent = NULL;
-
+		
 		// si to_insert est compri entre parent et grand parent
 		if ( p && gp &&
 			(( gp > p && _comp(p->_content.first, to_insert.first) 
@@ -358,44 +345,13 @@ public:
 				&& _comp(to_insert.first, p->_content.first)))) {
 			std::cout << "hint is good" << std::endl;
 
-			find_to_insert(to_insert);
-
-			insert_node(to_insert);
-
-			// while (_current != NULL)
-			// {
-			// 	_parent = _current;
-			// 	if (_comp(to_insert.first, _current->_content.first))
-			// 		_current = _current->_left;
-			// 	else if (_comp(_current->_content.first, to_insert.first))
-			// 		_current = _current->_right;
-			// 	else 
-			// 		return iterator(_current, _last_node);
-			// }
-
-			// // insert
-			// _current = _node_alloc.allocate(1);
-			// _node_alloc.construct(_current, Node(to_insert));
-			// _current->_parent = _parent;
-
-			// if (_comp(to_insert.first, _parent->_content.first))
-			// 	_parent->_left = _current;
-			// else
-			// 	_parent->_right = _current;
-
-			// _size++;
-			// // display_tree("after insert");
-			// fix_tree(_current);
-			// // display_tree("after insert");
-
-			return iterator(_current, _last_node);
+			// node_pointer current = insert_node(hint._node, to_insert);
+			return iterator(insert_node(hint._node, to_insert), _last_node);
 		} else {
-			std::cout << "sdfsdfsfdsfdsfsfsdf" << std::endl;
-						return insert_pair(to_insert).first;
-
-
+			return insert_pair(to_insert).first;
 		}
 	}
+
 
 	void clear();
 
@@ -549,7 +505,7 @@ public:
 	}
 
 	//fixe tree
-	void fix_tree(node_pointer c)
+	node_pointer fix_tree(node_pointer c)
 	{
 		node_pointer u;
 		while (c->_parent && c->_parent->_color == 1)
@@ -612,6 +568,8 @@ public:
 		while (c->_right != NULL)
 			c = c->_right;
 		_last_node = c;
+
+		return c;
 	}
 
 
