@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/10 22:40:08 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/03 00:12:54 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/07 00:07:02 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 
 namespace ft
 {
-    
+
 template <class T1, class T2>
 struct pair 
 {
@@ -34,7 +34,6 @@ struct pair
 
     pair() : first(T1()), second(T2()) {}
 
-    
     template <class U, class V>
     pair(const pair<U, V>& pr) : first(pr.first), second(pr.second) {}
 

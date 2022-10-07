@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 12:54:45 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/03 14:33:28 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/07 13:53:52 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,22 +15,12 @@
 
 #include "utils.hpp"
 #include "rbtree_iterator.hpp"
+#include "map.hpp"
 
 using namespace std;
 
-
 namespace ft
 {
-
-// struct Node
-// {
-// 	int     _content;
-// 	Node 	*_parent;
-// 	Node 	*_left;
-// 	Node 	*_right;
-// 	int 	_color;
-// };
-
 
 template <class T,
 		  class Compare = std::less<T>,
@@ -42,43 +32,28 @@ class RedBlackTree
 {
 public:
 
-	/* Self type */
 	typedef RedBlackTree  							self;
-
-	/* A reference to the self type */
 	typedef self&   								self_reference;
-	
-	/* The first template argument */
 	typedef T   									value_type;
-
-	/* Stored Node type */
 	typedef Node 									node_type;
-
-	/* Pointer to stored node */
 	typedef Node 									*node_pointer;
-
 	typedef Node const 								*node_const_pointer;
-	
-	/* Node allocator */
 	typedef Node_Alloc  							node_alloc;
-
-	/* Size_t */
 	typedef size_t 									size_type;
-
 	typedef ft::RB_iterator<Node, Compare> 			iterator;
 	typedef ft::RB_const_iterator<Node, Compare> 	const_iterator;
+	typedef ft::my_reverse_iterator<iterator> 		reverse_iterator;
+	typedef ft::my_reverse_iterator<const_iterator> const_reverse_iterator;
+
 
 private:
 	// last_node parent = root of tree, last_node right = last node, last_node left = first node
 	node_alloc      _node_alloc;
 	node_pointer	_root;
-	// node_pointer    _node;
 	node_pointer	_last_node;
 	Compare         _comp;
 	size_type       _size;
-
 	node_pointer	TNULL;
-
 
 public:
 
@@ -94,16 +69,17 @@ public:
 		_root(NULL),
 		// _node(NULL),
 		_last_node(NULL),
-		_size(0)
+		_size(0),
+		TNULL(NULL)
 	{
 		// _node = _node_alloc.allocate(1);
 		// _node_alloc.construct(_node, Node());
 	}
 
 	/* Copy constructor */
-	// RedBlackTree(const self& x) : _node(_node_alloc.allocate(1))
+	// RedBlackTree(const self& x) : _node_a(_node_alloc.allocate(1))
 	// {
-	// 	_node_alloc.construct(_node, Node());
+	// 	_node_alloc.construct(_node_alloc, Node());
 	// 	_node->_content = x._node->_content;
 	// 	_node->_parent = x._node->_parent;
 	// 	_node->_left = x._node->_left;
@@ -120,10 +96,9 @@ public:
 	{
 		node_pointer current = _root;
 		node_pointer prev = NULL;
-		// node_pointer parent = NULL;
+
 		while (current != NULL)
 		{
-			// std::cout << "current avant: " << current->_content << std::endl;
 			if (current->_left) {
 				current = current->_left;
 			}
@@ -134,9 +109,11 @@ public:
 			{
 				_node_alloc.destroy(_root);
 				_node_alloc.deallocate(_root, 1);
+
+				// _node_alloc.destroy(_last_node);
+				// _node_alloc.deallocate(_last_node, 1);
 				return;
 			}
-
 			if ((current->_left == NULL && current->_right == NULL)) {
 				prev = current;
 				current = current->_parent;
@@ -144,7 +121,6 @@ public:
 					current->_left = NULL;
 				else if (current->_right == prev)
 					current->_right = NULL;
-				// std::cout << "deallocte : " << prev->_content << std::endl;
 				_node_alloc.destroy(prev);
 				_node_alloc.deallocate(prev, 1);
 			}
@@ -175,42 +151,51 @@ public:
 	/*                                                     */
 	/* *************************************************** */
 
-	iterator begin()
-	{
+	iterator begin() {
 		node_pointer current = _root;
 		while (current->_left != NULL)
 			current = current->_left;
-
-		return iterator(current);
+		return iterator(current, _last_node);
 	}
 
-	iterator end()
-	{
+	iterator end() {
 		node_pointer current = _root;
-		// node_pointer tmp;
-
 		while (current->_right != NULL)
 			current = current->_right;
-		// tmp = current;
-		// _last_node = current;
-		// current = current->_right;
-		// current->_parent = tmp;
-		
-		// std::cout << "test end()" << std::endl;
-		// std::cout << " current: " << current->_content << std::endl;
-		// std::cout << " current->_right: " << current->_right << std::endl;
-		// std::cout << " current->_left: " << current->_left << std::endl;
-		// std::cout << " current->_parent: " << current->_parent << std::endl;
-		
-		// return iterator(_last_node);
-		return iterator(_last_node);
+		_last_node = current;
+		return iterator(TNULL, _last_node);
 	}
 	
-	const_iterator begin() const;
+	const_iterator begin() const {
+		node_pointer current = _root;
+		while (current->_left != NULL)
+			current = current->_left;
+		return const_iterator(current, _last_node);
+	}
 
-	const_iterator end() const;
+	const_iterator end() const {
+		node_pointer current = _root;
+		while (current->_right != NULL)
+			current = current->_right;
+		_last_node = current;
+		return const_iterator(TNULL, _last_node);
+	}
 
+	reverse_iterator rbegin() {
+		return reverse_iterator(end());
+	}
 
+	reverse_iterator rend() {
+		return reverse_iterator(begin());
+	}
+	
+	const_reverse_iterator rbegin() const {
+		return const_reverse_iterator(end());
+	}
+
+	const_reverse_iterator rend() const {
+		return const_reverse_iterator(begin());
+	}
 
 
 
@@ -222,7 +207,9 @@ public:
 	/*                                                     */
 	/* *************************************************** */
 
-	size_type size() const;
+	size_type size() const {
+		return _size;
+	}
 
 	bool empty() const;
 
@@ -238,66 +225,113 @@ public:
 	/*                                                     */
 	/* *************************************************** */
 
+	node_pointer insert_node(node_pointer current, const value_type &val)
+	{
+		node_pointer parent = NULL;
+
+		while (current != NULL)
+		{
+			parent = current;
+			if (_comp(val.first, current->_content.first))
+				current = current->_left;
+			else if (_comp(current->_content.first, val.first))
+				current = current->_right;
+			else
+				return current;
+		}
+
+		current = _node_alloc.allocate(1);
+		_node_alloc.construct(current, Node(val));
+		current->_parent = parent;
+		
+		if (_comp(val.first, parent->_content.first))
+			parent->_left = current;
+		else
+			parent->_right = current;
+
+		_size++;
+
+		// display_tree("insert before fixed");
+		fix_tree(current);
+		// display_tree("insert after fixed");
+
+		return current;
+	}
+
+
 	ft::pair<iterator, bool> insert_pair(const value_type& val)
 	{
 		if (_size == 0)
 		{
 			node_pointer new_node = _node_alloc.allocate(1);
-			_node_alloc.construct(new_node, Node(val, BLACK));
+			_node_alloc.construct(new_node, Node(val, N_BLACK));
 			_root = new_node;
 			_size++;
-
-
-			_last_node = _node_alloc.allocate(1);
-			_node_alloc.construct(_last_node, Node());
-			_last_node->_parent = _root;
-
-
-			return ft::make_pair(iterator(_root), true);
-			// return ft::pair<iterator, bool>(iterator(_node), true);
+			_last_node = _root;
+			return ft::make_pair(iterator(_root, _last_node), true);
 		}
 
-		// std::cout << "test comp : " << _comp(val.first , val.first) << std::endl;
-
-		// cherche position natuelle
-		node_pointer current = _root;
-		node_pointer parent = NULL;
-		while (current != NULL)
-		{
-			// std::cout << "test key comp : " << val.first << " < " << current->_content.first << "? "
-					//   <<  _comp(val.first , val.first) << std::endl;
-			parent = current;
-			if (_comp(val.first, current->_content.first)) {
-				// std::cout << " -> left" << std::endl;
-				current = current->_left;
-			}
-			else if (_comp(current->_content.first, val.first)){
-				// std::cout << " -> right" << std::endl;
-				current = current->_right;
-			}
-			else
-				return ft::make_pair(iterator(current), false);
-		}
-
-		// insert
-		current = _node_alloc.allocate(1);
-		_node_alloc.construct(current, Node(val));
-		current->_parent = parent;
-		if (_comp(val.first, parent->_content.first))
-			parent->_left = current;
-		else
-			parent->_right = current;
-		_size++;
-		// display_tree("after insert");
-		// fix tree
-		fix_tree(current);
-		_last_node = set_last_node();
-		return ft::make_pair(iterator(current), true);
+		// node_pointer current = insert_node(_root, val);
+		return ft::make_pair(iterator(insert_node(_root, val), _last_node), true);
 	}
 
 
+	iterator insert( iterator hint, const value_type &to_insert ) {
+		
 
-	iterator insert(value_type to_insert);
+		if (hint._node == _root || hint._node == _root->_left || hint._node == _root->_right)
+			return insert_pair(to_insert).first;
+
+		if (hint == end()) {
+			if (_comp(_last_node->_content.first, to_insert.first)) {
+				// std::cout << "hint is good";
+				return iterator(insert_node(_last_node, to_insert), _last_node);
+			}
+			else {
+				// std::cout << "hint not good";
+				return insert_pair(to_insert).first;
+			}
+		}
+		
+		node_pointer p = hint._node->_parent;
+		node_pointer gp = p->_parent;
+
+		if (hint == begin()) {
+			if (_comp(to_insert.first, p->_content.first)) {
+				// std::cout << "hint is good";
+				return iterator(insert_node(hint._node, to_insert), _last_node);
+			}
+			else {
+				// std::cout << "hint not good";
+				return insert_pair(to_insert).first;
+			}
+		}
+
+
+		// si to_insert est compri entre parent et grand parent
+		if ( p && gp &&
+			(( gp > p && _comp(p->_content.first, to_insert.first) 
+				&& _comp(to_insert.first, gp->_content.first)) 
+			||
+			(p < gp && _comp(gp->_content.first, to_insert.first) 
+				&& _comp(to_insert.first, p->_content.first)))) {
+			std::cout << "hint is good";
+
+			// node_pointer current = insert_node(hint._node, to_insert);
+			return iterator(insert_node(hint._node, to_insert), _last_node);
+		} else {
+			std::cout << "hint not good";
+			return insert_pair(to_insert).first;
+		}
+	}
+
+	template< class InputIt >
+	void insert( InputIt first, InputIt last ) {
+		while (first != last) {
+			insert_pair(*first);
+			first++;
+		}
+	};
 
 	void clear();
 
@@ -326,6 +360,7 @@ public:
 
 	iterator find(value_type to_find)
 	{
+		// Key test;
 		iterator it = begin();
 		while (it != end())
 		{
@@ -333,7 +368,10 @@ public:
 				return it;
 			it++;
 		}
-		return it;
+		if (it != end())
+			return it;
+		else 
+			return NULL;
 	}
 
 	const_iterator find(value_type to_find) const;
@@ -391,19 +429,9 @@ public:
 	/*                                                     */
 	/* *************************************************** */
 
-	node_pointer set_last_node()
-	{
-		node_pointer current = _root;
-		
-		while (current->_right != NULL)
-			current = current->_right;
-		_last_node->_parent = current;
-		return _last_node;
-	}
-
 	void leftRotate(node_pointer x)
 	{
-		std::cout << "left rotate" << std::endl;
+		// std::cout << "left rotate" << std::endl;
 		node_pointer y = x->_right;
 		x->_right = y->_left;
 
@@ -434,7 +462,7 @@ public:
 
 	void rightRotate(node_pointer x)
 	{
-		std::cout << "right rotate" << std::endl;
+		// std::cout << "right rotate" << std::endl;
 		node_pointer y = x->_left;
 		x->_left = y->_right;
 		if (y->_right != TNULL)
@@ -461,64 +489,71 @@ public:
 	}
 
 	//fixe tree
-	void fix_tree(node_pointer k)
+	node_pointer fix_tree(node_pointer c)
 	{
 		node_pointer u;
-		while (k->_parent && k->_parent->_color == 1)
+		while (c->_parent && c->_parent->_color == 1)
 		{
-			if (k->_parent == k->_parent->_parent->_right)
+			if (c->_parent == c->_parent->_parent->_right)
 			{
-				u = k->_parent->_parent->_left;
-				std::cout << "test : " << u << std::endl;
+				u = c->_parent->_parent->_left;
+				// std::cout << "test : " << u << std::endl;
 				if (u && u->_color == 1)
 				{
 					u->_color = 0;
-					k->_parent->_color = 0;
-					k->_parent->_parent->_color = 1;
-					k = k->_parent->_parent;
+					c->_parent->_color = 0;
+					c->_parent->_parent->_color = 1;
+					c = c->_parent->_parent;
 				}
 				else
 				{
-					if (k == k->_parent->_left)
+					if (c == c->_parent->_left)
 					{
-						k = k->_parent;
-						rightRotate(k);
+						c = c->_parent;
+						rightRotate(c);
 					}
-					k->_parent->_color = 0;
-					k->_parent->_parent->_color = 1;
-					leftRotate(k->_parent->_parent);
+					c->_parent->_color = 0;
+					c->_parent->_parent->_color = 1;
+					leftRotate(c->_parent->_parent);
 				}
 			}
 			else
 			{
-				std::cout << "left" << std::endl;
-				u = k->_parent->_parent->_right;
+				// std::cout << "left" << std::endl;
+				u = c->_parent->_parent->_right;
 
 				if (u && u->_color == 1)
 				{
 					u->_color = 0;
-					k->_parent->_color = 0;
-					k->_parent->_parent->_color = 1;
-					k = k->_parent->_parent;
+					c->_parent->_color = 0;
+					c->_parent->_parent->_color = 1;
+					c = c->_parent->_parent;
 				}
 				else
 				{
-					if (k == k->_parent->_right)
+					if (c == c->_parent->_right)
 					{
-						k = k->_parent;
-						leftRotate(k);
+						c = c->_parent;
+						leftRotate(c);
 					}
-					k->_parent->_color = 0;
-					k->_parent->_parent->_color = 1;
-					rightRotate(k->_parent->_parent);
+					c->_parent->_color = 0;
+					c->_parent->_parent->_color = 1;
+					rightRotate(c->_parent->_parent);
 				}
 			}
-			if (k == _root)
+			if (c == _root)
 			{
 				break;
 			}
 		}
 		_root->_color = 0;
+
+		// set last node
+		while (c->_right != NULL)
+			c = c->_right;
+		_last_node = c;
+
+		return c;
 	}
 
 
@@ -538,7 +573,7 @@ public:
 		node_pointer current = _root;
 		node_pointer parent = NULL;
 
-		int space_root = 80;
+		int space_root = 50 + _size;
 		int level = 0;
 		int node_in_line = 0;
 
@@ -579,8 +614,8 @@ public:
 		// std::cout << std::endl;
 		for (int i = 10; i < space_root; i++)
 			std::cout << " ";
-		if (parent->_color == RED)
-			std::cout << C_RED;
+		if (parent->_color == N_RED)
+			std::cout << RED;
 		std::cout << parent->_content.first << " : " << parent->_content.second << std::endl;
 		// std::cout << parent->_content.first << " : " << parent->_content.second << " c: " << parent->_color << std::endl;
 		std::cout << END ;

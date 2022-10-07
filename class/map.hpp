@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   map.hpp                                            :+:      :+:    :+:   */
+/*   Map.hpp                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 18:14:05 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/03 14:39:22 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/07 13:57:11 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,23 +71,24 @@ public:
 		// { return (comp(x.first, y.first)); }
 		bool operator() (const value_type& x, const value_type& y) const;
 	};
-	// typedef typename Allocator::template rebind<Node>::other			node_alloc_type;
 
-	typedef typename ft::RedBlackTree<value_type, key_compare>::iterator 		iterator;
-	typedef typename ft::RedBlackTree<value_type, key_compare>::const_iterator 	const_iterator;
-	typedef typename ft::my_reverse_iterator<iterator>    						reverse_iterator;
-	typedef typename ft::my_reverse_iterator<const_iterator> 					const_reverse_iterator;
+
+
+	// typedef typename Allocator::template rebind<Node>::other			node_alloc_type;
+	typedef typename ft::RedBlackTree<value_type, key_compare>			tree_type;
+
+	typedef typename tree_type::iterator 								iterator;
+	typedef typename tree_type::const_iterator 							const_iterator;
+	typedef typename ft::my_reverse_iterator<iterator>    				reverse_iterator;
+	typedef typename ft::my_reverse_iterator<const_iterator> 			const_reverse_iterator;
+
+
 
 private:
-	allocator_type				_alloc;
-	// node_alloc_type			_node_alloc;
-
+	allocator_type							_alloc;
 	key_compare								_comp;
-	// size_type							_size;
 	RedBlackTree<value_type, key_compare>	_tree;
 	
-	// Node					*_root;
-	// Node					*_end;
 
 
 public:
@@ -102,22 +103,20 @@ public:
 	:
 		_alloc(alloc), _comp(comp), _tree()
 	{
-		std::cout << "CONSTRUCTOR map()" << std::endl;
+		// std::cout << "CONSTRUCTOR map()" << std::endl;
 	};
 
 	template <class InputIt>
 	map(InputIt first, InputIt last,
 		const Compare &comp = Compare(),
 		const Allocator &alloc = Allocator()) 
-		: _alloc(alloc), _comp(comp)
+		: _alloc(alloc), _comp(comp), _tree()
 	{
-		std::cout << "CONSTRUCTOR map(first, last)" << std::endl;
+		// std::cout << "CONSTRUCTOR map(first, last)" << std::endl;
 	};
 
-	map(const map &other)
-	{
-		std::cout << "Constructor map(&other)" << std::endl;
-
+	map(const map &other) {
+		*this = other;
 	};
 
 	~map()
@@ -127,12 +126,18 @@ public:
 
 	map& operator=( const map& other )
 	{
-		
+		// delete other;
+
+		// reaffection
+		this->_alloc = other._alloc;
+		this->_comp = other._comp;
+		this->_tree = other._tree;
+		return (*this);
 	};
 
 	allocator_type get_allocator() const
 	{
-		
+		return (this->_alloc);
 	};
 
 
@@ -166,27 +171,44 @@ public:
 	/* *************************************************** */
 
 	iterator begin() {
+		// std::cout << "begin()" << std::endl;
 		return (_tree.begin());
 	}
 
-	const_iterator begin() const;
+	const_iterator begin() const {
+		// std::cout << "const_iterator begin() const" << std::endl;
+		return (_tree.begin());
+	}
 
 	iterator end() {
-		// iterator tmp = _tree.end();
-		// // tmp++;
-		// return (tmp);
+		// std::cout << "end()" << std::endl;
 		return (_tree.end());
 	}
 
-	const_iterator end() const;
+	const_iterator end() const {
+		// std::cout << "const_iterator end() const" << std::endl;
+		return (_tree.end());
+	}
 
-	reverse_iterator rbegin();
+	reverse_iterator rbegin() {
+		// std::cout << "rbegin()" << std::endl;
+		return (_tree.rbegin());
+	}
 
-	const_reverse_iterator rbegin() const;
+	const_reverse_iterator rbegin() const {
+		// std::cout << "const_reverse_iterator rbegin() const" << std::endl;
+		return (_tree.rbegin());
+	}
 
-	reverse_iterator rend();
+	reverse_iterator rend() {
+		// std::cout << "rend()" << std::endl;
+		return (_tree.rend());
+	}
 
-	const_reverse_iterator rend() const;
+	const_reverse_iterator rend() const {
+		// std::cout << "const_reverse_iterator rend() const" << std::endl;
+		return (_tree.rend());
+	}
 
 
 
@@ -201,8 +223,7 @@ public:
 
 	bool empty() const;
 
-	size_type size() const
-	{
+	size_type size() const {
 		return (_tree.size());
 	};
 
@@ -219,20 +240,18 @@ public:
 
 	void clear();
 
-	ft::pair<iterator, bool> insert( const value_type& value )
-	{
-		std::cout << "value [" << value.first << "] = " << value.second << std::endl;
+	ft::pair<iterator, bool> insert( const value_type& value ) {
 		return (_tree.insert_pair(value));
 	}
 
-	iterator insert( iterator hint, const value_type& value )
-	{
-		(void)hint;
-		return (insert(value).first);
+	iterator insert( iterator hint, const value_type& value ) {
+		return (_tree.insert(hint, value));
 	}
 
 	template< class InputIt >
-	void insert( InputIt first, InputIt last );
+	void insert( InputIt first, InputIt last ) {
+		_tree.insert(first, last);
+	};
 
 	iterator erase( iterator pos );
 
@@ -257,12 +276,30 @@ public:
 
 	iterator find( const Key& key )
 	{
-		return (_tree.find(key));
+		iterator it = begin();
+		while (it != end())
+		{
+			if (it->first == key)
+				return it;
+			it++;
+		}
+		return it;
 	};
 	
-	const_iterator find( const Key& key ) const;
+	const_iterator find( const Key& key ) const {
+		std::cout << "********** use const it find ! ***********" << std::endl;
+		const_iterator it = begin();
+		while (it != end())
+		{
+			if (it->first == key)
+				return it;
+			it++;
+		}
+		return it;
+	}
 
 	std::pair<iterator,iterator> equal_range( const Key& key );
+
 	std::pair<const_iterator,const_iterator> equal_range( const Key& key ) const;
 
 	iterator lower_bound( const Key& key );
@@ -289,43 +326,6 @@ public:
 	key_compare key_comp() const;
 
 	value_compare value_comp() const;
-
-
-
-
-
-
-
-	/* *************************************************** */
-	/*                                                     */
-	/*                      OPERATOR                       */
-	/*                                                     */
-	/* *************************************************** */
-
-	// template <class O_Key, class O_T, class O_Compare, class O_Alloc>
-	// bool operator==(const map<O_Key, O_T, O_Compare, O_Alloc> &lhs,
-	// 				const map<O_Key, O_T, O_Compare, O_Alloc> &rhs);
-
-	// template <class O_Key, class O_T, class O_Compare, class O_Alloc>
-	// bool operator!=(const map<O_Key, O_T, O_Compare, O_Alloc> &lhs,
-	// 				const map<O_Key, O_T, O_Compare, O_Alloc> &rhs);
-
-	// template <class O_Key, class O_T, class O_Compare, class O_Alloc>
-	// bool operator<(const map<O_Key, O_T, O_Compare, O_Alloc> &lhs,
-	// 			   const map<O_Key, O_T, O_Compare, O_Alloc> &rhs);
-
-	// template <class O_Key, class O_T, class O_Compare, class O_Alloc>
-	// bool operator<=(const map<O_Key, O_T, O_Compare, O_Alloc> &lhs,
-	// 				const map<O_Key, O_T, O_Compare, O_Alloc> &rhs);
-
-	// template <class O_Key, class O_T, class O_Compare, class O_Alloc>
-	// bool operator>(const smap<O_Key, O_T, O_Compare, O_Alloc> &lhs,
-	// 			   const smap<O_Key, O_T, O_Compare, O_Alloc> &rhs);
-
-	// template <class O_Key, class O_T, class O_Compare, class O_Alloc>
-	// bool operator>=(const map<O_Key, O_T, O_Compare, O_Alloc> &lhs,
-	// 				const map<O_Key, O_T, O_Compare, O_Alloc> &rhs);
-
 
 
 	/* *************************************************** */
@@ -377,12 +377,7 @@ public:
 	void swap(std::map<Key, T, Compare, Alloc> &lhs,
 			  std::map<Key, T, Compare, Alloc> &rhs);
 
-
-
-	
-
-};	// namespace ft
-
+}	// namespace ft
 
 
 #endif

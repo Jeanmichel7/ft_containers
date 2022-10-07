@@ -6,16 +6,15 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/10 21:23:15 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/02 18:19:27 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/07 12:34:25 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef UTILS_HPP
 #define UTILS_HPP
 
-#define BLACK 0
-#define RED 1
-#define C_RED "\033[0;31m"
+#define N_BLACK 0
+#define N_RED 1
 #define END "\033[0m"
 
 #include <iostream>
@@ -131,13 +130,13 @@ namespace ft
 
     public:
         Node() 
-        : _content(), _parent(NULL), _left(NULL), _right(NULL), _color(BLACK) {}
+        : _content(), _parent(NULL), _left(NULL), _right(NULL), _color(N_BLACK) {}
 
         // Node(value_type content) 
-        // : _content(content), _parent(NULL), _left(NULL), _right(NULL), _color(BLACK) {}
+        // : _content(content), _parent(NULL), _left(NULL), _right(NULL), _color(N_BLACK) {}
 
         Node(value_type const &content) 
-        : _content(content), _parent(NULL), _left(NULL), _right(NULL), _color(RED) {}
+        : _content(content), _parent(NULL), _left(NULL), _right(NULL), _color(N_RED) {}
 
         Node(value_type const &content, int color) 
         : _content(content), _parent(NULL), _left(NULL), _right(NULL), _color(color) {}
@@ -170,7 +169,7 @@ namespace ft
     template <typename T>
     std::ostream& operator<<(std::ostream& os, const Node<T>& node)
     {
-        os << "test : " << node->_content.first << " " << node->_content.second << std::endl;
+        os << "ostream node : " << node->_content.first << " " << node->_content.second << std::endl;
         return os;
     }
     
