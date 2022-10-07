@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 18:14:05 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/06 01:39:07 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/07 00:09:01 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -271,10 +271,14 @@ public:
 
 	iterator find( const Key& key )
 	{
-
-
-
-		return (_tree.find(key));
+		iterator it = begin();
+		while (it != end())
+		{
+			if (it->first == key)
+				return it;
+			it++;
+		}
+		return it;
 	};
 	
 	const_iterator find( const Key& key ) const;

@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/14 22:19:53 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/06 01:52:39 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/06 23:56:16 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@
 // tester
 #include <sstream>
 #include <string>
+#include <stddef.h>
 
 /*	function prediction for vector
 	function pair
@@ -65,6 +66,12 @@ std::string to_string(T value)
 
 
 void str_comp(std::string str, std::string ft_str, std::string msg) {
+	const std::string cstr 		= const_cast< std::string& >(str);
+	const std::string cft_str 	= const_cast< std::string& >(ft_str);
+
+	std::string test;
+	if (cstr == test || cft_str == test)
+		std::cout << "un des element a compar est null" << std::endl;
 	if (str.compare(ft_str) != 0)
 	{
 		std::cout << RED "\n[KO] " END << msg << std::endl;
@@ -1128,7 +1135,6 @@ int main()
 	str_comp(it_insert_hint->first, ft_it_insert_hint->first, "insert(end(), value(ft_pair(\"z\", 1))) -> first");
 	str_comp(to_string(it_insert_hint->second), to_string(ft_it_insert_hint->second), "insert(end(), value(ft_pair(\"z\", 1))) -> second");
 
-	
 	/* insert(end(), "a") */
 	it_insert_hint = map.insert(map.end(), pair("za", 1));
 	ft_it_insert_hint = ft_map.insert(ft_map.end(), ft_pair("za", 1));
@@ -1180,6 +1186,8 @@ int main()
 	// ft_map.display_tree();
 
 
+
+
 	/* ***************************************************** */
 	/*                  INSERT(first, last)                  */
 	/*                  pair< string, int >                  */
@@ -1203,42 +1211,49 @@ int main()
 
 
 
-
+	/* insert with iterator */
 	it_type it_insert_f_l 		= map_insert_f_l.begin();
 	ft_it_type ft_it_insert_f_l = ft_map_insert_f_l.begin();
 
 	int n = 3;
 	for(int i = 0; i < n; i++)
 	{
-		str_comp(it_insert_f_l->first, ft_it_insert_f_l->first, "insert( first, last ) -> first");
-		str_comp(to_string(it_insert_f_l->second), to_string(ft_it_insert_f_l->second), "insert( first, last ) -> second");
+		str_comp(it_insert_f_l->first, ft_it_insert_f_l->first, "insert( first, last ) with iterator -> first");
+		str_comp(to_string(it_insert_f_l->second), to_string(ft_it_insert_f_l->second), "insert( first, last ) with iterator -> second");
 		it_insert_f_l++;
 		ft_it_insert_f_l++;
+	}
+
+	/* insert with reverse iterator */
+	r_it_type rit_insert_f_l 		= map_insert_f_l.rbegin();
+	ft_r_it_type ft_rit_insert_f_l 	= ft_map_insert_f_l.rbegin();
+
+	n = 3;
+	for(int i = 0; i < n; i++)
+	{
+		str_comp(rit_insert_f_l->first, ft_rit_insert_f_l->first, "insert( first, last ) with reverse iterator -> first");
+		str_comp(to_string(rit_insert_f_l->second), to_string(ft_rit_insert_f_l->second), "insert( first, last ) with reverse iterator-> second");
+		rit_insert_f_l++;
+		ft_rit_insert_f_l++;
+	}
+
+	/* insert with const iterator */
+	const_it_type const_it_insert_f_l 			= map_insert_f_l.begin();
+	const_ft_it_type ft_const_it_insert_f_l 	= ft_map_insert_f_l.begin();
+
+	n = 3;
+	for(int i = 0; i < n; i++)
+	{
+		str_comp(const_it_insert_f_l->first, ft_const_it_insert_f_l->first, "insert( first, last ) with const iterator -> first");
+		str_comp(to_string(const_it_insert_f_l->second), to_string(ft_const_it_insert_f_l->second), "insert( first, last ) with const iterator -> second");
+		const_it_insert_f_l++;
+		ft_const_it_insert_f_l++;
 	}
 
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	
 
 
 
@@ -1374,6 +1389,71 @@ std::cout << MAG "\n\nTEST iterator" END << std::endl;
 	sstr.str(""); sstr.clear(); ft_sstr.str(""); ft_sstr.clear();
 
 	
+
+
+
+
+
+
+	/* ***************************************************** */
+	/*                      find(value)                      */
+	/*                  pair< string, int >                  */
+	/* ***************************************************** */
+	std::cout << MAG "\n\nTEST find(value)" END << std::endl;
+
+	/* find("a") */
+	it_type ret_find 		= map.find("a");
+	ft_it_type ft_ret_find 	= ft_map.find("a");
+	str_comp(ret_find->first, ft_ret_find->first, "find(\"a\")");
+
+	std::cout << "ret_find : " << ret_find->first << std::endl;
+	std::cout << "ft_ret_find : " << ft_ret_find->first << std::endl;
+
+
+
+	/* find("z") */
+	ret_find 		= map.find("z");
+	ft_ret_find 	= ft_map.find("z");
+	str_comp(ret_find->first, ft_ret_find->first, "find(\"z\")");
+
+	/* find("inexist") */
+	ret_find		= map.find("inexist");
+	ft_ret_find		= ft_map.find("inexist");
+
+	std::cout << "ret_find : " << ret_find->first << std::endl;
+	// std::cout << "ft_ret_find : " << ft_ret_find->first << std::endl;
+	// str_comp(ret_find->first, ft_ret_find->first, "find(\"inexist\")");
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

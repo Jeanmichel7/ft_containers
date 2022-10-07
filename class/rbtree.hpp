@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 12:54:45 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/06 01:52:57 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/07 00:08:44 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 #include "utils.hpp"
 #include "rbtree_iterator.hpp"
+#include "map.hpp"
 
 using namespace std;
 
@@ -68,6 +69,8 @@ public:
 	typedef ft::RB_const_iterator<Node, Compare> 	const_iterator;
 	typedef ft::my_reverse_iterator<iterator> 		reverse_iterator;
 	typedef ft::my_reverse_iterator<const_iterator> const_reverse_iterator;
+
+	// typedef typename value_type::T1							Key;
 
 private:
 	// last_node parent = root of tree, last_node right = last node, last_node left = first node
@@ -387,6 +390,7 @@ public:
 
 	iterator find(value_type to_find)
 	{
+		// Key test;
 		iterator it = begin();
 		while (it != end())
 		{
@@ -394,7 +398,10 @@ public:
 				return it;
 			it++;
 		}
-		return it;
+		if (it != end())
+			return it;
+		else 
+			return NULL;
 	}
 
 	const_iterator find(value_type to_find) const;
