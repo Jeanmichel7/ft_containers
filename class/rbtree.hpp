@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 12:54:45 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/07 00:08:44 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/07 13:53:52 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,16 +22,6 @@ using namespace std;
 namespace ft
 {
 
-// struct Node
-// {
-// 	int     _content;
-// 	Node 	*_parent;
-// 	Node 	*_left;
-// 	Node 	*_right;
-// 	int 	_color;
-// };
-
-
 template <class T,
 		  class Compare = std::less<T>,
 		  class Node = ft::Node<T>,
@@ -42,48 +32,28 @@ class RedBlackTree
 {
 public:
 
-	/* Self type */
 	typedef RedBlackTree  							self;
-
-	/* A reference to the self type */
 	typedef self&   								self_reference;
-	
-	/* The first template argument */
 	typedef T   									value_type;
-
-	/* Stored Node type */
 	typedef Node 									node_type;
-
-	/* Pointer to stored node */
 	typedef Node 									*node_pointer;
-
 	typedef Node const 								*node_const_pointer;
-	
-	/* Node allocator */
 	typedef Node_Alloc  							node_alloc;
-
-	/* Size_t */
 	typedef size_t 									size_type;
-
 	typedef ft::RB_iterator<Node, Compare> 			iterator;
 	typedef ft::RB_const_iterator<Node, Compare> 	const_iterator;
 	typedef ft::my_reverse_iterator<iterator> 		reverse_iterator;
 	typedef ft::my_reverse_iterator<const_iterator> const_reverse_iterator;
 
-	// typedef typename value_type::T1							Key;
 
 private:
 	// last_node parent = root of tree, last_node right = last node, last_node left = first node
 	node_alloc      _node_alloc;
 	node_pointer	_root;
-	// node_pointer    _node;
 	node_pointer	_last_node;
 	Compare         _comp;
 	size_type       _size;
-
 	node_pointer	TNULL;
-
-
 
 public:
 

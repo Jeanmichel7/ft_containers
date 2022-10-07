@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/14 22:19:53 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/06 23:56:16 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/07 13:54:27 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@
 
 // #include <typeinfo>     // typeid
 // #include <iostream>
-
 */
 
 /* include map */
@@ -36,7 +35,6 @@
 // tester
 #include <sstream>
 #include <string>
-#include <stddef.h>
 
 /*	function prediction for vector
 	function pair
@@ -66,12 +64,12 @@ std::string to_string(T value)
 
 
 void str_comp(std::string str, std::string ft_str, std::string msg) {
-	const std::string cstr 		= const_cast< std::string& >(str);
-	const std::string cft_str 	= const_cast< std::string& >(ft_str);
+	// const std::string cstr 		= const_cast< std::string& >(str);
+	// const std::string cft_str 	= const_cast< std::string& >(ft_str);
 
-	std::string test;
-	if (cstr == test || cft_str == test)
-		std::cout << "un des element a compar est null" << std::endl;
+	// std::string test;
+	// if (cstr == test || cft_str == test)
+	// 	std::cout << "un des element a compar est null" << std::endl;
 	if (str.compare(ft_str) != 0)
 	{
 		std::cout << RED "\n[KO] " END << msg << std::endl;
@@ -1326,12 +1324,13 @@ std::cout << MAG "\n\nTEST iterator" END << std::endl;
 
 
 
+
+
 	/* ***************************************************** */
 	/*                    CONST_ITERATOR                     */
 	/*                  pair< string, int >                  */
 	/* ***************************************************** */
 
-	
 
 	/* begin() */
 	const_it_type 		const_it 	= map.begin();
@@ -1358,11 +1357,14 @@ std::cout << MAG "\n\nTEST iterator" END << std::endl;
 
 
 
+
+
+
 	/* ***************************************************** */
 	/*                REVERSE_CONST_ITERATOR                 */
 	/*                  pair< string, int >                  */
 	/* ***************************************************** */
-	
+
 
 	/* rbegin() */
 	const_r_it_type 	const_r_it 		= map.rbegin();
@@ -1405,38 +1407,74 @@ std::cout << MAG "\n\nTEST iterator" END << std::endl;
 	it_type ret_find 		= map.find("a");
 	ft_it_type ft_ret_find 	= ft_map.find("a");
 	str_comp(ret_find->first, ft_ret_find->first, "find(\"a\")");
-
-	std::cout << "ret_find : " << ret_find->first << std::endl;
-	std::cout << "ft_ret_find : " << ft_ret_find->first << std::endl;
+	str_comp(to_string(ret_find->second), to_string(ft_ret_find->second), "find(\"a\")");
 
 
+	/* find("za") */
+	ret_find 		= map.find("za");
+	ft_ret_find 	= ft_map.find("za");
+	str_comp(ret_find->first, ft_ret_find->first, "find(\"za\")");
+	str_comp(to_string(ret_find->second), to_string(ft_ret_find->second), "find(\"za\")");
 
-	/* find("z") */
-	ret_find 		= map.find("z");
-	ft_ret_find 	= ft_map.find("z");
-	str_comp(ret_find->first, ft_ret_find->first, "find(\"z\")");
 
 	/* find("inexist") */
 	ret_find		= map.find("inexist");
 	ft_ret_find		= ft_map.find("inexist");
 
-	std::cout << "ret_find : " << ret_find->first << std::endl;
-	// std::cout << "ft_ret_find : " << ft_ret_find->first << std::endl;
-	// str_comp(ret_find->first, ft_ret_find->first, "find(\"inexist\")");
+	if (ret_find == map.end() && ft_ret_find == ft_map.end())
+		std::cout << GRN "[OK] " END ;
+	else 
+		std::cout << RED "[KO]" END << " find(\"inexist\")" << std::endl;
+
+	ret_find--;
+	ft_ret_find--;
+	str_comp(ret_find->first, ft_ret_find->first, "find(\"inexist\")--");
+	str_comp(to_string(ret_find->second), to_string(ft_ret_find->second), "find(\"inexist\")--");
+
+	// test segv sur find(inexist)
 
 
 
 
 
+	/* ***************************************************** */
+	/*                   const find(value)                   */
+	/*                  pair< string, int >                  */
+	/* ***************************************************** */
+
+	/* find("a") */
+	const_it_type ret_const_find = map.find("a");
+	const_ft_it_type ft_ret_const_find = ft_map.find("a");
+
+	str_comp(ret_const_find->first, ft_ret_const_find->first, "const find(\"a\")");
+	str_comp(to_string(ret_const_find->second), to_string(ft_ret_const_find->second), "const find(\"a\")");
+
+	/* increment it */
+	ret_const_find++;
+	ft_ret_const_find++;
+
+	str_comp(ret_const_find->first, ft_ret_const_find->first, "const find(\"a\")++");
+	str_comp(to_string(ret_const_find->second), to_string(ft_ret_const_find->second), "const find(\"a\")++");
 
 
+	/* find("za") */
+	ret_const_find 		= map.find("za");
+	ft_ret_const_find 	= ft_map.find("za");
+	str_comp(ret_const_find->first, ft_ret_const_find->first, "const find(\"za\")");
+	str_comp(to_string(ret_const_find->second), to_string(ft_ret_const_find->second), "const find(\"za\")");
 
 
+	/* find(exist) */
+	ret_const_find		= map.find("inexist");
+	ft_ret_const_find	= ft_map.find("inexist");
+	if (ret_const_find == map.end() && ft_ret_const_find == ft_map.end())
+		std::cout << GRN "[OK] " END ;
+	else 
+		std::cout << RED "[KO]" END << " const find(\"inexist\")" << std::endl;
+	
 
 
-
-
-
+	ft_map.display_tree();
 
 
 
