@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 12:54:45 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/07 13:53:52 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/07 17:50:24 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,19 +77,31 @@ public:
 	}
 
 	/* Copy constructor */
-	// RedBlackTree(const self& x) : _node_a(_node_alloc.allocate(1))
+	RedBlackTree(const self& x)
+	{
+		_node_alloc = x._node_alloc;
+		_root = x._root;
+		_last_node = x._last_node;
+		_comp = x._comp;
+		_size = x._size;
+		TNULL = x.TNULL;
+	}
 	// {
-	// 	_node_alloc.construct(_node_alloc, Node());
-	// 	_node->_content = x._node->_content;
-	// 	_node->_parent = x._node->_parent;
-	// 	_node->_left = x._node->_left;
-	// 	_node->_right = x._node->right;
-	// 	_node->_color = x._node->_color;
+	// 	// _node_alloc.construct(_node_alloc, Node());
+	// 	// _root = 
 	// 	// *this = x;
 	// }
 
 
-	RedBlackTree &operator=(const RedBlackTree &x);
+	RedBlackTree &operator=(const RedBlackTree &x) {
+		_node_alloc = x._node_alloc;
+		_root = x._root;
+		_last_node = x._last_node;
+		_comp = x._comp;
+		_size = x._size;
+		TNULL = x.TNULL;
+		return *this;
+	}
 
 	/* Destructor */
 	~RedBlackTree()
@@ -165,7 +177,7 @@ public:
 		_last_node = current;
 		return iterator(TNULL, _last_node);
 	}
-	
+
 	const_iterator begin() const {
 		node_pointer current = _root;
 		while (current->_left != NULL)

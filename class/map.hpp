@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 18:14:05 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/07 13:57:11 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/07 17:52:10 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,10 +85,9 @@ public:
 
 
 private:
-	allocator_type							_alloc;
-	key_compare								_comp;
-	RedBlackTree<value_type, key_compare>	_tree;
-	
+	allocator_type		_alloc;
+	key_compare			_comp;
+	tree_type			_tree;
 
 
 public:
@@ -115,11 +114,16 @@ public:
 		// std::cout << "CONSTRUCTOR map(first, last)" << std::endl;
 	};
 
-	map(const map &other) {
-		*this = other;
+	// map(const map &other) {};
+
+	map(const map &other)
+	: _alloc(other._alloc), _comp(other._comp), _tree()
+	{
+		// std::cout << "CONSTRUCTOR map(other)" << std::endl;
+		insert(other.begin(), other.end());
 	};
 
-	~map()
+	virtual ~map()
 	{
 		
 	};
@@ -171,22 +175,22 @@ public:
 	/* *************************************************** */
 
 	iterator begin() {
-		// std::cout << "begin()" << std::endl;
+		std::cout << "begin()" << std::endl;
 		return (_tree.begin());
 	}
 
 	const_iterator begin() const {
-		// std::cout << "const_iterator begin() const" << std::endl;
+		std::cout << "begin() const" << std::endl;
 		return (_tree.begin());
 	}
 
 	iterator end() {
-		// std::cout << "end()" << std::endl;
+		std::cout << "end()" << std::endl;
 		return (_tree.end());
 	}
 
 	const_iterator end() const {
-		// std::cout << "const_iterator end() const" << std::endl;
+		std::cout << "end() const" << std::endl;
 		return (_tree.end());
 	}
 
