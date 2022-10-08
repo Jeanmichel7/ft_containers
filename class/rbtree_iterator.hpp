@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 16:58:53 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/07 13:56:58 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/08 20:04:24 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -402,18 +402,48 @@ template <typename T, class Compare >
 			*/
 			RB_const_iterator& operator++(void)
 			{
+				// T * cursor = _node;
+
+				// if (_node->_right == _last_node)
+				// {
+				// 	cursor = _node->_parent;
+				// 	while (cursor != _last_node
+				// 		&& _comp(cursor->_content.first, _node->_content.first))
+				// 		cursor = cursor->_parent;
+				// 	_node = cursor;
+				// }
+				// else if (cursor == _last_node)
+				// 	_node = _last_node->_right;
+				// else
+				// {
+				// 	cursor = _node->_right;
+				// 	if (cursor == _last_node->_parent
+				// 		&& cursor->_right == _last_node)
+				// 		_node = cursor;
+				// 	else
+				// 	{
+				// 		while (cursor->_left != _last_node)
+				// 			cursor = cursor->_left;
+				// 	}
+				// 	_node = cursor;
+				// }
+				// return (*this);
+
 				if (_node == NULL) {
+					std::cout << "Error: incrementing a NULL iterator" << std::endl;
 					_node = _last_node;
 					return (*this);
 				}
 				if (_node->_right != NULL)
 				{
+					std::cout << "go right" << std::endl;
 					_node = _node->_right;
 					while (_node->_left != NULL)
 						_node = _node->_left;
 				}
 				else
 				{
+					std::cout << "go up" << std::endl;
 					while (_node->_parent != NULL && _node->_parent->_right == _node)
 						_node = _node->_parent;
 					_node = _node->_parent;

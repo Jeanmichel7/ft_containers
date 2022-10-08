@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Map.hpp                                            :+:      :+:    :+:   */
+/*   map.hpp                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 18:14:05 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/07 17:52:10 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/08 18:38:51 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ public:
 	typedef value_type										&reference;
 	typedef value_type const								&const_reference;
 	typedef typename Allocator::pointer						pointer;
-	typedef typename Allocator::const_pointer				const_pointer;
+	typedef typename Allocator::const_pointer const			const_pointer;
 
 
 	class value_compare
@@ -78,9 +78,9 @@ public:
 	typedef typename ft::RedBlackTree<value_type, key_compare>			tree_type;
 
 	typedef typename tree_type::iterator 								iterator;
-	typedef typename tree_type::const_iterator 							const_iterator;
+	typedef typename tree_type::const_iterator const					const_iterator;
 	typedef typename ft::my_reverse_iterator<iterator>    				reverse_iterator;
-	typedef typename ft::my_reverse_iterator<const_iterator> 			const_reverse_iterator;
+	typedef typename ft::my_reverse_iterator<const_iterator> const		const_reverse_iterator;
 
 
 
@@ -175,22 +175,22 @@ public:
 	/* *************************************************** */
 
 	iterator begin() {
-		std::cout << "begin()" << std::endl;
+		// std::cout << "begin()" << std::endl;
 		return (_tree.begin());
 	}
 
 	const_iterator begin() const {
-		std::cout << "begin() const" << std::endl;
+		std::cout << "const begin()" << std::endl;
 		return (_tree.begin());
 	}
 
 	iterator end() {
-		std::cout << "end()" << std::endl;
+		// std::cout << "end()" << std::endl;
 		return (_tree.end());
 	}
 
 	const_iterator end() const {
-		std::cout << "end() const" << std::endl;
+		std::cout << "const end()" << std::endl;
 		return (_tree.end());
 	}
 
@@ -200,7 +200,7 @@ public:
 	}
 
 	const_reverse_iterator rbegin() const {
-		// std::cout << "const_reverse_iterator rbegin() const" << std::endl;
+		std::cout << "const_reverse_iterator rbegin() const" << std::endl;
 		return (_tree.rbegin());
 	}
 
@@ -210,7 +210,7 @@ public:
 	}
 
 	const_reverse_iterator rend() const {
-		// std::cout << "const_reverse_iterator rend() const" << std::endl;
+		std::cout << "const_reverse_iterator rend() const" << std::endl;
 		return (_tree.rend());
 	}
 

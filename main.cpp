@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/14 22:19:53 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/07 18:02:32 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/08 19:53:47 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,8 @@
 	};
 */
 
+
+
 template <typename T>
 std::string to_string(T value)
 {
@@ -93,6 +95,31 @@ void sstr_comp(T1 it, T2 ft_it, std::string msg) {
 	ft_sstr << ft_it->first << " " << ft_it->second;
 	str_comp(sstr.str(), ft_sstr.str(), msg);
 }
+
+
+
+
+
+
+template <class M1, class M2>
+void	comp_map( M1 &map, M2 &ft_map, std::string msg) {
+	std::stringstream sstr;
+	std::stringstream ft_sstr;
+
+	typename M1::iterator it = map.begin();
+	typename M2::iterator ft_it = ft_map.begin();
+
+	for(; it != map.end(); it++) {
+		sstr << it->first << ":" << it->second << " ";
+	}
+	for(; ft_it != ft_map.end(); ft_it++) {
+		ft_sstr << ft_it->first << ":" << ft_it->second << " ";
+	}
+	str_comp(sstr.str(), ft_sstr.str(), msg);
+	sstr.str(""); sstr.clear(); ft_sstr.str(""); ft_sstr.clear();
+}
+
+
 
 template < class T_map, class T_pair>
 void fill_map(T_map *map) {
@@ -927,6 +954,10 @@ int main()
 	/* ***************************************************** */
 	std::cout << BLU "map<string, int> " END << std::endl;
 
+/*
+	typedef const ft::RedBlackTree<ft::pair<const Key, T>, Compare>::const_iterator 
+	ft::map<Key, T, Compare, Allocator>::const_iterator
+*/
 	/* define type map */
 	typedef std::map< std::string, int > 				std_map_str_int;
 	typedef  ft::map< std::string, int > 				ft_map_str_int;
@@ -960,7 +991,6 @@ int main()
 	/*                     INSERT(value)                     */
 	/*                  pair< string, int >                  */
 	/* ***************************************************** */
-
 	// ft_map.display_tree();
 	std::cout << MAG "\n\nTEST insert( value )" END << std::endl;
 
@@ -1129,71 +1159,86 @@ int main()
 	std_map_str_int map_insert_f_l;
 	ft_map_str_int ft_map_insert_f_l;
 
+	/* insert(begin(), end()) */
 	map_insert_f_l.insert(map.begin(), map.end());
 	ft_map_insert_f_l.insert(ft_map.begin(), ft_map.end());
 
-	/* insert(first, last) */
 	for (it_type it = map_insert_f_l.begin(); it != map_insert_f_l.end(); it++)
 		sstr << it->first << ":" << it->second << " ";
 	for (ft_it_type it = ft_map_insert_f_l.begin(); it != ft_map_insert_f_l.end(); it++)
 		ft_sstr << it->first << ":" << it->second << " ";
-
 	str_comp(sstr.str(), ft_sstr.str(), "insert( first, last )");
 	sstr.str(""); sstr.clear(); ft_sstr.str(""); ft_sstr.clear();
 
 
 
-	/* insert with iterator */
-	it_type it_insert_f_l 		= map_insert_f_l.begin();
-	ft_it_type ft_it_insert_f_l = ft_map_insert_f_l.begin();
+	/* insert with iterator + 3 */
+	it_type it_insert_f_l_end 		= map.begin();
+	ft_it_type ft_it_insert_f_l_end = ft_map.begin();
 
-	int n = 3;
-	for(int i = 0; i < n; i++)
-	{
-		str_comp(it_insert_f_l->first, ft_it_insert_f_l->first, "insert( first, last ) with iterator -> first");
-		str_comp(to_string(it_insert_f_l->second), to_string(ft_it_insert_f_l->second), "insert( first, last ) with iterator -> second");
-		it_insert_f_l++;
-		ft_it_insert_f_l++;
-	}
+	for(int i = 0; i < 3; i++) { it_insert_f_l_end++; ft_it_insert_f_l_end++; }
 
-	/* insert with reverse iterator */
-	r_it_type rit_insert_f_l 		= map_insert_f_l.rbegin();
-	ft_r_it_type ft_rit_insert_f_l 	= ft_map_insert_f_l.rbegin();
+	map_insert_f_l.insert(map.begin(), it_insert_f_l_end);
+	ft_map_insert_f_l.insert(ft_map.begin(), ft_it_insert_f_l_end);
 
-	n = 3;
-	for(int i = 0; i < n; i++)
-	{
-		str_comp(rit_insert_f_l->first, ft_rit_insert_f_l->first, "insert( first, last ) with reverse iterator -> first");
-		str_comp(to_string(rit_insert_f_l->second), to_string(ft_rit_insert_f_l->second), "insert( first, last ) with reverse iterator-> second");
-		rit_insert_f_l++;
-		ft_rit_insert_f_l++;
-	}
+	for (it_type it = map_insert_f_l.begin(); it != map_insert_f_l.end(); it++)
+		sstr << it->first << ":" << it->second << " ";
+	for (ft_it_type it = ft_map_insert_f_l.begin(); it != ft_map_insert_f_l.end(); it++)
+		ft_sstr << it->first << ":" << it->second << " ";
+	str_comp(sstr.str(), ft_sstr.str(), "insert( first, first + 3 )");
+	sstr.str(""); sstr.clear(); ft_sstr.str(""); ft_sstr.clear();
+
+
+
+
+
 
 	/* insert with const iterator */
-	// const_it_type const_it_insert_f_l 			= map_insert_f_l.begin();
-	// ft_const_it_type ft_const_it_insert_f_l 	= ft_map_insert_f_l.begin();
+	it_type 	it_end 		= map.begin();
+	ft_it_type 	ft_it_end 	= ft_map.begin();
+	for(int i = 0; i < 5; i++) { it_end++; ft_it_end++; }
+	const_it_type 		const const_it_end1 		= it_end;
+	ft_const_it_type 	const const_ft_it_end1 	= ft_it_end;
+	const_it_type cit_begin = map.begin();
+	ft_const_it_type ft_cit_begin = ft_map.begin();
 
-	// n = 3;
-	// for(int i = 0; i < n; i++)
-	// {
-	// 	str_comp(const_it_insert_f_l->first, ft_const_it_insert_f_l->first, "insert( first, last ) with const iterator -> first");
-	// 	str_comp(to_string(const_it_insert_f_l->second), to_string(ft_const_it_insert_f_l->second), "insert( first, last ) with const iterator -> second");
-	// 	const_it_insert_f_l++;
-	// 	ft_const_it_insert_f_l++;
-	// }
-
-
+	map_insert_f_l.insert(cit_begin, const_it_end1);
+	ft_map_insert_f_l.insert(ft_cit_begin, const_ft_it_end1);
+	comp_map(map_insert_f_l, ft_map_insert_f_l, "insert( const_iterator, const_iterator )");
 
 
 
+	/* insert with reverse iterator */
+	map_insert_f_l.insert(map.rbegin(), map.rend());
+	ft_map_insert_f_l.insert(ft_map.rbegin(), ft_map.rend());
+	comp_map(map_insert_f_l, ft_map_insert_f_l, "insert( reverse_iterator, reverse_iterator )");
+
+
+	
+	/* insert with reverse iterator + 3 */
+	r_it_type 	 rit_insert_f_l 	= map.rbegin();
+	ft_r_it_type ft_rit_insert_f_l 	= ft_map.rbegin();
+	for(int i = 0; i < 3; i++) { rit_insert_f_l++; ft_rit_insert_f_l++; }
+	map_insert_f_l.insert(map.rbegin(), rit_insert_f_l);
+	ft_map_insert_f_l.insert(ft_map.rbegin(), ft_rit_insert_f_l);
+	comp_map(map_insert_f_l, ft_map_insert_f_l, "insert( reverse_iterator, reverse_iterator )");
 
 
 
-std::cout << MAG "\n\nTEST iterator" END << std::endl;
+
+	/* compare maps */
+	comp_map(map, ft_map, "compare map - ft_map");
+	comp_map(map_insert_f_l, ft_map_insert_f_l, "compare map_insert_f_l - ft_map_insert_f_l");
+
+
+
+
+
 	/* ***************************************************** */
 	/*                       ITERATOR                        */
 	/*                  pair< string, int >                  */
 	/* ***************************************************** */
+	std::cout << MAG "\n\nTEST iterator" END << std::endl;
 	
 
 	/* begin() */
@@ -1227,6 +1272,55 @@ std::cout << MAG "\n\nTEST iterator" END << std::endl;
 
 
 
+
+	/* ***************************************************** */
+	/*                    CONST_ITERATOR                     */
+	/*                  pair< string, int >                  */
+	/* ***************************************************** */
+
+	/* begin() */
+	const_it_type 		const const_it		= map.begin();
+	ft_const_it_type 	const const_ft_it 	= ft_map.begin();
+	sstr_comp< const_it_type, ft_const_it_type >(const_it, const_ft_it, "const begin()");
+
+	/*const  end()-- */
+	it_end 		= map.end(); it_end--;
+	ft_it_end 	= ft_map.end(); ft_it_end--;
+	const_it_type 		const const_it_end 		= it_end;
+	ft_const_it_type 	const const_ft_it_end 	= ft_it_end;
+	sstr_comp< const_it_type, ft_const_it_type >(const_it_end, const_ft_it_end, "const end()--");
+
+	/*const end()++ */
+	it_end 		= map.end(); it_end++;
+	ft_it_end 	= ft_map.end(); ft_it_end++;
+	const_it_type 		const const_it_end_p 		= it_end;
+	ft_const_it_type 	const const_ft_it_end_p 	= ft_it_end;
+	sstr_comp< const_it_type, ft_const_it_type >(const_it_end_p, const_ft_it_end_p, "const end()++");
+
+
+	/* const bengin() += 4 */
+	it_end 		= map.begin(); it_end++; it_end++; it_end++; it_end++;
+	ft_it_end 	= ft_map.begin(); ft_it_end++; ft_it_end++; ft_it_end++; ft_it_end++;
+	const_it_type 		const const_it_end_pp 		= it_end;
+	ft_const_it_type 	const const_ft_it_end_pp 	= ft_it_end;
+	sstr_comp< const_it_type, ft_const_it_type >(const_it_end_pp, const_ft_it_end_pp, "const begin()+=4");
+
+	// const_it_type 		const_it2 	 = map.end();
+	// ft_const_it_type 	const_ft_it2 = ft_map.end();
+	// sstr_comp< const_it_type, ft_const_it_type >(const_it, const_ft_it, "const end()++");
+
+	/* begin() -> end() */
+	// for (const_it = map.begin(); const_it != map.end(); const_it++)
+	// 	sstr << const_it->first << ":" << const_it->second << " ";
+	// for (const_ft_it = ft_map.begin(); const_ft_it != ft_map.end(); const_ft_it++)
+	// 	ft_sstr << const_ft_it->first << ":" << const_ft_it->second << " ";
+	// str_comp(sstr.str(), ft_sstr.str(), "const begin() -> end()");
+	// sstr.str(""); sstr.clear(); ft_sstr.str(""); ft_sstr.clear();
+
+
+
+
+
 	/* ***************************************************** */
 	/*                   REVERSE_ITERATOR                    */
 	/*                  pair< string, int >                  */
@@ -1241,7 +1335,7 @@ std::cout << MAG "\n\nTEST iterator" END << std::endl;
 	/* rend()  SEGV */
 	// r_it 	= map.rend();
 	// ft_r_it = ft_map.rend();
-	// sstr_comp< r_it_type, ft_r_it_type >(r_it, ft_r_it, "rend()--");
+	// sstr_comp< r_it_type, ft_r_it_type >(r_it, ft_r_it, "rend()");
 
 	/* rend()-- */
 	r_it 	= map.rend(); r_it--;
@@ -1266,39 +1360,6 @@ std::cout << MAG "\n\nTEST iterator" END << std::endl;
 
 
 
-
-	/* ***************************************************** */
-	/*                    CONST_ITERATOR                     */
-	/*                  pair< string, int >                  */
-	/* ***************************************************** */
-
-	/* begin() */
-	const_it_type const	const_it 		= map.begin();
-	ft_const_it_type const const_ft_it 	= ft_map.begin();
-	sstr_comp< const_it_type, ft_const_it_type >(const_it, const_ft_it, "const begin()");
-
-	/* end() */
-	// const_it_type 		const_it2 		= map.end();
-	// ft_const_it_type 	const_ft_it2 	= ft_map.end();
-	// sstr_comp< const_it_type, ft_const_it_type >(const_it2, const_ft_it2, "const end()--");
-
-	// const_it_type 		const_it2 	 = map.end();
-	// ft_const_it_type 	const_ft_it2 = ft_map.end();
-	// sstr_comp< const_it_type, ft_const_it_type >(const_it, const_ft_it, "const end()++");
-
-	/* begin() -> end() */
-	// for (const_it = map.begin(); const_it != map.end(); const_it++)
-	// 	sstr << const_it->first << ":" << const_it->second << " ";
-	// for (const_ft_it = ft_map.begin(); const_ft_it != ft_map.end(); const_ft_it++)
-	// 	ft_sstr << const_ft_it->first << ":" << const_ft_it->second << " ";
-	
-	// str_comp(sstr.str(), ft_sstr.str(), "const begin() -> end()");
-	// sstr.str(""); sstr.clear(); ft_sstr.str(""); ft_sstr.clear();
-
-
-
-
-
 	/* ***************************************************** */
 	/*                REVERSE_CONST_ITERATOR                 */
 	/*                  pair< string, int >                  */
@@ -1306,9 +1367,11 @@ std::cout << MAG "\n\nTEST iterator" END << std::endl;
 
 
 	/* rbegin() */
-	const_r_it_type 	const_r_it 		= map.rbegin();
-	ft_const_r_it_type 	const_ft_r_it 	= ft_map.rbegin();
-	sstr_comp< const_r_it_type, ft_const_r_it_type >(const_r_it, const_ft_r_it, "const rbegin()");
+	const_r_it_type 	const const_r_it 		= map.rbegin();
+	ft_const_r_it_type 	const const_ft_r_it 	= ft_map.rbegin();
+	std::cout << "const_r_it: " << const_r_it->first << ":" << const_r_it->second << std::endl;
+	std::cout << "const_ft_r_it: " << const_ft_r_it->first << ":" << const_ft_r_it->second << std::endl;
+	// sstr_comp< const_r_it_type, ft_const_r_it_type >(const_r_it, const_ft_r_it, "const rbegin()");
 
 	/* rend()-- */
 	// const_r_it_type 	const_r_it2 		= map.rend();
@@ -1336,83 +1399,83 @@ std::cout << MAG "\n\nTEST iterator" END << std::endl;
 
 
 
-// 	/* ***************************************************** */
-// 	/*                      find(value)                      */
-// 	/*                  pair< string, int >                  */
-// 	/* ***************************************************** */
-// 	std::cout << MAG "\n\nTEST find(value)" END << std::endl;
+	/* ***************************************************** */
+	/*                      find(value)                      */
+	/*                  pair< string, int >                  */
+	/* ***************************************************** */
+	std::cout << MAG "\n\nTEST find(value)" END << std::endl;
 
-// 	/* find("a") */
-// 	it_type ret_find 		= map.find("a");
-// 	ft_it_type ft_ret_find 	= ft_map.find("a");
-// 	str_comp(ret_find->first, ft_ret_find->first, "find(\"a\")");
-// 	str_comp(to_string(ret_find->second), to_string(ft_ret_find->second), "find(\"a\")");
-
-
-// 	/* find("za") */
-// 	ret_find 		= map.find("za");
-// 	ft_ret_find 	= ft_map.find("za");
-// 	str_comp(ret_find->first, ft_ret_find->first, "find(\"za\")");
-// 	str_comp(to_string(ret_find->second), to_string(ft_ret_find->second), "find(\"za\")");
+	/* find("a") */
+	it_type ret_find 		= map.find("a");
+	ft_it_type ft_ret_find 	= ft_map.find("a");
+	str_comp(ret_find->first, ft_ret_find->first, "find(\"a\")");
+	str_comp(to_string(ret_find->second), to_string(ft_ret_find->second), "find(\"a\")");
 
 
-// 	/* find("inexist") */
-// 	ret_find		= map.find("inexist");
-// 	ft_ret_find		= ft_map.find("inexist");
-
-// 	if (ret_find == map.end() && ft_ret_find == ft_map.end())
-// 		std::cout << GRN "[OK] " END ;
-// 	else 
-// 		std::cout << RED "[KO]" END << " find(\"inexist\")" << std::endl;
-
-// 	ret_find--;
-// 	ft_ret_find--;
-// 	str_comp(ret_find->first, ft_ret_find->first, "find(\"inexist\")--");
-// 	str_comp(to_string(ret_find->second), to_string(ft_ret_find->second), "find(\"inexist\")--");
-
-// 	// test segv sur find(inexist)
+	/* find("za") */
+	ret_find 		= map.find("za");
+	ft_ret_find 	= ft_map.find("za");
+	str_comp(ret_find->first, ft_ret_find->first, "find(\"za\")");
+	str_comp(to_string(ret_find->second), to_string(ft_ret_find->second), "find(\"za\")");
 
 
+	/* find("inexist") */
+	ret_find		= map.find("inexist");
+	ft_ret_find		= ft_map.find("inexist");
+
+	if (ret_find == map.end() && ft_ret_find == ft_map.end())
+		std::cout << GRN "[OK] " END ;
+	else 
+		std::cout << RED "[KO]" END << " find(\"inexist\")" << std::endl;
+
+	ret_find--;
+	ft_ret_find--;
+	str_comp(ret_find->first, ft_ret_find->first, "find(\"inexist\")--");
+	str_comp(to_string(ret_find->second), to_string(ft_ret_find->second), "find(\"inexist\")--");
+
+	// test segv sur find(inexist)
 
 
 
-// 	/* ***************************************************** */
-// 	/*                   const find(value)                   */
-// 	/*                  pair< string, int >                  */
-// 	/* ***************************************************** */
-
-// 	/* find("a") */
-// 	const_it_type ret_const_find = map.find("a");
-// 	ft_const_it_type ft_ret_const_find = ft_map.find("a");
-
-// 	str_comp(ret_const_find->first, ft_ret_const_find->first, "const find(\"a\")");
-// 	str_comp(to_string(ret_const_find->second), to_string(ft_ret_const_find->second), "const find(\"a\")");
-
-// 	/* increment it */
-// 	ret_const_find++;
-// 	ft_ret_const_find++;
-// 	str_comp(ret_const_find->first, ft_ret_const_find->first, "const find(\"a\")++");
-// 	str_comp(to_string(ret_const_find->second), to_string(ft_ret_const_find->second), "const find(\"a\")++");
 
 
-// 	/* find("za") */
-// 	ret_const_find 		= map.find("za");
-// 	ft_ret_const_find 	= ft_map.find("za");
-// 	str_comp(ret_const_find->first, ft_ret_const_find->first, "const find(\"za\")");
-// 	str_comp(to_string(ret_const_find->second), to_string(ft_ret_const_find->second), "const find(\"za\")");
+	/* ***************************************************** */
+	/*                   const find(value)                   */
+	/*                  pair< string, int >                  */
+	/* ***************************************************** */
+
+	/* find("a") */
+	const_it_type 	ret_const_find		= map.find("a");
+	ft_const_it_type ft_ret_const_find 	= ft_map.find("a");
+
+	str_comp(ret_const_find->first, ft_ret_const_find->first, "const find(\"a\")");
+	str_comp(to_string(ret_const_find->second), to_string(ft_ret_const_find->second), "const find(\"a\")");
+
+	/* increment it */
+	// ret_const_find++;
+	// ft_ret_const_find++;
+	// str_comp(ret_const_find->first, ft_ret_const_find->first, "const find(\"a\")++");
+	// str_comp(to_string(ret_const_find->second), to_string(ft_ret_const_find->second), "const find(\"a\")++");
 
 
-// 	/* find(exist) */
-// 	ret_const_find		= map.find("inexist");
-// 	ft_ret_const_find	= ft_map.find("inexist");
-// 	if (ret_const_find == map.end() && ft_ret_const_find == ft_map.end())
-// 		std::cout << GRN "[OK] " END ;
-// 	else 
-// 		std::cout << RED "[KO]" END << " const find(\"inexist\")" << std::endl;
+	/* find("za") */
+	const_it_type 	 ret_const_find2 		= map.find("za");
+	ft_const_it_type ft_ret_const_find2 	= ft_map.find("za");
+	str_comp(ret_const_find2->first, ft_ret_const_find2->first, "const find(\"za\")");
+	str_comp(to_string(ret_const_find2->second), to_string(ft_ret_const_find2->second), "const find(\"za\")");
+
+
+	/* find(exist) */
+	// ret_const_find		= map.find("inexist");
+	// ft_ret_const_find	= ft_map.find("inexist");
+	// if (ret_const_find == map.end() && ft_ret_const_find == ft_map.end())
+	// 	std::cout << GRN "[OK] " END ;
+	// else 
+	// 	std::cout << RED "[KO]" END << " const find(\"inexist\")" << std::endl;
 	
 
 
-// 	ft_map.display_tree();
+	ft_map.display_tree();
 
 
 

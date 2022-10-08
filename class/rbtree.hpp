@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 12:54:45 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/07 17:50:24 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/08 18:35:07 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,9 @@ public:
 	typedef Node_Alloc  							node_alloc;
 	typedef size_t 									size_type;
 	typedef ft::RB_iterator<Node, Compare> 			iterator;
-	typedef ft::RB_const_iterator<Node, Compare> 	const_iterator;
+	typedef ft::RB_const_iterator<Node, Compare> const 	const_iterator;
 	typedef ft::my_reverse_iterator<iterator> 		reverse_iterator;
-	typedef ft::my_reverse_iterator<const_iterator> const_reverse_iterator;
+	typedef ft::my_reverse_iterator<const_iterator> const const_reverse_iterator;
 
 
 private:
@@ -179,6 +179,7 @@ public:
 	}
 
 	const_iterator begin() const {
+		std::cout << "const begin" << std::endl;
 		node_pointer current = _root;
 		while (current->_left != NULL)
 			current = current->_left;
@@ -186,6 +187,7 @@ public:
 	}
 
 	const_iterator end() const {
+		std::cout << "const end" << std::endl;
 		node_pointer current = _root;
 		while (current->_right != NULL)
 			current = current->_right;
@@ -202,10 +204,12 @@ public:
 	}
 	
 	const_reverse_iterator rbegin() const {
+		std::cout << "const rbegin" << std::endl;
 		return const_reverse_iterator(end());
 	}
 
 	const_reverse_iterator rend() const {
+		std::cout << "const rend" << std::endl;
 		return const_reverse_iterator(begin());
 	}
 
