@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Map.hpp                                            :+:      :+:    :+:   */
+/*   map.hpp                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 18:14:05 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/07 17:52:10 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/08 15:31:20 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,12 +75,11 @@ public:
 
 
 	// typedef typename Allocator::template rebind<Node>::other			node_alloc_type;
-	typedef typename ft::RedBlackTree<value_type, key_compare>			tree_type;
-
-	typedef typename tree_type::iterator 								iterator;
-	typedef typename tree_type::const_iterator 							const_iterator;
-	typedef typename ft::my_reverse_iterator<iterator>    				reverse_iterator;
-	typedef typename ft::my_reverse_iterator<const_iterator> 			const_reverse_iterator;
+	typedef typename ft::RedBlackTree<value_type, key_compare>	tree_type;
+	typedef typename tree_type::iterator 						iterator;
+	typedef typename tree_type::const_iterator 					const_iterator;
+	typedef typename ft::my_reverse_iterator<iterator>			reverse_iterator;
+	typedef typename ft::my_reverse_iterator<const_iterator> 	const_reverse_iterator;
 
 
 
@@ -175,7 +174,7 @@ public:
 	/* *************************************************** */
 
 	iterator begin() {
-		std::cout << "begin()" << std::endl;
+		// std::cout << "begin()" << std::endl;
 		return (_tree.begin());
 	}
 
@@ -185,7 +184,7 @@ public:
 	}
 
 	iterator end() {
-		std::cout << "end()" << std::endl;
+		// std::cout << "end()" << std::endl;
 		return (_tree.end());
 	}
 
@@ -283,6 +282,7 @@ public:
 		iterator it = begin();
 		while (it != end())
 		{
+
 			if (it->first == key)
 				return it;
 			it++;
@@ -295,6 +295,7 @@ public:
 		const_iterator it = begin();
 		while (it != end())
 		{
+
 			if (it->first == key)
 				return it;
 			it++;

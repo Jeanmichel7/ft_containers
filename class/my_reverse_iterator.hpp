@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/04 16:25:38 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/04 20:13:14 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/08 00:10:34 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,13 @@ namespace ft
 
     protected:
         _Iterator                           current;
-        typedef iterator_traits<_Iterator>  __traits_type;
+        typedef ft::iterator_traits<_Iterator>  __traits_type;
 
     public:
-        typedef _Iterator iterator_type;
+        typedef _Iterator                               iterator_type;
         typedef typename __traits_type::difference_type difference_type;
-        typedef typename __traits_type::pointer pointer;
-        typedef typename __traits_type::reference reference;
+        typedef typename __traits_type::pointer         pointer;
+        typedef typename __traits_type::reference       reference;
 
         my_reverse_iterator() : current() {}
         explicit my_reverse_iterator(iterator_type x) : current(x) {}

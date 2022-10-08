@@ -6,7 +6,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Thu Oct  6 22:50:52 2022
+# Make data base, printed on Sat Oct  8 15:08:04 2022
 
 # Variables
 
@@ -67,7 +67,7 @@ NVM_BIN = /home/jrasser/.nvm/versions/node/v16.14.2/bin
 # environment
 ELECTRON_RUN_AS_NODE = 1
 # environment
-VSCODE_IPC_HOOK_CLI = /mnt/wslg/runtime-dir/vscode-ipc-625db0f0-7d8e-413b-8904-83d9c346ceb9.sock
+VSCODE_IPC_HOOK_CLI = /mnt/wslg/runtime-dir/vscode-ipc-b9a233db-01fa-440c-be3f-e85695e128b4.sock
 # default
 .FEATURES := target-specific order-only second-expansion else-if shortest-stem undefine oneshell archives jobserver output-sync check-symlink load
 # makefile (from 'Makefile', line 14)
@@ -83,13 +83,13 @@ PWD = /home/jrasser/42/ft_containers
 # default
 .LOADED := 
 # environment
-WSL_INTEROP = /run/WSL/9_interop
+WSL_INTEROP = /run/WSL/473_interop
 # environment
 PULSE_SERVER = /mnt/wslg/PulseServer
 # makefile (from 'Makefile', line 13)
 BLU = \033[0;34m
 # environment
-WT_SESSION = e2ee4d69-6393-416b-bc5e-5fc325ac0f0a
+WT_SESSION = d19bb1d6-1e57-48d4-b069-2d4d47aa1ef9
 # environment
 VSCODE_AMD_ENTRYPOINT = vs/workbench/api/node/extensionHostProcess
 # environment
@@ -186,10 +186,8 @@ LANG = C
 TERM = xterm-256color
 # environment
 WSL_DISTRO_NAME = Ubuntu
-# environment
-MOTD_SHOWN = update-motd
 # variable set hash-table stats:
-# Load=89/1024=9%, Rehash=0, Collisions=11/120=9%
+# Load=88/1024=9%, Rehash=0, Collisions=11/119=9%
 
 # Pattern-specific Variable Values
 
@@ -223,7 +221,7 @@ objs/%.o: srcs/**%.cpp
 objs/main.o: main.cpp
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: 'main'
-#  Last modified 2022-10-06 01:52:59.935058
+#  Last modified 2022-10-08 01:58:08.636786
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'Makefile', line 31):
@@ -247,20 +245,20 @@ all: prog
 # Not a target:
 Makefile:
 #  Implicit rule search has been done.
-#  Last modified 2022-10-04 12:12:04.991937
+#  Last modified 2022-10-07 22:36:42.793203
 #  File has been updated.
 #  Successfully updated.
 
 # Not a target:
 main.cpp:
 #  Implicit rule search has been done.
-#  Last modified 2022-10-06 01:52:39.305058
+#  Last modified 2022-10-08 01:44:01.002735
 #  File has been updated.
 #  Successfully updated.
 
 prog: objs/main.o
 #  Implicit rule search has not been done.
-#  Last modified 2022-10-06 01:53:00.095058
+#  Last modified 2022-10-08 01:58:08.766786
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'Makefile', line 41):
@@ -275,11 +273,12 @@ fclean: clean
 #  File has not been updated.
 #  recipe to execute (from 'Makefile', line 52):
 			${RM} ${NAME}
- 
 			@echo "$(GRN) [Fclean]$(END) 			$(CHECK)"
 
+ 
 # Not a target:
 .DEFAULT:
+ 
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
@@ -313,6 +312,6 @@ clean:
 # strcache performance: lookups = 55 / hit rate = 47%
 # hash-table stats:
 # Load=29/8192=0%, Rehash=0, Collisions=2/55=4%
-# Finished Make data base on Thu Oct  6 22:50:52 2022
+# Finished Make data base on Sat Oct  8 15:08:04 2022
 
  
