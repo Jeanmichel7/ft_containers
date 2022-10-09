@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 18:14:05 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/08 18:38:51 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/09 15:33:47 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,10 +77,10 @@ public:
 	// typedef typename Allocator::template rebind<Node>::other			node_alloc_type;
 	typedef typename ft::RedBlackTree<value_type, key_compare>			tree_type;
 
-	typedef typename tree_type::iterator 								iterator;
-	typedef typename tree_type::const_iterator const					const_iterator;
-	typedef typename ft::my_reverse_iterator<iterator>    				reverse_iterator;
-	typedef typename ft::my_reverse_iterator<const_iterator> const		const_reverse_iterator;
+	typedef typename tree_type::iterator 					iterator;
+	typedef typename tree_type::const_iterator				const_iterator;
+	typedef typename tree_type::reverse_iterator			reverse_iterator;
+	typedef typename tree_type::const_reverse_iterator		const_reverse_iterator;
 
 
 
@@ -130,12 +130,7 @@ public:
 
 	map& operator=( const map& other )
 	{
-		// delete other;
-
-		// reaffection
-		this->_alloc = other._alloc;
-		this->_comp = other._comp;
-		this->_tree = other._tree;
+		_tree.insert(other.begin(), other.end());
 		return (*this);
 	};
 
@@ -157,11 +152,26 @@ public:
 	/*                                                     */
 	/* *************************************************** */
 
-	T& at( const Key& key );
+	T& at( const Key& key ) {
+		iterator it = find(key);
+		if (it == end())
+			throw std::out_of_range("map::at");
+		return (it->second);
+	}
 
-	const T& at( const Key& key ) const;
+	const T& at( const Key& key ) const {
+		const_iterator it = find(key);
+		if (it == end())
+			throw std::out_of_range("map::at");
+		return (it->second);
+	}
 
-	T& operator[]( const Key& key );
+	T& operator[]( const Key& key ) {
+		iterator it = find(key);
+		if (it == end())
+			it = insert(ft::make_pair(key, T())).first;
+		return (it->second);
+	}
 
 
 
@@ -181,7 +191,7 @@ public:
 
 	const_iterator begin() const {
 		std::cout << "const begin()" << std::endl;
-		return (_tree.begin());
+		return (_tree.const_begin());
 	}
 
 	iterator end() {
