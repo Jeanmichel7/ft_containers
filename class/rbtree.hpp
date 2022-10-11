@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 12:54:45 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/09 15:34:33 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/09 21:00:06 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ public:
 	typedef ft::RB_iterator<Node, Compare> 				iterator;
 	typedef ft::RB_const_iterator<Node, Compare>  const_iterator;
 	typedef ft::reverse_iterator<iterator> 				reverse_iterator;
-	typedef ft::reverse_iterator<const_iterator> const  const_reverse_iterator;
+	typedef ft::reverse_iterator<const_iterator>  const_reverse_iterator;
 
 
 private:
@@ -164,7 +164,7 @@ public:
 		return iterator(current, _last_node);
 	}
 
-	const_iterator const_begin() const {
+	const_iterator begin() const {
 		std::cout << "const begin" << std::endl;
 		node_pointer current = _root;
 		while (current->_left != NULL)

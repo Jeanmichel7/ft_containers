@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/14 22:19:53 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/09 15:30:27 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/09 21:15:04 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -964,14 +964,14 @@ int main()
 
 	/* define type iterator */
 	typedef std_map_str_int::iterator 						it_type;
-	typedef std_map_str_int::const_iterator const 			const_it_type;
+	typedef std_map_str_int::const_iterator 			const_it_type;
 	typedef std_map_str_int::reverse_iterator 				r_it_type;
-	typedef std_map_str_int::const_reverse_iterator const 	const_r_it_type;
+	typedef std_map_str_int::const_reverse_iterator 	const_r_it_type;
 
 	typedef  ft_map_str_int::iterator 						ft_it_type;
-	typedef  ft_map_str_int::const_iterator const			ft_const_it_type;
+	typedef  ft_map_str_int::const_iterator 			ft_const_it_type;
 	typedef  ft_map_str_int::reverse_iterator 				ft_r_it_type;
-	typedef  ft_map_str_int::const_reverse_iterator const 	ft_const_r_it_type;
+	typedef  ft_map_str_int::const_reverse_iterator  	ft_const_r_it_type;
 
 	/* define type pair */
 	typedef std::pair<std::string, int> 				pair;

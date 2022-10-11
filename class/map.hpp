@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 18:14:05 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/09 15:33:47 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/09 21:09:11 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -191,7 +191,7 @@ public:
 
 	const_iterator begin() const {
 		std::cout << "const begin()" << std::endl;
-		return (_tree.const_begin());
+		return (_tree.begin());
 	}
 
 	iterator end() {
@@ -388,8 +388,8 @@ public:
 					const map<O_Key, O_T, O_Compare, O_Alloc> &rhs);
 
 	template <class Key, class T, class Compare, class Alloc>
-	void swap(std::map<Key, T, Compare, Alloc> &lhs,
-			  std::map<Key, T, Compare, Alloc> &rhs);
+	void swap(map<Key, T, Compare, Alloc> &lhs,
+			  map<Key, T, Compare, Alloc> &rhs);
 
 }	// namespace ft
 

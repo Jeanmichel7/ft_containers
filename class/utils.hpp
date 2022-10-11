@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/10 21:23:15 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/07 15:44:36 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/09 21:08:15 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,11 @@
 
 #define N_BLACK 0
 #define N_RED 1
+#define RED "\033[0;31m"
+#define GRN "\033[0;32m"
+#define BLU "\033[0;34m"
+#define MAG "\033[0;35m"
+#define CYA "\033[0;36m"
 #define END "\033[0m"
 
 #include <iostream>

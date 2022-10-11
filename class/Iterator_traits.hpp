@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/10 18:24:21 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/08 23:42:44 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/09 21:42:00 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ struct iterator_traits
     typedef typename _Iterator::reference               reference;
 };
 
-/// Partial specialization for pointer types.
+// Partial specialization for pointer types.
 template <typename _Tp>
 struct iterator_traits<_Tp *>
 {
@@ -60,7 +60,7 @@ struct iterator_traits<_Tp *>
     typedef _Tp                                 &reference;
 };
 
-/// Partial specialization for const pointer types.
+// Partial specialization for const pointer types.
 template <typename _Tp>
 struct iterator_traits<const _Tp *>
 {

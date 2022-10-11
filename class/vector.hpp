@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/14 22:06:29 by jrasser           #+#    #+#             */
-/*   Updated: 2022/09/12 22:28:59 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/09 21:12:03 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,8 @@ public:
 	typedef const T 									*const_pointer;
 	typedef my_iterator<pointer>						iterator;
 	typedef my_iterator<const_pointer>					const_iterator;
-	typedef my_reverse_iterator<iterator> 				reverse_iterator;
-	typedef my_reverse_iterator<const_iterator> 		const_reverse_iterator;
+	typedef reverse_iterator<iterator> 				reverse_iterator;
+	typedef reverse_iterator<const_iterator> 		const_reverse_iterator;
 
 
 
