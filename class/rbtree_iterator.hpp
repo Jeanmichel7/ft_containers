@@ -289,7 +289,7 @@ template <typename T, class Compare >
 
 			RB_const_iterator& operator++(void)
 			{
-				std::cout << "const operator++" << std::endl;
+				// std::cout << "const operator++" << std::endl;
 
 				if (_node == NULL) {
 					std::cout << "Error: incrementing a NULL iterator" << std::endl;
@@ -315,7 +315,7 @@ template <typename T, class Compare >
 
 			RB_const_iterator operator++(int)
 			{
-				std::cout << "const operator++(int)" << std::endl;
+				// std::cout << "const operator++(int)" << std::endl;
 
 				RB_const_iterator tmp(*this);
 				operator++();
@@ -324,7 +324,7 @@ template <typename T, class Compare >
 
 			RB_const_iterator& operator--(void)
 			{
-				std::cout << "const operator--" << std::endl;
+				// std::cout << "const operator--" << std::endl;
 
 				if (_node == NULL) {
 					_node = _last_node;
@@ -352,7 +352,7 @@ template <typename T, class Compare >
 
 			RB_const_iterator operator--(int)
 			{
-				std::cout << "const operator--(int)" << std::endl;
+				// std::cout << "const operator--(int)" << std::endl;
 
 				RB_const_iterator tmp(*this);
 				operator--();
@@ -365,4 +365,4 @@ template <typename T, class Compare >
 	};
 }
 
-#endif /* BST_ITERATOR_HPP */
+#endif /* RBTREE_ITERATOR_HPP */

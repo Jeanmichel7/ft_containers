@@ -94,6 +94,8 @@ void sstr_comp(T1 it, T2 ft_it, std::string msg) {
 	sstr << it->first << " " << it->second;
 	ft_sstr << ft_it->first << " " << ft_it->second;
 	str_comp(sstr.str(), ft_sstr.str(), msg);
+	sstr.str(""); sstr.clear(); ft_sstr.str(""); ft_sstr.clear();
+
 }
 
 
@@ -1193,11 +1195,9 @@ int main()
 
 
 	/* insert with const iterator */
-	it_type 			it_end 				= map.begin();
-	ft_it_type 			ft_it_end 			= ft_map.begin();
-	for(int i = 0; i < 5; i++) { it_end++; ft_it_end++; }
-	const_it_type 		cit_end1 		= it_end;
-	ft_const_it_type 	ft_cit_end1 	= ft_it_end;
+	const_it_type 		cit_end1 		= map.begin();
+	ft_const_it_type 	ft_cit_end1 	= ft_map.begin();
+	for(int i = 0; i < 5; i++)	{cit_end1++; ft_cit_end1++;}
 	const_it_type 		cit_begin 		= map.begin();
 	ft_const_it_type 	ft_cit_begin 	= ft_map.begin();
 
@@ -1287,7 +1287,6 @@ int main()
 
 
 
-
 	/* begin() */
 	it_type 	it_to_constit		= map.begin();
 	ft_it_type 	ft_it_to_constit 	= ft_map.begin();
@@ -1297,8 +1296,8 @@ int main()
 	sstr_comp< const_it_type, ft_const_it_type >(const_it, const_ft_it, "const begin()");
 
 	/*const  end()-- */
-	it_end 		= map.end(); 	it_end--;
-	ft_it_end 	= ft_map.end(); ft_it_end--;
+	it_type 	it_end 		= map.end(); 	it_end--;
+	ft_it_type 	ft_it_end 	= ft_map.end(); ft_it_end--;
 	const_it_type 		const_it_end 		= it_end;
 	ft_const_it_type 	const_ft_it_end 	= ft_it_end;
 	sstr_comp< const_it_type, ft_const_it_type >(const_it_end, const_ft_it_end, "const end()--");
@@ -1318,7 +1317,14 @@ int main()
 	ft_const_it_type 	const_ft_it_end_pp 	= ft_it_end;
 	sstr_comp< const_it_type, ft_const_it_type >(const_it_end_pp, const_ft_it_end_pp, "const begin()+=4");
 
-
+	/* rbegin() -> rend() */
+	for (const_it_type cit_begin2 = map.begin(); cit_begin2 != map.end(); cit_begin2++)
+		sstr << cit_begin2->first << ":" << cit_begin2->second << " ";
+	for (ft_const_it_type ft_cit_begin2 = ft_map.begin(); ft_cit_begin2 != ft_map.end(); ft_cit_begin2++)
+		ft_sstr << ft_cit_begin2->first << ":" << ft_cit_begin2->second << " ";
+	
+	str_comp(sstr.str(), ft_sstr.str(), "cbegin() -> cend()");
+	sstr.str(""); sstr.clear(); ft_sstr.str(""); ft_sstr.clear();
 
 	/* ***************************************************** */
 	/*                   REVERSE_ITERATOR                    */
@@ -1492,6 +1498,8 @@ int main()
 
 
 	ft_map.display_tree();
+
+	ft_map.clear();
 
 
 

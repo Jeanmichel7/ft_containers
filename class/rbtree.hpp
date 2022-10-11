@@ -100,37 +100,37 @@ public:
 	/* Destructor */
 	~RedBlackTree()
 	{
-		node_pointer current = _root;
-		node_pointer prev = NULL;
+		// node_pointer current = _root;
+		// node_pointer prev = NULL;sdfdsffds
 
-		while (current != NULL)
-		{
-			if (current->_left) {
-				current = current->_left;
-			}
-			else if (current->_right) {
-				current = current->_right;
-			}
-			else if (current == _root)
-			{
-				_node_alloc.destroy(_root);
-				_node_alloc.deallocate(_root, 1);
+		// while (current != NULL)
+		// {
+		// 	if (current->_left) {
+		// 		current = current->_left;
+		// 	}
+		// 	else if (current->_right) {
+		// 		current = current->_right;
+		// 	}
+		// 	else if (current == _root)
+		// 	{
+		// 		_node_alloc.destroy(_root);
+		// 		_node_alloc.deallocate(_root, 1);
 
-				// _node_alloc.destroy(_last_node);
-				// _node_alloc.deallocate(_last_node, 1);
-				return;
-			}
-			if ((current->_left == NULL && current->_right == NULL)) {
-				prev = current;
-				current = current->_parent;
-				if (current->_left == prev)
-					current->_left = NULL;
-				else if (current->_right == prev)
-					current->_right = NULL;
-				_node_alloc.destroy(prev);
-				_node_alloc.deallocate(prev, 1);
-			}
-		}
+		// 		// _node_alloc.destroy(_last_node);
+		// 		// _node_alloc.deallocate(_last_node, 1);
+		// 		return;
+		// 	}
+		// 	if ((current->_left == NULL && current->_right == NULL)) {
+		// 		prev = current;
+		// 		current = current->_parent;
+		// 		if (current->_left == prev)
+		// 			current->_left = NULL;
+		// 		else if (current->_right == prev)
+		// 			current->_right = NULL;
+		// 		_node_alloc.destroy(prev);
+		// 		_node_alloc.deallocate(prev, 1);
+		// 	}
+		// }
 	}
 
 
@@ -348,9 +348,31 @@ public:
 
 	void clear();
 
-	void erase(iterator position);
+	iterator erase(iterator position) {
+		iterator next = position++;
+		node_pointer current = _root;
+		node_pointer prev = _root;
 
-	void erase(iterator first, iterator last);
+		while(current->_content.first != position->first) {
+			current ++;
+		}
+
+
+		_node_alloc.destroy(current);
+		_node_alloc.deallocate(current, 1);
+		fix_tree(current);
+
+		return (next);
+	}
+
+	void erase(iterator first, iterator last) {
+		node_pointer current = first;
+
+		while(current != last) {
+			erase(current);
+			current++;
+		}
+	}
 
 	void erase(value_type to_erase);
 

@@ -252,7 +252,9 @@ public:
 	/*                                                     */
 	/* *************************************************** */
 
-	void clear();
+	void clear() {
+		erase(begin(), end());
+	}
 
 	ft::pair<iterator, bool> insert( const value_type& value ) {
 		return (_tree.insert_pair(value));
@@ -267,9 +269,18 @@ public:
 		_tree.insert(first, last);
 	};
 
-	iterator erase( iterator pos );
+	iterator erase( iterator pos ) {
+		return (_tree.erase(pos));
+	}
 
-	iterator erase( iterator first, iterator last );
+	iterator erase( iterator first, iterator last ) {
+		iterator current = first;
+		while(current != last) {
+			erase(current);
+			current++;
+		}
+		return current;
+	}
 
 	size_type erase( const Key& key );
 
