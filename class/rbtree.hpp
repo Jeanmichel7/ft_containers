@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 12:54:45 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/11 23:29:38 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/13 10:10:18 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -374,7 +374,6 @@ public:
 			if (current->_content.first == position->first) {
 				z = current;
 			}
-
 			if (current->_content.first <= position->first) {
 				current = current->_right;
 			} else {
