@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 12:54:45 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/13 10:17:35 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/13 10:18:53 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -363,7 +363,6 @@ public:
 
 //   void deleteNodeHelper(NodePtr node, int key) {
 	iterator erase(iterator position) {
-
 		/* check validity */
 
 		node_pointer current = _root;
