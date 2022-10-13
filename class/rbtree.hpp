@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 12:54:45 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/09 21:00:06 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/11 23:29:38 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,10 +70,20 @@ public:
 		// _node(NULL),
 		_last_node(NULL),
 		_size(0),
-		TNULL(NULL)
+		TNULL()
 	{
-		// _node = _node_alloc.allocate(1);
-		// _node_alloc.construct(_node, Node());
+		node_pointer new_node = _node_alloc.allocate(1);
+		_node_alloc.construct(new_node, Node(NULL, NULL, NULL, N_BLACK));
+		TNULL = new_node;
+
+
+
+		// TNULL = _node_alloc.allocate(1);
+		// _node_alloc.construct(TNULL, node_type());
+		// TNULL->_color = 0;
+		// TNULL->_left = NULL;
+		// TNULL->_right = NULL;
+		// _root = TNULL;
 	}
 
 	RedBlackTree(const self& x)
@@ -100,37 +110,37 @@ public:
 	/* Destructor */
 	~RedBlackTree()
 	{
-		// node_pointer current = _root;
-		// node_pointer prev = NULL;sdfdsffds
+		node_pointer current = _root;
+		node_pointer prev = NULL;
 
-		// while (current != NULL)
-		// {
-		// 	if (current->_left) {
-		// 		current = current->_left;
-		// 	}
-		// 	else if (current->_right) {
-		// 		current = current->_right;
-		// 	}
-		// 	else if (current == _root)
-		// 	{
-		// 		_node_alloc.destroy(_root);
-		// 		_node_alloc.deallocate(_root, 1);
+		while (current != NULL)
+		{
+			if (current->_left) {
+				current = current->_left;
+			}
+			else if (current->_right) {
+				current = current->_right;
+			}
+			else if (current == _root)
+			{
+				_node_alloc.destroy(_root);
+				_node_alloc.deallocate(_root, 1);
 
-		// 		// _node_alloc.destroy(_last_node);
-		// 		// _node_alloc.deallocate(_last_node, 1);
-		// 		return;
-		// 	}
-		// 	if ((current->_left == NULL && current->_right == NULL)) {
-		// 		prev = current;
-		// 		current = current->_parent;
-		// 		if (current->_left == prev)
-		// 			current->_left = NULL;
-		// 		else if (current->_right == prev)
-		// 			current->_right = NULL;
-		// 		_node_alloc.destroy(prev);
-		// 		_node_alloc.deallocate(prev, 1);
-		// 	}
-		// }
+				// _node_alloc.destroy(_last_node);
+				// _node_alloc.deallocate(_last_node, 1);
+				return;
+			}
+			if ((current->_left == NULL && current->_right == NULL)) {
+				prev = current;
+				current = current->_parent;
+				if (current->_left == prev)
+					current->_left = NULL;
+				else if (current->_right == prev)
+					current->_right = NULL;
+				_node_alloc.destroy(prev);
+				_node_alloc.deallocate(prev, 1);
+			}
+		}
 	}
 
 
@@ -177,7 +187,7 @@ public:
 		// while (current->_right != NULL)
 		// 	current = current->_right;
 		// _last_node = current;
-		return iterator(TNULL, _last_node);
+		return iterator(NULL, _last_node);
 	}
 
 	const_iterator end() const {
@@ -186,7 +196,7 @@ public:
 		// while (current->_right != NULL)
 		// 	current = current->_right;
 		// _last_node = current;
-		return const_iterator(TNULL, _last_node);
+		return const_iterator(NULL, _last_node);
 	}
 
 
@@ -348,29 +358,81 @@ public:
 
 	void clear();
 
-	iterator erase(iterator position) {
-		iterator next = position++;
-		node_pointer current = _root;
-		node_pointer prev = _root;
 
-		while(current->_content.first != position->first) {
-			current ++;
+
+
+//   void deleteNodeHelper(NodePtr node, int key) {
+
+	iterator erase(iterator position) {
+
+		/* check validity */
+
+		node_pointer current = _root;
+		node_pointer z = TNULL;
+		node_pointer x, y;
+		while (current != NULL) {
+			if (current->_content.first == position->first) {
+				z = current;
+			}
+
+			if (current->_content.first <= position->first) {
+				current = current->_right;
+			} else {
+				current = current->_left;
+			}
+		}
+		if (z == NULL) {
+			std::cout << "Key not found in the tree" << std::endl;
+			return position;
 		}
 
+		y = z;
+		int y_original_color = y->_color;
+		if (z->_left == NULL) {
+			x = z->_right;
+			rbTransplant(z, z->_right);
+		} else if (z->_right == NULL) {
+			x = z->_left;
+			rbTransplant(z, z->_left);
+		} else {
+			y = minimum(z->_right);
+			y_original_color = y->_color;
+			x = y->_right;
+			if (y->_parent == z) {
+				x->_parent = y;
+			} else {
+				rbTransplant(y, y->_right);
+				y->_right = z->_right;
+				y->_right->_parent = y;
+			}
 
+			rbTransplant(z, y);
+			y->_left = z->_left;
+			y->_left->_parent = y;
+			y->_color = z->_color;
+		}
 		_node_alloc.destroy(current);
 		_node_alloc.deallocate(current, 1);
-		fix_tree(current);
+		if (y_original_color == N_BLACK) {
+			deleteFix(x);
+		}
+		return iterator(x, _last_node);
 
-		return (next);
 	}
 
+	node_pointer minimum(node_pointer node) {
+    while (node->_left != NULL) {
+      node = node->_left;
+    }
+    return node;
+  }
+
 	void erase(iterator first, iterator last) {
-		node_pointer current = first;
+		iterator current = first;
+		iterator tmp = current;
 
 		while(current != last) {
-			erase(current);
-			current++;
+			current = erase(tmp);
 		}
 	}
 
@@ -594,6 +656,94 @@ public:
 
 
 
+	// For balancing the tree after deletion
+		void deleteFix(node_pointer x)
+		{
+			node_pointer s;
+			while (x != _root && x->_color == 0)
+			{
+				if (x == x->_parent->_left)
+				{
+					s = x->_parent->_right;
+					if (s->_color == 1)
+					{
+						s->_color = 0;
+						x->_parent->_color = 1;
+						leftRotate(x->_parent);
+						s = x->_parent->_right;
+					}
+
+					if (s->_left->_color == 0 && s->_right->_color == 0)
+					{
+						s->_color = 1;
+						x = x->_parent;
+					}
+					else
+					{
+						if (s->_right->_color == 0)
+						{
+							s->_left->_color = 0;
+							s->_color = 1;
+							rightRotate(s);
+							s = x->_parent->_right;
+						}
+
+						s->_color = x->_parent->_color;
+						x->_parent->_color = 0;
+						s->_right->_color = 0;
+						leftRotate(x->_parent);
+						x = _root;
+					}
+				}
+				else
+				{
+					s = x->_parent->_left;
+					if (s->_color == 1)
+					{
+						s->_color = 0;
+						x->_parent->_color = 1;
+						rightRotate(x->_parent);
+						s = x->_parent->_left;
+					}
+
+					if (s->_right->_color == 0 && s->_right->_color == 0)
+					{
+						s->_color = 1;
+						x = x->_parent;
+					}
+					else
+					{
+						if (s->_left->_color == 0)
+						{
+							s->_right->_color = 0;
+							s->_color = 1;
+							leftRotate(s);
+							s = x->_parent->_left;
+						}
+
+						s->_color = x->_parent->_color;
+						x->_parent->_color = 0;
+						s->_left->_color = 0;
+						rightRotate(x->_parent);
+						x = _root;
+					}
+				}
+			}
+			x->_color = 0;
+		}
+
+	 void rbTransplant(node_pointer u, node_pointer v) {
+		std::cout << "u : " << u->_content.first << std::endl;
+		// std::cout << "v : " << v->_content.first << std::endl;
+    if (u->_parent == NULL) {
+      _root = v;
+    } else if (u == u->_parent->_left) {
+      u->_parent->_left = v;
+    } else {
+      u->_parent->_right = v;
+    }
+    if (v->_parent) v->_parent = u->_parent;
+  }
 
 	/* *************************************************** */
 	/*                                                     */

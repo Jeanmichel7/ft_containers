@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 18:14:05 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/09 21:09:11 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/11 22:35:45 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,7 @@ public:
 
 	virtual ~map()
 	{
-		
+		erase(begin(), end());
 	};
 
 	map& operator=( const map& other )
@@ -254,7 +254,7 @@ public:
 
 	void clear() {
 		erase(begin(), end());
-	}
+	};
 
 	ft::pair<iterator, bool> insert( const value_type& value ) {
 		return (_tree.insert_pair(value));
@@ -269,18 +269,11 @@ public:
 		_tree.insert(first, last);
 	};
 
-	iterator erase( iterator pos ) {
-		return (_tree.erase(pos));
-	}
+	void erase( iterator pos );
 
-	iterator erase( iterator first, iterator last ) {
-		iterator current = first;
-		while(current != last) {
-			erase(current);
-			current++;
-		}
-		return current;
-	}
+	void erase( iterator first, iterator last ) {
+		_tree.erase(first, last);
+	};
 
 	size_type erase( const Key& key );
 
