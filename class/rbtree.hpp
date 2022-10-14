@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 12:54:45 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/09 21:00:06 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/14 19:46:18 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -290,8 +290,6 @@ public:
 
 
 	iterator insert( iterator hint, const value_type &to_insert ) {
-		
-
 		if (hint._node == _root || hint._node == _root->_left || hint._node == _root->_right)
 			return insert_pair(to_insert).first;
 
@@ -348,7 +346,76 @@ public:
 
 	void clear();
 
-	void erase(iterator position);
+	void erase(iterator position) {
+		node_pointer current = _root;
+
+		while(current != NULL) {
+			if (_comp(position->first, current->_content.first))
+				current = current->_left;
+			else if (_comp(current->_content.first, position->first))
+				current = current->_right;
+			else
+				break;
+		}
+
+		if (current == NULL)
+			return;
+
+		// std::cout << "current: " << current->_content.first << std::endl;
+		// std::cout << "current->left: " << current->_left->_content.first << std::endl;
+
+		if (current->_left == NULL && current->_right == NULL) {
+			if (current->_parent == NULL) {
+				_root = NULL;
+				_last_node = NULL;
+			}
+			else if (current->_parent->_left == current)
+				current->_parent->_left = NULL;
+			else
+				current->_parent->_right = NULL;
+		}
+		else if (current->_left == NULL || current->_right == NULL) {
+			node_pointer child = current->_left ? current->_left : current->_right;
+			if (current->_parent == NULL) {
+				_root = child;
+				_last_node = _root;
+			}
+			else if (current->_parent->_left == current)
+				current->_parent->_left = child;
+			else
+				current->_parent->_right = child;
+			child->_parent = current->_parent;
+		}
+		else {
+			node_pointer successor = current->_right;
+			while (successor->_left != NULL)
+				successor = successor->_left;
+
+			current->_content = successor->_content;
+			if (successor->_parent->_left == successor)
+				successor->_parent->_left = successor->_right;
+			else
+				successor->_parent->_right = successor->_right;
+			if (successor->_right != NULL)
+				successor->_right->_parent = successor->_parent;
+		}
+
+		_node_alloc.destroy(current);
+		_node_alloc.deallocate(current, 1);
+		_size--;
+
+		if (_size == 0)
+			_root = NULL;
+		
+		fix_tree(_root);
+
+		// display_tree("erase");
+
+		
+
+	
+
+	}
 
 	void erase(iterator first, iterator last);
 

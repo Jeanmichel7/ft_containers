@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/10 22:40:08 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/07 00:07:02 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/14 19:52:51 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,12 +41,18 @@ struct pair
     
     pair& operator=(const pair& pr)
     {
+        
         if (*this == pr)
             return *this;
         this->first = pr.first;
         this->second = pr.second;
         return *this;
+
+        // return ft::make_pair(pr.first, pr.second);
+
     }
+
+
 
     ~pair() {}
 

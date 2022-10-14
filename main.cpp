@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/14 22:19:53 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/09 21:15:04 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/14 19:37:09 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -1303,12 +1303,12 @@ int main()
 	ft_const_it_type 	const_ft_it_end 	= ft_it_end;
 	sstr_comp< const_it_type, ft_const_it_type >(const_it_end, const_ft_it_end, "const end()--");
 
-	/*const end()++ */
-	it_end 		= map.end(); 	it_end++;
-	ft_it_end 	= ft_map.end(); ft_it_end++;
-	const_it_type 		const_it_end_p 		= it_end;
-	ft_const_it_type 	const_ft_it_end_p 	= ft_it_end;
-	sstr_comp< const_it_type, ft_const_it_type >(const_it_end_p, const_ft_it_end_p, "const end()++");
+	/*const end()++  only linux */
+	// it_end 		= map.end(); 	it_end++;
+	// ft_it_end 	= ft_map.end(); ft_it_end++;
+	// const_it_type 		const_it_end_p 		= it_end;
+	// ft_const_it_type 	const_ft_it_end_p 	= ft_it_end;
+	// sstr_comp< const_it_type, ft_const_it_type >(const_it_end_p, const_ft_it_end_p, "const end()++");
 
 
 	/* const bengin() += 4 */
@@ -1494,8 +1494,18 @@ int main()
 	ft_map.display_tree();
 
 
+	/* ***************************************************** */
+	/*                      erase(value)                     */
+	/*                  pair< string, int >                  */
+	/* ***************************************************** */
 
+	/* erase("a") */
+	map.erase(map.begin());
+	ft_map.erase(ft_map.begin());
 
+	
+
+	ft_map.display_tree();
 
 
 

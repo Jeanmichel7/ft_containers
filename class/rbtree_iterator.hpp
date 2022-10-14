@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 16:58:53 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/09 15:27:14 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/14 19:33:29 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -289,7 +289,7 @@ template <typename T, class Compare >
 
 			RB_const_iterator& operator++(void)
 			{
-				std::cout << "const operator++" << std::endl;
+				// std::cout << "const operator++" << std::endl;
 
 				if (_node == NULL) {
 					std::cout << "Error: incrementing a NULL iterator" << std::endl;
@@ -315,7 +315,7 @@ template <typename T, class Compare >
 
 			RB_const_iterator operator++(int)
 			{
-				std::cout << "const operator++(int)" << std::endl;
+				// std::cout << "const operator++(int)" << std::endl;
 
 				RB_const_iterator tmp(*this);
 				operator++();
@@ -324,7 +324,7 @@ template <typename T, class Compare >
 
 			RB_const_iterator& operator--(void)
 			{
-				std::cout << "const operator--" << std::endl;
+				// std::cout << "const operator--" << std::endl;
 
 				if (_node == NULL) {
 					_node = _last_node;
@@ -352,7 +352,7 @@ template <typename T, class Compare >
 
 			RB_const_iterator operator--(int)
 			{
-				std::cout << "const operator--(int)" << std::endl;
+				// std::cout << "const operator--(int)" << std::endl;
 
 				RB_const_iterator tmp(*this);
 				operator--();
