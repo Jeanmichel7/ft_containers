@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/14 22:19:53 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/11 21:39:49 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/13 18:02:55 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -1058,96 +1058,96 @@ int main()
 
 
 
-	/* ***************************************************** */
-	/*                  INSERT(hint, value)                  */
-	/*                  pair< string, int >                  */
-	/* ***************************************************** */
-	std::cout << MAG "\n\nTEST insert( hint, value )" END << std::endl;
+	// /* ***************************************************** */
+	// /*                  INSERT(hint, value)                  */
+	// /*                  pair< string, int >                  */
+	// /* ***************************************************** */
+	// std::cout << MAG "\n\nTEST insert( hint, value )" END << std::endl;
 
 
-	/* insert(begin(), 1) */
-	it_type it_insert_hint 			= map.insert(map.begin()++, pair("A", 1));
-	ft_it_type ft_it_insert_hint 	= ft_map.insert(ft_map.begin()++, ft_pair("A", 1));
+	// /* insert(begin(), 1) */
+	// it_type it_insert_hint 			= map.insert(map.begin()++, pair("A", 1));
+	// ft_it_type ft_it_insert_hint 	= ft_map.insert(ft_map.begin()++, ft_pair("A", 1));
 
-	str_comp(it_insert_hint->first, ft_it_insert_hint->first, "insert(begin(), value(ft_pair(\"A\", 1))) -> first");
-	str_comp(to_string(it_insert_hint->second), to_string(ft_it_insert_hint->second), "insert(begin(), value(ft_pair(\"A\", 1))) -> second");
-
-
-	/* insert(begin(), 1) */
-	it_insert_hint 		= map.insert(map.begin(), pair("AA", 1));
-	ft_it_insert_hint 	= ft_map.insert(ft_map.begin(), ft_pair("AA", 1));
-
-	str_comp(it_insert_hint->first, ft_it_insert_hint->first, "insert(begin(), value(ft_pair(\"z\", 1))) -> first");
-	str_comp(to_string(it_insert_hint->second), to_string(ft_it_insert_hint->second), "insert(begin(), value(ft_pair(\"z\", 1))) -> second");
-
-	/* insert(begin(), "z") */
-	it_insert_hint		= map.insert(map.begin(), pair("yz", 1));
-	ft_it_insert_hint 	= ft_map.insert(ft_map.begin(), ft_pair("yz", 1));
-
-	str_comp(it_insert_hint->first, ft_it_insert_hint->first, "insert(begin(), value(ft_pair(\"z\", 1))) -> first");
-	str_comp(to_string(it_insert_hint->second), to_string(ft_it_insert_hint->second), "insert(begin(), value(ft_pair(\"z\", 1))) -> second");
+	// str_comp(it_insert_hint->first, ft_it_insert_hint->first, "insert(begin(), value(ft_pair(\"A\", 1))) -> first");
+	// str_comp(to_string(it_insert_hint->second), to_string(ft_it_insert_hint->second), "insert(begin(), value(ft_pair(\"A\", 1))) -> second");
 
 
+	// /* insert(begin(), 1) */
+	// it_insert_hint 		= map.insert(map.begin(), pair("AA", 1));
+	// ft_it_insert_hint 	= ft_map.insert(ft_map.begin(), ft_pair("AA", 1));
 
+	// str_comp(it_insert_hint->first, ft_it_insert_hint->first, "insert(begin(), value(ft_pair(\"z\", 1))) -> first");
+	// str_comp(to_string(it_insert_hint->second), to_string(ft_it_insert_hint->second), "insert(begin(), value(ft_pair(\"z\", 1))) -> second");
 
-	/* insert(end(), 1) */
-	it_insert_hint		= map.insert(map.end(), pair("z", 1));
-	ft_it_insert_hint 	= ft_map.insert(ft_map.end(), ft_pair("z", 1));
+	// /* insert(begin(), "z") */
+	// it_insert_hint		= map.insert(map.begin(), pair("yz", 1));
+	// ft_it_insert_hint 	= ft_map.insert(ft_map.begin(), ft_pair("yz", 1));
 
-	str_comp(it_insert_hint->first, ft_it_insert_hint->first, "insert(end(), value(ft_pair(\"z\", 1))) -> first");
-	str_comp(to_string(it_insert_hint->second), to_string(ft_it_insert_hint->second), "insert(end(), value(ft_pair(\"z\", 1))) -> second");
-
-	/* insert(end(), "a") */
-	it_insert_hint 		= map.insert(map.end(), pair("za", 1));
-	ft_it_insert_hint 	= ft_map.insert(ft_map.end(), ft_pair("za", 1));
-
-	str_comp(it_insert_hint->first, ft_it_insert_hint->first, "insert(end(), value(ft_pair(\"za\", 1))) -> first");
-	str_comp(to_string(it_insert_hint->second), to_string(ft_it_insert_hint->second), "insert(end(), value(ft_pair(\"za\", 1))) -> second");
-
-	/* insert(end(), "z") */
-	it_insert_hint 		= map.insert(map.end(), pair("c", 1));
-	ft_it_insert_hint 	= ft_map.insert(ft_map.end(), ft_pair("c", 1));
-
-	str_comp(it_insert_hint->first, ft_it_insert_hint->first, "insert(end(), value(ft_pair(\"c\", 1))) -> first");
-	str_comp(to_string(it_insert_hint->second), to_string(ft_it_insert_hint->second), "insert(end(), value(ft_pair(\"c\", 1))) -> second");
+	// str_comp(it_insert_hint->first, ft_it_insert_hint->first, "insert(begin(), value(ft_pair(\"z\", 1))) -> first");
+	// str_comp(to_string(it_insert_hint->second), to_string(ft_it_insert_hint->second), "insert(begin(), value(ft_pair(\"z\", 1))) -> second");
 
 
 
 
-	/* insert begin()+5, "e" */
-	std::string val_to_insert = "e";
-	int 		pos_to_insert = 5;
+	// /* insert(end(), 1) */
+	// it_insert_hint		= map.insert(map.end(), pair("z", 1));
+	// ft_it_insert_hint 	= ft_map.insert(ft_map.end(), ft_pair("z", 1));
 
-	it_type it_test = map.begin();
-	for(int i = 0; i < pos_to_insert; i++)
-		it_test++;
-	ft_it_type ft_it_test = ft_map.begin();
-	for(int i = 0; i < pos_to_insert; i++)
-		ft_it_test++;
+	// str_comp(it_insert_hint->first, ft_it_insert_hint->first, "insert(end(), value(ft_pair(\"z\", 1))) -> first");
+	// str_comp(to_string(it_insert_hint->second), to_string(ft_it_insert_hint->second), "insert(end(), value(ft_pair(\"z\", 1))) -> second");
 
-	it_type it_test2 = map.insert(it_test, pair(val_to_insert, 26));
-	sstr << "ret_insert(hint, value) " << it_test2->first << std::endl;
+	// /* insert(end(), "a") */
+	// it_insert_hint 		= map.insert(map.end(), pair("za", 1));
+	// ft_it_insert_hint 	= ft_map.insert(ft_map.end(), ft_pair("za", 1));
 
-	ft_it_type ft_it_test2 = ft_map.insert(ft_it_test, ft_pair(val_to_insert, 26));
-	ft_sstr << "ret_insert(hint, value) " << ft_it_test2->first << std::endl;
+	// str_comp(it_insert_hint->first, ft_it_insert_hint->first, "insert(end(), value(ft_pair(\"za\", 1))) -> first");
+	// str_comp(to_string(it_insert_hint->second), to_string(ft_it_insert_hint->second), "insert(end(), value(ft_pair(\"za\", 1))) -> second");
 
-	str_comp(sstr.str(), ft_sstr.str(), "begin() -> end()");
-	sstr.str(""); sstr.clear(); ft_sstr.str(""); ft_sstr.clear();
+	// /* insert(end(), "z") */
+	// it_insert_hint 		= map.insert(map.end(), pair("c", 1));
+	// ft_it_insert_hint 	= ft_map.insert(ft_map.end(), ft_pair("c", 1));
+
+	// str_comp(it_insert_hint->first, ft_it_insert_hint->first, "insert(end(), value(ft_pair(\"c\", 1))) -> first");
+	// str_comp(to_string(it_insert_hint->second), to_string(ft_it_insert_hint->second), "insert(end(), value(ft_pair(\"c\", 1))) -> second");
 
 
 
 
-	/* insert many value */
-	for (it_type it = map.begin(); it != map.end(); it++)
-		sstr << it->first << ":" << it->second << " ";
-	for (ft_it_type it = ft_map.begin(); it != ft_map.end(); it++)
-		ft_sstr << it->first << ":" << it->second << " ";
+	// /* insert begin()+5, "e" */
+	// std::string val_to_insert = "e";
+	// int 		pos_to_insert = 5;
+
+	// it_type it_test = map.begin();
+	// for(int i = 0; i < pos_to_insert; i++)
+	// 	it_test++;
+	// ft_it_type ft_it_test = ft_map.begin();
+	// for(int i = 0; i < pos_to_insert; i++)
+	// 	ft_it_test++;
+
+	// it_type it_test2 = map.insert(it_test, pair(val_to_insert, 26));
+	// sstr << "ret_insert(hint, value) " << it_test2->first << std::endl;
+
+	// ft_it_type ft_it_test2 = ft_map.insert(ft_it_test, ft_pair(val_to_insert, 26));
+	// ft_sstr << "ret_insert(hint, value) " << ft_it_test2->first << std::endl;
+
+	// str_comp(sstr.str(), ft_sstr.str(), "begin() -> end()");
+	// sstr.str(""); sstr.clear(); ft_sstr.str(""); ft_sstr.clear();
+
+
+
+
+	// /* insert many value */
+	// for (it_type it = map.begin(); it != map.end(); it++)
+	// 	sstr << it->first << ":" << it->second << " ";
+	// for (ft_it_type it = ft_map.begin(); it != ft_map.end(); it++)
+	// 	ft_sstr << it->first << ":" << it->second << " ";
 	
-	str_comp(sstr.str(), ft_sstr.str(), "insert many values");
-	sstr.str(""); sstr.clear(); ft_sstr.str(""); ft_sstr.clear();
+	// str_comp(sstr.str(), ft_sstr.str(), "insert many values");
+	// sstr.str(""); sstr.clear(); ft_sstr.str(""); ft_sstr.clear();
 
 
-	// ft_map.display_tree();
+	// // ft_map.display_tree();
 
 
 
@@ -1499,7 +1499,7 @@ int main()
 
 	ft_map.display_tree();
 
-	ft_map.clear();
+	// ft_map.clear();
 
 
 

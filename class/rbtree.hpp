@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 12:54:45 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/13 10:21:42 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/13 18:21:49 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,7 +169,7 @@ public:
 
 	iterator begin() {
 		node_pointer current = _root;
-		while (current->_left != NULL)
+		while (current->_left != TNULL)
 			current = current->_left;
 		return iterator(current, _last_node);
 	}
@@ -177,7 +177,7 @@ public:
 	const_iterator begin() const {
 		std::cout << "const begin" << std::endl;
 		node_pointer current = _root;
-		while (current->_left != NULL)
+		while (current->_left != TNULL)
 			current = current->_left;
 		return const_iterator(current, _last_node);
 	}
@@ -187,7 +187,7 @@ public:
 		// while (current->_right != NULL)
 		// 	current = current->_right;
 		// _last_node = current;
-		return iterator(NULL, _last_node);
+		return iterator(TNULL, _last_node);
 	}
 
 	const_iterator end() const {
@@ -196,7 +196,7 @@ public:
 		// while (current->_right != NULL)
 		// 	current = current->_right;
 		// _last_node = current;
-		return const_iterator(NULL, _last_node);
+		return const_iterator(TNULL, _last_node);
 	}
 
 
@@ -248,110 +248,161 @@ public:
 	/*                                                     */
 	/* *************************************************** */
 
-	node_pointer insert_node(node_pointer current, const value_type &val)
-	{
-		node_pointer parent = NULL;
+	// node_pointer insert_node(node_pointer current, const value_type &val)
+	// {
+	// 	node_pointer parent = NULL;
 
-		while (current != NULL)
-		{
-			parent = current;
-			if (_comp(val.first, current->_content.first))
-				current = current->_left;
-			else if (_comp(current->_content.first, val.first))
-				current = current->_right;
-			else
-				return current;
-		}
+	// 	while (current != TNULL)
+	// 	{
+	// 		parent = current;
+	// 		if (_comp(val.first, current->_content.first))
+	// 			current = current->_left;
+	// 		else if (_comp(current->_content.first, val.first))
+	// 			current = current->_right;
+	// 		else
+	// 			return current;
+	// 	}
 
-		current = _node_alloc.allocate(1);
-		_node_alloc.construct(current, Node(val));
-		current->_parent = parent;
+	// 	current = _node_alloc.allocate(1);
+	// 	_node_alloc.construct(current, Node(val, parent, TNULL, TNULL, N_RED));
+	// 	// current->_parent = parent;
 		
-		if (_comp(val.first, parent->_content.first))
-			parent->_left = current;
-		else
-			parent->_right = current;
+	// 	if (_comp(val.first, parent->_content.first))
+	// 		parent->_left = current;
+	// 	else
+	// 		parent->_right = current;
 
+	// 	_size++;
+
+	// 	// display_tree("insert before fixed");
+	// 	fix_tree(current);
+	// 	// display_tree("insert after fixed");
+
+	// 	return current;
+	// }
+
+
+	// ft::pair<iterator, bool> insert_pair(const value_type& val)
+	// {
+	// 	if (_size == 0)
+	// 	{
+	// 		node_pointer new_node = _node_alloc.allocate(1);
+	// 		_node_alloc.construct(new_node, Node(val, NULL, TNULL, TNULL, N_BLACK));
+	// 		_root = new_node;
+	// 		_size++;
+	// 		_last_node = _root;
+	// 		return ft::make_pair(iterator(_root, _last_node), true);
+	// 	}
+
+	// 	// node_pointer current = insert_node(_root, val);
+	// 	return ft::make_pair(iterator(insert_node(_root, val), _last_node), true);
+	// }
+
+
+	// iterator insert( iterator hint, const value_type &to_insert ) {
+		
+
+	// 	if (hint._node == _root || hint._node == _root->_left || hint._node == _root->_right)
+	// 		return insert_pair(to_insert).first;
+
+	// 	if (hint == end()) {
+	// 		if (_comp(_last_node->_content.first, to_insert.first)) {
+	// 			// std::cout << "hint is good";
+	// 			return iterator(insert_node(_last_node, to_insert), _last_node);
+	// 		}
+	// 		else {
+	// 			// std::cout << "hint not good";
+	// 			return insert_pair(to_insert).first;
+	// 		}
+	// 	}
+		
+	// 	node_pointer p = hint._node->_parent;
+	// 	node_pointer gp = p->_parent;
+
+	// 	if (hint == begin()) {
+	// 		if (_comp(to_insert.first, p->_content.first)) {
+	// 			// std::cout << "hint is good";
+	// 			return iterator(insert_node(hint._node, to_insert), _last_node);
+	// 		}
+	// 		else {
+	// 			// std::cout << "hint not good";
+	// 			return insert_pair(to_insert).first;
+	// 		}
+	// 	}
+
+
+	// 	// si to_insert est compri entre parent et grand parent
+	// 	if ( p && gp &&
+	// 		(( gp > p && _comp(p->_content.first, to_insert.first) 
+	// 			&& _comp(to_insert.first, gp->_content.first)) 
+	// 		||
+	// 		(p < gp && _comp(gp->_content.first, to_insert.first) 
+	// 			&& _comp(to_insert.first, p->_content.first)))) {
+	// 		std::cout << "hint is good";
+
+	// 		// node_pointer current = insert_node(hint._node, to_insert);
+	// 		return iterator(insert_node(hint._node, to_insert), _last_node);
+	// 	} else {
+	// 		std::cout << "hint not good";
+	// 		return insert_pair(to_insert).first;
+	// 	}
+	// }
+
+
+	  // Inserting a node
+  ft::pair<iterator, bool> insert(const value_type& value) {
+
+		node_pointer node = _node_alloc.allocate(1);
+		_node_alloc.construct(node, Node(value, NULL, TNULL, TNULL, N_BLACK));
+		// _root = node;
 		_size++;
+		// _last_node = _root;
+    // node_pointer node = new Node;
+    // node->_parent = NULL;
+    // node->_content = value;
+    // node->_left = TNULL;
+    // node->_right = TNULL;
+    // node->_color = 1;
 
-		// display_tree("insert before fixed");
-		fix_tree(current);
-		// display_tree("insert after fixed");
+    node_pointer y = TNULL;
+    node_pointer x = this->_root;
 
-		return current;
-	}
+    while (x != TNULL) {
+      y = x;
+      if (node->_content < x->_content) {
+        x = x->_left;
+      } else {
+        x = x->_right;
+      }
+    }
 
+    node->_parent = y;
+    if (y == NULL) {
+      _root = node;
+    } else if (node->_content < y->_content) {
+      y->_left = node;
+    } else {
+      y->_right = node;
+    }
 
-	ft::pair<iterator, bool> insert_pair(const value_type& val)
-	{
-		if (_size == 0)
-		{
-			node_pointer new_node = _node_alloc.allocate(1);
-			_node_alloc.construct(new_node, Node(val, N_BLACK));
-			_root = new_node;
-			_size++;
-			_last_node = _root;
-			return ft::make_pair(iterator(_root, _last_node), true);
-		}
+    if (node->_parent == NULL) {
+      node->_color = 0;
+      return ft::make_pair(iterator(node), true);
+    }
 
-		// node_pointer current = insert_node(_root, val);
-		return ft::make_pair(iterator(insert_node(_root, val), _last_node), true);
-	}
+    if (node->_parent->_parent == NULL) {
+      return ft::make_pair(iterator(node), true);
+    }
 
+    insertFix(node);
+		return ft::make_pair(iterator(node), true);
 
-	iterator insert( iterator hint, const value_type &to_insert ) {
-		
-
-		if (hint._node == _root || hint._node == _root->_left || hint._node == _root->_right)
-			return insert_pair(to_insert).first;
-
-		if (hint == end()) {
-			if (_comp(_last_node->_content.first, to_insert.first)) {
-				// std::cout << "hint is good";
-				return iterator(insert_node(_last_node, to_insert), _last_node);
-			}
-			else {
-				// std::cout << "hint not good";
-				return insert_pair(to_insert).first;
-			}
-		}
-		
-		node_pointer p = hint._node->_parent;
-		node_pointer gp = p->_parent;
-
-		if (hint == begin()) {
-			if (_comp(to_insert.first, p->_content.first)) {
-				// std::cout << "hint is good";
-				return iterator(insert_node(hint._node, to_insert), _last_node);
-			}
-			else {
-				// std::cout << "hint not good";
-				return insert_pair(to_insert).first;
-			}
-		}
-
-
-		// si to_insert est compri entre parent et grand parent
-		if ( p && gp &&
-			(( gp > p && _comp(p->_content.first, to_insert.first) 
-				&& _comp(to_insert.first, gp->_content.first)) 
-			||
-			(p < gp && _comp(gp->_content.first, to_insert.first) 
-				&& _comp(to_insert.first, p->_content.first)))) {
-			std::cout << "hint is good";
-
-			// node_pointer current = insert_node(hint._node, to_insert);
-			return iterator(insert_node(hint._node, to_insert), _last_node);
-		} else {
-			std::cout << "hint not good";
-			return insert_pair(to_insert).first;
-		}
-	}
+  }
 
 	template< class InputIt >
 	void insert( InputIt first, InputIt last ) {
 		while (first != last) {
-			insert_pair(*first);
+			insert(*first);
 			first++;
 		}
 	};
@@ -362,14 +413,16 @@ public:
 
 
 
-//   void deleteNodeHelper(NodePtr node, int key) {
+//   void deleteNodeHelper(node_pointer node, int key) {
 	iterator erase(iterator position) {
 		/* check validity */
+
+		std::cout << "erase : " << position->first << std::endl;
 
 		node_pointer current = _root;
 		node_pointer z = TNULL;
 		node_pointer x, y;
-		while (current != NULL) {
+		while (current != TNULL) {
 			if (current->_content.first == position->first) {
 				z = current;
 			}
@@ -386,12 +439,46 @@ public:
 
 		y = z;
 		int y_original_color = y->_color;
-		if (z->_left == NULL) {
+		if (z->_left == NULL && z->_right == NULL) {
+			if (z == _root) {
+				_root = NULL;
+			} else if (z->_parent->_left == z) {
+				z->_parent->_left = NULL;
+			} else {
+				z->_parent->_right = NULL;
+			}
+			_node_alloc.destroy(z);
+			_node_alloc.deallocate(z, 1);
+			_size--;
+			return position;
+		} else if (z->_left == NULL) {
 			x = z->_right;
-			rbTransplant(z, z->_right);
+			if (z == _root) {
+				_root = x;
+			} else if (z->_parent->_left == z) {
+				z->_parent->_left = x;
+			} else {
+				z->_parent->_right = x;
+			}
+			x->_parent = z->_parent;
+			_node_alloc.destroy(z);
+			_node_alloc.deallocate(z, 1);
+			_size--;
+			return position;
 		} else if (z->_right == NULL) {
 			x = z->_left;
-			rbTransplant(z, z->_left);
+			if (z == _root) {
+				_root = x;
+			} else if (z->_parent->_left == z) {
+				z->_parent->_left = x;
+			} else {
+				z->_parent->_right = x;
+			}
+			x->_parent = z->_parent;
+			_node_alloc.destroy(z);
+			_node_alloc.deallocate(z, 1);
+			_size--;
+			return position;
 		} else {
 			y = minimum(z->_right);
 			y_original_color = y->_color;
@@ -399,30 +486,67 @@ public:
 			if (y->_parent == z) {
 				x->_parent = y;
 			} else {
-				rbTransplant(y, y->_right);
+				if (x != NULL) {
+					x->_parent = y->_parent;
+				}
+				y->_parent->_left = x;
 				y->_right = z->_right;
-				y->_right->_parent = y;
+				z->_right->_parent = y;
 			}
-
-			rbTransplant(z, y);
+			if (z == _root) {
+				_root = y;
+			} else if (z->_parent->_left == z) {
+				z->_parent->_left = y;
+			} else {
+				z->_parent->_right = y;
+			}
+			y->_parent = z->_parent;
 			y->_left = z->_left;
-			y->_left->_parent = y;
+			z->_left->_parent = y;
 			y->_color = z->_color;
+			_node_alloc.destroy(z);
+			_node_alloc.deallocate(z, 1);
+			_size--;
+			std::cout << "fin erase" << std::endl;
+			return position;
 		}
-		_node_alloc.destroy(current);
-		_node_alloc.deallocate(current, 1);
-		if (y_original_color == N_BLACK) {
-			deleteFix(x);
-		}
-		return iterator(x, _last_node);
+		// else if (z->_left == NULL) {
+		// 	x = z->_right;
+		// 	rbTransplant(z, z->_right);
+		// } else if (z->_right == NULL) {
+		// 	x = z->_left;
+		// 	rbTransplant(z, z->_left);
+		// } else {
+		// 	y = minimum(z->_right);
+		// 	y_original_color = y->_color;
+		// 	x = y->_right;
+		// 	if (y->_parent == z) {
+		// 		x->_parent = y;
+		// 	} else {
+		// 		rbTransplant(y, y->_right);
+		// 		y->_right = z->_right;
+		// 		y->_right->_parent = y;
+		// 	}
+
+		// 	rbTransplant(z, y);
+		// 	y->_left = z->_left;
+		// 	y->_left->_parent = y;
+		// 	y->_color = z->_color;
+		// }
+		// _node_alloc.destroy(current);
+		// _node_alloc.deallocate(current, 1);
+		// if (y_original_color == N_BLACK) {
+		// 	deleteFix(x);
+		// }
+		// return iterator(x, _last_node);
 
 	}
 
 	node_pointer minimum(node_pointer node) {
-    while (node->_left != NULL) {
-      node = node->_left;
-    }
-    return node;
+	while (node->_left != TNULL) {
+	  node = node->_left;
+	}
+	return node;
   }
 
 	void erase(iterator first, iterator last) {
@@ -489,7 +613,7 @@ public:
 
 
 	/* *************************************************** */
-	/*                                                     */
+	/*               	                                      */
 	/*                      OPERATOR                       */
 	/*                                                     */
 	/* *************************************************** */
@@ -539,7 +663,7 @@ public:
 			}
 		}
 		y->_parent = x->_parent;
-		if (x->_parent == u_nullptr)
+		if (x->_parent == TNULL)
 		{
 			this->_root = y;
 		}
@@ -567,7 +691,7 @@ public:
 			}
 		}
 		y->_parent = x->_parent;
-		if (x->_parent == u_nullptr)
+		if (x->_parent == TNULL)
 		{
 			this->_root = y;
 		}
@@ -582,6 +706,52 @@ public:
 		y->_right = x;
 		x->_parent = y;
 	}
+
+	// For balancing the tree after insertion
+  void insertFix(node_pointer k) {
+		
+    node_pointer u;
+    while (k->_parent->_color == 1) {
+      if (k->_parent == k->_parent->_parent->_right) {
+        u = k->_parent->_parent->_left;
+        if (u->_color == 1) {
+          u->_color = 0;
+          k->_parent->_color = 0;
+          k->_parent->_parent->_color = 1;
+          k = k->_parent->_parent;
+        } else {
+          if (k == k->_parent->_left) {
+            k = k->_parent;
+            rightRotate(k);
+          }
+          k->_parent->_color = 0;
+          k->_parent->_parent->_color = 1;
+          leftRotate(k->_parent->_parent);
+        }
+      } else {
+        u = k->_parent->_parent->_right;
+
+        if (u->_color == 1) {
+          u->_color = 0;
+          k->_parent->_color = 0;
+          k->_parent->_parent->_color = 1;
+          k = k->_parent->_parent;
+        } else {
+          if (k == k->_parent->_right) {
+            k = k->_parent;
+            leftRotate(k);
+          }
+          k->_parent->_color = 0;
+          k->_parent->_parent->_color = 1;
+          rightRotate(k->_parent->_parent);
+        }
+      }
+      if (k == _root) {
+        break;
+      }
+    }
+    _root->_color = 0;
+  }
 
 	//fixe tree
 	node_pointer fix_tree(node_pointer c)
@@ -732,15 +902,17 @@ public:
 
 	 void rbTransplant(node_pointer u, node_pointer v) {
 		std::cout << "u : " << u->_content.first << std::endl;
+		if(v == NULL)
+			std::cout << "v == NULL " << std::endl;
 		// std::cout << "v : " << v->_content.first << std::endl;
-    if (u->_parent == NULL) {
-      _root = v;
-    } else if (u == u->_parent->_left) {
-      u->_parent->_left = v;
-    } else {
-      u->_parent->_right = v;
-    }
-    if (v->_parent) v->_parent = u->_parent;
+	if (u->_parent == NULL) {
+	  _root = v;
+	} else if (u == u->_parent->_left) {
+	  u->_parent->_left = v;
+	} else {
+	  u->_parent->_right = v;
+	}
+	if (v->_parent) v->_parent = u->_parent;
   }
 
 	/* *************************************************** */

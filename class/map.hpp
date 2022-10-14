@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 18:14:05 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/11 22:35:45 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/13 18:08:13 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,7 @@ public:
 
 	virtual ~map()
 	{
-		erase(begin(), end());
+		// erase(begin(), end());
 	};
 
 	map& operator=( const map& other )
@@ -257,11 +257,11 @@ public:
 	};
 
 	ft::pair<iterator, bool> insert( const value_type& value ) {
-		return (_tree.insert_pair(value));
+		return (_tree.insert(value));
 	}
 
 	iterator insert( iterator hint, const value_type& value ) {
-		return (_tree.insert(hint, value));
+		// return (_tree.insertFix(hint, value));
 	}
 
 	template< class InputIt >
