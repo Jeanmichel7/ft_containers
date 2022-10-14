@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 16:58:53 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/11 23:17:15 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/14 19:31:44 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,23 +104,43 @@ template <typename T, class Compare >
 
 			RB_iterator& operator++(void)
 			{
-				if (_node == NULL) {
-					_node = _last_node;
-					return (*this);
-				}
-				if (_node->_right != NULL)
+				if (_node->_right != _last_node)
 				{
 					_node = _node->_right;
-					while (_node->_left != NULL)
+					while (_node->_left != _last_node)
 						_node = _node->_left;
 				}
 				else
 				{
-					while (_node->_parent != NULL && _node->_parent->_right == _node)
+					while (_node->_parent != _last_node && _node->_parent->_right == _node)
 						_node = _node->_parent;
 					_node = _node->_parent;
 				}
 				return (*this);
+
+
+
+
+
+
+
+				// if (_node == NULL) {
+				// 	_node = _last_node;
+				// 	return (*this);
+				// }
+				// if (_node->_right != NULL)
+				// {
+				// 	_node = _node->_right;
+				// 	while (_node->_left != NULL)
+				// 		_node = _node->_left;
+				// }
+				// else
+				// {
+				// 	while (_node->_parent != NULL && _node->_parent->_right == _node)
+				// 		_node = _node->_parent;
+				// 	_node = _node->_parent;
+				// }
+				// return (*this);
 			}
 
 			RB_iterator operator++(int)
@@ -134,10 +154,10 @@ template <typename T, class Compare >
 			RB_iterator& operator--(void)
 			{
 				// std::cout << "bbabouille" << std::endl;
-				if (_node == NULL) {
-					_node = _last_node;
-					return (*this);
-				}
+				// if (_node == NULL) {
+				// 	_node = _last_node;
+				// 	return (*this);
+				// }
 				if (_node->_left != NULL)
 				{
 					_node = _node->_left;

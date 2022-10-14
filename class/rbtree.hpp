@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 12:54:45 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/13 18:21:49 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/14 19:32:22 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,8 +73,10 @@ public:
 		TNULL()
 	{
 		node_pointer new_node = _node_alloc.allocate(1);
-		_node_alloc.construct(new_node, Node(NULL, NULL, NULL, N_BLACK));
+		_node_alloc.construct(new_node, Node(NULL, TNULL, TNULL, N_BLACK));
 		TNULL = new_node;
+		_last_node = new_node;
+		_root = new_node;
 
 
 
@@ -213,7 +215,6 @@ public:
 	reverse_iterator rend() {
 		return reverse_iterator(begin());
 	}
-	
 
 	const_reverse_iterator rend() const {
 		std::cout << "const rend" << std::endl;
@@ -350,26 +351,27 @@ public:
 
 
 	  // Inserting a node
-  ft::pair<iterator, bool> insert(const value_type& value) {
+	ft::pair<iterator, bool> insert(const value_type& value) {
 
+	
 		node_pointer node = _node_alloc.allocate(1);
-		_node_alloc.construct(node, Node(value, NULL, TNULL, TNULL, N_BLACK));
-		// _root = node;
-		_size++;
-		// _last_node = _root;
-    // node_pointer node = new Node;
-    // node->_parent = NULL;
+		_node_alloc.construct(node, Node(value, NULL, TNULL, TNULL, N_RED));
+		
+		// node->_parent = NULL;
     // node->_content = value;
+		// // node->_content.second = value.second;
     // node->_left = TNULL;
     // node->_right = TNULL;
     // node->_color = 1;
+		std::cout << "inserting " << node->_content.first << std::endl;
 
-    node_pointer y = TNULL;
+    node_pointer y = NULL;
     node_pointer x = this->_root;
 
     while (x != TNULL) {
       y = x;
-      if (node->_content < x->_content) {
+			std::cout << "content: " << x->_content.first << std::endl;
+      if (node->_content.first < x->_content.first) {
         x = x->_left;
       } else {
         x = x->_right;
@@ -379,7 +381,7 @@ public:
     node->_parent = y;
     if (y == NULL) {
       _root = node;
-    } else if (node->_content < y->_content) {
+    } else if (node->_content.first < y->_content.first) {
       y->_left = node;
     } else {
       y->_right = node;
@@ -396,7 +398,6 @@ public:
 
     insertFix(node);
 		return ft::make_pair(iterator(node), true);
-
   }
 
 	template< class InputIt >
@@ -654,7 +655,7 @@ public:
 		node_pointer y = x->_right;
 		x->_right = y->_left;
 
-		// display_tree("befor left rotate");
+		display_tree("befor left rotate");
 		
 		if (y->_left != TNULL)
 		{

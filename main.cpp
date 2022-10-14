@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/14 22:19:53 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/13 18:02:55 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/14 19:06:41 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -1000,9 +1000,11 @@ int main()
 	std::pair< it_type, bool > ret_insert_value 		= map.insert(pair("b", 2));
 	 ft::pair< ft_it_type, bool > ft_ret_insert_value 	= ft_map.insert(ft_pair("b", 2));
 
+	ft_map.display_tree();
 	str_comp(ret_insert_value.first->first, ft_ret_insert_value.first->first, "insert(value(ft_pair(\"b\", 2)))");
 	str_comp(to_string(ret_insert_value.first->second), to_string(ft_ret_insert_value.first->second), "insert(value(ft_pair(\"b\", 2)))");
 
+	
 	/* insert ("a", 1) */
 	ret_insert_value 	= map.insert(pair("a", 1));
 	ft_ret_insert_value = ft_map.insert(ft_pair("a", 1));
@@ -1016,6 +1018,9 @@ int main()
 
 	str_comp(ret_insert_value.first->first, ft_ret_insert_value.first->first, "insert(value(ft_pair(\"c\", 3))) -> first");
 	str_comp(to_string(ret_insert_value.first->second), to_string(ft_ret_insert_value.first->second), "insert(value(ft_pair(\"c\", 3))) -> second");
+
+
+
 
 	/* insert ("e", 5) */
 	ret_insert_value 	= map.insert(pair("e", 5));
@@ -1035,11 +1040,20 @@ int main()
 	ret_insert_value 	= map.insert(pair("d", 4));
 	ft_ret_insert_value = ft_map.insert(ft_pair("d", 4));
 
+	// if (ret_insert_value == ft_ret_insert_value)
+	// 	std::cout << GRN "insert(value(ft_pair(\"d\", 4))) -> return value is equal" END << std::endl;
+	// else
+	// 	std::cout << RED "insert(value(ft_pair(\"d\", 4))) -> return value is not equal" END << std::endl;
 	str_comp(ret_insert_value.first->first, ft_ret_insert_value.first->first, "test doublon insert(value(ft_pair(\"d\", 4))) -> first");
 	str_comp(to_string(ret_insert_value.first->second), to_string(ft_ret_insert_value.first->second), "test doublon insert(value(ft_pair(\"d\", 4))) -> second");
+	
+	
+	
+	ft_map.display_tree();
 
 
-	/* insert many value */
+	// /* insert many value */
+	std::cout << "ok" << std::endl;
 	fill_map< std_map_str_int, pair >(&map);
 	fill_map< ft_map_str_int, ft_pair >(&ft_map);
 	for (it_type it = map.begin(); it != map.end(); it++)
@@ -1156,78 +1170,78 @@ int main()
 	/*                  INSERT(first, last)                  */
 	/*                  pair< string, int >                  */
 	/* ***************************************************** */
-	std::cout << MAG "\n\nTEST insert( first, last )" END << std::endl;
+	// std::cout << MAG "\n\nTEST insert( first, last )" END << std::endl;
 
-	std_map_str_int map_insert_f_l;
-	ft_map_str_int ft_map_insert_f_l;
+	// std_map_str_int map_insert_f_l;
+	// ft_map_str_int ft_map_insert_f_l;
 
-	/* insert(begin(), end()) */
-	map_insert_f_l.insert(map.begin(), map.end());
-	ft_map_insert_f_l.insert(ft_map.begin(), ft_map.end());
+	// /* insert(begin(), end()) */
+	// map_insert_f_l.insert(map.begin(), map.end());
+	// ft_map_insert_f_l.insert(ft_map.begin(), ft_map.end());
 
-	for (it_type it = map_insert_f_l.begin(); it != map_insert_f_l.end(); it++)
-		sstr << it->first << ":" << it->second << " ";
-	for (ft_it_type it = ft_map_insert_f_l.begin(); it != ft_map_insert_f_l.end(); it++)
-		ft_sstr << it->first << ":" << it->second << " ";
-	str_comp(sstr.str(), ft_sstr.str(), "insert( first, last )");
-	sstr.str(""); sstr.clear(); ft_sstr.str(""); ft_sstr.clear();
-	// clear map;
+	// for (it_type it = map_insert_f_l.begin(); it != map_insert_f_l.end(); it++)
+	// 	sstr << it->first << ":" << it->second << " ";
+	// for (ft_it_type it = ft_map_insert_f_l.begin(); it != ft_map_insert_f_l.end(); it++)
+	// 	ft_sstr << it->first << ":" << it->second << " ";
+	// str_comp(sstr.str(), ft_sstr.str(), "insert( first, last )");
+	// sstr.str(""); sstr.clear(); ft_sstr.str(""); ft_sstr.clear();
+	// // clear map;
 
 
-	/* insert with iterator + 3 */
-	it_type it_insert_f_l_end 		= map.begin();
-	ft_it_type ft_it_insert_f_l_end = ft_map.begin();
+	// /* insert with iterator + 3 */
+	// it_type it_insert_f_l_end 		= map.begin();
+	// ft_it_type ft_it_insert_f_l_end = ft_map.begin();
 
-	for(int i = 0; i < 3; i++) { it_insert_f_l_end++; ft_it_insert_f_l_end++; }
+	// for(int i = 0; i < 3; i++) { it_insert_f_l_end++; ft_it_insert_f_l_end++; }
 
-	map_insert_f_l.insert(map.begin(), it_insert_f_l_end);
-	ft_map_insert_f_l.insert(ft_map.begin(), ft_it_insert_f_l_end);
+	// map_insert_f_l.insert(map.begin(), it_insert_f_l_end);
+	// ft_map_insert_f_l.insert(ft_map.begin(), ft_it_insert_f_l_end);
 
-	for (it_type it = map_insert_f_l.begin(); it != map_insert_f_l.end(); it++)
-		sstr << it->first << ":" << it->second << " ";
-	for (ft_it_type it = ft_map_insert_f_l.begin(); it != ft_map_insert_f_l.end(); it++)
-		ft_sstr << it->first << ":" << it->second << " ";
+	// for (it_type it = map_insert_f_l.begin(); it != map_insert_f_l.end(); it++)
+	// 	sstr << it->first << ":" << it->second << " ";
+	// for (ft_it_type it = ft_map_insert_f_l.begin(); it != ft_map_insert_f_l.end(); it++)
+	// 	ft_sstr << it->first << ":" << it->second << " ";
 		
-	str_comp(sstr.str(), ft_sstr.str(), "insert( first, first + 3 )");
-	sstr.str(""); sstr.clear(); ft_sstr.str(""); ft_sstr.clear();
-	// clear map;
+	// str_comp(sstr.str(), ft_sstr.str(), "insert( first, first + 3 )");
+	// sstr.str(""); sstr.clear(); ft_sstr.str(""); ft_sstr.clear();
+	// // clear map;
 
 
 
-	/* insert with const iterator */
-	const_it_type 		cit_end1 		= map.begin();
-	ft_const_it_type 	ft_cit_end1 	= ft_map.begin();
-	for(int i = 0; i < 5; i++)	{cit_end1++; ft_cit_end1++;}
-	const_it_type 		cit_begin 		= map.begin();
-	ft_const_it_type 	ft_cit_begin 	= ft_map.begin();
+	// /* insert with const iterator */
+	// const_it_type 		cit_end1 		= map.begin();
+	// ft_const_it_type 	ft_cit_end1 	= ft_map.begin();
+	// for(int i = 0; i < 5; i++)	{cit_end1++; ft_cit_end1++;}
+	// const_it_type 		cit_begin 		= map.begin();
+	// ft_const_it_type 	ft_cit_begin 	= ft_map.begin();
 
-	map_insert_f_l.insert(cit_begin, cit_end1);
-	ft_map_insert_f_l.insert(ft_cit_begin, ft_cit_end1);
-	comp_map(map_insert_f_l, ft_map_insert_f_l, "insert( const_iterator, const_iterator +5 )");
-	// clear map;
+	// map_insert_f_l.insert(cit_begin, cit_end1);
+	// ft_map_insert_f_l.insert(ft_cit_begin, ft_cit_end1);
+	// comp_map(map_insert_f_l, ft_map_insert_f_l, "insert( const_iterator, const_iterator +5 )");
+	// // clear map;
 
 
-	/* insert with reverse iterator */
-	map_insert_f_l.insert(map.rbegin(), map.rend());
-	ft_map_insert_f_l.insert(ft_map.rbegin(), ft_map.rend());
-	comp_map(map_insert_f_l, ft_map_insert_f_l, "insert( reverse_iterator, reverse_iterator )");
-	// clear map;
+	// /* insert with reverse iterator */
+	// map_insert_f_l.insert(map.rbegin(), map.rend());
+	// ft_map_insert_f_l.insert(ft_map.rbegin(), ft_map.rend());
+	// comp_map(map_insert_f_l, ft_map_insert_f_l, "insert( reverse_iterator, reverse_iterator )");
+	// // clear map;
 
 	
-	/* insert with reverse iterator + 3 */
-	r_it_type 	 rit_insert_f_l 	= map.rbegin();
-	ft_r_it_type ft_rit_insert_f_l 	= ft_map.rbegin();
-	for(int i = 0; i < 3; i++) { rit_insert_f_l++; ft_rit_insert_f_l++; }
-	map_insert_f_l.insert(map.rbegin(), rit_insert_f_l);
-	ft_map_insert_f_l.insert(ft_map.rbegin(), ft_rit_insert_f_l);
-	comp_map(map_insert_f_l, ft_map_insert_f_l, "insert( reverse_iterator, reverse_iterator )");
+	// /* insert with reverse iterator + 3 */
+	// r_it_type 	 rit_insert_f_l 	= map.rbegin();
+	// ft_r_it_type ft_rit_insert_f_l 	= ft_map.rbegin();
+	// for(int i = 0; i < 3; i++) { rit_insert_f_l++; ft_rit_insert_f_l++; }
+	// map_insert_f_l.insert(map.rbegin(), rit_insert_f_l);
+	// ft_map_insert_f_l.insert(ft_map.rbegin(), ft_rit_insert_f_l);
+	// comp_map(map_insert_f_l, ft_map_insert_f_l, "insert( reverse_iterator, reverse_iterator )");
 
 
 
 
-	/* compare maps */
-	comp_map(map, ft_map, "compare map - ft_map");
-	comp_map(map_insert_f_l, ft_map_insert_f_l, "compare map_insert_f_l - ft_map_insert_f_l");
+	// /* compare maps */
+	// comp_map(map, ft_map, "compare map - ft_map");
+	// comp_map(map_insert_f_l, ft_map_insert_f_l, "compare map_insert_f_l - ft_map_insert_f_l");
 
 
 
@@ -1248,13 +1262,17 @@ int main()
 	/* end() */
 	it 		= map.end(); it--;
 	ft_it 	= ft_map.end(); ft_it--;
+	std::cout << "end() - 1: " << it->first << " " << it->second << std::endl;
+	std::cout << "ft_end() - 1: " << ft_it->first << " " << ft_it->second << std::endl;
+
 	sstr_comp< it_type, ft_it_type >(it, ft_it, "end()--");
 
 	// it 		= map.end(); it++;
 	// ft_it 	= ft_map.end(); ft_it++;
 	// sstr_comp< it_type, ft_it_type >(it, ft_it, "end()++");
 
-																						// gerer test segfault
+	// gerer test segfault
+
 	// it = map.end(); it++; it++;
 	// ft_it = ft_map.end(); ft_it++; ft_it++;
 	// sstr_comp< it_type, ft_it_type >(it, ft_it, "end()++");
@@ -1497,7 +1515,7 @@ int main()
 	
 
 
-	ft_map.display_tree();
+	// ft_map.display_tree();
 
 	// ft_map.clear();
 
