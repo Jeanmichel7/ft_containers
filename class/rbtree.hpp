@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 12:54:45 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/14 19:46:18 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/15 12:45:00 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -330,6 +330,7 @@ public:
 
 			// node_pointer current = insert_node(hint._node, to_insert);
 			return iterator(insert_node(hint._node, to_insert), _last_node);
+
 		} else {
 			std::cout << "hint not good";
 			return insert_pair(to_insert).first;
@@ -344,10 +345,20 @@ public:
 		}
 	};
 
+
+
+
+
 	void clear();
+
+
+
+
 
 	void erase(iterator position) {
 		node_pointer current = _root;
+		node_pointer tmp;
+
 
 		while(current != NULL) {
 			if (_comp(position->first, current->_content.first))
@@ -365,6 +376,7 @@ public:
 		// std::cout << "current->left: " << current->_left->_content.first << std::endl;
 
 		if (current->_left == NULL && current->_right == NULL) {
+			std::cout << "\nno child" << std::endl;
 			if (current->_parent == NULL) {
 				_root = NULL;
 				_last_node = NULL;
@@ -373,8 +385,10 @@ public:
 				current->_parent->_left = NULL;
 			else
 				current->_parent->_right = NULL;
+			tmp = current->_parent;
 		}
 		else if (current->_left == NULL || current->_right == NULL) {
+			std::cout << "\none child" << std::endl;
 			node_pointer child = current->_left ? current->_left : current->_right;
 			if (current->_parent == NULL) {
 				_root = child;
@@ -385,20 +399,44 @@ public:
 			else
 				current->_parent->_right = child;
 			child->_parent = current->_parent;
+			tmp = child;
 		}
 		else {
+			std::cout << "\ntwo child" << std::endl;
 			node_pointer successor = current->_right;
 			while (successor->_left != NULL)
 				successor = successor->_left;
 
-			current->_content = successor->_content;
+			current = successor;
 			if (successor->_parent->_left == successor)
 				successor->_parent->_left = successor->_right;
 			else
 				successor->_parent->_right = successor->_right;
 			if (successor->_right != NULL)
 				successor->_right->_parent = successor->_parent;
+			tmp = successor->_parent;
 		}
+
+
+
+		std::cout << "current avt: " << current->_content.first << std::endl;
+		fix_tree(current);
+		std::cout << "current apr: " << current->_content.first << std::endl;
+
+
+		// node_pointer current2 = _root;
+
+
+		// while(current2 != NULL) {
+		// 	if (_comp(position->first, current2->_content.first))
+		// 		current2 = current2->_left;
+		// 	else if (_comp(current2->_content.first, position->first))
+		// 		current2 = current2->_right;
+		// 	else
+		// 		break;
+		// }
+		// if (current2 == NULL)
+		// 	return;
 
 		_node_alloc.destroy(current);
 		_node_alloc.deallocate(current, 1);
@@ -407,9 +445,8 @@ public:
 		if (_size == 0)
 			_root = NULL;
 		
-		fix_tree(_root);
-
-		// display_tree("erase");
+		// std::cout << "cest passe" << std::endl;
+		display_tree("erase");
 
 		
 
@@ -635,6 +672,68 @@ public:
 
 		return c;
 	}
+
+
+	// For balancing the tree after deletion
+  void deleteFix(node_pointer x) {
+    node_pointer s;
+    while (x != _root && x->_color == 0) {
+      if (x == x->_parent->_left) {
+        s = x->_parent->_right;
+        if (s->_color == 1) {
+          s->_color = 0;
+          x->_parent->_color = 1;
+          leftRotate(x->_parent);
+          s = x->_parent->_right;
+        }
+
+        if (s->_left->_color == 0 && s->_right->_color == 0) {
+          s->_color = 1;
+          x = x->_parent;
+        } else {
+          if (s->_right->_color == 0) {
+            s->_left->_color = 0;
+            s->_color = 1;
+            rightRotate(s);
+            s = x->_parent->_right;
+          }
+
+          s->_color = x->_parent->_color;
+          x->_parent->_color = 0;
+          s->_right->_color = 0;
+          leftRotate(x->_parent);
+          x = _root;
+        }
+      } else {
+        s = x->_parent->_left;
+        if (s->_color == 1) {
+          s->_color = 0;
+          x->_parent->_color = 1;
+          rightRotate(x->_parent);
+          s = x->_parent->_left;
+        }
+
+        if (s->_right->_color == 0 && s->_right->_color == 0) {
+          s->_color = 1;
+          x = x->_parent;
+        } else {
+          if (s->_left->_color == 0) {
+            s->_right->_color = 0;
+            s->_color = 1;
+            leftRotate(s);
+            s = x->_parent->_left;
+          }
+
+          s->_color = x->_parent->_color;
+          x->_parent->_color = 0;
+          s->_left->_color = 0;
+          rightRotate(x->_parent);
+          x = _root;
+        }
+      }
+    }
+    x->_color = 0;
+  }
 
 
 

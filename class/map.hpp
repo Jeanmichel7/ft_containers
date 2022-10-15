@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Map.hpp                                            :+:      :+:    :+:   */
+/*   map.hpp                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 18:14:05 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/14 19:37:55 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/15 12:42:04 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -268,7 +268,7 @@ public:
 	};
 
 	void erase( iterator pos ) {
-		return (_tree.erase(pos));
+		_tree.erase(pos);
 	}
 
 	void erase( iterator first, iterator last );

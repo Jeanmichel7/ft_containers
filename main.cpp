@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/14 22:19:53 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/14 19:37:09 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/15 12:43:06 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,24 +124,24 @@ void	comp_map( M1 &map, M2 &ft_map, std::string msg) {
 template < class T_map, class T_pair>
 void fill_map(T_map *map) {
 	map->insert(T_pair("g", 1));
-	map->insert(T_pair("h", 1));
-	map->insert(T_pair("i", 1));
-	map->insert(T_pair("j", 1));
-	map->insert(T_pair("k", 1));
-	map->insert(T_pair("l", 1));
-	map->insert(T_pair("m", 1));
-	map->insert(T_pair("n", 1));
-	map->insert(T_pair("o", 1));
-	map->insert(T_pair("p", 1));
-	map->insert(T_pair("q", 1));
-	map->insert(T_pair("r", 1));
-	map->insert(T_pair("s", 1));
-	map->insert(T_pair("t", 1));
-	map->insert(T_pair("u", 1));
-	map->insert(T_pair("v", 1));
-	map->insert(T_pair("w", 1));
-	map->insert(T_pair("x", 1));
-	map->insert(T_pair("y", 1));
+	map->insert(T_pair("h", 2));
+	map->insert(T_pair("i", 3));
+	map->insert(T_pair("j", 4));
+	map->insert(T_pair("k", 5));
+	map->insert(T_pair("l", 6));
+	map->insert(T_pair("m", 7));
+	map->insert(T_pair("n", 8));
+	map->insert(T_pair("o", 9));
+	map->insert(T_pair("p", 10));
+	map->insert(T_pair("q", 11));
+	map->insert(T_pair("r", 12));
+	map->insert(T_pair("s", 13));
+	map->insert(T_pair("t", 14));
+	map->insert(T_pair("u", 15));
+	map->insert(T_pair("v", 16));
+	map->insert(T_pair("w", 17));
+	map->insert(T_pair("x", 18));
+	map->insert(T_pair("y", 19));
 	// map->insert(T_pair("aa", 1));
 	// map->insert(T_pair("ab", 1));
 	// map->insert(T_pair("za", 1));
@@ -1072,15 +1072,15 @@ int main()
 
 
 	/* insert(begin(), 1) */
-	it_insert_hint 		= map.insert(map.begin(), pair("AA", 1));
-	ft_it_insert_hint 	= ft_map.insert(ft_map.begin(), ft_pair("AA", 1));
+	it_insert_hint 		= map.insert(map.begin(), pair("AA", 10));
+	ft_it_insert_hint 	= ft_map.insert(ft_map.begin(), ft_pair("AA", 10));
 
 	str_comp(it_insert_hint->first, ft_it_insert_hint->first, "insert(begin(), value(ft_pair(\"z\", 1))) -> first");
 	str_comp(to_string(it_insert_hint->second), to_string(ft_it_insert_hint->second), "insert(begin(), value(ft_pair(\"z\", 1))) -> second");
 
 	/* insert(begin(), "z") */
-	it_insert_hint		= map.insert(map.begin(), pair("yz", 1));
-	ft_it_insert_hint 	= ft_map.insert(ft_map.begin(), ft_pair("yz", 1));
+	it_insert_hint		= map.insert(map.begin(), pair("yz", 11));
+	ft_it_insert_hint 	= ft_map.insert(ft_map.begin(), ft_pair("yz", 11));
 
 	str_comp(it_insert_hint->first, ft_it_insert_hint->first, "insert(begin(), value(ft_pair(\"z\", 1))) -> first");
 	str_comp(to_string(it_insert_hint->second), to_string(ft_it_insert_hint->second), "insert(begin(), value(ft_pair(\"z\", 1))) -> second");
@@ -1089,22 +1089,22 @@ int main()
 
 
 	/* insert(end(), 1) */
-	it_insert_hint		= map.insert(map.end(), pair("z", 1));
-	ft_it_insert_hint 	= ft_map.insert(ft_map.end(), ft_pair("z", 1));
+	it_insert_hint		= map.insert(map.end(), pair("z", 12));
+	ft_it_insert_hint 	= ft_map.insert(ft_map.end(), ft_pair("z", 12));
 
 	str_comp(it_insert_hint->first, ft_it_insert_hint->first, "insert(end(), value(ft_pair(\"z\", 1))) -> first");
 	str_comp(to_string(it_insert_hint->second), to_string(ft_it_insert_hint->second), "insert(end(), value(ft_pair(\"z\", 1))) -> second");
 
 	/* insert(end(), "a") */
-	it_insert_hint 		= map.insert(map.end(), pair("za", 1));
-	ft_it_insert_hint 	= ft_map.insert(ft_map.end(), ft_pair("za", 1));
+	it_insert_hint 		= map.insert(map.end(), pair("za", 13));
+	ft_it_insert_hint 	= ft_map.insert(ft_map.end(), ft_pair("za", 13));
 
 	str_comp(it_insert_hint->first, ft_it_insert_hint->first, "insert(end(), value(ft_pair(\"za\", 1))) -> first");
 	str_comp(to_string(it_insert_hint->second), to_string(ft_it_insert_hint->second), "insert(end(), value(ft_pair(\"za\", 1))) -> second");
 
 	/* insert(end(), "z") */
-	it_insert_hint 		= map.insert(map.end(), pair("c", 1));
-	ft_it_insert_hint 	= ft_map.insert(ft_map.end(), ft_pair("c", 1));
+	it_insert_hint 		= map.insert(map.end(), pair("c", 15));
+	ft_it_insert_hint 	= ft_map.insert(ft_map.end(), ft_pair("c", 15));
 
 	str_comp(it_insert_hint->first, ft_it_insert_hint->first, "insert(end(), value(ft_pair(\"c\", 1))) -> first");
 	str_comp(to_string(it_insert_hint->second), to_string(ft_it_insert_hint->second), "insert(end(), value(ft_pair(\"c\", 1))) -> second");
@@ -1491,7 +1491,7 @@ int main()
 	
 
 
-	ft_map.display_tree();
+	// ft_map.display_tree();
 
 
 	/* ***************************************************** */
@@ -1502,10 +1502,40 @@ int main()
 	/* erase("a") */
 	map.erase(map.begin());
 	ft_map.erase(ft_map.begin());
-
-	
-
 	ft_map.display_tree();
+	comp_map(map, ft_map, "erase begin()");
+
+
+	/* erase("inexist") */
+	// map.erase(map.find("inexist"));
+	// ft_map.erase(ft_map.find("inexist"));
+	// comp_map(map, ft_map, "erase find(\"inexist\")");
+
+	/* std::map SEGV */
+	// map.erase(map.end());
+	// ft_map.erase(ft_map.end());
+	// comp_map(map, ft_map, "erase end()");
+
+	it = map.end(); it--;
+	ft_it = ft_map.end(); ft_it--;
+	map.erase(it);
+	ft_map.erase(ft_it);
+	ft_map.display_tree();
+	comp_map(map, ft_map, "erase end()--");
+
+
+	/* erase("za") */
+	map.erase(map.find("z"));
+	ft_map.erase(ft_map.find("z"));
+	ft_map.display_tree();
+	comp_map(map, ft_map, "erase find(\"z\")");
+
+	/* erase("m") */
+	map.erase(map.find("g"));
+	ft_map.erase(ft_map.find("g"));
+	ft_map.display_tree();
+	comp_map(map, ft_map, "erase find(\"g\")");
+
 
 
 
