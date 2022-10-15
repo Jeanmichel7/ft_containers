@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 12:54:45 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/15 12:45:00 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/15 16:54:31 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,37 +100,38 @@ public:
 	/* Destructor */
 	~RedBlackTree()
 	{
-		node_pointer current = _root;
-		node_pointer prev = NULL;
+		clear();
+		// node_pointer current = _root;
+		// node_pointer prev = NULL;
 
-		while (current != NULL)
-		{
-			if (current->_left) {
-				current = current->_left;
-			}
-			else if (current->_right) {
-				current = current->_right;
-			}
-			else if (current == _root)
-			{
-				_node_alloc.destroy(_root);
-				_node_alloc.deallocate(_root, 1);
+		// while (current != NULL)
+		// {
+		// 	if (current->_left) {
+		// 		current = current->_left;
+		// 	}
+		// 	else if (current->_right) {
+		// 		current = current->_right;
+		// 	}
+		// 	else if (current == _root)
+		// 	{
+		// 		_node_alloc.destroy(_root);
+		// 		_node_alloc.deallocate(_root, 1);
 
-				// _node_alloc.destroy(_last_node);
-				// _node_alloc.deallocate(_last_node, 1);
-				return;
-			}
-			if ((current->_left == NULL && current->_right == NULL)) {
-				prev = current;
-				current = current->_parent;
-				if (current->_left == prev)
-					current->_left = NULL;
-				else if (current->_right == prev)
-					current->_right = NULL;
-				_node_alloc.destroy(prev);
-				_node_alloc.deallocate(prev, 1);
-			}
-		}
+		// 		// _node_alloc.destroy(_last_node);
+		// 		// _node_alloc.deallocate(_last_node, 1);
+		// 		return;
+		// 	}
+		// 	if ((current->_left == NULL && current->_right == NULL)) {
+		// 		prev = current;
+		// 		current = current->_parent;
+		// 		if (current->_left == prev)
+		// 			current->_left = NULL;
+		// 		else if (current->_right == prev)
+		// 			current->_right = NULL;
+		// 		_node_alloc.destroy(prev);
+		// 		_node_alloc.deallocate(prev, 1);
+		// 	}
+		// }
 	}
 
 
@@ -159,6 +160,8 @@ public:
 
 	iterator begin() {
 		node_pointer current = _root;
+		if (_root == NULL)
+			return iterator(_last_node);
 		while (current->_left != NULL)
 			current = current->_left;
 		return iterator(current, _last_node);
@@ -224,7 +227,9 @@ public:
 		return _size;
 	}
 
-	bool empty() const;
+	bool empty() const {
+		return _size == 0;
+	}
 
 
 
@@ -349,7 +354,9 @@ public:
 
 
 
-	void clear();
+	void clear() {
+		erase(begin(), end());
+	}
 
 
 
@@ -357,8 +364,10 @@ public:
 
 	void erase(iterator position) {
 		node_pointer current = _root;
-		node_pointer tmp;
+		// node_pointer tmp;
 
+		// std::cout << "\npositio to del : " << position->first << std::endl;
+		// display_tree("erase");
 
 		while(current != NULL) {
 			if (_comp(position->first, current->_content.first))
@@ -376,7 +385,7 @@ public:
 		// std::cout << "current->left: " << current->_left->_content.first << std::endl;
 
 		if (current->_left == NULL && current->_right == NULL) {
-			std::cout << "\nno child" << std::endl;
+			// std::cout << "\nno child" << std::endl;
 			if (current->_parent == NULL) {
 				_root = NULL;
 				_last_node = NULL;
@@ -385,10 +394,9 @@ public:
 				current->_parent->_left = NULL;
 			else
 				current->_parent->_right = NULL;
-			tmp = current->_parent;
 		}
 		else if (current->_left == NULL || current->_right == NULL) {
-			std::cout << "\none child" << std::endl;
+			// std::cout << "\none child" << std::endl;
 			node_pointer child = current->_left ? current->_left : current->_right;
 			if (current->_parent == NULL) {
 				_root = child;
@@ -399,62 +407,94 @@ public:
 			else
 				current->_parent->_right = child;
 			child->_parent = current->_parent;
-			tmp = child;
+			// delete_fix_tree(child);
 		}
 		else {
-			std::cout << "\ntwo child" << std::endl;
+			// std::cout << "\ntwo child" << std::endl;
 			node_pointer successor = current->_right;
 			while (successor->_left != NULL)
 				successor = successor->_left;
 
-			current = successor;
-			if (successor->_parent->_left == successor)
+			if (successor->_parent != current) {
 				successor->_parent->_left = successor->_right;
+				if (successor->_right != NULL)
+					successor->_right->_parent = successor->_parent;
+				successor->_right = current->_right;
+				current->_right->_parent = successor;
+			}
+			successor->_parent = current->_parent;
+			if (current->_parent == NULL)
+				_root = successor;
+			else if (current->_parent->_left == current)
+				current->_parent->_left = successor;
 			else
-				successor->_parent->_right = successor->_right;
-			if (successor->_right != NULL)
-				successor->_right->_parent = successor->_parent;
-			tmp = successor->_parent;
+				current->_parent->_right = successor;
+			successor->_left = current->_left;
+			current->_left->_parent = successor;
+			delete_fix_tree(successor);
 		}
 
-
-
-		std::cout << "current avt: " << current->_content.first << std::endl;
-		fix_tree(current);
-		std::cout << "current apr: " << current->_content.first << std::endl;
-
-
-		// node_pointer current2 = _root;
-
-
-		// while(current2 != NULL) {
-		// 	if (_comp(position->first, current2->_content.first))
-		// 		current2 = current2->_left;
-		// 	else if (_comp(current2->_content.first, position->first))
-		// 		current2 = current2->_right;
-		// 	else
-		// 		break;
-		// }
-		// if (current2 == NULL)
-		// 	return;
+		// display_tree("befor fix");
+		// fix_tree(_root);
+		// display_tree("after fix");
 
 		_node_alloc.destroy(current);
 		_node_alloc.deallocate(current, 1);
 		_size--;
 
-		if (_size == 0)
-			_root = NULL;
 		
-		// std::cout << "cest passe" << std::endl;
-		display_tree("erase");
-
 		
 
-	
 
+
+		// 	if (successor->_parent->_left == successor)
+		// 		successor->_parent->_left = successor->_right;
+		// 	else
+		// 		successor->_parent->_right = successor->_right;
+		// 	if (successor->_right != NULL)
+		// 		successor->_right->_parent = successor->_parent;
+		// 	tmp = successor->_parent;
+		// }
+
+		// display_tree("befor fix");
+
+		// fix_tree(current);
+		// // delete_fix_tree(tmp);
+
+		// display_tree("after fix");
+
+
+		// // _node_alloc.destroy(current);
+		// // _node_alloc.deallocate(current, 1);
+		// _size--;
+
+		// if (_size == 0)
+		// 	_root = NULL;
+
+		// // std::cout << "cest passe" << std::endl;
+		// // display_tree("erase");
+
+	};
+
+	void erase(iterator first, iterator last) {
+		iterator tmp = first;
+		iterator tmp_last = last;
+		tmp_last--;
+		
+		while (first != last) {
+			// std::cout << "erase(" << first->first << ")" << std::endl;
+			iterator tmp = first;
+			if (tmp != tmp_last) {
+				tmp++;
+				erase(first);
+				first = tmp;
+			}
+			if (tmp == tmp_last) {
+				erase(first);
+				break;
+			}
+		}
 	}
-
-	void erase(iterator first, iterator last);
 
 	void erase(value_type to_erase);
 
@@ -554,7 +594,7 @@ public:
 
 		// display_tree("befor left rotate");
 		
-		if (y->_left != TNULL)
+		if (y->_left != NULL)
 		{
 			if (y->_left && y->_left->_parent) {
 				y->_left->_parent = x;
@@ -582,7 +622,7 @@ public:
 		// std::cout << "right rotate" << std::endl;
 		node_pointer y = x->_left;
 		x->_left = y->_right;
-		if (y->_right != TNULL)
+		if (y->_right != NULL)
 		{
 			if (y->_right && y->_right->_parent) {
 				y->_right->_parent = x;
@@ -675,8 +715,9 @@ public:
 
 
 	// For balancing the tree after deletion
-  void deleteFix(node_pointer x) {
+  void delete_fix_tree(node_pointer x) {
     node_pointer s;
+		// std::cout << "del fix current : " << x->_content.first << std::endl;
     while (x != _root && x->_color == 0) {
       if (x == x->_parent->_left) {
         s = x->_parent->_right;
@@ -733,6 +774,12 @@ public:
       }
     }
     x->_color = 0;
+
+		// set last node
+		node_pointer c = _root;
+		while (c->_right != NULL)
+			c = c->_right;
+		_last_node = c;
   }
 
 

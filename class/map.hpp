@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 18:14:05 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/15 12:42:04 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/15 16:44:34 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -235,7 +235,9 @@ public:
 	/*                                                     */
 	/* *************************************************** */
 
-	bool empty() const;
+	bool empty() const {
+		return (_tree.empty());
+	}
 
 	size_type size() const {
 		return (_tree.size());
@@ -271,7 +273,9 @@ public:
 		_tree.erase(pos);
 	}
 
-	void erase( iterator first, iterator last );
+	void erase( iterator first, iterator last ) {
+		_tree.erase(first, last);
+	}
 
 	size_type erase( const Key& key );
 
