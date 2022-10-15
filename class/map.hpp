@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 18:14:05 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/15 16:44:34 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/15 19:52:50 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ public:
 
 	typedef Key												key_type;
 	typedef T												mapped_type;
-	typedef typename ft::pair<const Key, T>					value_type;
+	typedef typename ft::pair<Key, T>					value_type;
 	typedef typename std::size_t							size_type;
 	typedef typename std::ptrdiff_t							difference_type;
 	typedef Compare											key_compare;
@@ -123,10 +123,7 @@ public:
 		insert(other.begin(), other.end());
 	};
 
-	virtual ~map()
-	{
-		
-	};
+	~map(){	};
 
 	map& operator=( const map& other )
 	{
@@ -254,7 +251,9 @@ public:
 	/*                                                     */
 	/* *************************************************** */
 
-	void clear();
+	void clear() {
+		_tree.clear();
+	}
 
 	ft::pair<iterator, bool> insert( const value_type& value ) {
 		return (_tree.insert_pair(value));

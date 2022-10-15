@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/14 22:19:53 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/15 16:56:03 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/15 20:07:15 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -1498,13 +1498,18 @@ int main()
 	/*                      erase(value)                     */
 	/*                  pair< string, int >                  */
 	/* ***************************************************** */
-	std::cout << MAG "\n\nTEST erase(value)" END << std::endl;
+	std::cout << MAG "\n\nTEST erase(pos)" END << std::endl;
+
+	ft_map.display_tree();
+
 
 	/* erase("a") */
+	std::cout << "test erase begin()" << std::endl;
 	map.erase(map.begin());
 	ft_map.erase(ft_map.begin());
 	// ft_map.display_tree();
 	comp_map(map, ft_map, "erase begin()");
+	ft_map.display_tree();
 
 
 	/* erase("inexist") */
@@ -1517,31 +1522,106 @@ int main()
 	// ft_map.erase(ft_map.end());
 	// comp_map(map, ft_map, "erase end()");
 
-	it = map.end(); it--;
-	ft_it = ft_map.end(); ft_it--;
-	map.erase(it);
-	ft_map.erase(ft_it);
-	// ft_map.display_tree();
-	comp_map(map, ft_map, "erase end()--");
+
+	// it = map.end(); it--;
+	// ft_it = ft_map.end(); ft_it--;
+	// map.erase(it);
+	// ft_map.erase(ft_it);
+	// // ft_map.display_tree();
+	// comp_map(map, ft_map, "erase end()--");
 
 
-	/* erase("za") */
-	map.erase(map.find("z"));
-	ft_map.erase(ft_map.find("z"));
-	// ft_map.display_tree();
-	comp_map(map, ft_map, "erase find(\"z\")");
+	// /* erase("z") */
+	// map.erase(map.find("z"));
+	// ft_map.erase(ft_map.find("z"));
+	// // ft_map.display_tree();
+	// comp_map(map, ft_map, "erase find(\"z\")");
 
-	/* erase("m") */
+	/* erase("n")  */
+	map.erase(map.find("n"));
+	ft_map.erase(ft_map.find("n"));
+	comp_map(map, ft_map, "erase find(\"n\")");
+	ft_map.display_tree();
+
+
+
+	/* erase("g") */
+	map.erase(map.find("d"));
+	ft_map.erase(ft_map.find("d"));
+	comp_map(map, ft_map, "erase find(\"d\")");
+	ft_map.display_tree();
+
+	/*erase q*/
+	map.erase(map.find("q"));
+	ft_map.erase(ft_map.find("q"));
+	comp_map(map, ft_map, "erase find(\"q\")");
+	ft_map.display_tree();
+
+	/* erase("AA") */
+	map.erase(map.find("AA"));
+	ft_map.erase(ft_map.find("AA"));
+	comp_map(map, ft_map, "erase find(\"AA\")");
+	ft_map.display_tree();
+
+	/* erase("a") */
+	map.erase(map.find("a"));
+	ft_map.erase(ft_map.find("a"));
+	comp_map(map, ft_map, "erase find(\"a\")");
+	ft_map.display_tree();
+
+	/* erase c */
+	map.erase(map.find("c"));
+	ft_map.erase(ft_map.find("c"));
+	comp_map(map, ft_map, "erase find(\"c\")");
+	ft_map.display_tree();
+
+	/* erase "b" */
+	map.erase(map.find("b"));
+	ft_map.erase(ft_map.find("b"));
+	comp_map(map, ft_map, "erase find(\"b\")");
+	ft_map.display_tree();
+
+	/* erase("e") */
+	map.erase(map.find("e"));
+	ft_map.erase(ft_map.find("e"));
+	comp_map(map, ft_map, "erase find(\"e\")");
+	ft_map.display_tree();
+
+	/* erase("g") */
 	map.erase(map.find("g"));
 	ft_map.erase(ft_map.find("g"));
-	// ft_map.display_tree();
 	comp_map(map, ft_map, "erase find(\"g\")");
+	ft_map.display_tree();
+
+	/* erase("h") */
+	map.erase(map.find("h"));
+	ft_map.erase(ft_map.find("h"));
+	comp_map(map, ft_map, "erase find(\"h\")");
+	ft_map.display_tree();
+
+
 
 	/* erase("i") */
 	map.erase(map.find("i"));
 	ft_map.erase(ft_map.find("i"));
-	// ft_map.display_tree();
 	comp_map(map, ft_map, "erase find(\"i\")");
+	ft_map.display_tree();
+
+	it = map.begin();
+	ft_it = ft_map.begin();
+	while (it != map.end())
+	{
+		std::cout << it->first << " " << it->second << std::endl;
+		it++;
+	}
+
+	it = map.end();
+	ft_it = ft_map.end();
+	it--;
+	ft_it--;
+	sstr_comp< it_type, ft_it_type >(it, ft_it, "end()--");
+
+
 
 
 
@@ -1555,45 +1635,93 @@ int main()
 	/*                  erase(first, last)                   */
 	/*                  pair< string, int >                  */
 	/* ***************************************************** */
-	std::cout << MAG "\n\nTEST erase(first, last)" END << std::endl;
+	// std::cout << MAG "\n\nTEST erase(first, last)" END << std::endl;
 
-	/* erase begin() -> begin() + 1*/
-	it_type 		it_erase 		= map.begin();
-	ft_it_type 	ft_it_erase = ft_map.begin();
+	// ft_map.display_tree();
 
-	for(int  i =0; i < 5; i++) { it_erase++; ft_it_erase++;	}
+	// /* erase begin() -> begin() + 5*/
+	// it_type 		it_erase 		= map.begin();
+	// ft_it_type 	ft_it_erase = ft_map.begin();
 
-	map.erase(map.begin(), it_erase);
-	ft_map.erase(ft_map.begin(), ft_it_erase);
-	comp_map(map, ft_map, "erase(begin(), begin()++)");
+	// for(int  i =0; i < 5; i++) { it_erase++; ft_it_erase++;	}
+
+	// map.erase(map.begin(), it_erase);
+	// ft_map.erase(ft_map.begin(), ft_it_erase);
+	// comp_map(map, ft_map, "erase(begin(), begin()++)");
+
+	// ft_map.display_tree();
 
 
-	/* erase begin() + 5 -> end() - 5 */
+
+
+
+
+
+
+
+
+
+
+
+
+	// /* erase begin() + 5 -> end() - 5 */
 	// it_type 		it_erase_begin 		= map.begin();
 	// ft_it_type 	ft_it_erase_begin = ft_map.begin();
 	// for(int i = 0; i < 5; i++) { it_erase_begin++; ft_it_erase_begin++;	}
 
 	// it_type 		it_erase_end 			= map.end();
 	// ft_it_type 	ft_it_erase_end 	= ft_map.end();
-	// for(int i = 0; i < 2; i++) { it_erase_end--; ft_it_erase_end--;	}
+	// for(int i = 0; i < 5; i++) { it_erase_end--; ft_it_erase_end--;	}
 
 	// map.erase(it_erase_begin, it_erase_end);
 	// ft_map.erase(ft_it_erase_begin, ft_it_erase_end);
 	// comp_map(map, ft_map, "erase(begin() + 5, end() - 5)");
 
+	// ft_map.display_tree();
 
 
-	/* erase begin() -> end() */
-	map.erase(map.begin(), map.end());
-	ft_map.erase(ft_map.begin(), ft_map.end());
-	comp_map(map, ft_map, "erase(begin(), end())");
+	// /* erase begin() -> end() */
+	// map.erase(map.begin(), map.end());
+	// ft_map.erase(ft_map.begin(), ft_map.end());
+	// comp_map(map, ft_map, "erase(begin(), end())");
 
-	/* test empty */
-	if (map.empty() && ft_map.empty())
-		std::cout << GRN "[OK] " END ;
-	else 
-		std::cout << RED "[KO]" END << " erase(begin(), end())" << std::endl;
+	// /* test empty */
+	// if (map.empty() && ft_map.empty())
+	// 	std::cout << GRN "[OK] " END ;
+	// else 
+	// 	std::cout << RED "[KO]" END << " erase(begin(), end())" << std::endl;
 	
+
+
+
+
+
+
+
+
+	// map.clear();
+	// ft_map.clear();
+	// comp_map(map, ft_map, "clear()");
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 // 	/* test constructor copy */
