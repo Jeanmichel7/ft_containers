@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 12:54:45 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/15 20:05:02 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/16 02:54:57 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,7 @@ public:
 	/* Destructor */
 	~RedBlackTree()
 	{
+		
 		node_pointer current = _root;
 		node_pointer prev = NULL;
 
@@ -354,7 +355,9 @@ public:
 
 
 	void clear() {
-		erase(begin(), end());
+		while (begin() != end())
+			erase(begin());
+		// erase(begin(), end());
 	}
 
 
@@ -362,6 +365,7 @@ public:
 
 
 	void erase(iterator position) {
+			display_tree("---------------------befor delete---------------------");
 		node_pointer current = _root;
 		// node_pointer tmp;
 
@@ -377,9 +381,10 @@ public:
 				break;
 		}
 
-		if (current == NULL)
+		if (current == NULL) {
+			std::cout << "not found" << std::endl;
 			return;
-
+		}
 		std::cout << "position to del : " << current->_content.first << std::endl;
 		// std::cout << "current->left: " << current->_left->_content.first << std::endl;
 
@@ -394,6 +399,8 @@ public:
 			else
 				current->_parent->_right = NULL;
 			// delete_fix_tree(current);
+			// display_tree("befor modify");
+
 		}
 		else if (current->_left == NULL || current->_right == NULL) {
 			std::cout << "\none child" << std::endl;
@@ -408,6 +415,7 @@ public:
 				current->_parent->_right = child;
 			child->_parent = current->_parent;
 			// fix_tree(child);
+			// display_tree("befor modify");
 			delete_fix_tree(child);
 
 		}
@@ -437,6 +445,8 @@ public:
 			successor->_parent = current->_parent;
 			successor->_left = current->_left;
 			current->_left->_parent = successor;
+			// display_tree("befor modify");
+
 			fix_tree(successor);
 		}
 
@@ -451,6 +461,7 @@ public:
 		_size--;
 
 		
+		// display_tree("after delete");
 		
 		
 
@@ -498,26 +509,32 @@ public:
 	};
 
 	void erase(iterator first, iterator last) {
-		iterator tmp = first;
-		iterator tmp_last = last;
-		tmp_last--;
+
+
+
+		while (first != last)
+			erase(first);
+
+
+
+
+
+		// iterator next = first;
+		// next++;
 		
-		while (first != last) {
-			std::cout << "erase(" << first->first << ")" << std::endl;
-			iterator tmp = first;
-			if (tmp != tmp_last) {
-				tmp++;
-				if (tmp != NULL) {
-					erase(first);
-					first = tmp;
-				}
-			}
-			if (tmp == tmp_last) {
-				erase(first);
-				break;
-			}
-		}
+		// while (next != last ) {
+		// 	std::cout << "erase(" << first->first << ")" << std::endl;
+
+		// 	erase(first);
+		// 	first = next;
+		// 	next++;
+		// }
+		// std::cout << "erase last (" << first->first << ")" << std::endl;
+		// erase(first);
+			
+		// erase(first);
 	}
+	
 
 
 	// 	void erase(iterator first, iterator last) {
@@ -761,65 +778,59 @@ public:
 
 	// For balancing the tree after deletion
   void delete_fix_tree(node_pointer x) {
-    node_pointer s;
-		// std::cout << "del fix current : " << x->_content.first << std::endl;
-    while (x != _root && x->_color == 0) {
-			std::cout << "fix node : " << x->_content.first << std::endl;
-      if (x == x->_parent->_left) {
-        s = x->_parent->_right;
-        if (s->_color == 1) {
-          s->_color = 0;
-          x->_parent->_color = 1;
-          leftRotate(x->_parent);
-          s = x->_parent->_right;
-        }
-
-        if (s->_left->_color == 0 && s->_right->_color == 0) {
-          s->_color = 1;
-          x = x->_parent;
-        } else {
-          if (s->_right->_color == 0) {
-            s->_left->_color = 0;
-            s->_color = 1;
-            rightRotate(s);
-            s = x->_parent->_right;
-          }
-
-          s->_color = x->_parent->_color;
-          x->_parent->_color = 0;
-          s->_right->_color = 0;
-          leftRotate(x->_parent);
-          x = _root;
-        }
-      } else {
-        s = x->_parent->_left;
-        if (s->_color == 1) {
-          s->_color = 0;
-          x->_parent->_color = 1;
-          rightRotate(x->_parent);
-          s = x->_parent->_left;
-        }
-
-        if (s->_right->_color == 0 && s->_right->_color == 0) {
-          s->_color = 1;
-          x = x->_parent;
-        } else {
-          if (s->_left->_color == 0) {
-            s->_right->_color = 0;
-            s->_color = 1;
-            leftRotate(s);
-            s = x->_parent->_left;
-          }
-
-          s->_color = x->_parent->_color;
-          x->_parent->_color = 0;
-          s->_left->_color = 0;
-          rightRotate(x->_parent);
-          x = _root;
-        }
-      }
-    }
-    x->_color = 0;
+		node_pointer s;
+		while (x != _root && x->_color == 0) {
+			if (x == x->_parent->_left) {
+				s = x->_parent->_right;
+				if (s->_color == 1) {
+					s->_color = 0;
+					x->_parent->_color = 1;
+					leftRotate(x->_parent);
+					s = x->_parent->_right;
+				}
+				if (s->_left->_color == 0 && s->_right->_color == 0) {
+					s->_color = 1;
+					x = x->_parent;
+				} else {
+					if (s->_right->_color == 0) {
+						s->_left->_color = 0;
+						s->_color = 1;
+						rightRotate(s);
+						s = x->_parent->_right;
+					}
+					s->_color = x->_parent->_color;
+					x->_parent->_color = 0;
+					s->_right->_color = 0;
+					leftRotate(x->_parent);
+					x = _root;
+				}
+			} else {
+				s = x->_parent->_left;
+				if (s->_color == 1) {
+					s->_color = 0;
+					x->_parent->_color = 1;
+					rightRotate(x->_parent);
+					s = x->_parent->_left;
+				}
+				if (s->_right->_color == 0 && s->_left->_color == 0) {
+					s->_color = 1;
+					x = x->_parent;
+				} else {
+					if (s->_left->_color == 0) {
+						s->_right->_color = 0;
+						s->_color = 1;
+						leftRotate(s);
+						s = x->_parent->_left;
+					}
+					s->_color = x->_parent->_color;
+					x->_parent->_color = 0;
+					s->_left->_color = 0;
+					rightRotate(x->_parent);
+					x = _root;
+				}
+			}
+		}
+		x->_color = 0;
 
 		// set last node
 		node_pointer c = _root;
