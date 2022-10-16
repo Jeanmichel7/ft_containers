@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 12:54:45 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/16 22:20:34 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/16 23:52:33 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -288,7 +288,6 @@ public:
 
 
 
-
 	ft::pair<iterator, bool> insert_pair(const value_type& val) {
 		node_pointer y = NULL;
 		node_pointer x = _root;
@@ -309,11 +308,21 @@ public:
 
 
 
-
-
 	iterator insert_hint( iterator hint, const value_type &to_insert ) {
 		if (hint._node == _root || hint._node == _root->_left || hint._node == _root->_right)
 			return insert_pair(to_insert).first;
+
+		node_pointer x = _root;
+		while (x != _nil) {
+			if (to_insert.first < x->_content.first) {
+				x = x->_left;
+			} else if (x->_content.first < to_insert.first) {
+				x = x->_right;
+			} else {
+				return iterator(x, _last_node, _nil);
+			}
+		}
+
 		if (hint == end()) {
 			if (_comp(_last_node->_content.first, to_insert.first)) {
 				// std::cout << "hint is good";
@@ -323,7 +332,8 @@ public:
 				// std::cout << "hint not good";
 				return insert_pair(to_insert).first;
 			}
-		}
+		} 
+		
 		node_pointer p = hint._node->_parent;
 		node_pointer gp = p->_parent;
 		if (hint == begin()) {
@@ -336,6 +346,7 @@ public:
 				return insert_pair(to_insert).first;
 			}
 		}
+
 		// si to_insert est compri entre parent et grand parent
 		if ( p && gp &&
 			(( gp > p && _comp(p->_content.first, to_insert.first) 
@@ -378,202 +389,201 @@ public:
 
 
 
+	void rbTransplant(node_pointer u, node_pointer v) {
+    if (u->_parent == NULL) {
+      _root = v;
+    } else if (u == u->_parent->_left) {
+      u->_parent->_left = v;
+    } else {
+      u->_parent->_right = v;
+    }
+    v->_parent = u->_parent;
+  }
 
+  // void deleteNodeHelper(node_pointer node, int key) {
+	void erase(iterator pos) {
 
-	void erase(iterator position) {
-			display_tree("---------------------befor delete---------------------");
 		node_pointer current = _root;
-		// node_pointer tmp;
+    node_pointer z = _nil;
+    node_pointer x, y;
 
-		// std::cout << "\npositio to del : " << position->first << std::endl;
-		// display_tree("erase");
+		
+    while (current != _nil) {
+      if (current->_content.first == pos->first) {
+        z = current;
+      }
 
-		while(current != NULL) {
-			if (_comp(position->first, current->_content.first))
-				current = current->_left;
-			else if (_comp(current->_content.first, position->first))
-				current = current->_right;
-			else
+      if (current->_content.first < pos->first) {
+        current = current->_right;
+      } else if (current->_content.first > pos->first){
+        current = current->_left;
+      } else {
 				break;
-		}
-
-		if (current == NULL) {
-			std::cout << "not found" << std::endl;
-			return;
-		}
-		std::cout << "position to del : " << current->_content.first << std::endl;
-		// std::cout << "current->left: " << current->_left->_content.first << std::endl;
-
-		if (current->_left == NULL && current->_right == NULL) {
-			std::cout << "\nno child" << std::endl;
-			if (current->_parent == NULL) {
-				_root = NULL;
-				_last_node = NULL;
 			}
-			else if (current->_parent->_left == current)
-				current->_parent->_left = NULL;
-			else
-				current->_parent->_right = NULL;
-			// delete_fix_tree(current);
-			// display_tree("befor modify");
+    }
 
-		}
-		else if (current->_left == NULL || current->_right == NULL) {
-			std::cout << "\none child" << std::endl;
-			node_pointer child = current->_left ? current->_left : current->_right;
-			if (current->_parent == NULL) {
-				_root = child;
-				_last_node = _root;
-			}
-			else if (current->_parent->_left == current)
-				current->_parent->_left = child;
-			else
-				current->_parent->_right = child;
-			child->_parent = current->_parent;
-			// fix_tree(child);
-			// display_tree("befor modify");
-			delete_fix_tree(child);
+    if (z == _nil) {
+      cout << "Key not found in the tree" << endl;
+      return;
+    }
 
-		}
-		else {
-			std::cout << "\ntwo child" << std::endl;
-			
-			node_pointer successor = current->_right;
-			while (successor->_left != NULL)
-				successor = successor->_left;
+    y = z;
+    int y_original_color = y->_color;
+    if (z->_left == _nil) {
+      x = z->_right;
+      rbTransplant(z, z->_right);
+    } else if (z->_right == _nil) {
+      x = z->_left;
+      rbTransplant(z, z->_left);
+    } else {
+      y = minimum(z->_right);
+      y_original_color = y->_color;
+      x = y->_right;
+      if (y->_parent == z) {
+        x->_parent = y;
+      } else {
+        rbTransplant(y, y->_right);
+        y->_right = z->_right;
+        y->_right->_parent = y;
+      }
 
-			if (successor->_parent != current) {
-				successor->_parent->_left = successor->_right;
-				if (successor->_right != NULL)
-					successor->_right->_parent = successor->_parent;
-				successor->_right = current->_right;
-				current->_right->_parent = successor;
-			}
-
-			if (current->_parent == NULL) {
-				_root = successor;
-				_last_node = _root;
-			}
-			else if (current->_parent->_left == current)
-				current->_parent->_left = successor;
-			else
-				current->_parent->_right = successor;
-			successor->_parent = current->_parent;
-			successor->_left = current->_left;
-			current->_left->_parent = successor;
-			// display_tree("befor modify");
-
-			fix_tree(successor);
-		}
-
-		// display_tree("befor fix");
-		// fix_tree(_root);
-		// display_tree("after fix");
-
-		// delete_fix_tree(current);
-
-		_node_alloc.destroy(current);
-		_node_alloc.deallocate(current, 1);
+      rbTransplant(z, y);
+      y->_left = z->_left;
+      y->_left->_parent = y;
+      y->_color = z->_color;
+    }
+		_node_alloc.destroy(z);
+		_node_alloc.deallocate(z, 1);
 		_size--;
-
+    if (y_original_color == 0) {
+      del_fix_tree(x);
+    }
 		
-		// display_tree("after delete");
-		
-		
+		// set last node
+		node_pointer c = _root;
+		while (c->_right != _nil)
+			c = c->_right;
+		_last_node = c;
 
-			// successor->_content = current->_content;
-			// // successor->_content = current->_content;
+		display_tree("");
+  }
+
+	// void erase(iterator position) {
+	// 	display_tree("---------------------befor delete---------------------");
+	// 	node_pointer current = _root;
+
+	// 	while(current != _nil) {
+	// 		if (_comp(position->first, current->_content.first))
+	// 			current = current->_left;
+	// 		else if (_comp(current->_content.first, position->first))
+	// 			current = current->_right;
+	// 		else
+	// 			break;
+	// 	}
+
+	// 	if (current == _nil) {
+	// 		std::cout << "not found" << std::endl;
+	// 		return;
+	// 	}
+	// 	// std::cout << "position to del : " << current->_content.first << std::endl;
+	// 	// std::cout << "current->left: " << current->_left->_content.first << std::endl;
+
+	// 	if (current->_left == _nil && current->_right == _nil) {
+	// 		std::cout << "\nno child" << std::endl;
+	// 		if (current->_parent == NULL) {
+	// 			_root = _nil;
+	// 		}
+	// 		else if (current->_parent->_left == current)
+	// 			current->_parent->_left = _nil;
+	// 		else
+	// 			current->_parent->_right = _nil;
+	// 		display_tree("befor fix tree");
+
+	// 		del_fix_tree(current->_parent);
+
+	// 		// node_pointer c = _root;
+	// 		// while (c->_right != _nil)
+	// 		// 	c = c->_right;
+	// 		// _last_node = c;
+	// 		// del_fix_tree(current);
 
 
-			// if (current->_parent == NULL)
-			// 	_root = successor;
-			// else if (current->_parent->_left == current)
-			// 	current->_parent->_left = successor;
-			// else
-			// 	current->_parent->_right = successor;
-			// successor->_left = current->_left;
-			// current->_left->_parent = successor;
-			// delete_fix_tree(successor);
+	// 		std::cout << "end of no child" << std::endl;
+	// 	}
 
+	// 	else if (current->_left == _nil || current->_right == _nil) {
+	// 		std::cout << "\none child" << std::endl;
+	// 		node_pointer child = current->_left ? current->_left : current->_right;
+	// 		if (current->_parent == NULL) {
+	// 			_root = child;
+	// 			_last_node = _root;
+	// 		}
+	// 		else if (current->_parent->_left == current)
+	// 			current->_parent->_left = child;
+	// 		else
+	// 			current->_parent->_right = child;
+	// 		child->_parent = current->_parent;
+	// 		// fix_tree(child);
+	// 		display_tree("befor fix tree");
+	// 		del_fix_tree(child);
+	// 	}
 
-		// 	if (successor->_parent->_left == successor)
-		// 		successor->_parent->_left = successor->_right;
-		// 	else
-		// 		successor->_parent->_right = successor->_right;
-		// 	if (successor->_right != NULL)
-		// 		successor->_right->_parent = successor->_parent;
-		// 	tmp = successor->_parent;
-		// }
+	// 	else {
+	// 		std::cout << "\ntwo child" << std::endl;
+			
+	// 		node_pointer successor = current->_right;
+	// 		while (successor->_left != _nil)
+	// 			successor = successor->_left;
 
-		// display_tree("befor fix");
+	// 		if (successor->_parent != current) {
+	// 			successor->_parent->_left = successor->_right;
+	// 			if (successor->_right != _nil)
+	// 				successor->_right->_parent = successor->_parent;
+	// 			successor->_right = current->_right;
+	// 			current->_right->_parent = successor;
+	// 		}
 
-		// fix_tree(current);
-		// // delete_fix_tree(tmp);
+	// 		if (current->_parent == NULL) {
+	// 			_root = successor;
+	// 			_last_node = _root;
+	// 		}
+	// 		else if (current->_parent->_left == current)
+	// 			current->_parent->_left = successor;
+	// 		else
+	// 			current->_parent->_right = successor;
+	// 		successor->_parent = current->_parent;
+	// 		successor->_left = current->_left;
+	// 		current->_left->_parent = successor;
+	// 		display_tree("befor fix tree");
+	// 		del_fix_tree(successor);
+	// 	}
 
-		// display_tree("after fix");
+	// 	display_tree("after fix tree");
 
+	// 	_node_alloc.destroy(current);
+	// 	_node_alloc.deallocate(current, 1);
+	// 	_size--;
 
-		// // _node_alloc.destroy(current);
-		// // _node_alloc.deallocate(current, 1);
-		// _size--;
-
-		// if (_size == 0)
-		// 	_root = NULL;
-
-		// // display_tree("erase");
-
-	};
+	// };
 
 	void erase(iterator first, iterator last) {
-
-
-
-		while (first != last)
-			erase(first);
-
-
-
-
-
-		// iterator next = first;
-		// next++;
-		
-		// while (next != last ) {
-		// 	std::cout << "erase(" << first->first << ")" << std::endl;
-
+		// while (first != last)
 		// 	erase(first);
-		// 	first = next;
-		// 	next++;
-		// }
+
+		iterator next = first;
+		next++;
+		
+		while (first != last ) {
+			std::cout << "erase(" << first->first << ")" << std::endl;
+
+			erase(first);
+			first = next;
+			next++;
+		}
 		// std::cout << "erase last (" << first->first << ")" << std::endl;
-		// erase(first);
-			
 		// erase(first);
 	}
 	
-
-
-	// 	void erase(iterator first, iterator last) {
-	// 	iterator tmp = first;
-	// 	iterator tmp_last = last;
-	// 	tmp_last--;
-		
-	// 	while (first != last) {
-	// 		std::cout << "erase(" << first->first << ")" << std::endl;
-	// 		iterator tmp = first;
-	// 		if (tmp != tmp_last) {
-	// 			tmp++;
-	// 			if (tmp != NULL)
-	// 				erase(first);
-	// 			first = tmp;
-	// 		}
-	// 		if (tmp == tmp_last) {
-	// 			erase(first);
-	// 			break;
-	// 		}
-	// 	}
-	// }
-
 	void erase(value_type to_erase);
 
 	void swap(RedBlackTree &x);
@@ -663,6 +673,13 @@ public:
 	/*                       UTILS                         */
 	/*                                                     */
 	/* *************************************************** */
+
+	node_pointer minimum(node_pointer node) {
+    while (node->_left != _nil) {
+      node = node->_left;
+    }
+    return node;
+  }
 
 	void leftRotate(node_pointer x)
 	{
@@ -768,7 +785,7 @@ public:
     }
     _root->_color = 0;
 
-		// // set last node
+		// set last node
 		// node_pointer c = _root;
 		// while (c->_right != _nil)
 		// 	c = c->_right;
@@ -777,7 +794,8 @@ public:
 
 
 	// For balancing the tree after deletion
-  void delete_fix_tree(node_pointer x) {
+  void del_fix_tree(node_pointer x) {
+		// std::cout << "fix node : " << x->_content.first << std::endl;
 		node_pointer s;
 		while (x != _root && x->_color == 0) {
 			if (x == x->_parent->_left) {
@@ -788,6 +806,7 @@ public:
 					leftRotate(x->_parent);
 					s = x->_parent->_right;
 				}
+
 				if (s->_left->_color == 0 && s->_right->_color == 0) {
 					s->_color = 1;
 					x = x->_parent;
@@ -798,6 +817,7 @@ public:
 						rightRotate(s);
 						s = x->_parent->_right;
 					}
+
 					s->_color = x->_parent->_color;
 					x->_parent->_color = 0;
 					s->_right->_color = 0;
@@ -812,7 +832,8 @@ public:
 					rightRotate(x->_parent);
 					s = x->_parent->_left;
 				}
-				if (s->_right->_color == 0 && s->_left->_color == 0) {
+
+				if (s->_right->_color == 0 && s->_right->_color == 0) {
 					s->_color = 1;
 					x = x->_parent;
 				} else {
@@ -822,6 +843,7 @@ public:
 						leftRotate(s);
 						s = x->_parent->_left;
 					}
+
 					s->_color = x->_parent->_color;
 					x->_parent->_color = 0;
 					s->_left->_color = 0;
@@ -831,10 +853,64 @@ public:
 			}
 		}
 		x->_color = 0;
+	// }
+	// 	node_pointer s;
+	// 	while (x != _root && x->_color == 0) {
+	// 		if (x == x->_parent->_left) {
+	// 			s = x->_parent->_right;
+	// 			if (s->_color == 1) {
+	// 				s->_color = 0;
+	// 				x->_parent->_color = 1;
+	// 				leftRotate(x->_parent);
+	// 				s = x->_parent->_right;
+	// 			}
+	// 			if (s->_left->_color == 0 && s->_right->_color == 0) {
+	// 				s->_color = 1;
+	// 				x = x->_parent;
+	// 			} else {
+	// 				if (s->_right->_color == 0) {
+	// 					s->_left->_color = 0;
+	// 					s->_color = 1;
+	// 					rightRotate(s);
+	// 					s = x->_parent->_right;
+	// 				}
+	// 				s->_color = x->_parent->_color;
+	// 				x->_parent->_color = 0;
+	// 				s->_right->_color = 0;
+	// 				leftRotate(x->_parent);
+	// 				x = _root;
+	// 			}
+	// 		} else {
+	// 			s = x->_parent->_left;
+	// 			if (s->_color == 1) {
+	// 				s->_color = 0;
+	// 				x->_parent->_color = 1;
+	// 				rightRotate(x->_parent);
+	// 				s = x->_parent->_left;
+	// 			}
+	// 			if (s->_right->_color == 0 && s->_left->_color == 0) {
+	// 				s->_color = 1;
+	// 				x = x->_parent;
+	// 			} else {
+	// 				if (s->_left->_color == 0) {
+	// 					s->_right->_color = 0;
+	// 					s->_color = 1;
+	// 					leftRotate(s);
+	// 					s = x->_parent->_left;
+	// 				}
+	// 				s->_color = x->_parent->_color;
+	// 				x->_parent->_color = 0;
+	// 				s->_left->_color = 0;
+	// 				rightRotate(x->_parent);
+	// 				x = _root;
+	// 			}
+	// 		}
+	// 	}
+	// 	x->_color = 0;
 
 		// set last node
 		node_pointer c = _root;
-		while (c->_right != NULL)
+		while (c->_right != _nil)
 			c = c->_right;
 		_last_node = c;
   }
