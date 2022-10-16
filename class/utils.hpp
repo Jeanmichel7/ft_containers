@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/10 21:23:15 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/16 14:56:23 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/16 18:00:33 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,6 +142,10 @@ namespace ft
         Node(Node<T> *left, Node<T> *right) 
         : _left(left), _right(right), _color(N_BLACK) {}
         
+        Node(Node<T> *parent, Node<T> *left, Node<T> *right) 
+        : _parent(parent), _left(left), _right(right), _color(N_BLACK) {}
+
+
         Node(T content, Node<T> *parent, Node<T> *left, Node<T> *right, int color) 
         : _content(content), _parent(parent), _left(left), _right(right), _color(color) {}
 

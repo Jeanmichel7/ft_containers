@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 12:54:45 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/16 16:10:55 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/16 20:19:37 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,6 @@ public:
 		_nil = x._nil;
 	}
 
-
 	RedBlackTree &operator=(const RedBlackTree &x) {
 		_node_alloc = x._node_alloc;
 		_root = x._root;
@@ -175,7 +174,8 @@ public:
 			return iterator(_last_node, _nil);
 		while (current->_left != _nil)
 			current = current->_left;
-		return iterator(current, _last_node, _nil);
+		iterator ret = iterator(current, _last_node, _nil);
+		return ret;
 	}
 
 	const_iterator begin() const {
@@ -188,12 +188,15 @@ public:
 
 	iterator end() {
 		node_pointer current = _root;
-		if (_root == _nil)
+		if (current == _nil)
 			return iterator(_last_node, _nil);
 		while (current->_right != _nil)
 			current = current->_right;
-		_last_node = current;
-		return iterator(current, _last_node, _nil);
+		current = current->_right;
+		// _last_node = current;
+
+		iterator ret = iterator(current, _last_node, _nil);
+		return ret;
 	}
 
 	const_iterator end() const {
@@ -313,10 +316,10 @@ public:
 	ft::pair<iterator, bool> insert_pair(const value_type& val) {
 
 		
-		if (find(val) != end ()){
-			std::cout << "not inserting doublon" << std::endl;
-			return ft::make_pair(iterator(_root, _last_node), false);
-		}
+		// if (find(val) != end()){
+		// 	std::cout << "not inserting doublon" << std::endl;
+		// 	return ft::make_pair(iterator(_root, _last_node), false);
+		// }
 
 
 		_node = _node_alloc.allocate(1);
@@ -337,7 +340,7 @@ public:
     _node->_parent = y;
 
     if (y == NULL) {
-			std::cout << "y is null" << std::endl;
+			// std::cout << "y is null" << std::endl;
       _root = _node;
     } else if (_node->_content < y->_content) {
       y->_left = _node;
@@ -379,107 +382,7 @@ public:
 	}
 
 
-	// For balancing the tree after insertion
-  void insertFix(node_pointer k) {
-		std::cout << "fix node : " << k->_content.first << std::endl;
-    node_pointer u;
-    while (k->_parent->_color == 1) {
-      if (k->_parent == k->_parent->_parent->_right) {
-        u = k->_parent->_parent->_left;
-        if (u->_color == 1) {
-          u->_color = 0;
-          k->_parent->_color = 0;
-          k->_parent->_parent->_color = 1;
-          k = k->_parent->_parent;
-        } else {
-          if (k == k->_parent->_left) {
-            k = k->_parent;
-            rightRotate(k);
-          }
-          k->_parent->_color = 0;
-          k->_parent->_parent->_color = 1;
-          leftRotate(k->_parent->_parent);
-        }
-      } else {
-        u = k->_parent->_parent->_right;
 
-        if (u->_color == 1) {
-          u->_color = 0;
-          k->_parent->_color = 0;
-          k->_parent->_parent->_color = 1;
-          k = k->_parent->_parent;
-        } else {
-          if (k == k->_parent->_right) {
-            k = k->_parent;
-            leftRotate(k);
-          }
-          k->_parent->_color = 0;
-          k->_parent->_parent->_color = 1;
-          rightRotate(k->_parent->_parent);
-        }
-      }
-      if (k == _root) {
-        break;
-      }
-    }
-    _root->_color = 0;
-
-		
-		// set last node
-		node_pointer c = _root;
-		while (c->_right != _nil)
-			c = c->_right;
-		_last_node = c;
-  }
-
-
-	iterator insert( iterator hint, const value_type &to_insert ) {
-		if (hint._node == _root || hint._node == _root->_left || hint._node == _root->_right)
-			return insert_pair(to_insert).first;
-
-		if (hint == end()) {
-			if (_comp(_last_node->_content.first, to_insert.first)) {
-				// std::cout << "hint is good";
-				return iterator(insert_node(_last_node, to_insert), _last_node, _nil);
-			}
-			else {
-				// std::cout << "hint not good";
-				return insert_pair(to_insert).first;
-			}
-		}
-		
-		node_pointer p = hint._node->_parent;
-		node_pointer gp = p->_parent;
-
-		if (hint == begin()) {
-			if (_comp(to_insert.first, p->_content.first)) {
-				// std::cout << "hint is good";
-				return iterator(insert_node(hint._node, to_insert), _last_node, _nil);
-			}
-			else {
-				// std::cout << "hint not good";
-				return insert_pair(to_insert).first;
-			}
-		}
-
-
-		// si to_insert est compri entre parent et grand parent
-		if ( p && gp &&
-			(( gp > p && _comp(p->_content.first, to_insert.first) 
-				&& _comp(to_insert.first, gp->_content.first)) 
-			||
-			(p < gp && _comp(gp->_content.first, to_insert.first) 
-				&& _comp(to_insert.first, p->_content.first)))) {
-			std::cout << "hint is good";
-
-			// node_pointer current = insert_node(hint._node, to_insert);
-			return iterator(insert_node(hint._node, to_insert), _last_node, _nil);
-
-		} else {
-			std::cout << "hint not good";
-			return insert_pair(to_insert).first;
-		}
-	}
 
 	template< class InputIt >
 	void insert( InputIt first, InputIt last ) {
@@ -847,73 +750,58 @@ public:
 		x->_parent = y;
 	}
 
-	//fixe tree
-	node_pointer fix_tree(node_pointer c)
-	{
-		node_pointer u;
-		while (c->_parent && c->_parent->_color == 1)
-		{
-			if (c->_parent == c->_parent->_parent->_right)
-			{
-				u = c->_parent->_parent->_left;
-				// std::cout << "test : " << u << std::endl;
-				if (u && u->_color == 1)
-				{
-					u->_color = 0;
-					c->_parent->_color = 0;
-					c->_parent->_parent->_color = 1;
-					c = c->_parent->_parent;
-				}
-				else
-				{
-					if (c == c->_parent->_left)
-					{
-						c = c->_parent;
-						rightRotate(c);
-					}
-					c->_parent->_color = 0;
-					c->_parent->_parent->_color = 1;
-					leftRotate(c->_parent->_parent);
-				}
-			}
-			else
-			{
-				// std::cout << "left" << std::endl;
-				u = c->_parent->_parent->_right;
+	// For balancing the tree after insertion
+  void insertFix(node_pointer k) {
+		// std::cout << "fix node : " << k->_content.first << std::endl;
+    node_pointer u;
+    while (k->_parent->_color == 1) {
+      if (k->_parent == k->_parent->_parent->_right) {
+        u = k->_parent->_parent->_left;
+        if (u->_color == 1) {
+          u->_color = 0;
+          k->_parent->_color = 0;
+          k->_parent->_parent->_color = 1;
+          k = k->_parent->_parent;
+        } else {
+          if (k == k->_parent->_left) {
+            k = k->_parent;
+            rightRotate(k);
+          }
+          k->_parent->_color = 0;
+          k->_parent->_parent->_color = 1;
+          leftRotate(k->_parent->_parent);
+        }
+      } else {
+        u = k->_parent->_parent->_right;
 
-				if (u && u->_color == 1)
-				{
-					u->_color = 0;
-					c->_parent->_color = 0;
-					c->_parent->_parent->_color = 1;
-					c = c->_parent->_parent;
-				}
-				else
-				{
-					if (c == c->_parent->_right)
-					{
-						c = c->_parent;
-						leftRotate(c);
-					}
-					c->_parent->_color = 0;
-					c->_parent->_parent->_color = 1;
-					rightRotate(c->_parent->_parent);
-				}
-			}
-			if (c == _root)
-			{
-				break;
-			}
-		}
-		_root->_color = 0;
+        if (u->_color == 1) {
+          u->_color = 0;
+          k->_parent->_color = 0;
+          k->_parent->_parent->_color = 1;
+          k = k->_parent->_parent;
+        } else {
+          if (k == k->_parent->_right) {
+            k = k->_parent;
+            leftRotate(k);
+          }
+          k->_parent->_color = 0;
+          k->_parent->_parent->_color = 1;
+          rightRotate(k->_parent->_parent);
+        }
+      }
+      if (k == _root) {
+        break;
+      }
+    }
+    _root->_color = 0;
 
+		
 		// set last node
-		while (c->_right != NULL)
+		node_pointer c = _root;
+		while (c->_right != _nil)
 			c = c->_right;
 		_last_node = c;
-
-		return c;
-	}
+  }
 
 
 	// For balancing the tree after deletion
