@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 12:54:45 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/16 23:52:33 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/17 00:33:22 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -567,23 +567,29 @@ public:
 	// };
 
 	void erase(iterator first, iterator last) {
-		// while (first != last)
-		// 	erase(first);
-
 		iterator next = first;
 		next++;
-		
-		while (first != last ) {
-			std::cout << "erase(" << first->first << ")" << std::endl;
 
+		while (first != last && next != last) {
+			std::cout << "erase(" << first->first << ")" << std::endl;
 			erase(first);
 			first = next;
 			next++;
 		}
+
+
+
+
+		
 		// std::cout << "erase last (" << first->first << ")" << std::endl;
-		// erase(first);
+		if (first._node == _last_node) {
+			std::cout << "iterator node == last node" << std::endl;
+		}
+		
+		if (first != last)
+			erase(first);
 	}
-	
+
 	void erase(value_type to_erase);
 
 	void swap(RedBlackTree &x);

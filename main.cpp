@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/14 22:19:53 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/16 23:44:05 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/17 00:31:25 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -1700,25 +1700,32 @@ int main()
 
 	ft_map.display_tree();
 
-	/* erase begin() -> begin() + 5*/
-	it_type 		it_erase 		= map.begin();
-	ft_it_type 	ft_it_erase = ft_map.begin();
-
-	for(int i = 0; i < 5; i++) { it_erase++; ft_it_erase++;	}
-
-	map.erase(map.begin(), map.end());
-	ft_map.erase(ft_map.begin(), ft_map.end());
+	/* erase begin() -> end--*/
+	it_type 		it_erase_end 		= map.end();
+	ft_it_type 	ft_it_erase_end = ft_map.end();
+	map.erase(map.begin(), it_erase_end);
+	ft_map.erase(ft_map.begin(), ft_it_erase_end);
 	comp_map(map, ft_map, "erase(begin(), begin()++)");
 
 	ft_map.display_tree();
 
 
+	/* erase last */
+	map.erase(map.begin(), map.begin());
+	if (map.empty())
+		std::cout << "map is empty" << std::endl;
+	else std::cout << "map is not empty" << std::endl;
+	
+	ft_map.erase(ft_map.begin(), ft_map.begin());
+	comp_map(map, ft_map, "erase(begin(), begin())");
+
+	// it_type 		it_erase 		= map.begin();
+	// ft_it_type 	ft_it_erase = ft_map.begin();
+
+	// for(int i = 0; i < 5; i++) { it_erase++; ft_it_erase++;	}
 
 
-
-
-
-
+	
 
 
 	// /* erase begin() + 5 -> end() - 5 */
