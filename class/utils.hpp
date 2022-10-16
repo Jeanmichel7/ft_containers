@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/10 21:23:15 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/09 21:08:15 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/16 14:56:23 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,28 +128,33 @@ namespace ft
         
     // private:
         value_type           _content;
-        Node<value_type>     *_parent;
-        Node<value_type>     *_left;
-        Node<value_type>     *_right;
+        Node<T>             *_parent;
+        Node<T>             *_left;
+        Node<T>             *_right;
         int                  _color;
 
+
+
     public:
-        Node() 
-        : _content(), _parent(NULL), _left(NULL), _right(NULL), _color(N_BLACK) {}
+        // Node() 
+        // : _content(), _parent(NULL), _left(NULL), _right(NULL), _color(N_BLACK) {}
 
-        // Node(value_type content) 
-        // : _content(content), _parent(NULL), _left(NULL), _right(NULL), _color(N_BLACK) {}
+        Node(Node<T> *left, Node<T> *right) 
+        : _left(left), _right(right), _color(N_BLACK) {}
+        
+        Node(T content, Node<T> *parent, Node<T> *left, Node<T> *right, int color) 
+        : _content(content), _parent(parent), _left(left), _right(right), _color(color) {}
 
-        Node(value_type const &content) 
+
+
+        Node(T const &content) 
         : _content(content), _parent(NULL), _left(NULL), _right(NULL), _color(N_RED) {}
 
-        Node(value_type const &content, int color) 
+        Node(T const &content, int color) 
         : _content(content), _parent(NULL), _left(NULL), _right(NULL), _color(color) {}
 
-        Node(value_type content, Node<value_type> *parent, Node<value_type> *left, Node<value_type> *right, int color) 
-        : _content(content), _parent(parent), _left(left), _right(right), _color(color) {}
-        
-        Node(Node<value_type> const &src) 
+
+        Node(Node<T> const &src) 
         :   _content(src._content),
             _parent(src._parent),
             _left(src._left),
@@ -161,7 +166,7 @@ namespace ft
 
         ~Node() {}
 
-        Node<value_type> &operator=(Node<value_type> const &rhs)
+        Node<T> &operator=(Node<T> const &rhs)
         {
             if (this != &rhs)
             {

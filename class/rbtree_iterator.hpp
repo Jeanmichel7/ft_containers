@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 16:58:53 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/14 19:33:29 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/16 16:01:55 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,27 +39,39 @@ template <typename T, class Compare >
 			:
 				_node(),
 				_last_node(),
+				_nil(NULL),
 				_comp(comp)
 			{}
 
-			RB_iterator(T * node_p, const Compare& comp = Compare())
+			RB_iterator(T * node_p, T * nil, const Compare& comp = Compare())
 			:
 				_node(node_p),
 				_last_node(),
+				_nil(nil),
 				_comp(comp)
-			{}
+			{
+				_last_node = _node;
+				while (_last_node->_right && _last_node->_right != _nil)
+					_last_node = _last_node->_right;
+			}
 
-			RB_iterator(T * node_p, T * last_node, const Compare& comp = Compare())
+			RB_iterator(T * node_p, T * last_node, T * nil, const Compare& comp = Compare())
 			:
 				_node(node_p),
 				_last_node(last_node),
+				_nil(nil),
 				_comp(comp)
-			{}
+			{
+				_last_node = _node;
+				while (_last_node->_right && _last_node->_right != _nil)
+					_last_node = _last_node->_right;
+			}
 
 			RB_iterator(const RB_iterator& tree_it)
 			:
 				_node(tree_it._node),
 				_last_node(tree_it._last_node),
+				_nil(tree_it._nil),
 				_comp()
 			{}
 
@@ -77,6 +89,7 @@ template <typename T, class Compare >
 				if (*this == tree_it)
 					return (*this);
 				_node = tree_it._node;
+				_nil = tree_it._nil;
 				_last_node = tree_it._last_node;
 				_comp = tree_it._comp;
 				return (*this);
@@ -104,19 +117,15 @@ template <typename T, class Compare >
 
 			RB_iterator& operator++(void)
 			{
-				if (_node == NULL) {
-					_node = _last_node;
-					return (*this);
-				}
-				if (_node->_right != NULL)
+				if (_node->_right != _nil)
 				{
 					_node = _node->_right;
-					while (_node->_left != NULL)
+					while (_node->_left != _nil)
 						_node = _node->_left;
 				}
 				else
 				{
-					while (_node->_parent != NULL && _node->_parent->_right == _node)
+					while (_node->_parent != _nil && _node->_parent->_right == _node)
 						_node = _node->_parent;
 					_node = _node->_parent;
 				}
@@ -182,6 +191,7 @@ template <typename T, class Compare >
 
 			T *			_node;
 			T *			_last_node;
+			T *			_nil;
 			Compare		_comp;
 	};
 
@@ -361,6 +371,7 @@ template <typename T, class Compare >
 
 			T *         _node;
 			T *         _last_node;
+			// T *				 	_nil;
 			Compare     _comp;
 	};
 }
