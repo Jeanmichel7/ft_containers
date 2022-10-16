@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 12:54:45 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/16 20:19:37 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/16 21:04:52 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,9 +139,6 @@ public:
 				_node_alloc.deallocate(prev, 1);
 			}
 		}
-
-		
-		
 	}
 
 
@@ -171,7 +168,7 @@ public:
 	iterator begin() {
 		node_pointer current = _root;
 		if (_root == _nil)
-			return iterator(_last_node, _nil);
+			return iterator(current, _last_node, _nil);
 		while (current->_left != _nil)
 			current = current->_left;
 		iterator ret = iterator(current, _last_node, _nil);
@@ -189,7 +186,7 @@ public:
 	iterator end() {
 		node_pointer current = _root;
 		if (current == _nil)
-			return iterator(_last_node, _nil);
+			return iterator(current, _last_node, _nil);
 		while (current->_right != _nil)
 			current = current->_right;
 		current = current->_right;
@@ -312,21 +309,20 @@ public:
 	// }
 
 
-// terator find(value_type to_find)
+
+
+	// iterator find(value_type to_find)
 	ft::pair<iterator, bool> insert_pair(const value_type& val) {
 
-		
-		// if (find(val) != end()){
-		// 	std::cout << "not inserting doublon" << std::endl;
-		// 	return ft::make_pair(iterator(_root, _last_node), false);
-		// }
-
+		if (find(val) != end()){
+			std::cout << "not inserting doublon" << std::endl;
+			return ft::make_pair(find(val), false);
+		}
 
 		_node = _node_alloc.allocate(1);
 		_node_alloc.construct(_node, Node(val, NULL, _nil, _nil, N_RED));
 		node_pointer y = NULL;
     node_pointer x = this->_root;
-
 
     while (x != _nil) {
       y = x;
@@ -340,43 +336,31 @@ public:
     _node->_parent = y;
 
     if (y == NULL) {
-			// std::cout << "y is null" << std::endl;
       _root = _node;
     } else if (_node->_content < y->_content) {
       y->_left = _node;
     } else {
       y->_right = _node;
     }
-
     if (_node->_parent == NULL) {
-      _node->_color = 0;
-			// display_tree("parent NULL");
-			_size++;
-
-			// set last node
-			node_pointer c = _root;
-			while (c->_right != _nil)
-				c = c->_right;
-			_last_node = c;
-
+      _node->_color = 0; // display_tree("parent NULL");
 			return ft::make_pair(iterator(_node, _last_node, _nil), true);
     }
-
-    if (_node->_parent->_parent == NULL) {
-			// display_tree("gp NULL");
-			_size++;
-			
-			// set last node
-			node_pointer c = _root;
-			while (c->_right != _nil)
-				c = c->_right;
-			_last_node = c;
+    else if (_node->_parent->_parent == NULL) { // display_tree("gp NULL");
       return ft::make_pair(iterator(_node, _last_node, _nil), true);
     }
+		else
+    	insertFix(_node);
 
-    insertFix(_node);
-		// display_tree("insert");
 		_size++;
+			
+		// set last node
+		node_pointer c = _root;
+		while (c->_right != _nil)
+			c = c->_right;
+		_last_node = c;
+
+		// display_tree("insert");
 
 		return ft::make_pair(iterator(_node, _last_node, _nil), true);
 	}
@@ -621,19 +605,18 @@ public:
 
 	iterator find(value_type to_find)
 	{
-		iterator it = begin();
-		while (it != end())
-		{
-			if (it->first == to_find.first)
-				return it;
-			// if (it._node->_content.first == to_find.first)
-				// return it;
-			it++;
+		if (_root == NULL)
+			return end();
+		node_pointer current = _root;
+		while (current != NULL) {
+			if (current->_content.first == to_find.first)
+				return iterator(current, _nil);
+			else if (current->_content < to_find)
+				current = current->_right;
+			else
+				current = current->_left;
 		}
-		// if (it != end())
-			return it;
-		// else 
-			// return end();
+		return end();
 	}
 
 	const_iterator find(value_type to_find) const;
@@ -795,12 +778,11 @@ public:
     }
     _root->_color = 0;
 
-		
-		// set last node
-		node_pointer c = _root;
-		while (c->_right != _nil)
-			c = c->_right;
-		_last_node = c;
+		// // set last node
+		// node_pointer c = _root;
+		// while (c->_right != _nil)
+		// 	c = c->_right;
+		// _last_node = c;
   }
 
 
@@ -893,7 +875,16 @@ public:
 		else {
 			display_tree(parent = _root, space_root, level, node_in_line);
 		}
-		std::cout << "\n****************************************\n\n\n" << std::endl;
+
+		std::cout << RED "\n\nlast node " END << std::endl
+		<< "content	:" << _last_node->_content.first << std::endl
+		<< "color	:" << _last_node->_color << std::endl
+		<< "parent	:"<< (_last_node->_parent != NULL ? _last_node->_parent->_content.first : "") << std::endl
+		<< "left	:" << (_last_node->_left == _nil ? "NIL" : _last_node->_left->_content.first) << std::endl
+		<< "right	:" << (_last_node->_right == _nil ? "NIL" : _last_node->_right->_content.first) << std::endl;
+		
+
+		std::cout << "\n**********  End display tree ************\n\n\n" << std::endl;
 
 		// for(size_t i = 0; i <= _size; i++)
 		// {

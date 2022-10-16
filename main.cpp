@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/14 22:19:53 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/16 20:17:34 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/16 21:00:08 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -998,7 +998,7 @@ int main()
 
 	/* insert ("b", 2) */
 	std::pair< it_type, bool > ret_insert_value 		= map.insert(pair("b", 2));
-	 ft::pair< ft_it_type, bool > ft_ret_insert_value 	= ft_map.insert(ft_pair("b", 2));
+	ft::pair< ft_it_type, bool > ft_ret_insert_value 	= ft_map.insert(ft_pair("b", 2));
 
 	str_comp(ret_insert_value.first->first, ft_ret_insert_value.first->first, "insert(value(ft_pair(\"b\", 2)))");
 	str_comp(to_string(ret_insert_value.first->second), to_string(ft_ret_insert_value.first->second), "insert(value(ft_pair(\"b\", 2)))");
@@ -1031,12 +1031,20 @@ int main()
 	str_comp(ret_insert_value.first->first, ft_ret_insert_value.first->first, "insert(value(ft_pair(\"d\", 4))) -> first");
 	str_comp(to_string(ret_insert_value.first->second), to_string(ft_ret_insert_value.first->second), "insert(value(ft_pair(\"d\", 4))) -> second");
 
-	/* insert ("d", 4) */
-	// ret_insert_value 	= map.insert(pair("d", 4));
-	// ft_ret_insert_value = ft_map.insert(ft_pair("d", 4));
+	/* insert ("d", 4) DOUBLON*/
+	ret_insert_value 	= map.insert(pair("d", 4));
+	ft_ret_insert_value = ft_map.insert(ft_pair("d", 4));
 
-	// str_comp(ret_insert_value.first->first, ft_ret_insert_value.first->first, "insert(value(ft_pair(\"d\", 4))) -> first");
-	// str_comp(to_string(ret_insert_value.first->second), to_string(ft_ret_insert_value.first->second), "insert(value(ft_pair(\"d\", 4))) -> second");
+	str_comp(ret_insert_value.first->first, ft_ret_insert_value.first->first, "insert(value(ft_pair(\"d\", 4))) -> first");
+	str_comp(to_string(ret_insert_value.first->second), to_string(ft_ret_insert_value.first->second), "insert(value(ft_pair(\"d\", 4))) -> second");
+
+	/* insert ("d", 10) DOUBLON*/
+	ret_insert_value 	= map.insert(pair("d", 10));
+	ft_ret_insert_value = ft_map.insert(ft_pair("d", 10));
+	
+	str_comp(ret_insert_value.first->first, ft_ret_insert_value.first->first, "insert(value(ft_pair(\"d\", 10))) -> first");
+	str_comp(to_string(ret_insert_value.first->second), to_string(ft_ret_insert_value.first->second), "insert(value(ft_pair(\"d\", 10))) -> second");
+
 
 
 
