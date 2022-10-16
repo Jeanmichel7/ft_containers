@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 12:54:45 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/16 21:04:52 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/16 22:20:34 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -256,114 +256,104 @@ public:
 	/*                                                     */
 	/* *************************************************** */
 
-	// node_pointer insert_node(node_pointer current, const value_type &val)
-	// {
-	// 	node_pointer parent = NULL;
-
-	// 	while (current != NULL)
-	// 	{
-	// 		parent = current;
-	// 		if (_comp(val.first, current->_content.first))
-	// 			current = current->_left;
-	// 		else if (_comp(current->_content.first, val.first))
-	// 			current = current->_right;
-	// 		else
-	// 			return current;
-	// 	}
-
-	// 	current = _node_alloc.allocate(1);
-	// 	// _node_alloc.construct(current, Node(val));
-	// 	_node_alloc.construct(current, Node(val, NULL, _nil, _nil, N_RED));
-	// 	// current->_parent = parent;
-		
-	// 	if (_comp(val.first, parent->_content.first))
-	// 		parent->_left = current;
-	// 	else
-	// 		parent->_right = current;
-
-	// 	_size++;
-
-	// 	// display_tree("insert before fixed");
-	// 	fix_tree(current);
-	// 	// display_tree("insert after fixed");
-
-	// 	return current;
-	// }
-
-
-
-	// ft::pair<iterator, bool> insert_pair(const value_type& val)
-	// {
-	// 	if (_size == 0)
-	// 	{
-	// 		node_pointer new_node = _node_alloc.allocate(1);
-	// 		_node_alloc.construct(new_node, Node(val, NULL, _nil, _nil, N_RED));
-	// 		_root = new_node;
-	// 		_size++;
-	// 		_last_node = _root;
-	// 		return ft::make_pair(iterator(_root, _last_node), true);
-	// 	}
-
-	// 	// node_pointer current = insert_node(_root, val);
-	// 	return ft::make_pair(iterator(insert_node(_root, val), _last_node), true);
-	// }
-
-
-
-
-	// iterator find(value_type to_find)
-	ft::pair<iterator, bool> insert_pair(const value_type& val) {
-
-		if (find(val) != end()){
-			std::cout << "not inserting doublon" << std::endl;
-			return ft::make_pair(find(val), false);
+	node_pointer insert_node(node_pointer y, const value_type& val) {
+		node_pointer new_node = _node_alloc.allocate(1);
+		_node_alloc.construct(new_node, Node(val, y, _nil, _nil, N_RED));
+		if (y == NULL) {
+			_root = new_node;
+		} else if (val.first < y->_content.first) {
+			y->_left = new_node;
+		} else {
+			y->_right = new_node;
 		}
 
-		_node = _node_alloc.allocate(1);
-		_node_alloc.construct(_node, Node(val, NULL, _nil, _nil, N_RED));
-		node_pointer y = NULL;
-    node_pointer x = this->_root;
-
-    while (x != _nil) {
-      y = x;
-      if (_node->_content < x->_content) {
-        x = x->_left;
-      } else {
-        x = x->_right;
-      }
-    }
-
-    _node->_parent = y;
-
-    if (y == NULL) {
-      _root = _node;
-    } else if (_node->_content < y->_content) {
-      y->_left = _node;
-    } else {
-      y->_right = _node;
-    }
-    if (_node->_parent == NULL) {
-      _node->_color = 0; // display_tree("parent NULL");
-			return ft::make_pair(iterator(_node, _last_node, _nil), true);
-    }
-    else if (_node->_parent->_parent == NULL) { // display_tree("gp NULL");
-      return ft::make_pair(iterator(_node, _last_node, _nil), true);
+   	if (new_node->_parent == NULL) {
+      new_node->_color = 0; 
     }
 		else
-    	insertFix(_node);
+    	insertFix(new_node);
 
 		_size++;
-			
+
 		// set last node
 		node_pointer c = _root;
 		while (c->_right != _nil)
 			c = c->_right;
 		_last_node = c;
 
-		// display_tree("insert");
-
-		return ft::make_pair(iterator(_node, _last_node, _nil), true);
+		return new_node;
 	}
+
+
+
+
+
+
+	ft::pair<iterator, bool> insert_pair(const value_type& val) {
+		node_pointer y = NULL;
+		node_pointer x = _root;
+		while (x != _nil) {
+			y = x;
+			if (val.first < x->_content.first) {
+				x = x->_left;
+			} else if (x->_content.first < val.first) {
+				x = x->_right;
+			} else {
+				return ft::make_pair(iterator(x, _last_node, _nil), false);
+			}
+		}
+		return ft::make_pair(iterator(insert_node(y, val), _last_node, _nil), true);
+	}
+
+
+
+
+
+
+
+	iterator insert_hint( iterator hint, const value_type &to_insert ) {
+		if (hint._node == _root || hint._node == _root->_left || hint._node == _root->_right)
+			return insert_pair(to_insert).first;
+		if (hint == end()) {
+			if (_comp(_last_node->_content.first, to_insert.first)) {
+				// std::cout << "hint is good";
+				return iterator(insert_node(_last_node, to_insert), _last_node);
+			}
+			else {
+				// std::cout << "hint not good";
+				return insert_pair(to_insert).first;
+			}
+		}
+		node_pointer p = hint._node->_parent;
+		node_pointer gp = p->_parent;
+		if (hint == begin()) {
+			if (_comp(to_insert.first, p->_content.first)) {
+				// std::cout << "hint is good";
+				return iterator(insert_node(hint._node, to_insert), _last_node);
+			}
+			else {
+				// std::cout << "hint not good";
+				return insert_pair(to_insert).first;
+			}
+		}
+		// si to_insert est compri entre parent et grand parent
+		if ( p && gp &&
+			(( gp > p && _comp(p->_content.first, to_insert.first) 
+				&& _comp(to_insert.first, gp->_content.first)) 
+			||
+			(p < gp && _comp(gp->_content.first, to_insert.first) 
+				&& _comp(to_insert.first, p->_content.first)))) {
+			std::cout << "hint is good";
+			// node_pointer current = insert_node(hint._node, to_insert);
+			return iterator(insert_node(hint._node, to_insert), _last_node);
+		} else {
+			std::cout << "hint not good";
+			return insert_pair(to_insert).first;
+		}
+	}
+
+
+
 
 
 

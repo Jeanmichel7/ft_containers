@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 18:14:05 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/16 19:02:23 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/16 21:15:25 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -262,7 +262,7 @@ public:
 	}
 
 	iterator insert( iterator hint, const value_type& value ) {
-		return (_tree.insert(hint, value));
+		return (_tree.insert_hint(hint, value));
 	}
 
 	template< class InputIt >

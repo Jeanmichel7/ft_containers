@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/14 22:19:53 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/16 21:00:08 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/16 22:20:03 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -1046,8 +1046,6 @@ int main()
 	str_comp(to_string(ret_insert_value.first->second), to_string(ft_ret_insert_value.first->second), "insert(value(ft_pair(\"d\", 10))) -> second");
 
 
-
-
 	/* insert many value */
 	fill_map< std_map_str_int, pair >(&map);
 	fill_map< ft_map_str_int, ft_pair >(&ft_map);
@@ -1071,14 +1069,14 @@ int main()
 
 
 
-	// /* ***************************************************** */
-	// /*                  INSERT(hint, value)                  */
-	// /*                  pair< string, int >                  */
-	// /* ***************************************************** */
-	// std::cout << MAG "\n\nTEST insert( hint, value )" END << std::endl;
+	/* ***************************************************** */
+	/*                  INSERT(hint, value)                  */
+	/*                  pair< string, int >                  */
+	/* ***************************************************** */
+	std::cout << MAG "\n\nTEST insert( hint, value )" END << std::endl;
 
 
-	// /* insert(begin(), 1) */
+	/* insert(begin(), 1) */
 	// it_type it_insert_hint 			= map.insert(map.begin()++, pair("A", 1));
 	// ft_it_type ft_it_insert_hint 	= ft_map.insert(ft_map.begin()++, ft_pair("A", 1));
 
