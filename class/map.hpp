@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 18:14:05 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/16 23:38:20 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/17 11:47:47 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -271,7 +271,7 @@ public:
 	};
 
 	void erase( iterator pos ) {
-		// std::cout << "erase(" << pos->first << ", " << pos->second << ")" << std::endl;
+		std::cout << "erase(" << pos->first << ", " << pos->second << ")" << std::endl;
 		_tree.erase(pos);
 	}
 
