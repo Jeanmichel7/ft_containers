@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 12:54:45 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/17 21:49:11 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/17 22:28:35 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,13 +75,8 @@ public:
 		// _node_alloc.construct(_nil, Node(NULL, NULL));
 		// _root = _nil;
 		// _last_node = _root;
-		// _node = _node_alloc.allocate(1);
-		// _nil->color = 0;
-    // _nil->left = nullptr;
-    // _nil->right = nullptr;
-		// _node_alloc.construct(_node, Node());
 
-		std::cout << "Constructor tree called" << std::endl;
+		// std::cout << "Constructor tree called" << std::endl;
 	}
 
 	RedBlackTree(const self& x) :
@@ -90,10 +85,10 @@ public:
 		_comp(x._comp),
 		_size(0)
 	{
-		_nil = _node_alloc.allocate(1);
-		_node_alloc.construct(_nil, Node(NULL, NULL));
-		_root = _nil;
-		_last_node = _root;
+		// _nil = _node_alloc.allocate(1);
+		// _node_alloc.construct(_nil, Node(NULL, NULL));
+		// _root = _nil;
+		// _last_node = _root;
 	
 		insert(x.begin(), x.end());
 	}
@@ -113,8 +108,7 @@ public:
 	/* Destructor */
 	~RedBlackTree()
 	{
-		std::cout << "Destructor called" << std::endl;
-
+		// std::cout << "Destructor called" << std::endl;
 		// clear();
 
 
@@ -122,7 +116,7 @@ public:
 		node_pointer prev;
 
 		// std::cout << "current : " << current->_content.first << std::endl;
-		while (_size > 0 && current != _nil)
+		while (current != _nil)
 		{
 			if (current->_left != _nil) {
 				current = current->_left;
@@ -134,8 +128,8 @@ public:
 			{
 				_node_alloc.destroy(_root);
 				_node_alloc.deallocate(_root, 1);
-				// _node_alloc.destroy(_nil);
-				// _node_alloc.deallocate(_nil, 1);
+				_node_alloc.destroy(_nil);
+				_node_alloc.deallocate(_nil, 1);
 				break;
 			}
 			if ((current->_left == _nil && current->_right == _nil)) {
@@ -149,21 +143,6 @@ public:
 				_node_alloc.deallocate(prev, 1);
 			}
 		}
-
-
-		if (empty()) {
-			// std::cout << "empty" << std::endl;
-			// std::cout << "root : " 	<< _root->_content.first << std::endl;
-			// std::cout << "nil : " 	<< _nil->_content.first << std::endl;
-			// std::cout << "last_node : " << _last_node->_content.first << std::endl;
-
-			// _node_alloc.destroy(_nil);
-			// _node_alloc.deallocate(_nil, 1);
-			// return ;
-		}
-		
-		// _node_alloc.destroy(_nil);
-		// _node_alloc.deallocate(_nil, 1);
 	}
 
 
@@ -293,10 +272,9 @@ public:
 			_last_node = _root;
 		}
 
-
 		node_pointer new_node = _node_alloc.allocate(1);
 		_node_alloc.construct(new_node, Node(val, y, _nil, _nil, N_RED));
-		if (y == NULL) {
+		if (_size == 0) {
 			_root = new_node;
 		} else if (val.first < y->_content.first) {
 			y->_left = new_node;
@@ -307,14 +285,14 @@ public:
    	if (new_node->_parent == NULL) {
       new_node->_color = 0; 
     }
-		else
+		else if (_size > 1)
     	insertFix(new_node);
 
 		_size++;
 
 		// set last node
 		node_pointer c = _root;
-		while (c->_right != _nil)
+		while (c && c->_right != _nil)
 			c = c->_right;
 		_last_node = c;
 
@@ -326,9 +304,10 @@ public:
 
 
 	ft::pair<iterator, bool> insert_pair(const value_type& val) {
-		node_pointer y = NULL;
+		node_pointer y = _root;
 		node_pointer x = _root;
-		while (x != _nil) {
+
+		while (x != _nil && _size != 0) {
 			y = x;
 			if (val.first < x->_content.first) {
 				x = x->_left;
@@ -977,11 +956,14 @@ public:
 		int level = 0;
 		int node_in_line = 0;
 
+		// std::cout << "current : " << current->_content.first << std::endl;
+
+
 		if (current == NULL )
 			std::cout << "Tree is NULL" << std::endl;
 		else if (current == _nil)
 			std::cout << "Tree is empty" << std::endl;
-		else {
+		else if (!empty()){
 			display_tree(parent = _root, space_root, level, node_in_line);
 		}
 
