@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/14 22:19:53 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/17 22:28:10 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/17 23:32:24 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -1811,6 +1811,43 @@ int main()
 
 
 
+	ft_map.display_tree();
+
+
+	/* ***************************************************** */
+	/*                constructor(first, last)               */
+	/*                  pair< string, int >                  */
+	/* ***************************************************** */
+
+	std::cout << MAG "\n\nTEST constructor(first, last)" END << std::endl;
+
+	/* constructor(first, last) */
+	std_map_str_int map_construct(map.begin(), map.end());
+	ft_map_str_int ft_map_construct(ft_map.begin(), ft_map.end());
+	comp_map(map_construct, ft_map_construct, "constructor(first, last)");
+	
+
+	/*construct(begin, begin + 2) */
+	it_end = map.begin();
+	ft_it_end = ft_map.begin();
+	for(int i = 0; i < 2; i++) { it_end++; ft_it_end++; }
+	
+	std_map_str_int map_construct2(map.begin(), it_end);
+	ft_map_str_int ft_map_construct2(ft_map.begin(), ft_it_end);
+	comp_map(map_construct2, ft_map_construct2, "constructor(begin, begin + 2)");
+
+
+	/*construct(begin + 2, end - 2) */
+	it_type it_begin = map.begin();
+	ft_it_type ft_it_begin = ft_map.begin();
+	for(int i = 0; i < 2; i++) { it_begin++; ft_it_begin++; }
+	it_end = map.end();
+	ft_it_end = ft_map.end();
+	for(int i = 0; i < 2; i++) { it_end--; ft_it_end--; }
+
+	std_map_str_int map_construct3(it_begin, it_end);
+	ft_map_str_int ft_map_construct3(ft_it_begin, ft_it_end);
+	comp_map(map_construct3, ft_map_construct3, "constructor(begin + 2, end - 2)");
 
 
 
@@ -1818,6 +1855,37 @@ int main()
 
 
 
+	/* constructor const */
+	const_it_type 	 cit_begin2 = map.begin();
+	ft_const_it_type ft_cit_begin2 = ft_map.begin();
+	const_it_type 	 cit_end2 = map.end();
+	ft_const_it_type ft_cit_end2 = ft_map.end();
+
+	std_map_str_int map_construct10(cit_begin2, cit_end2);
+	ft_map_str_int ft_map_construct10(ft_cit_begin2, ft_cit_end2);
+	comp_map(map_construct10, ft_map_construct10, "constructor const");
+
+
+
+
+
+
+	/* construct(reverse begin, revse end) */
+	std_map_str_int map_construct4(map.rbegin(), map.rend());
+	ft_map_str_int ft_map_construct4(ft_map.rbegin(), ft_map.rend());
+	comp_map(map_construct4, ft_map_construct4, "constructor(reverse begin, revse end)");
+
+	/* construct(reverse begin + 2, revse end - 2) */
+	r_it = map.rbegin();
+	ft_r_it = ft_map.rbegin();
+	for(int i = 0; i < 2; i++) { r_it++; ft_r_it++; }
+	r_it_type 	 r_it_end = map.rend();
+	ft_r_it_type ft_r_it_end = ft_map.rend();
+	for(int i = 0; i < 2; i++) { r_it_end--; ft_r_it_end--; }
+
+	std_map_str_int map_construct5(r_it, r_it_end);
+	ft_map_str_int ft_map_construct5(ft_r_it, ft_r_it_end);
+	comp_map(map_construct5, ft_map_construct5, "constructor(reverse begin + 2, revse end - 2)");
 
 
 

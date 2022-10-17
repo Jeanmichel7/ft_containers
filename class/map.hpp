@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 18:14:05 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/17 22:28:27 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/17 23:26:21 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,9 +112,10 @@ public:
 	map(InputIt first, InputIt last,
 		const Compare &comp = Compare(),
 		const Allocator &alloc = Allocator()) 
-		: _alloc(alloc), _comp(comp), _tree()
+	: _alloc(alloc), _comp(comp), _tree()
 	{
 		// std::cout << "CONSTRUCTOR map(first, last)" << std::endl;
+		_tree.insert(first, last);
 	};
 
 	// map(const map &other) {};
@@ -125,8 +126,7 @@ public:
 		// std::cout << "CONSTRUCTOR copie " << std::endl;
 	};
 
-	~map(){
-		// _tree.clear();
+	~map() {
 		// std::cout << "DESTRUCTOR map()" << std::endl;
 	};
 
