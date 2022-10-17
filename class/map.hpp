@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 18:14:05 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/17 23:26:21 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/18 01:11:21 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,34 +148,6 @@ public:
 
 
 
-	/* *************************************************** */
-	/*                                                     */
-	/*                     ELEMENT ACCESS                  */
-	/*                                                     */
-	/* *************************************************** */
-
-	T& at( const Key& key ) {
-		iterator it = find(key);
-		if (it == end())
-			throw std::out_of_range("map::at");
-		return (it->second);
-	}
-
-	const T& at( const Key& key ) const {
-		const_iterator it = find(key);
-		if (it == end())
-			throw std::out_of_range("map::at");
-		return (it->second);
-	}
-
-	T& operator[]( const Key& key ) {
-		iterator it = find(key);
-		if (it == end())
-			it = insert(ft::make_pair(key, T())).first;
-		return (it->second);
-	}
-
-
 
 
 
@@ -252,6 +224,41 @@ public:
 
 
 
+
+
+	/* *************************************************** */
+	/*                                                     */
+	/*                     ELEMENT ACCESS                  */
+	/*                                                     */
+	/* *************************************************** */
+
+	T& at( const Key& key ) {
+		iterator it = find(key);
+		if (it == end())
+			throw std::out_of_range("ft_map::at");
+		return (it->second);
+	}
+
+	const T& at( const Key& key ) const {
+		const_iterator it = find(key);
+		if (it == end())
+			throw std::out_of_range("const ft_map::at");
+		return (it->second);
+	}
+
+	T& operator[]( const Key& key ) {
+		iterator it = find(key);
+		if (it == end())
+			it = insert(ft::make_pair(key, T())).first;
+		return (it->second);
+	}
+
+
+
+
+
+
+
 	/* *************************************************** */
 	/*                                                     */
 	/*                       MODIFY                        */
@@ -309,7 +316,11 @@ public:
 	/*                                                     */
 	/* *************************************************** */
 
-	size_type count( const Key& key ) const;
+	size_type count( const Key& key ) const {
+		if (find(key) != end())
+			return (1);
+		return (0);
+	}
 
 	iterator find( const Key& key )
 	{
@@ -324,7 +335,7 @@ public:
 	};
 	
 	const_iterator find( const Key& key ) const {
-		std::cout << "********** const fund ! ***********" << std::endl;
+		// std::cout << "********** const fund ! ***********" << std::endl;
 		const_iterator it = begin();
 		while (it != end())
 		{
@@ -335,14 +346,26 @@ public:
 		return it;
 	}
 
-	std::pair<iterator,iterator> equal_range( const Key& key );
+	ft::pair<iterator,iterator> equal_range( const Key& key ) {
+		iterator it = find(key);
+		if (it == end())
+			return (ft::make_pair(end(), end()));
+		return (ft::make_pair(it, it));
+	}
 
-	std::pair<const_iterator,const_iterator> equal_range( const Key& key ) const;
+	ft::pair<const_iterator,const_iterator> equal_range( const Key& key ) const {
+		const_iterator it = find(key);
+		if (it == end())
+			return (ft::make_pair(end(), end()));
+		return (ft::make_pair(it, it));
+	}
 
 	iterator lower_bound( const Key& key );
+
 	const_iterator lower_bound( const Key& key ) const;
 
 	iterator upper_bound( const Key& key );
+	
 	const_iterator upper_bound( const Key& key ) const;
 
 

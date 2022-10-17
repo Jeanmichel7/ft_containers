@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/14 22:19:53 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/17 23:32:24 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/18 01:11:28 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -948,6 +948,14 @@ int main()
 /*                                                       */
 /* ***************************************************** */
 
+
+	typedef	std::string		type_key_map1;
+	typedef	int						type_value_map1;
+
+	// typedef int						type_key_map2;
+	// typedef int						type_value_map2;
+
+
 	/* ***************************************************** */
 	/*                                                       */
 	/*                          MAPS                         */
@@ -1875,6 +1883,7 @@ int main()
 	ft_map_str_int ft_map_construct4(ft_map.rbegin(), ft_map.rend());
 	comp_map(map_construct4, ft_map_construct4, "constructor(reverse begin, revse end)");
 
+
 	/* construct(reverse begin + 2, revse end - 2) */
 	r_it = map.rbegin();
 	ft_r_it = ft_map.rbegin();
@@ -1886,6 +1895,8 @@ int main()
 	std_map_str_int map_construct5(r_it, r_it_end);
 	ft_map_str_int ft_map_construct5(ft_r_it, ft_r_it_end);
 	comp_map(map_construct5, ft_map_construct5, "constructor(reverse begin + 2, revse end - 2)");
+
+
 
 
 
@@ -1921,6 +1932,190 @@ int main()
 
 
 
+	/* ***************************************************** */
+	/*                    tests capacity                     */
+	/*                  pair< string, int >                  */
+	/* ***************************************************** */
+
+	std::cout << MAG "\n\nTEST empty" END << std::endl;
+
+	std_map_str_int empty_map;
+	ft_map_str_int 	ft_empty_map;
+
+	
+	str_comp( to_string(map.empty()), to_string(ft_map.empty()), "empty()");
+	str_comp( to_string(map_cp.empty()), to_string(ft_map_cp.empty()), "empty()");
+	str_comp( to_string(map_construct2.empty()), to_string(ft_map_construct2.empty()), "empty()");
+	str_comp( to_string(empty_map.empty()), to_string(ft_empty_map.empty()), "empty()");
+	map_cp.clear();
+	ft_map_cp.clear();
+	str_comp( to_string(map_cp.empty()), to_string(ft_map_cp.empty()), "empty() after clear()");
+	
+
+
+
+
+
+	/* ***************************************************** */
+	/*                      tests size                       */
+	/*                  pair< string, int >                  */
+	/* ***************************************************** */
+	
+	std::cout << MAG "\n\nTEST size - max_size" END << std::endl;
+
+	str_comp( to_string(map.size()), to_string(ft_map.size()), "empty()");
+	str_comp( to_string(map_cp.size()), to_string(ft_map_cp.size()), "empty()");
+
+	str_comp( to_string(map_construct3.size()), to_string(ft_map_construct3.size()), "empty()");
+	str_comp( to_string(empty_map.size()), to_string(ft_empty_map.size()), "empty()");
+	map_construct3.clear();
+	ft_map_construct3.clear();
+	str_comp( to_string(map_construct3.size()), to_string(ft_map_construct3.size()), "empty() after clear()");
+
+
+
+	str_comp(to_string(map.max_size()), to_string(ft_map.max_size()), "max_size()");
+	str_comp(to_string(map_cp.max_size()), to_string(ft_map_cp.max_size()), "max_size()");
+	str_comp(to_string(map_construct3.max_size()), to_string(ft_map_construct3.max_size()), "max_size()");
+
+
+
+
+
+
+	/* ***************************************************** */
+	/*                     test at && []                     */
+	/*                  pair< string, int >                  */
+	/* ***************************************************** */
+
+	std::cout << MAG "\n\nTEST at && []" END << std::endl;
+
+	/* at l */
+	type_value_map1 ret_at = map.at("l");
+	type_value_map1 ft_ret_at = ft_map.at("l");
+	str_comp( to_string(ret_at), to_string(ft_ret_at), "at(\"l\")");
+	str_comp( to_string(map.at("l")), to_string(ft_map.at("l")), "at(\"l\")");
+
+	// /* at a */																																		tester excetion
+	// ret_at = map.at("a");
+	// ft_ret_at = ft_map.at("a");
+	// str_comp( to_string(ret_at), to_string(ft_ret_at), "at(\"a\")");
+	// str_comp( to_string(map.at("a")), to_string(ft_map.at("a")), "at(\"a\")");
+
+
+	// /* at j */
+	ret_at = map.at("j");
+	ft_ret_at = ft_map.at("j");
+	str_comp( to_string(ret_at), to_string(ft_ret_at), "at(\"j\")");
+	str_comp( to_string(map.at("j")), to_string(ft_map.at("j")), "at(\"j\")");
+
+	/* at @ */
+	ret_at = map.at("@");
+	ft_ret_at = ft_map.at("@");
+	str_comp( to_string(ret_at), to_string(ft_ret_at), "at(\"@\")");
+	str_comp( to_string(map.at("@")), to_string(ft_map.at("@")), "at(\"@\")");
+
+	/* at y */
+	ret_at = map.at("y");
+	ft_ret_at = ft_map.at("y");
+	str_comp( to_string(ret_at), to_string(ft_ret_at), "at(\"y\")");
+	str_comp( to_string(map.at("y")), to_string(ft_map.at("y")), "at(\"y\")");
+
+
+
+
+
+
+
+
+
+
+	/* [] l */
+	ret_at = map["l"];
+	ft_ret_at = ft_map["l"];
+	str_comp( to_string(ret_at), to_string(ft_ret_at), "[](\"l\")");
+	str_comp( to_string(map["l"]), to_string(ft_map["l"]), "[](\"l\")");
+
+	/* [] @ */
+	ret_at = map["@"];
+	ft_ret_at = ft_map["@"];
+	str_comp( to_string(ret_at), to_string(ft_ret_at), "[](\"@\")");
+	str_comp( to_string(map["@"]), to_string(ft_map["@"]), "[](\"@\")");
+
+	/* [] y */
+	ret_at = map["y"];
+	ft_ret_at = ft_map["y"];
+	str_comp( to_string(ret_at), to_string(ft_ret_at), "[](\"y\")");
+	str_comp( to_string(map["y"]), to_string(ft_map["y"]), "[](\"y\")");
+
+	
+
+
+
+
+	ft_map.display_tree();
+
+
+
+
+
+	/* ***************************************************** */
+	/*                        LOOKUP                         */
+	/*                  pair< string, int >                  */
+	/* ***************************************************** */
+
+
+	std::cout << MAG "\n\nTEST count" END << std::endl;
+
+	str_comp( to_string(map.count("@")), to_string(ft_map.count("@")), "count()" );
+	str_comp( to_string(map.count("a")), to_string(ft_map.count("a")), "count()" );
+	str_comp( to_string(map.count("l")), to_string(ft_map.count("l")), "count()" );
+	str_comp( to_string(map.count("y")), to_string(ft_map.count("y")), "count()" );
+	str_comp( to_string(map.count("z")), to_string(ft_map.count("z")), "count()" );
+	
+
+
+	comp_map(map, ft_map, "comp map, ft_map");
+
+
+	/* ***************************************************** */
+	/*                        LOOKUP                         */
+	/*                  pair< string, int >                  */
+	/* ***************************************************** */
+	
+	std::cout << MAG "\n\nTEST equal_range()" END << std::endl;
+
+	/* l */
+	std::pair<it_type, it_type> ret_equal_range = map.equal_range("l");
+	ft::pair<ft_it_type, ft_it_type> ft_ret_equal_range = ft_map.equal_range("l");
+	str_comp( to_string(ret_equal_range.first->first), to_string(ft_ret_equal_range.first->first), "equal_range(\"l\")");
+	str_comp( to_string(ret_equal_range.first->second), to_string(ft_ret_equal_range.first->second), "equal_range(\"l\")");
+
+	/* @ */
+	ret_equal_range = map.equal_range("@");
+	ft_ret_equal_range = ft_map.equal_range("@");
+	str_comp( to_string(ret_equal_range.first->first), to_string(ft_ret_equal_range.first->first), "equal_range(\"@\")");
+	str_comp( to_string(ret_equal_range.first->second), to_string(ft_ret_equal_range.first->second), "equal_range(\"@\")");
+
+	/* y */
+	ret_equal_range = map.equal_range("y");
+	ft_ret_equal_range = ft_map.equal_range("y");
+	str_comp( to_string(ret_equal_range.first->first), to_string(ft_ret_equal_range.first->first), "equal_range(\"y\")");
+	str_comp( to_string(ret_equal_range.first->second), to_string(ft_ret_equal_range.first->second), "equal_range(\"y\")");
+
+	/* z */
+	// ret_equal_range = map.equal_range("z");
+	// ft_ret_equal_range = ft_map.equal_range("z");
+	// str_comp( to_string(ret_equal_range.first->first), to_string(ft_ret_equal_range.first->first), "equal_range(\"z\")");
+	// str_comp( to_string(ret_equal_range.first->second), to_string(ft_ret_equal_range.first->second), "equal_range(\"z\")");
+
+
+
+
+
+	
+
+
 
 
 
@@ -1934,6 +2129,9 @@ int main()
 	ft_map.clear();
 	comp_map(map, ft_map, "clear()");
 	// ft_map.display_tree();
+
+
+
 
 
 
