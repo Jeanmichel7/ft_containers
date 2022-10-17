@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 12:54:45 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/17 13:31:10 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/17 16:58:07 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,6 @@ public:
 	/* Destructor */
 	~RedBlackTree()
 	{
-		
 		node_pointer current = _root;
 		node_pointer prev;
 
@@ -389,84 +388,82 @@ public:
 
 
 
-	void rbTransplant(node_pointer u, node_pointer v) {
-    if (u->_parent == NULL) {
-      _root = v;
-    } else if (u == u->_parent->_left) {
-      u->_parent->_left = v;
-    } else {
-      u->_parent->_right = v;
+
+
+	void erase(iterator pos) {
+
+		node_pointer current = _root;
+    node_pointer z = _nil;
+    node_pointer x, y;
+
+		
+    while (current != _nil) {
+      if (current->_content.first == pos->first) {
+        z = current;
+      }
+
+      if (current->_content.first < pos->first) {
+        current = current->_right;
+      } else if (current->_content.first > pos->first){
+        current = current->_left;
+      } else {
+				break;
+			}
     }
-    v->_parent = u->_parent;
+    if (z == _nil) {
+      cout << "Key not found in the tree" << endl;
+      return;
+    }
+		// std::cout << "node : " << z->_content.first << std::endl;
+
+    y = z;
+    int y_original_color = y->_color;
+    if (z->_left == _nil) {
+      x = z->_right;
+      rbTransplant(z, z->_right);
+    } else if (z->_right == _nil) {
+      x = z->_left;
+      rbTransplant(z, z->_left);
+    } else {
+      y = minimum(z->_right);
+      y_original_color = y->_color;
+      x = y->_right;
+      if (y->_parent == z) {
+        x->_parent = y;
+      } else {
+        rbTransplant(y, y->_right);
+        y->_right = z->_right;
+        y->_right->_parent = y;
+      }
+
+      rbTransplant(z, y);
+      y->_left = z->_left;
+      y->_left->_parent = y;
+      y->_color = z->_color;
+    }
+
+		if (z == _last_node && z != _root) {
+			_last_node = _last_node->_parent;
+		} else if (z == _root) {
+			_root = x;
+		}
+
+		if (y_original_color == N_BLACK) {
+			del_fix_tree(x);
+		}
+
+		_node_alloc.destroy(z);
+		_node_alloc.deallocate(z, 1);
+		_size--;
+
+		if (_root == _nil) {
+			_last_node = _nil;
+			_node_alloc.destroy(_nil);
+			_node_alloc.deallocate(_nil, 1);
+		}
+
   }
-
-	// void erase(iterator pos) {
-
-	// 	node_pointer current = _root;
-  //   node_pointer z = _nil;
-  //   node_pointer x, y;
-
-		
-  //   while (current != _nil) {
-  //     if (current->_content.first == pos->first) {
-  //       z = current;
-  //     }
-
-  //     if (current->_content.first < pos->first) {
-  //       current = current->_right;
-  //     } else if (current->_content.first > pos->first){
-  //       current = current->_left;
-  //     } else {
-	// 			break;
-	// 		}
-  //   }
-
-  //   if (z == _nil) {
-  //     cout << "Key not found in the tree" << endl;
-  //     return;
-  //   }
-
-  //   y = z;
-  //   int y_original_color = y->_color;
-  //   if (z->_left == _nil) {
-  //     x = z->_right;
-  //     rbTransplant(z, z->_right);
-  //   } else if (z->_right == _nil) {
-  //     x = z->_left;
-  //     rbTransplant(z, z->_left);
-  //   } else {
-  //     y = minimum(z->_right);
-  //     y_original_color = y->_color;
-  //     x = y->_right;
-  //     if (y->_parent == z) {
-  //       x->_parent = y;
-  //     } else {
-  //       rbTransplant(y, y->_right);
-  //       y->_right = z->_right;
-  //       y->_right->_parent = y;
-  //     }
-
-  //     rbTransplant(z, y);
-  //     y->_left = z->_left;
-  //     y->_left->_parent = y;
-  //     y->_color = z->_color;
-  //   }
-	// 	_node_alloc.destroy(z);
-	// 	_node_alloc.deallocate(z, 1);
-	// 	_size--;
-  //   if (y_original_color == 0) {
-  //     del_fix_tree(x);
-  //   }
-		
-	// 	// set last node
-	// 	node_pointer c = _root;
-	// 	while (c->_right != _nil)
-	// 		c = c->_right;
-	// 	_last_node = c;
-
-	// 	display_tree("");
-  // }
-
+/*
 	void erase(iterator position) {
 		// display_tree("---------------------befor delete---------------------");
 		node_pointer current = _root;
@@ -588,24 +585,25 @@ public:
 			_last_node = c;
 		}
 	};
+*/
+
+
 
 	void erase(iterator first, iterator last) {
 		iterator next = first;
-		next++;
-
+		if (next != last)
+			next++;
 		while (first != last && next != last) {
 			// std::cout << "erase(" << first->first << ")" << std::endl;
 			erase(first);
 			first = next;
 			next++;
 		}
-
 		// std::cout << "erase last (" << first->first << ")" << std::endl;
 		if (first._node == _last_node) {
 			// std::cout << "iterator node == last node" << std::endl;
 		}
-		
-		// if (first != last)
+		if (first != last)
 			erase(first);
 	}
 
@@ -708,13 +706,10 @@ public:
 
 	void leftRotate(node_pointer x)
 	{
-		// std::cout << "left rotate" << std::endl;
+		// std::cout << "left rotate : " << x->_content.first << std::endl;
 		node_pointer y = x->_right;
 		x->_right = y->_left;
-
-		// display_tree("befor left rotate");
-		
-		if (y->_left != NULL)
+		if (y->_left != _nil)
 		{
 			if (y->_left && y->_left->_parent) {
 				y->_left->_parent = x;
@@ -742,7 +737,7 @@ public:
 		// std::cout << "right rotate" << std::endl;
 		node_pointer y = x->_left;
 		x->_left = y->_right;
-		if (y->_right != NULL)
+		if (y->_right != _nil)
 		{
 			if (y->_right && y->_right->_parent) {
 				y->_right->_parent = x;
@@ -765,7 +760,17 @@ public:
 		x->_parent = y;
 	}
 
-	// For balancing the tree after insertion
+	void rbTransplant(node_pointer u, node_pointer v) {
+    if (u->_parent == NULL) {
+      _root = v;
+    } else if (u == u->_parent->_left) {
+      u->_parent->_left = v;
+    } else {
+      u->_parent->_right = v;
+    }
+    v->_parent = u->_parent;
+  }
+
   void insertFix(node_pointer k) {
 		// std::cout << "fix node : " << k->_content.first << std::endl;
     node_pointer u;
@@ -820,7 +825,13 @@ public:
 
 	// For balancing the tree after deletion
   void del_fix_tree(node_pointer x) {
-		std::cout << "fix node : " << x->_content.first << std::endl;
+		// std::cout << "fix node : "<< std::endl
+		// 	<< "content	:" << x->_content.first << std::endl
+		// 	<< "color	:" <<   x->_color << std::endl
+		// 	<< "parent	:"<< (x->_parent != NULL ? x->_parent->_content.first : "") << std::endl;
+		// 	// << "left	:" << ( x->_left && x->_left == _nil ? "NIL" : x->_left->_content.first) << std::endl
+		// 	// << "right	:" << ( x->_right == _nil ? "NIL" : x->_right->_content.first) << std::endl;
+
 		node_pointer s;
 		while (x != _root && x->_color == 0) {
 			if (x == x->_parent->_left) {
@@ -868,7 +879,6 @@ public:
 						leftRotate(s);
 						s = x->_parent->_left;
 					}
-
 					s->_color = x->_parent->_color;
 					x->_parent->_color = 0;
 					s->_left->_color = 0;
@@ -913,7 +923,7 @@ public:
 			display_tree(parent = _root, space_root, level, node_in_line);
 		}
 
-		if (_last_node == _nil)
+		if (_last_node == _nil || _last_node == NULL)
 					std::cout << RED "\n\nlast node is nil" END << std::endl;
 		else {
 			std::cout << RED "\n\nlast node" END << std::endl
@@ -923,28 +933,7 @@ public:
 			<< "left	:" << (_last_node->_left == _nil ? "NIL" : _last_node->_left->_content.first) << std::endl
 			<< "right	:" << (_last_node->_right == _nil ? "NIL" : _last_node->_right->_content.first) << std::endl;
 		}
-
 		std::cout << "\n**********  End display tree ************\n\n\n" << std::endl;
-
-		// for(size_t i = 0; i <= _size; i++)
-		// {
-		// 	if (current == _root) {
-		// 		std::cout << "			" <<current->_content << std::endl;
-		// 		parent = current;
-		// 	}
-		// 	if (current->_left) {
-		// 		std::cout << "left " << current->_content << std::endl;
-		// 		current = current->_left;
-		// 	}
-		// 	else if (current->_right) {
-		// 		std::cout << "right " << current->_content << std::endl;
-		// 		current = current->_right;
-		// 	}
-		// 	// else
-		// 	// 	break;
-			
-		// }
-		// std::cout << "			" << _root->_content.first << " : " << _root->_content.second << std::endl;
 	}
 
 
@@ -969,55 +958,56 @@ public:
 
 		display_tree(parent->_right, space_root, level + 1, node_in_line);
 	}
-	// {
-	// 	if (parent == NULL)
-	// 		return;
+	/*
+	{
+		if (parent == NULL)
+			return;
 		
-	// 	// int display_r = 0;
-	// 	// int display_l = 0;
+		// int display_r = 0;
+		// int display_l = 0;
 
-	// 	int space_between = 3;
+		int space_between = 3;
 
-	// 	// if (parent == _root) {
-	// 		for(int i = 0; i < space_root; i++) std::cout << " ";
-	// 		std::cout <<parent->_content.first << std::endl;
-	// 		for(int i = 0; i < space_root - 2 ; i++) std::cout << " ";
-	// 		std::cout << "/" ;
-	// 		for(int i = 0; i < space_between ; i++) std::cout << " ";
-	// 		std::cout << "\\";
-	// 		if (node_in_line == pow(level, 2)) 
-	// 			std::cout << std::endl;
-	// 	// }
+		// if (parent == _root) {
+			for(int i = 0; i < space_root; i++) std::cout << " ";
+			std::cout <<parent->_content.first << std::endl;
+			for(int i = 0; i < space_root - 2 ; i++) std::cout << " ";
+			std::cout << "/" ;
+			for(int i = 0; i < space_between ; i++) std::cout << " ";
+			std::cout << "\\";
+			if (node_in_line == pow(level, 2)) 
+				std::cout << std::endl;
+		// }
 
-	// 	display_tree(parent->_left, space_root - 3, level + 1, node_in_line++);
-	// 	display_tree(parent->_right, space_root + 3, level + 1, node_in_line++);
+		display_tree(parent->_left, space_root - 3, level + 1, node_in_line++);
+		display_tree(parent->_right, space_root + 3, level + 1, node_in_line++);
 
-	// 	if (parent->_left != NULL) {
-	// 		// for(int i = 0; i < space_root - (level * 3) - 1; i++) std::cout << " ";
-	// 		// std::cout << parent->_left->_content.first;
-	// 		// for(int i = 0; i < space_between + (3 * level); i++) std::cout << " ";
-	// 		node_in_line++;
+		if (parent->_left != NULL) {
+			// for(int i = 0; i < space_root - (level * 3) - 1; i++) std::cout << " ";
+			// std::cout << parent->_left->_content.first;
+			// for(int i = 0; i < space_between + (3 * level); i++) std::cout << " ";
+			node_in_line++;
 
-	// 		// display_l = 1;
-	// 	}
-	// 	else
-	// 		for(int i = 0; i < space_root + (level * 3); i++) std::cout << " ";
+			// display_l = 1;
+		}
+		else
+			for(int i = 0; i < space_root + (level * 3); i++) std::cout << " ";
 
 
-	// 	if (parent->_right != NULL) {
-	// 		// std::cout <<parent->_right->_content.first;
-	// 		node_in_line++;
+		if (parent->_right != NULL) {
+			// std::cout <<parent->_right->_content.first;
+			node_in_line++;
 			
-	// 		// display_r = 1;
-	// 	}
-	// 	else {
-	// 		// if (node_in_line == pow(level, 2))
-	// 		std::cout << std::endl;
-	// 		level++;
-	// 	}
+			// display_r = 1;
+		}
+		else {
+			// if (node_in_line == pow(level, 2))
+			std::cout << std::endl;
+			level++;
+		}
 			
-	// }
-
+	}
+	*/
 };
 
 } // namespace ft

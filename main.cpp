@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/14 22:19:53 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/17 12:38:06 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/17 16:53:03 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -1047,8 +1047,8 @@ int main()
 
 
 	/* insert many value */
-	// fill_map< std_map_str_int, pair >(&map);
-	// fill_map< ft_map_str_int, ft_pair >(&ft_map);
+	fill_map< std_map_str_int, pair >(&map);
+	fill_map< ft_map_str_int, ft_pair >(&ft_map);
 	
 	// for (it_type it = map.begin(); it != map.end(); it++)
 	// 	sstr << it->first << ":" << it->second << " ";
@@ -1264,15 +1264,15 @@ int main()
 
 
 	// /* end --; --;*/
-	// it 		= map.end(); it--; it--; it--;
-	// ft_it 	= ft_map.end(); ft_it--; ft_it--; ft_it--;
-	// std::cout << "\n	it->first: " << it->first << " \n	ft_it->first: " << ft_it->first << std::endl;
-	// sstr_comp< it_type, ft_it_type >(it, ft_it, "end()--x3");
+	it 		= map.end(); it--; it--; it--;
+	ft_it 	= ft_map.end(); ft_it--; ft_it--; ft_it--;
+	std::cout << "\n	it->first: " << it->first << " \n	ft_it->first: " << ft_it->first << std::endl;
+	sstr_comp< it_type, ft_it_type >(it, ft_it, "end()--x3");
 
-	// it 		= map.end(); it--; it--; it--;  it--;
-	// ft_it 	= ft_map.end(); ft_it--; ft_it--; ft_it--; ft_it--;
-	// std::cout << "\n	it->first: " << it->first << " \n	ft_it->first: " << ft_it->first << std::endl;
-	// sstr_comp< it_type, ft_it_type >(it, ft_it, "end()--x3");
+	it 		= map.end(); it--; it--; it--;  it--;
+	ft_it 	= ft_map.end(); ft_it--; ft_it--; ft_it--; ft_it--;
+	std::cout << "\n	it->first: " << it->first << " \n	ft_it->first: " << ft_it->first << std::endl;
+	sstr_comp< it_type, ft_it_type >(it, ft_it, "end()--x3");
 	
 	// it 		= map.end(); it--; it--; it--; it--;  it--;
 	// ft_it 	= ft_map.end(); ft_it--; ft_it--; ft_it--; ft_it--; ft_it--;
@@ -1617,11 +1617,11 @@ int main()
 	comp_map(map, ft_map, "erase find(\"AA\")");
 	ft_map.display_tree();
 
-	/* erase("a") */
-	map.erase(map.find("a"));
-	ft_map.erase(ft_map.find("a"));
-	comp_map(map, ft_map, "erase find(\"a\")");
-	ft_map.display_tree();
+	// /* erase("a") */
+	// map.erase(map.find("a"));
+	// ft_map.erase(ft_map.find("a"));
+	// comp_map(map, ft_map, "erase find(\"a\")");
+	// ft_map.display_tree();
 
 	// /* erase c */
 	// map.erase(map.find("c"));
@@ -1701,50 +1701,41 @@ int main()
 	/* ***************************************************** */
 	std::cout << MAG "\n\nTEST erase(first, last)" END << std::endl;
 
-	ft_map.display_tree();
 
-	/* erase begin() -> end--*/
-	it_type 		it_erase_end 		= map.end();
-	ft_it_type 	ft_it_erase_end = ft_map.end();
+	/* erase begin() -> begin++*/
+	it_type 		it_erase_end 		= map.begin(); it_erase_end++;
+	ft_it_type 	ft_it_erase_end = ft_map.begin(); ft_it_erase_end++;
 	map.erase(map.begin(), it_erase_end);
 	ft_map.erase(ft_map.begin(), ft_it_erase_end);
-	comp_map(map, ft_map, "erase(begin(), end())");
-
+	comp_map(map, ft_map, "erase(begin(), begin()++)");
 	ft_map.display_tree();
 
 
-	// /* erase last */
-	// map.erase(map.begin(), map.begin());
-	// if (map.empty())
-	// 	std::cout << "map is empty" << std::endl;
-	// else std::cout << "map is not empty" << std::endl;
-	
-	// ft_map.erase(ft_map.begin(), ft_map.begin());
-	// comp_map(map, ft_map, "erase(begin(), begin())");
+	/* erase begin(), begin() */
+	map.erase(map.begin(), map.begin());
+	ft_map.erase(ft_map.begin(), ft_map.begin());
+	comp_map(map, ft_map, "erase(begin(), begin())");
 
-	// it_type 		it_erase 		= map.begin();
-	// ft_it_type 	ft_it_erase = ft_map.begin();
-
-	// for(int i = 0; i < 5; i++) { it_erase++; ft_it_erase++;	}
+	/* erase end(), end() */
+	map.erase(map.end(), map.end());
+	ft_map.erase(ft_map.end(), ft_map.end());
+	comp_map(map, ft_map, "erase(end(), end())");
 
 
-	
 
+	/* erase begin() + 5 -> end() - 5 */
+	it_type 		it_erase_begin 		= map.begin();
+	ft_it_type 	ft_it_erase_begin = ft_map.begin();
+	for(int i = 0; i < 5; i++) { it_erase_begin++; ft_it_erase_begin++;	}
 
-	// /* erase begin() + 5 -> end() - 5 */
-	// it_type 		it_erase_begin 		= map.begin();
-	// ft_it_type 	ft_it_erase_begin = ft_map.begin();
-	// for(int i = 0; i < 5; i++) { it_erase_begin++; ft_it_erase_begin++;	}
+	it_erase_end 			= map.end();
+	ft_it_erase_end 	= ft_map.end();
+	for(int i = 0; i < 5; i++) { it_erase_end--; ft_it_erase_end--;	}
 
-	// it_type 		it_erase_end 			= map.end();
-	// ft_it_type 	ft_it_erase_end 	= ft_map.end();
-	// for(int i = 0; i < 5; i++) { it_erase_end--; ft_it_erase_end--;	}
-
-	// map.erase(it_erase_begin, it_erase_end);
-	// ft_map.erase(ft_it_erase_begin, ft_it_erase_end);
-	// comp_map(map, ft_map, "erase(begin() + 5, end() - 5)");
-
-	// ft_map.display_tree();
+	map.erase(it_erase_begin, it_erase_end);
+	ft_map.erase(ft_it_erase_begin, ft_it_erase_end);
+	comp_map(map, ft_map, "erase(begin() + 5, end() - 5)");
+	ft_map.display_tree();
 
 
 	/* erase begin() -> end() */
@@ -1755,13 +1746,7 @@ int main()
 	// // map.erase(map.begin(), map.end());
 	// // ft_map.erase(ft_map.begin(), ft_map.end());
 	// comp_map(map, ft_map, "erase(begin(), end())");
-
-	/* test empty */
-	// if (map.empty() && ft_map.empty())
-	// 	std::cout << GRN "[OK] " END ;
-	// else 
-	// 	std::cout << RED "[KO]" END << " is empty" << std::endl;
-	
+	// ft_map.display_tree();
 
 
 
@@ -1770,9 +1755,14 @@ int main()
 
 
 
-	// map.clear();
-	// ft_map.clear();
-	// comp_map(map, ft_map, "clear()");
+
+
+	std::cout << MAG "\n\nTEST clear" END << std::endl;
+
+	map.clear();
+	ft_map.clear();
+	comp_map(map, ft_map, "clear()");
+	ft_map.display_tree();
 
 
 

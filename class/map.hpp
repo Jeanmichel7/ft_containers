@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 18:14:05 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/17 12:38:14 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/17 16:44:17 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -277,13 +277,6 @@ public:
 
 	void erase( iterator first, iterator last ) {
 		_tree.erase(first, last);
-
-		// iterator it = first;
-		// while (it != last)
-		// {
-		// 	_tree.erase(it);
-		// 	it++;
-		// }
 	}
 
 	size_type erase( const Key& key );
