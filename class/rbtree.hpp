@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 12:54:45 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/17 12:25:52 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/17 13:31:10 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -468,7 +468,7 @@ public:
   // }
 
 	void erase(iterator position) {
-		display_tree("---------------------befor delete---------------------");
+		// display_tree("---------------------befor delete---------------------");
 		node_pointer current = _root;
 
 		while(current != _nil) {
@@ -481,7 +481,7 @@ public:
 		}
 
 		if (current == _nil) {
-			std::cout << "not found" << std::endl;
+			std::cout << "element not found" << std::endl;
 			return;
 		}
 		// std::cout << "position to del : " << current->_content.first << std::endl;
@@ -490,7 +490,7 @@ public:
 		int y_original_color = current->_color;
 
 		if (current->_left == _nil && current->_right == _nil) {
-			std::cout << "\nno child" << std::endl;
+			// std::cout << "\nno child" << std::endl;
 			if (current->_parent == NULL) {
 				_root = _nil;
 			}
@@ -498,7 +498,7 @@ public:
 				current->_parent->_left = _nil;
 			else
 				current->_parent->_right = _nil;
-			display_tree("befor fix tree");
+			// display_tree("befor fix tree");
 
 			if (y_original_color == 0 && current->_parent != NULL)
 				del_fix_tree(current->_parent);
@@ -511,11 +511,11 @@ public:
 			// del_fix_tree(current);
 
 
-			std::cout << "end of no child" << std::endl;
+			// std::cout << "end of no child" << std::endl;
 		}
 
 		else if (current->_left == _nil || current->_right == _nil) {
-			std::cout << "\none child" << std::endl;
+			// std::cout << "\none child" << std::endl;
 			node_pointer child = current->_left == _nil ? current->_right : current->_left;
 			if (current->_parent == NULL) {
 				_root = child;
@@ -529,17 +529,17 @@ public:
 				current->_parent->_right = child;
 				child->_parent = current->_parent;
 			}
-			display_tree("befor fix tree");
+			// display_tree("befor fix tree");
 
 			if (y_original_color == 0)
 				del_fix_tree(child);
-			std::cout << "end of one child" << std::endl;
+			// std::cout << "end of one child" << std::endl;
 
 			
 		}
 
 		else {
-			std::cout << "\ntwo child" << std::endl;
+			// std::cout << "\ntwo child" << std::endl;
 			
 			node_pointer successor = current->_right;
 			while (successor->_left != _nil)
@@ -564,24 +564,29 @@ public:
 			successor->_parent = current->_parent;
 			successor->_left = current->_left;
 			current->_left->_parent = successor;
-			display_tree("befor fix tree");
+			// display_tree("befor fix tree");
 
 			if (y_original_color == 0)
 				del_fix_tree(successor);
 		}
 
-		display_tree("after fix tree");
+		// display_tree("after fix tree");
 
 		_node_alloc.destroy(current);
 		_node_alloc.deallocate(current, 1);
 		_size--;
 
-
-		node_pointer c = _root;
-		while (c && c->_right != _nil)
-			c = c->_right;
-		_last_node = c;
-
+		if (_root == _nil) {
+			_last_node = _nil;
+			_node_alloc.destroy(_nil);
+			_node_alloc.deallocate(_nil, 1);
+		}
+		else {
+			node_pointer c = _root;
+			while (c->_right != _nil)
+				c = c->_right;
+			_last_node = c;
+		}
 	};
 
 	void erase(iterator first, iterator last) {
@@ -589,19 +594,15 @@ public:
 		next++;
 
 		while (first != last && next != last) {
-			std::cout << "erase(" << first->first << ")" << std::endl;
+			// std::cout << "erase(" << first->first << ")" << std::endl;
 			erase(first);
 			first = next;
 			next++;
 		}
 
-
-
-
-		
 		// std::cout << "erase last (" << first->first << ")" << std::endl;
 		if (first._node == _last_node) {
-			std::cout << "iterator node == last node" << std::endl;
+			// std::cout << "iterator node == last node" << std::endl;
 		}
 		
 		// if (first != last)
@@ -877,60 +878,6 @@ public:
 			}
 		}
 		x->_color = 0;
-	// }
-	// 	node_pointer s;
-	// 	while (x != _root && x->_color == 0) {
-	// 		if (x == x->_parent->_left) {
-	// 			s = x->_parent->_right;
-	// 			if (s->_color == 1) {
-	// 				s->_color = 0;
-	// 				x->_parent->_color = 1;
-	// 				leftRotate(x->_parent);
-	// 				s = x->_parent->_right;
-	// 			}
-	// 			if (s->_left->_color == 0 && s->_right->_color == 0) {
-	// 				s->_color = 1;
-	// 				x = x->_parent;
-	// 			} else {
-	// 				if (s->_right->_color == 0) {
-	// 					s->_left->_color = 0;
-	// 					s->_color = 1;
-	// 					rightRotate(s);
-	// 					s = x->_parent->_right;
-	// 				}
-	// 				s->_color = x->_parent->_color;
-	// 				x->_parent->_color = 0;
-	// 				s->_right->_color = 0;
-	// 				leftRotate(x->_parent);
-	// 				x = _root;
-	// 			}
-	// 		} else {
-	// 			s = x->_parent->_left;
-	// 			if (s->_color == 1) {
-	// 				s->_color = 0;
-	// 				x->_parent->_color = 1;
-	// 				rightRotate(x->_parent);
-	// 				s = x->_parent->_left;
-	// 			}
-	// 			if (s->_right->_color == 0 && s->_left->_color == 0) {
-	// 				s->_color = 1;
-	// 				x = x->_parent;
-	// 			} else {
-	// 				if (s->_left->_color == 0) {
-	// 					s->_right->_color = 0;
-	// 					s->_color = 1;
-	// 					leftRotate(s);
-	// 					s = x->_parent->_left;
-	// 				}
-	// 				s->_color = x->_parent->_color;
-	// 				x->_parent->_color = 0;
-	// 				s->_left->_color = 0;
-	// 				rightRotate(x->_parent);
-	// 				x = _root;
-	// 			}
-	// 		}
-	// 	}
-	// 	x->_color = 0;
 
 		// set last node
 		node_pointer c = _root;
@@ -960,20 +907,22 @@ public:
 		int level = 0;
 		int node_in_line = 0;
 
-		if (current == NULL)
+		if (current == NULL || current == _nil)
 			std::cout << "Tree is empty" << std::endl;
 		else {
 			display_tree(parent = _root, space_root, level, node_in_line);
 		}
 
-		std::cout << RED "\n\nlast node " END << std::endl
-		// if (_last_node )
-		<< "content	:" << _last_node->_content.first << std::endl
-		<< "color	:" << _last_node->_color << std::endl
-		<< "parent	:"<< (_last_node->_parent != NULL ? _last_node->_parent->_content.first : "") << std::endl
-		<< "left	:" << (_last_node->_left == _nil ? "NIL" : _last_node->_left->_content.first) << std::endl
-		<< "right	:" << (_last_node->_right == _nil ? "NIL" : _last_node->_right->_content.first) << std::endl;
-		
+		if (_last_node == _nil)
+					std::cout << RED "\n\nlast node is nil" END << std::endl;
+		else {
+			std::cout << RED "\n\nlast node" END << std::endl
+			<< "content	:" << _last_node->_content.first << std::endl
+			<< "color	:" << _last_node->_color << std::endl
+			<< "parent	:"<< (_last_node->_parent != NULL ? _last_node->_parent->_content.first : "") << std::endl
+			<< "left	:" << (_last_node->_left == _nil ? "NIL" : _last_node->_left->_content.first) << std::endl
+			<< "right	:" << (_last_node->_right == _nil ? "NIL" : _last_node->_right->_content.first) << std::endl;
+		}
 
 		std::cout << "\n**********  End display tree ************\n\n\n" << std::endl;
 

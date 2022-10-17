@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/14 22:19:53 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/17 12:27:14 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/17 12:38:06 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -1604,6 +1604,7 @@ int main()
 	map.erase(map.find("d"));
 	ft_map.erase(ft_map.find("d"));
 	comp_map(map, ft_map, "erase find(\"d\")");
+	ft_map.display_tree();
 
 	/*erase q*/
 	// map.erase(map.find("q"));
@@ -1614,11 +1615,13 @@ int main()
 	map.erase(map.find("AA"));
 	ft_map.erase(ft_map.find("AA"));
 	comp_map(map, ft_map, "erase find(\"AA\")");
+	ft_map.display_tree();
 
 	/* erase("a") */
 	map.erase(map.find("a"));
 	ft_map.erase(ft_map.find("a"));
 	comp_map(map, ft_map, "erase find(\"a\")");
+	ft_map.display_tree();
 
 	// /* erase c */
 	// map.erase(map.find("c"));
