@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 16:58:53 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/16 20:01:53 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/17 19:57:20 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,13 +71,6 @@ template <typename T, class Compare >
 				_nil(tree_it._nil),
 				_comp()
 			{}
-
-			// RB_iterator(const RB_iterator<T, Compare> & tree_it)
-			// :
-			// 	_node(tree_it._node),
-			// 	_last_node(tree_it._last_node),
-			// 	_comp()
-			// {}
 
 			virtual ~RB_iterator() { }
 
@@ -354,7 +347,7 @@ template <typename T, class Compare >
 				{
 					// std::cout << BLU "go right" END<< std::endl;
 					_node = _node->_right;
-					while (_node->_left != _nil)
+					while (_node->_left && _node->_left != _nil)
 						_node = _node->_left;
 				}
 				else

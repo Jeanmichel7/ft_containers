@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 18:14:05 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/17 16:44:17 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/17 21:45:03 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ public:
 
 	typedef Key												key_type;
 	typedef T												mapped_type;
-	typedef typename ft::pair<Key, T>					value_type;
+	typedef typename ft::pair<const Key, T>					value_type;
 	typedef typename std::size_t							size_type;
 	typedef typename std::ptrdiff_t							difference_type;
 	typedef Compare											key_compare;
@@ -86,8 +86,9 @@ public:
 
 private:
 	allocator_type		_alloc;
-	key_compare			_comp;
-	tree_type			_tree;
+	key_compare				_comp;
+	tree_type					_tree;
+
 
 
 public:
@@ -100,9 +101,11 @@ public:
 	explicit map(const Compare &comp = Compare(),
 				 const Allocator &alloc = Allocator())
 	:
-		_alloc(alloc), _comp(comp), _tree()
+		_alloc(alloc),
+		_comp(comp),
+		_tree()
 	{
-		// std::cout << "CONSTRUCTOR map()" << std::endl;
+		std::cout << "CONSTRUCTOR map()" << std::endl;
 	};
 
 	template <class InputIt>
@@ -117,14 +120,14 @@ public:
 	// map(const map &other) {};
 
 	map(const map &other)
-	: _alloc(other._alloc), _comp(other._comp), _tree()
+	: _alloc(other._alloc), _comp(other._comp), _tree(other._tree)
 	{
-		// std::cout << "CONSTRUCTOR map(other)" << std::endl;
-		insert(other.begin(), other.end());
+		// std::cout << "CONSTRUCTOR copie " << std::endl;
 	};
 
 	~map(){
 		// _tree.clear();
+		// std::cout << "DESTRUCTOR map()" << std::endl;
 	};
 
 	map& operator=( const map& other )
@@ -189,7 +192,7 @@ public:
 	}
 
 	const_iterator begin() const {
-		std::cout << "const begin()" << std::endl;
+		// std::cout << "const begin()" << std::endl;
 		return (_tree.begin());
 	}
 
@@ -199,7 +202,7 @@ public:
 	}
 
 	const_iterator end() const {
-		std::cout << "const end()" << std::endl;
+		// std::cout << "const end()" << std::endl;
 		return (_tree.end());
 	}
 
@@ -209,7 +212,7 @@ public:
 	}
 
 	const_reverse_iterator rbegin() const {
-		std::cout << "const_reverse_iterator rbegin() const" << std::endl;
+		// std::cout << "const_reverse_iterator rbegin() const" << std::endl;
 		return (_tree.rbegin());
 	}
 
@@ -219,7 +222,7 @@ public:
 	}
 
 	const_reverse_iterator rend() const {
-		std::cout << "const_reverse_iterator rend() const" << std::endl;
+		// std::cout << "const_reverse_iterator rend() const" << std::endl;
 		return (_tree.rend());
 	}
 
@@ -242,7 +245,9 @@ public:
 		return (_tree.size());
 	};
 
-	size_type max_size() const;
+	size_type max_size() const {
+		return _tree.max_size();
+	}
 
 
 
@@ -271,7 +276,7 @@ public:
 	};
 
 	void erase( iterator pos ) {
-		std::cout << "erase(" << pos->first << ", " << pos->second << ")" << std::endl;
+		// std::cout << "erase(" << pos->first << ", " << pos->second << ")" << std::endl;
 		_tree.erase(pos);
 	}
 
@@ -279,9 +284,19 @@ public:
 		_tree.erase(first, last);
 	}
 
-	size_type erase( const Key& key );
+	size_type erase( const Key& key ) {
+		iterator it = find(key);
+		// size_type ret = size();
+		if (it == end())
+			return (0);
+		_tree.erase(it);
+		// return (ret - size());
+		return (1);
+	}
 
-	void swap( map& other );
+	void swap( map& other ) {
+		_tree.swap(other._tree);
+	}
 
 
 
@@ -309,7 +324,7 @@ public:
 	};
 	
 	const_iterator find( const Key& key ) const {
-		std::cout << "********** use const it find ! ***********" << std::endl;
+		std::cout << "********** const fund ! ***********" << std::endl;
 		const_iterator it = begin();
 		while (it != end())
 		{
@@ -355,6 +370,11 @@ public:
 	/*                       DISPLAY                       */
 	/*                                                     */
 	/* *************************************************** */
+	void display_tree(std::string msg)
+	{
+		_tree.display_tree(msg);
+	}
+
 	void display_tree()
 	{
 		_tree.display_tree("");

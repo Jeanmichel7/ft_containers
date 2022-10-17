@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 12:54:45 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/17 16:58:07 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/17 21:49:11 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ private:
 	// last_node parent = root of tree, last_node right = last node, last_node left = first node
 	node_alloc      _node_alloc;
 	node_pointer		_root;
-	node_pointer		_node;
+	// node_pointer		_node;
 	node_pointer		_last_node;
 	Compare         _comp;
 	size_type       _size;
@@ -67,36 +67,42 @@ public:
 	RedBlackTree(const node_alloc &node_alloc_init = node_alloc())
 	:
 		_node_alloc(node_alloc_init),
-		_node(NULL),
+		// _node(NULL),
 		_last_node(NULL),
+		_size(0)
+	{
+		// _nil = _node_alloc.allocate(1);
+		// _node_alloc.construct(_nil, Node(NULL, NULL));
+		// _root = _nil;
+		// _last_node = _root;
+		// _node = _node_alloc.allocate(1);
+		// _nil->color = 0;
+    // _nil->left = nullptr;
+    // _nil->right = nullptr;
+		// _node_alloc.construct(_node, Node());
+
+		std::cout << "Constructor tree called" << std::endl;
+	}
+
+	RedBlackTree(const self& x) :
+		_node_alloc(x._node_alloc),
+		// _node(NULL),
+		_comp(x._comp),
 		_size(0)
 	{
 		_nil = _node_alloc.allocate(1);
 		_node_alloc.construct(_nil, Node(NULL, NULL));
 		_root = _nil;
 		_last_node = _root;
-		// _node = _node_alloc.allocate(1);
-		// _nil->color = 0;
-    // _nil->left = nullptr;
-    // _nil->right = nullptr;
-		// _node_alloc.construct(_node, Node());
+	
+		insert(x.begin(), x.end());
 	}
 
-	RedBlackTree(const self& x)
-	{
-		_node_alloc = x._node_alloc;
-		_root = x._root;
-		_node = x._node;
-		_last_node = x._last_node;
-		_comp = x._comp;
-		_size = x._size;
-		_nil = x._nil;
-	}
 
 	RedBlackTree &operator=(const RedBlackTree &x) {
 		_node_alloc = x._node_alloc;
 		_root = x._root;
-		_node = x._node;
+		// _node = x._node;
 		_last_node = x._last_node;
 		_comp = x._comp;
 		_size = x._size;
@@ -107,10 +113,16 @@ public:
 	/* Destructor */
 	~RedBlackTree()
 	{
+		std::cout << "Destructor called" << std::endl;
+
+		// clear();
+
+
 		node_pointer current = _root;
 		node_pointer prev;
 
-		while (current != _nil)
+		// std::cout << "current : " << current->_content.first << std::endl;
+		while (_size > 0 && current != _nil)
 		{
 			if (current->_left != _nil) {
 				current = current->_left;
@@ -122,10 +134,9 @@ public:
 			{
 				_node_alloc.destroy(_root);
 				_node_alloc.deallocate(_root, 1);
-
-				_node_alloc.destroy(_nil);
-				_node_alloc.deallocate(_nil, 1);
-				return;
+				// _node_alloc.destroy(_nil);
+				// _node_alloc.deallocate(_nil, 1);
+				break;
 			}
 			if ((current->_left == _nil && current->_right == _nil)) {
 				prev = current;
@@ -138,6 +149,21 @@ public:
 				_node_alloc.deallocate(prev, 1);
 			}
 		}
+
+
+		if (empty()) {
+			// std::cout << "empty" << std::endl;
+			// std::cout << "root : " 	<< _root->_content.first << std::endl;
+			// std::cout << "nil : " 	<< _nil->_content.first << std::endl;
+			// std::cout << "last_node : " << _last_node->_content.first << std::endl;
+
+			// _node_alloc.destroy(_nil);
+			// _node_alloc.deallocate(_nil, 1);
+			// return ;
+		}
+		
+		// _node_alloc.destroy(_nil);
+		// _node_alloc.deallocate(_nil, 1);
 	}
 
 
@@ -170,16 +196,17 @@ public:
 			return iterator(current, _last_node, _nil);
 		while (current->_left != _nil)
 			current = current->_left;
-		iterator ret = iterator(current, _last_node, _nil);
-		return ret;
+		return iterator(current, _last_node, _nil);
 	}
 
 	const_iterator begin() const {
-		std::cout << "const begin" << std::endl;
+		// std::cout << "const begin" << std::endl;
 		node_pointer current = _root;
+		if (_root == _nil)
+			return const_iterator(current, _last_node, _nil);
 		while (current->_left != _nil)
 			current = current->_left;
-		return const_iterator(current, _last_node);
+		return (const_iterator(current, _last_node, _nil));
 	}
 
 	iterator end() {
@@ -189,19 +216,18 @@ public:
 		while (current->_right != _nil)
 			current = current->_right;
 		current = current->_right;
-		// _last_node = current;
-
-		iterator ret = iterator(current, _last_node, _nil);
-		return ret;
+		return (iterator(current, _last_node, _nil));
 	}
 
 	const_iterator end() const {
-		std::cout << "const end" << std::endl;
-		// node_pointer current = _root;
-		// while (current->_right != NULL)
-		// 	current = current->_right;
-		// _last_node = current;
-		return const_iterator(_nil, _last_node);
+		// std::cout << "const end" << std::endl;
+		node_pointer current = _root;
+		if (current == _nil)
+			return const_iterator(current, _last_node, _nil);
+		while (current->_right != _nil)
+			current = current->_right;
+		current = current->_right;
+		return (const_iterator(current, _last_node, _nil));
 	}
 
 
@@ -239,6 +265,10 @@ public:
 		return _size;
 	}
 
+	size_type max_size() const {
+		return _node_alloc.max_size();
+	}
+
 	bool empty() const {
 		return _size == 0;
 	}
@@ -256,6 +286,14 @@ public:
 	/* *************************************************** */
 
 	node_pointer insert_node(node_pointer y, const value_type& val) {
+		if (_size == 0) {
+			_nil = _node_alloc.allocate(1);
+			_node_alloc.construct(_nil, Node(NULL, NULL));
+			_root = _nil;
+			_last_node = _root;
+		}
+
+
 		node_pointer new_node = _node_alloc.allocate(1);
 		_node_alloc.construct(new_node, Node(val, y, _nil, _nil, N_RED));
 		if (y == NULL) {
@@ -345,7 +383,7 @@ public:
 				return insert_pair(to_insert).first;
 			}
 		}
-
+		
 		// si to_insert est compri entre parent et grand parent
 		if ( p && gp &&
 			(( gp > p && _comp(p->_content.first, to_insert.first) 
@@ -366,11 +404,10 @@ public:
 
 
 
-
-
 	template< class InputIt >
 	void insert( InputIt first, InputIt last ) {
-		while (first != last) {
+		while (first != last && _size < max_size()) {
+			// std::cout << "insert " << first->first << std::endl;
 			insert_pair(*first);
 			first++;
 		}
@@ -383,7 +420,6 @@ public:
 	void clear() {
 		while (begin() != end())
 			erase(begin());
-		// erase(begin(), end());
 	}
 
 
@@ -607,9 +643,33 @@ public:
 			erase(first);
 	}
 
-	void erase(value_type to_erase);
 
-	void swap(RedBlackTree &x);
+/*
+	node_alloc      _node_alloc;
+	node_pointer		_root;
+	node_pointer		_node;
+	node_pointer		_last_node;
+	Compare         _comp;
+	size_type       _size;
+	node_pointer		_nil;
+*/
+
+
+
+	void swap(RedBlackTree &x) {
+		if (&x == this)
+			return ;
+
+		std::swap(_root, x._root);
+		std::swap(_nil, x._nil);
+		std::swap(_size, x._size);
+		std::swap(_last_node, x._last_node);
+
+		if (_root == _nil)
+			_last_node = _nil;
+		if (x._root == x._nil)
+			x._last_node = x._nil;
+	}
 
 
 
@@ -917,14 +977,20 @@ public:
 		int level = 0;
 		int node_in_line = 0;
 
-		if (current == NULL || current == _nil)
+		if (current == NULL )
+			std::cout << "Tree is NULL" << std::endl;
+		else if (current == _nil)
 			std::cout << "Tree is empty" << std::endl;
 		else {
 			display_tree(parent = _root, space_root, level, node_in_line);
 		}
 
-		if (_last_node == _nil || _last_node == NULL)
-					std::cout << RED "\n\nlast node is nil" END << std::endl;
+		if (_last_node == _nil)
+			std::cout << RED "\n\nlast node is nil" END << std::endl;
+		if (_last_node == _root)
+			std::cout << RED "\n\nlast node is root" END << std::endl;
+		else if ( _last_node == NULL)
+			std::cout << RED "\n\nlast node is NULL" END << std::endl;
 		else {
 			std::cout << RED "\n\nlast node" END << std::endl
 			<< "content	:" << _last_node->_content.first << std::endl
@@ -933,7 +999,7 @@ public:
 			<< "left	:" << (_last_node->_left == _nil ? "NIL" : _last_node->_left->_content.first) << std::endl
 			<< "right	:" << (_last_node->_right == _nil ? "NIL" : _last_node->_right->_content.first) << std::endl;
 		}
-		std::cout << "\n**********  End display tree ************\n\n\n" << std::endl;
+		std::cout << "\n**********  End display tree ************\n" << std::endl;
 	}
 
 

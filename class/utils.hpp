@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/10 21:23:15 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/16 18:00:33 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/17 21:44:09 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,9 +128,9 @@ namespace ft
         
     // private:
         value_type           _content;
-        Node<T>             *_parent;
-        Node<T>             *_left;
-        Node<T>             *_right;
+        Node             *_parent;
+        Node             *_left;
+        Node             *_right;
         int                  _color;
 
 
@@ -139,14 +139,14 @@ namespace ft
         // Node() 
         // : _content(), _parent(NULL), _left(NULL), _right(NULL), _color(N_BLACK) {}
 
-        Node(Node<T> *left, Node<T> *right) 
+        Node(Node *left, Node *right) 
         : _left(left), _right(right), _color(N_BLACK) {}
         
-        Node(Node<T> *parent, Node<T> *left, Node<T> *right) 
+        Node(Node *parent, Node *left, Node *right) 
         : _parent(parent), _left(left), _right(right), _color(N_BLACK) {}
 
 
-        Node(T content, Node<T> *parent, Node<T> *left, Node<T> *right, int color) 
+        Node(T content, Node *parent, Node *left, Node *right, int color) 
         : _content(content), _parent(parent), _left(left), _right(right), _color(color) {}
 
 
@@ -158,7 +158,7 @@ namespace ft
         : _content(content), _parent(NULL), _left(NULL), _right(NULL), _color(color) {}
 
 
-        Node(Node<T> const &src) 
+        Node(Node const &src) 
         :   _content(src._content),
             _parent(src._parent),
             _left(src._left),
@@ -170,7 +170,7 @@ namespace ft
 
         ~Node() {}
 
-        Node<T> &operator=(Node<T> const &rhs)
+        Node &operator=(Node const &rhs)
         {
             if (this != &rhs)
             {
@@ -184,12 +184,12 @@ namespace ft
         }
     };
 
-    template <typename T>
-    std::ostream& operator<<(std::ostream& os, const Node<T>& node)
-    {
-        os << "ostream node : " << node->_content.first << " " << node->_content.second << std::endl;
-        return os;
-    }
+    // template <typename T>
+    // std::ostream& operator<<(std::ostream& os, const Node& node)
+    // {
+    //     os << "ostream node : " << node->_content.first << " " << node->_content.second << std::endl;
+    //     return os;
+    // }
     
 }
 
