@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 12:54:45 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/17 23:32:50 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/18 15:46:42 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -264,13 +264,14 @@ public:
 	/*                                                     */
 	/* *************************************************** */
 
+	void create_nil() {
+		_nil = _node_alloc.allocate(1);
+		_node_alloc.construct(_nil, Node(NULL, NULL));
+		_root = _nil;
+		_last_node = _root;
+	}
+
 	node_pointer insert_node(node_pointer y, const value_type& val) {
-		if (_size == 0) {
-			_nil = _node_alloc.allocate(1);
-			_node_alloc.construct(_nil, Node(NULL, NULL));
-			_root = _nil;
-			_last_node = _root;
-		}
 
 		node_pointer new_node = _node_alloc.allocate(1);
 		_node_alloc.construct(new_node, Node(val, y, _nil, _nil, N_RED));
@@ -282,7 +283,7 @@ public:
 			y->_right = new_node;
 		}
 
-   	if (new_node->_parent == NULL) {
+   	if (new_node == _nil || new_node->_parent == NULL ) {
       new_node->_color = 0; 
     }
 		else if (_size > 1)
@@ -307,7 +308,10 @@ public:
 		node_pointer y = _root;
 		node_pointer x = _root;
 
-		while (x != _nil && _size != 0) {
+		if (_size == 0)
+			create_nil();
+
+		while (x != _nil) {
 			y = x;
 			if (val.first < x->_content.first) {
 				x = x->_left;

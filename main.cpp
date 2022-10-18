@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/14 22:19:53 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/18 01:11:28 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/18 15:28:33 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,12 +66,6 @@ std::string to_string(T value)
 
 
 void str_comp(std::string str, std::string ft_str, std::string msg) {
-	// const std::string cstr 		= const_cast< std::string& >(str);
-	// const std::string cft_str 	= const_cast< std::string& >(ft_str);
-
-	// std::string test;
-	// if (cstr == test || cft_str == test)
-	// 	std::cout << "un des element a compar est null" << std::endl;
 	if (str.compare(ft_str) != 0)
 	{
 		std::cout << RED "\n[KO] " END << msg << std::endl;
@@ -95,7 +89,6 @@ void sstr_comp(T1 it, T2 ft_it, std::string msg) {
 	ft_sstr << ft_it->first << " " << ft_it->second;
 	str_comp(sstr.str(), ft_sstr.str(), msg);
 	sstr.str(""); sstr.clear(); ft_sstr.str(""); ft_sstr.clear();
-
 }
 
 
@@ -2088,32 +2081,132 @@ int main()
 	/* l */
 	std::pair<it_type, it_type> ret_equal_range = map.equal_range("l");
 	ft::pair<ft_it_type, ft_it_type> ft_ret_equal_range = ft_map.equal_range("l");
-	str_comp( to_string(ret_equal_range.first->first), to_string(ft_ret_equal_range.first->first), "equal_range(\"l\")");
-	str_comp( to_string(ret_equal_range.first->second), to_string(ft_ret_equal_range.first->second), "equal_range(\"l\")");
+	str_comp( to_string(ret_equal_range.first->first), to_string(ft_ret_equal_range.first->first), "equal_range first first(\"l\")");
+	str_comp( to_string(ret_equal_range.first->second), to_string(ft_ret_equal_range.first->second), "equal_range first second(\"l\")");
+	str_comp( to_string(ret_equal_range.second->first), to_string(ft_ret_equal_range.second->first), "equal_range second first(\"l\")");
+	str_comp( to_string(ret_equal_range.second->second), to_string(ft_ret_equal_range.second->second), "equal_range second second(\"l\")");
+
 
 	/* @ */
 	ret_equal_range = map.equal_range("@");
 	ft_ret_equal_range = ft_map.equal_range("@");
 	str_comp( to_string(ret_equal_range.first->first), to_string(ft_ret_equal_range.first->first), "equal_range(\"@\")");
 	str_comp( to_string(ret_equal_range.first->second), to_string(ft_ret_equal_range.first->second), "equal_range(\"@\")");
+	str_comp( to_string(ret_equal_range.second->first), to_string(ft_ret_equal_range.second->first), "equal_range(\"@\")");
+	str_comp( to_string(ret_equal_range.second->second), to_string(ft_ret_equal_range.second->second), "equal_range(\"@\")");
+
 
 	/* y */
 	ret_equal_range = map.equal_range("y");
 	ft_ret_equal_range = ft_map.equal_range("y");
 	str_comp( to_string(ret_equal_range.first->first), to_string(ft_ret_equal_range.first->first), "equal_range(\"y\")");
 	str_comp( to_string(ret_equal_range.first->second), to_string(ft_ret_equal_range.first->second), "equal_range(\"y\")");
+	str_comp( to_string(ret_equal_range.second->first), to_string(ft_ret_equal_range.second->first), "equal_range(\"y\")");
+	str_comp( to_string(ret_equal_range.second->second), to_string(ft_ret_equal_range.second->second), "equal_range(\"y\")");
 
-	/* z */
+
+
+
+
+
+
+
+
+
+
+	/* z SEGV */
 	// ret_equal_range = map.equal_range("z");
 	// ft_ret_equal_range = ft_map.equal_range("z");
 	// str_comp( to_string(ret_equal_range.first->first), to_string(ft_ret_equal_range.first->first), "equal_range(\"z\")");
 	// str_comp( to_string(ret_equal_range.first->second), to_string(ft_ret_equal_range.first->second), "equal_range(\"z\")");
-
-
-
-
-
 	
+	// std::cout << "ret first first = " << ret_equal_range.first->first << std::endl;
+	// std::cout << "ft first first = " << ft_ret_equal_range.first->first << std::endl;
+	// std::cout << "ret second first = " << ret_equal_range.second->first << std::endl;
+	// std::cout << "ft second first= " << ft_ret_equal_range.second->first << std::endl;
+
+	// std::cout << "ret second first = " << ret_equal_range.second->first << std::endl;
+	// std::cout << "ft_ret second first = " << ft_ret_equal_range.second->first << std::endl;
+	// std::cout << "ret second second = " << ret_equal_range.second->second << std::endl;
+	// std::cout << "ft_ret second second = " << ft_ret_equal_range.second->second << std::endl;
+
+	// str_comp( to_string(ret_equal_range.second->first), to_string(ft_ret_equal_range.second->first), "equal_range(\"z\")");
+	// str_comp( to_string(ret_equal_range.second->second), to_string(ft_ret_equal_range.second->second), "equal_range(\"z\")");
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	std::cout << MAG "\n\nTEST lower_bound()" END << std::endl;
+	
+	/* l */
+	it_type ret_lower_bound = map.lower_bound("l");
+	ft_it_type ft_ret_lower_bound = ft_map.lower_bound("l");
+	str_comp( to_string(ret_lower_bound->first), to_string(ft_ret_lower_bound->first), "lower_bound(\"l\")");
+	str_comp( to_string(ret_lower_bound->second), to_string(ft_ret_lower_bound->second), "lower_bound(\"l\")");
+
+	/* @ */
+	ret_lower_bound = map.lower_bound("@");
+	ft_ret_lower_bound = ft_map.lower_bound("@");
+	str_comp( to_string(ret_lower_bound->first), to_string(ft_ret_lower_bound->first), "lower_bound(\"@\")");
+	str_comp( to_string(ret_lower_bound->second), to_string(ft_ret_lower_bound->second), "lower_bound(\"@\")");
+
+	/* y */
+	ret_lower_bound = map.lower_bound("y");
+	ft_ret_lower_bound = ft_map.lower_bound("y");
+	str_comp( to_string(ret_lower_bound->first), to_string(ft_ret_lower_bound->first), "lower_bound(\"y\")");
+	str_comp( to_string(ret_lower_bound->second), to_string(ft_ret_lower_bound->second), "lower_bound(\"y\")");
+
+	/* z SEGV */
+	ret_lower_bound = map.lower_bound("z");
+	ft_ret_lower_bound = ft_map.lower_bound("z");
+
+	// str_comp( to_string(ret_lower_bound->first), to_string(ft_ret_lower_bound->first), "lower_bound(\"z\")");
+	// std::cout << "ret first = " << ret_lower_bound->first << std::endl;
+	// std::cout << "ft first = " << ft_ret_lower_bound->first << std::endl;
+	str_comp( to_string(ret_lower_bound->second), to_string(ft_ret_lower_bound->second), "lower_bound(\"z\")");
+	// std::cout << "ret second = " << ret_lower_bound->second << std::endl;
+	// std::cout << "ft second = " << ft_ret_lower_bound->second << std::endl;
+
+
+
+
+
+
+
+
+
+
+	std::cout << MAG "\n\nTEST upper_bound()" END << std::endl;
+
+	/* l */
+	it_type ret_upper_bound = map.upper_bound("l");
+	ft_it_type ft_ret_upper_bound = ft_map.upper_bound("l");
+	str_comp( ret_upper_bound->first, ft_ret_upper_bound->first, "upper_bound(\"l\")");
+	str_comp( to_string(ret_upper_bound->second), to_string(ft_ret_upper_bound->second), "upper_bound(\"l\")");
+
+	/* @ */
+	// ret_upper_bound = map.upper_bound("@");
+	// ft_ret_upper_bound = ft_map.upper_bound("@");
+
+	// std::cout << "ret first = " << ret_upper_bound->first << std::endl;
+	// std::cout << "ft first = " << ft_ret_upper_bound->first << std::endl;
+	// std::cout << "ret second = " << ret_upper_bound->second << std::endl;
+	// std::cout << "ft second = " << ft_ret_upper_bound->second << std::endl;
+
+	// str_comp( ret_upper_bound->first, ft_ret_upper_bound->first, "upper_bound(\"@\")");
+	// str_comp( to_string(ret_upper_bound->second), to_string(ft_ret_upper_bound->second), "upper_bound(\"@\")");
+
+
 
 
 

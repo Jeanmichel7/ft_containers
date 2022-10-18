@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   map.hpp                                            :+:      :+:    :+:   */
+/*   Map.hpp                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 18:14:05 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/18 01:11:21 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/18 14:35:25 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -350,21 +350,31 @@ public:
 		iterator it = find(key);
 		if (it == end())
 			return (ft::make_pair(end(), end()));
-		return (ft::make_pair(it, it));
+		return (ft::make_pair(it, ++it));
 	}
 
 	ft::pair<const_iterator,const_iterator> equal_range( const Key& key ) const {
 		const_iterator it = find(key);
 		if (it == end())
 			return (ft::make_pair(end(), end()));
-		return (ft::make_pair(it, it));
+		return (ft::make_pair(it, ++it));
 	}
 
-	iterator lower_bound( const Key& key );
+	iterator lower_bound( const Key& key ) {
+		iterator it = find(key);
+		if (it == end())
+			return (end());
+		return (it);
+	}
 
 	const_iterator lower_bound( const Key& key ) const;
 
-	iterator upper_bound( const Key& key );
+	iterator upper_bound( const Key& key ) {
+		iterator it = find(key);
+		if (it == end())
+			return (end());
+		return (++it);
+	}
 	
 	const_iterator upper_bound( const Key& key ) const;
 
