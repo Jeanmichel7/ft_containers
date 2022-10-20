@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/14 22:19:53 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/20 18:18:12 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/20 19:13:54 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -2162,19 +2162,12 @@ int main()
 	str_comp( to_string(ret_lower_bound->first), to_string(ft_ret_lower_bound->first), "lower_bound(\"y\")");
 	str_comp( to_string(ret_lower_bound->second), to_string(ft_ret_lower_bound->second), "lower_bound(\"y\")");
 
-	/* z SEGV */
+	/* z */
 	ret_lower_bound = map.lower_bound("z");
 	ft_ret_lower_bound = ft_map.lower_bound("z");
 
-	// str_comp( to_string(ret_lower_bound->first), to_string(ft_ret_lower_bound->first), "lower_bound(\"z\")");
-	// std::cout << "ret first = " << ret_lower_bound->first << std::endl;
-	// std::cout << "ft first = " << ft_ret_lower_bound->first << std::endl;
+	str_comp( to_string(ret_lower_bound->first), to_string(ft_ret_lower_bound->first), "lower_bound(\"z\")");
 	str_comp( to_string(ret_lower_bound->second), to_string(ft_ret_lower_bound->second), "lower_bound(\"z\")");
-	// std::cout << "ret second = " << ret_lower_bound->second << std::endl;
-	// std::cout << "ft second = " << ft_ret_lower_bound->second << std::endl;
-
-
-
 
 
 
@@ -2191,16 +2184,32 @@ int main()
 	str_comp( to_string(ret_upper_bound->second), to_string(ft_ret_upper_bound->second), "upper_bound(\"l\")");
 
 	/* @ */
-	// ret_upper_bound = map.upper_bound("@");
-	// ft_ret_upper_bound = ft_map.upper_bound("@");
+	ret_upper_bound = map.upper_bound("@");
+	ft_ret_upper_bound = ft_map.upper_bound("@");
 
 	// std::cout << "ret first = " << ret_upper_bound->first << std::endl;
 	// std::cout << "ft first = " << ft_ret_upper_bound->first << std::endl;
 	// std::cout << "ret second = " << ret_upper_bound->second << std::endl;
 	// std::cout << "ft second = " << ft_ret_upper_bound->second << std::endl;
 
-	// str_comp( ret_upper_bound->first, ft_ret_upper_bound->first, "upper_bound(\"@\")");
-	// str_comp( to_string(ret_upper_bound->second), to_string(ft_ret_upper_bound->second), "upper_bound(\"@\")");
+	str_comp( ret_upper_bound->first, ft_ret_upper_bound->first, "upper_bound(\"@\")");
+	str_comp( to_string(ret_upper_bound->second), to_string(ft_ret_upper_bound->second), "upper_bound(\"@\")");
+
+
+	/* y */
+	ret_upper_bound = map.upper_bound("y");
+	ft_ret_upper_bound = ft_map.upper_bound("y");
+
+	str_comp( ret_upper_bound->first, ft_ret_upper_bound->first, "upper_bound(\"y\")");
+	str_comp( to_string(ret_upper_bound->second), to_string(ft_ret_upper_bound->second), "upper_bound(\"y\")");
+
+	/* z */
+	ret_upper_bound = map.upper_bound("z");
+	ft_ret_upper_bound = ft_map.upper_bound("z");
+
+	str_comp( ret_upper_bound->first, ft_ret_upper_bound->first, "upper_bound(\"z\")");
+	str_comp( to_string(ret_upper_bound->second), to_string(ft_ret_upper_bound->second), "upper_bound(\"z\")");
+
 
 
 
@@ -2217,7 +2226,7 @@ int main()
 	map.clear();
 	ft_map.clear();
 	comp_map(map, ft_map, "clear()");
-	// ft_map.display_tree();
+	ft_map.display_tree();
 
 
 

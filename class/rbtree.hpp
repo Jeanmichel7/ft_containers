@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 12:54:45 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/20 19:09:23 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/20 19:56:15 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -782,15 +782,6 @@ public:
 	}
 
 
-/*
-	node_alloc      _node_alloc;
-	node_pointer		_root;
-	node_pointer		_node;
-	node_pointer		_last_node;
-	Compare         _comp;
-	size_type       _size;
-	node_pointer		_nil;
-*/
 
 
 
@@ -840,7 +831,20 @@ public:
 		return end();
 	}
 
-	const_iterator find(value_type to_find) const;
+	const_iterator find(value_type to_find) const {
+		if (_root == NULL)
+			return end();
+		node_pointer current = _root;
+		while (current != NULL) {
+			if (current->_content.first == to_find.first)
+				return const_iterator(current, _nil);
+			else if (current->_content < to_find)
+				current = current->_right;
+			else
+				current = current->_left;
+		}
+		return end();
+	}
 
 
 
@@ -851,10 +855,16 @@ public:
 	/*                                                     */
 	/* *************************************************** */
 
+	key_compare key_comp() const {
+		return _key_compare;
+	}
 
 
 
-	
+	ft::map::value_compare value_comp() const {
+		return ft::map::value_compare(_key_compare);
+	}
+
 
 
 

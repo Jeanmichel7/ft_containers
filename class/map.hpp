@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 18:14:05 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/20 18:17:27 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/20 19:56:14 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -395,9 +395,13 @@ public:
 	/*                                                     */
 	/* *************************************************** */
 
-	key_compare key_comp() const;
+	key_compare key_comp() const {
+		return (_tree.key_comp());
+	}
 
-	value_compare value_comp() const;
+	value_compare value_comp() const {
+		return (_tree.value_comp());
+	}
 
 
 	/* *************************************************** */
