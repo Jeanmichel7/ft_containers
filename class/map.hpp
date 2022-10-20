@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 18:14:05 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/20 12:26:10 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/20 18:13:14 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,17 +41,17 @@ class map
 public:
 	/* DEFINITION */
 
-	typedef Key												key_type;
-	typedef T												mapped_type;
-	typedef typename ft::pair<const Key, T>					value_type;
-	typedef typename std::size_t							size_type;
-	typedef typename std::ptrdiff_t							difference_type;
-	typedef Compare											key_compare;
-	typedef Allocator										allocator_type;
+	typedef Key																				key_type;
+	typedef T																					mapped_type;
+	typedef typename ft::pair<const Key, T>						value_type;
+	typedef typename std::size_t											size_type;
+	typedef typename std::ptrdiff_t										difference_type;
+	typedef Compare																		key_compare;
+	typedef Allocator																	allocator_type;
 
-	typedef value_type										&reference;
-	typedef value_type const								&const_reference;
-	typedef typename Allocator::pointer						pointer;
+	typedef value_type																&reference;
+	typedef value_type const													&const_reference;
+	typedef typename Allocator::pointer								pointer;
 	typedef typename Allocator::const_pointer const			const_pointer;
 
 
@@ -77,9 +77,9 @@ public:
 	// typedef typename Allocator::template rebind<Node>::other			node_alloc_type;
 	typedef typename ft::RedBlackTree<value_type, key_compare>			tree_type;
 
-	typedef typename tree_type::iterator 					iterator;
-	typedef typename tree_type::const_iterator				const_iterator;
-	typedef typename tree_type::reverse_iterator			reverse_iterator;
+	typedef typename tree_type::iterator 									iterator;
+	typedef typename tree_type::const_iterator						const_iterator;
+	typedef typename tree_type::reverse_iterator					reverse_iterator;
 	typedef typename tree_type::const_reverse_iterator		const_reverse_iterator;
 
 
@@ -118,12 +118,11 @@ public:
 		_tree.insert(first, last);
 	};
 
-	// map(const map &other) {};
-
 	map(const map &other)
 	: _alloc(other._alloc), _comp(other._comp), _tree(other._tree)
 	{
 		// std::cout << "CONSTRUCTOR copie " << std::endl;
+		// _tree.insert(other.begin(), other.end());
 	};
 
 	~map() {
@@ -132,6 +131,7 @@ public:
 
 	map& operator=( const map& other )
 	{
+		clear();
 		_tree.insert(other.begin(), other.end());
 		return (*this);
 	};

@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/10 21:23:15 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/17 21:44:09 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/20 15:55:58 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,9 +128,9 @@ namespace ft
         
     // private:
         value_type           _content;
-        Node             *_parent;
-        Node             *_left;
-        Node             *_right;
+        Node                *_parent;
+        Node                *_left;
+        Node                *_right;
         int                  _color;
 
 
@@ -145,11 +145,8 @@ namespace ft
         Node(Node *parent, Node *left, Node *right) 
         : _parent(parent), _left(left), _right(right), _color(N_BLACK) {}
 
-
         Node(T content, Node *parent, Node *left, Node *right, int color) 
         : _content(content), _parent(parent), _left(left), _right(right), _color(color) {}
-
-
 
         Node(T const &content) 
         : _content(content), _parent(NULL), _left(NULL), _right(NULL), _color(N_RED) {}
