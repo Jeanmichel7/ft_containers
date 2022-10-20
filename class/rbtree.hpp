@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 12:54:45 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/18 15:46:42 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/20 18:18:22 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,27 +69,31 @@ public:
 		_node_alloc(node_alloc_init),
 		// _node(NULL),
 		_last_node(NULL),
+		_comp(Compare()),
 		_size(0)
 	{
-		// _nil = _node_alloc.allocate(1);
-		// _node_alloc.construct(_nil, Node(NULL, NULL));
-		// _root = _nil;
-		// _last_node = _root;
+		_nil = _node_alloc.allocate(1);
+		_node_alloc.construct(_nil, Node(NULL, NULL));
+		_root = _nil;
+		_last_node = _root;
 
 		// std::cout << "Constructor tree called" << std::endl;
+		// std::cout << "Root: " << _root->_content.first << std::endl;
 	}
 
-	RedBlackTree(const self& x) :
-		_node_alloc(x._node_alloc),
+
+	RedBlackTree(const self& x)
+	:
+		_node_alloc(node_alloc()),
 		// _node(NULL),
-		_comp(x._comp),
+		_comp(Compare()),
 		_size(0)
 	{
-		// _nil = _node_alloc.allocate(1);
-		// _node_alloc.construct(_nil, Node(NULL, NULL));
-		// _root = _nil;
-		// _last_node = _root;
-	
+		// std::cout << "construcotr tree called" << std::endl;
+		_nil = _node_alloc.allocate(1);
+		_node_alloc.construct(_nil, Node(NULL, NULL));
+		_root = _nil;
+		_last_node = _root;
 		insert(x.begin(), x.end());
 	}
 
@@ -111,7 +115,6 @@ public:
 		// std::cout << "Destructor called" << std::endl;
 		// clear();
 
-
 		node_pointer current = _root;
 		node_pointer prev;
 
@@ -128,8 +131,6 @@ public:
 			{
 				_node_alloc.destroy(_root);
 				_node_alloc.deallocate(_root, 1);
-				_node_alloc.destroy(_nil);
-				_node_alloc.deallocate(_nil, 1);
 				break;
 			}
 			if ((current->_left == _nil && current->_right == _nil)) {
@@ -143,6 +144,8 @@ public:
 				_node_alloc.deallocate(prev, 1);
 			}
 		}
+		_node_alloc.destroy(_nil);
+		_node_alloc.deallocate(_nil, 1);
 	}
 
 
@@ -264,65 +267,181 @@ public:
 	/*                                                     */
 	/* *************************************************** */
 
-	void create_nil() {
-		_nil = _node_alloc.allocate(1);
-		_node_alloc.construct(_nil, Node(NULL, NULL));
-		_root = _nil;
-		_last_node = _root;
-	}
+	// node_pointer insert_node(node_pointer y, const value_type& val) {
+	// 	// if (_size == 0) {
+	// 	// 	_nil = _node_alloc.allocate(1);
+	// 	// 	_node_alloc.construct(_nil, Node(NULL, NULL));
+	// 	// 	_root = _nil;
+	// 	// 	_last_node = _root;
+	// 	// }
 
-	node_pointer insert_node(node_pointer y, const value_type& val) {
+	// 	std::cout << "insert_node : " << val.first << std::endl;
 
-		node_pointer new_node = _node_alloc.allocate(1);
-		_node_alloc.construct(new_node, Node(val, y, _nil, _nil, N_RED));
-		if (_size == 0) {
-			_root = new_node;
-		} else if (val.first < y->_content.first) {
-			y->_left = new_node;
-		} else {
-			y->_right = new_node;
-		}
-
-   	if (new_node == _nil || new_node->_parent == NULL ) {
-      new_node->_color = 0; 
-    }
-		else if (_size > 1)
-    	insertFix(new_node);
-
-		_size++;
-
-		// set last node
-		node_pointer c = _root;
-		while (c && c->_right != _nil)
-			c = c->_right;
-		_last_node = c;
-
-		return new_node;
-	}
+	// 	node_pointer new_node = _node_alloc.allocate(1);
+	// 	_node_alloc.construct(new_node, Node(val, y, _nil, _nil, N_RED));
+	// 	if (_size == 0) {
+	// 		_root = new_node;
+	// 		_root->_color = N_BLACK;
+	// 		_size++;
+	// 		return new_node;
+	// 	}
+	// 	else if (val.first < y->_content.first) {
+	// 		std::cout << "insert_node : left" << std::endl;
+	// 		y->_left = new_node;
+	// 	}
+	// 	else {
+	// 		std::cout << "insert_node : right" << std::endl;
+	// 		y->_right = new_node;
+	// 	}
+	// 	_size ++;
 
 
+  //  if (new_node->_parent == NULL) {
+  //     new_node->_color = 0;
+	// 		node_pointer c = _root;
+	// 		while (c && c->_right != _nil)
+	// 			c = c->_right;
+	// 		_last_node = c;
+  //     return new_node;
+  //   }
+
+  //   if (new_node->_parent->_parent == NULL) {
+	// 		node_pointer c = _root;
+	// 		while (c && c->_right != _nil)
+	// 			c = c->_right;
+	// 		_last_node = c;
+  //     return new_node;
+  //   }
+
+  //   insertFix(new_node);
 
 
 
-	ft::pair<iterator, bool> insert_pair(const value_type& val) {
-		node_pointer y = _root;
-		node_pointer x = _root;
+	// 	// display_tree(val.first);
 
-		if (_size == 0)
-			create_nil();
+	// 	// std::cout << "test new node : " << new_node->_content.first << std::endl;
+	// 	// std::cout << "test new node parent : " << new_node->_parent->_content.first << std::endl;
 
-		while (x != _nil) {
-			y = x;
-			if (val.first < x->_content.first) {
-				x = x->_left;
-			} else if (x->_content.first < val.first) {
-				x = x->_right;
-			} else {
+  //  	// if (new_node->_parent == _root) {
+  //   //   new_node->_color = 0; 
+  //   // }
+	// 	// // if (new_node != _root && new_node->_parent->_color == N_RED)
+	// 	// else 
+  //   // 	insertFix(new_node);
+	// 	// _size++;
+
+	// 	// set last node
+	// 	node_pointer c = _root;
+	// 	while (c && c->_right != _nil)
+	// 		c = c->_right;
+	// 	_last_node = c;
+
+	// 	return new_node;
+	// }
+
+
+
+
+
+
+	// ft::pair<iterator, bool> insert_pair(const value_type& val) {
+	// 	node_pointer y = _root;
+	// 	node_pointer x = _root;
+
+	// 	std::cout << "insert pair " << val.first << ":" << val.second << std::endl;
+
+	// 	if (_size == 0) {
+	// 		_nil = _node_alloc.allocate(1);
+	// 		_node_alloc.construct(_nil, Node(NULL, NULL));
+	// 		_root = _nil;
+	// 		_last_node = _root;
+	// 		return ft::make_pair(iterator(insert_node(y, val), _last_node, _nil), true);
+	// 	}
+
+	// 	while (x != _nil) {
+	// 		y = x;
+	// 		if (val.first < x->_content.first) {
+	// 			x = x->_left;
+	// 		} else if (x->_content.first < val.first) {
+	// 			x = x->_right;
+	// 		} else {
+	// 			return ft::make_pair(iterator(x, _last_node, _nil), false);
+	// 		}
+	// 	}
+	// 	return ft::make_pair(iterator(insert_node(y, val), _last_node, _nil), true);
+	// }
+
+
+
+
+
+
+	ft::pair<iterator, bool> insert_pair( const value_type& val ) {
+
+		ft::pair<iterator, bool> 	ret;
+    node_pointer 							x = this->_root;
+    node_pointer 							y = NULL;
+
+		node_pointer node = _node_alloc.allocate(1);
+		_node_alloc.construct(node, Node(val, NULL, _nil, _nil, N_RED));
+
+    // node_pointer node = new Node;
+
+
+    // node->_parent = NULL;
+    // node->_content = val;
+    // node->_left = _nil;
+    // node->_right = _nil;
+    // node->_color = 1;
+
+
+
+    while (x != _nil) {
+      y = x;
+      if (node->_content < x->_content) {
+        x = x->_left;
+      } else if (x->_content.first < val.first){
+        x = x->_right;
+      } else {
+				_node_alloc.destroy(node);
+				_node_alloc.deallocate(node, 1);
 				return ft::make_pair(iterator(x, _last_node, _nil), false);
 			}
-		}
-		return ft::make_pair(iterator(insert_node(y, val), _last_node, _nil), true);
+    }
+
+    node->_parent = y;
+    if (y == NULL) {
+      _root = node;
+    } else if (node->_content < y->_content) {
+      y->_left = node;
+    } else {
+      y->_right = node;
+    }
+		_size++;
+
+    if (node->_parent == NULL) {
+      node->_color = 0;
+			ret = ft::make_pair(iterator(node, _last_node, _nil), true);
+			_last_node = node;
+      return ret;
+    }
+
+    if (node->_parent->_parent == NULL) {
+			ret = ft::make_pair(iterator(node, _last_node, _nil), true);
+			_last_node = node;
+			return ret;
+    }
+
+    insertFix(node);
+		// display_tree("");
+
+		ret = ft::make_pair(iterator(node, _last_node, _nil), true);
+		return ret;
 	}
+  
+
+
+
 
 
 
@@ -346,7 +465,8 @@ public:
 		if (hint == end()) {
 			if (_comp(_last_node->_content.first, to_insert.first)) {
 				// std::cout << "hint is good";
-				return iterator(insert_node(_last_node, to_insert), _last_node);
+				// return iterator(insert_node(_last_node, to_insert), _last_node);
+				return insert_pair(to_insert).first;
 			}
 			else {
 				// std::cout << "hint not good";
@@ -359,7 +479,8 @@ public:
 		if (hint == begin()) {
 			if (_comp(to_insert.first, p->_content.first)) {
 				// std::cout << "hint is good";
-				return iterator(insert_node(hint._node, to_insert), _last_node);
+				// return iterator(insert_node(hint._node, to_insert), _last_node);
+				return insert_pair(to_insert).first;
 			}
 			else {
 				// std::cout << "hint not good";
@@ -376,7 +497,8 @@ public:
 				&& _comp(to_insert.first, p->_content.first)))) {
 			std::cout << "hint is good";
 			// node_pointer current = insert_node(hint._node, to_insert);
-			return iterator(insert_node(hint._node, to_insert), _last_node);
+			// return iterator(insert_node(hint._node, to_insert), _last_node);
+			return insert_pair(to_insert).first;
 		} else {
 			std::cout << "hint not good";
 			return insert_pair(to_insert).first;
@@ -401,8 +523,10 @@ public:
 
 
 	void clear() {
-		while (begin() != end())
-			erase(begin());
+		iterator it = begin();
+		while (it != end()){
+			erase(it++);
+		}
 	}
 
 
@@ -410,24 +534,19 @@ public:
 
 
 	void erase(iterator pos) {
-
 		node_pointer current = _root;
     node_pointer z = _nil;
     node_pointer x, y;
 
-		
     while (current != _nil) {
       if (current->_content.first == pos->first) {
         z = current;
-      }
-
-      if (current->_content.first < pos->first) {
-        current = current->_right;
-      } else if (current->_content.first > pos->first){
-        current = current->_left;
-      } else {
 				break;
-			}
+      } else if (current->_content.first < pos->first) {
+        current = current->_right;
+      } else {
+        current = current->_left;
+      }
     }
     if (z == _nil) {
       cout << "Key not found in the tree" << endl;
@@ -475,11 +594,11 @@ public:
 		_node_alloc.deallocate(z, 1);
 		_size--;
 
-		if (_root == _nil) {
-			_last_node = _nil;
-			_node_alloc.destroy(_nil);
-			_node_alloc.deallocate(_nil, 1);
-		}
+		// if (_root == _nil) {
+		// 	_last_node = _nil;
+		// 	_node_alloc.destroy(_nil);
+		// 	_node_alloc.deallocate(_nil, 1);
+		// }
 
   }
 /*
@@ -816,8 +935,11 @@ public:
 
   void insertFix(node_pointer k) {
 		// std::cout << "fix node : " << k->_content.first << std::endl;
+		// display_tree("fix");
+
+
     node_pointer u;
-    while (k->_parent->_color == 1) {
+    while (k->_parent->_color == 1 && k->_parent != NULL) {
       if (k->_parent == k->_parent->_parent->_right) {
         u = k->_parent->_parent->_left;
         if (u->_color == 1) {
@@ -836,6 +958,7 @@ public:
         }
       } else {
         u = k->_parent->_parent->_right;
+
 
         if (u->_color == 1) {
           u->_color = 0;
@@ -859,10 +982,10 @@ public:
     _root->_color = 0;
 
 		// set last node
-		// node_pointer c = _root;
-		// while (c->_right != _nil)
-		// 	c = c->_right;
-		// _last_node = c;
+		node_pointer c = _root;
+		while (c->_right != _nil)
+			c = c->_right;
+		_last_node = c;
   }
 
 
@@ -960,7 +1083,7 @@ public:
 		int level = 0;
 		int node_in_line = 0;
 
-		// std::cout << "current : " << current->_content.first << std::endl;
+		std::cout << "current : " << current->_content.first << std::endl;
 
 
 		if (current == NULL )
@@ -991,6 +1114,7 @@ public:
 
 	void display_tree(node_pointer parent, int space_root, int level, int node_in_line)
 	{
+
 		if (parent == NULL)
 			return;
 		space_root -= 8;
