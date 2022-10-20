@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 18:14:05 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/18 01:11:21 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/20 12:26:10 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -270,7 +270,9 @@ public:
 	}
 
 	ft::pair<iterator, bool> insert( const value_type& value ) {
-		return (_tree.insert_pair(value));
+		ft::pair<iterator, bool> ret = _tree.insert_pair(value);
+		// display_tree("after insert");
+		return (ret);
 	}
 
 	iterator insert( iterator hint, const value_type& value ) {
