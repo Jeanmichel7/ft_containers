@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/10 21:23:15 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/20 15:55:58 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/21 14:14:50 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,39 +24,10 @@
 
 #include <iostream>
 #include <math.h>
-
 #include "enable_if.hpp"
-
-static class nullptr_t
-{
-    public:
-        /*
-        ** @brief For conversion to any type
-        ** of null non-member pointer.
-        */
-        template<class T>
-        operator T*() const { return (0); }
-
-        /*
-        ** @brief For conversion to any type of null
-        ** member pointer.
-        */
-        template<class C, class T>
-        operator T C::*() const { return (0); }
-
-    private:
-        
-        /*
-        ** @brief It's imposible to get an address of
-        ** a nullptr.
-        */
-        void operator&() const;
-
-} u_nullptr = {};
 
 namespace ft
 {
-
     template <class InputIt1, class InputIt2>
     bool equal(InputIt1 first1, InputIt1 last1,
                InputIt2 first2)
@@ -123,21 +94,13 @@ namespace ft
     template <typename T>
     struct Node
     {
-    public:
         typedef T   value_type;
-        
-    // private:
+
         value_type           _content;
         Node                *_parent;
         Node                *_left;
         Node                *_right;
         int                  _color;
-
-
-
-    public:
-        // Node() 
-        // : _content(), _parent(NULL), _left(NULL), _right(NULL), _color(N_BLACK) {}
 
         Node(Node *left, Node *right) 
         : _left(left), _right(right), _color(N_BLACK) {}
@@ -180,14 +143,6 @@ namespace ft
             return (*this);
         }
     };
-
-    // template <typename T>
-    // std::ostream& operator<<(std::ostream& os, const Node& node)
-    // {
-    //     os << "ostream node : " << node->_content.first << " " << node->_content.second << std::endl;
-    //     return os;
-    // }
-    
 }
 
 
