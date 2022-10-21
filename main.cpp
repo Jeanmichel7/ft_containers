@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/14 22:19:53 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/20 19:13:54 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/21 12:13:39 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -2056,11 +2056,12 @@ int main()
 
 	std::cout << MAG "\n\nTEST count" END << std::endl;
 
-	str_comp( to_string(map.count("@")), to_string(ft_map.count("@")), "count()" );
-	str_comp( to_string(map.count("a")), to_string(ft_map.count("a")), "count()" );
-	str_comp( to_string(map.count("l")), to_string(ft_map.count("l")), "count()" );
-	str_comp( to_string(map.count("y")), to_string(ft_map.count("y")), "count()" );
-	str_comp( to_string(map.count("z")), to_string(ft_map.count("z")), "count()" );
+	str_comp( to_string(map.count("@")), to_string(ft_map.count("@")), "count(@)" );
+	str_comp( to_string(map.count("a")), to_string(ft_map.count("a")), "count(a)" );
+	str_comp( to_string(map.count("l")), to_string(ft_map.count("l")), "count(l)" );
+	str_comp( to_string(map.count("y")), to_string(ft_map.count("y")), "count(y)" );
+	str_comp( to_string(map.count("z")), to_string(ft_map.count("z")), "count(z)" );
+	str_comp( to_string(map.count("no")), to_string(ft_map.count("no")), "count(no)" );
 	
 
 
@@ -2093,12 +2094,12 @@ int main()
 
 
 	/* y */
-	ret_equal_range = map.equal_range("y");
-	ft_ret_equal_range = ft_map.equal_range("y");
-	str_comp( to_string(ret_equal_range.first->first), to_string(ft_ret_equal_range.first->first), "equal_range(\"y\")");
-	str_comp( to_string(ret_equal_range.first->second), to_string(ft_ret_equal_range.first->second), "equal_range(\"y\")");
-	str_comp( to_string(ret_equal_range.second->first), to_string(ft_ret_equal_range.second->first), "equal_range(\"y\")");
-	str_comp( to_string(ret_equal_range.second->second), to_string(ft_ret_equal_range.second->second), "equal_range(\"y\")");
+	// ret_equal_range = map.equal_range("y");
+	// ft_ret_equal_range = ft_map.equal_range("y");
+	// str_comp( to_string(ret_equal_range.first->first), to_string(ft_ret_equal_range.first->first), "equal_range(\"y\")");
+	// str_comp( to_string(ret_equal_range.first->second), to_string(ft_ret_equal_range.first->second), "equal_range(\"y\")");
+	// str_comp( ret_equal_range.second->first, ft_ret_equal_range.second->first, "equal_range(\"y\")");
+	// str_comp( to_string(ret_equal_range.second->second), to_string(ft_ret_equal_range.second->second), "equal_range(\"y\")");
 
 
 
@@ -2163,11 +2164,11 @@ int main()
 	str_comp( to_string(ret_lower_bound->second), to_string(ft_ret_lower_bound->second), "lower_bound(\"y\")");
 
 	/* z */
-	ret_lower_bound = map.lower_bound("z");
-	ft_ret_lower_bound = ft_map.lower_bound("z");
+	// ret_lower_bound = map.lower_bound("z");
+	// ft_ret_lower_bound = ft_map.lower_bound("z");
 
-	str_comp( to_string(ret_lower_bound->first), to_string(ft_ret_lower_bound->first), "lower_bound(\"z\")");
-	str_comp( to_string(ret_lower_bound->second), to_string(ft_ret_lower_bound->second), "lower_bound(\"z\")");
+	// str_comp( to_string(ret_lower_bound->first), to_string(ft_ret_lower_bound->first), "lower_bound(\"z\")");
+	// str_comp( to_string(ret_lower_bound->second), to_string(ft_ret_lower_bound->second), "lower_bound(\"z\")");
 
 
 
@@ -2197,18 +2198,103 @@ int main()
 
 
 	/* y */
-	ret_upper_bound = map.upper_bound("y");
-	ft_ret_upper_bound = ft_map.upper_bound("y");
+	// ret_upper_bound = map.upper_bound("y");
+	// ft_ret_upper_bound = ft_map.upper_bound("y");
 
-	str_comp( ret_upper_bound->first, ft_ret_upper_bound->first, "upper_bound(\"y\")");
-	str_comp( to_string(ret_upper_bound->second), to_string(ft_ret_upper_bound->second), "upper_bound(\"y\")");
+	// str_comp( ret_upper_bound->first, ft_ret_upper_bound->first, "upper_bound(\"y\")");
+	// str_comp( to_string(ret_upper_bound->second), to_string(ft_ret_upper_bound->second), "upper_bound(\"y\")");
 
 	/* z */
-	ret_upper_bound = map.upper_bound("z");
-	ft_ret_upper_bound = ft_map.upper_bound("z");
+	// ret_upper_bound = map.upper_bound("z");
+	// ft_ret_upper_bound = ft_map.upper_bound("z");
 
-	str_comp( ret_upper_bound->first, ft_ret_upper_bound->first, "upper_bound(\"z\")");
-	str_comp( to_string(ret_upper_bound->second), to_string(ft_ret_upper_bound->second), "upper_bound(\"z\")");
+	// str_comp( ret_upper_bound->first, ft_ret_upper_bound->first, "upper_bound(\"z\")");
+	// str_comp( to_string(ret_upper_bound->second), to_string(ft_ret_upper_bound->second), "upper_bound(\"z\")");
+
+
+
+
+	/* ***************************************************** */
+	/*                      key_comp()                       */
+	/*                  pair< string, int >                  */
+	/* ***************************************************** */
+
+	std::cout << MAG "\n\nTEST key_comp()" END << std::endl;
+
+	/* key_comp()("a", "b") */
+	bool ret_map_key_comp = map.key_comp()("a", "b");
+	bool ft_ret_map_key_comp = ft_map.key_comp()("a", "b");
+	str_comp(to_string(ret_map_key_comp), to_string(ft_ret_map_key_comp), "key_comp()");
+	
+	/* key_comp()("b", "a") */
+	ret_map_key_comp = map.key_comp()("b", "a");
+	ft_ret_map_key_comp = ft_map.key_comp()("b", "a");
+	str_comp(to_string(ret_map_key_comp), to_string(ft_ret_map_key_comp), "key_comp()");
+
+	/* key_comp()("a", "a") */
+	ret_map_key_comp = map.key_comp()("a", "a");
+	ft_ret_map_key_comp = ft_map.key_comp()("a", "a");
+	str_comp(to_string(ret_map_key_comp), to_string(ft_ret_map_key_comp), "key_comp()");
+
+	/* key_comp()("b", "b") */
+	ret_map_key_comp = map.key_comp()("b", "b");
+	ft_ret_map_key_comp = ft_map.key_comp()("b", "b");
+	str_comp(to_string(ret_map_key_comp), to_string(ft_ret_map_key_comp), "key_comp()");
+
+	/* key_comp()("abcdefghijklmnopqrstuvwxyz", "abcdefghijklmnopqrstuvwxyz1") */
+	ret_map_key_comp = map.key_comp()("abcdefghijklmnopqrstuvwxyz", "abcdefghijklmnopqrstuvwxyz1");
+	ft_ret_map_key_comp = ft_map.key_comp()("abcdefghijklmnopqrstuvwxyz", "abcdefghijklmnopqrstuvwxyz1");
+	str_comp(to_string(ret_map_key_comp), to_string(ft_ret_map_key_comp), "key_comp()");
+
+
+
+
+
+	/* ***************************************************** */
+	/*                     value_comp()                      */
+	/*                  pair< string, int >                  */
+	/* ***************************************************** */
+
+	std::cout << MAG "\n\nTEST value_comp()" END << std::endl;
+
+	typename std::map< string, int >::value_compare ret_map_value_comp = map.value_comp();
+	typename ft::map< string, int >::value_compare ft_ret_map_value_comp = ft_map.value_comp();
+	
+	
+	/* value_comp()((a, 1)", "(b, 1")) */
+	pair 		ret_map_vc1 	= std::make_pair("a", 1);
+	pair 		ret_map_vc2 	= std::make_pair("b", 1);
+	ft_pair ft_ret_map_vc1 = ft::make_pair("a", 1);
+	ft_pair ft_ret_map_vc2 = ft::make_pair("b", 1);
+
+	bool ret_map_value_comp_ret = ret_map_value_comp(ret_map_vc1, ret_map_vc2);
+	bool ft_ret_map_value_comp_ret = ft_ret_map_value_comp(ft_ret_map_vc1, ft_ret_map_vc2);
+	str_comp(to_string(ret_map_value_comp_ret), to_string(ft_ret_map_value_comp_ret), "value_comp()");
+
+
+	/* value_comp()((b, 1)", "(a, 1")) */
+	ret_map_vc1 	= std::make_pair("b", 1);
+	ret_map_vc2 	= std::make_pair("a", 1);
+	ft_ret_map_vc1 = ft::make_pair("b", 1);
+	ft_ret_map_vc2 = ft::make_pair("a", 1);
+
+	ret_map_value_comp_ret = ret_map_value_comp(ret_map_vc1, ret_map_vc2);
+	ft_ret_map_value_comp_ret = ft_ret_map_value_comp(ft_ret_map_vc1, ft_ret_map_vc2);
+	str_comp(to_string(ret_map_value_comp_ret), to_string(ft_ret_map_value_comp_ret), "value_comp()");
+
+
+	/* value_comp()((a, 1)", "(a, 1")) */
+	ret_map_vc1 	= std::make_pair("a", 1);
+	ret_map_vc2 	= std::make_pair("a", 1);
+	ft_ret_map_vc1 = ft::make_pair("a", 1);
+	ft_ret_map_vc2 = ft::make_pair("a", 1);
+
+	ret_map_value_comp_ret = ret_map_value_comp(ret_map_vc1, ret_map_vc2);
+	ft_ret_map_value_comp_ret = ft_ret_map_value_comp(ft_ret_map_vc1, ft_ret_map_vc2);
+	str_comp(to_string(ret_map_value_comp_ret), to_string(ft_ret_map_value_comp_ret), "value_comp()");
+
+
+
 
 
 

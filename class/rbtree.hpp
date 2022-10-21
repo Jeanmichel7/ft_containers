@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 12:54:45 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/20 19:56:15 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/21 10:46:08 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -855,15 +855,24 @@ public:
 	/*                                                     */
 	/* *************************************************** */
 
-	key_compare key_comp() const {
-		return _key_compare;
-	}
+	// key_compare key_comp() const {
+		// typedef bool result_type;
+		// typedef value_type first_argument_type;
+		// typedef value_type second_argument_type;
+		// bool operator() (const value_type& x, const value_type& y) const
+		// {
+		// 	return comp(x.first, y.first);
+		// }
+	// }
 
 
 
-	ft::map::value_compare value_comp() const {
-		return ft::map::value_compare(_key_compare);
-	}
+	// value_compare value_comp() const {
+	// 	return _value_compare;
+	// }
+	// ft::map::value_compare value_comp() const {
+	// 	return ft::map::value_compare(_key_compare);
+	// }
 
 
 

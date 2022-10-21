@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 18:14:05 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/20 19:56:14 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/21 12:13:53 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ public:
 
 	class value_compare
 	{
-		typedef bool 			result_type;
+		typedef bool 					result_type;
 		typedef value_type 		first_argument_type;
 		typedef value_type 		second_argument_type;
 
@@ -65,11 +65,11 @@ public:
 		Compare _comp;
 
 	public:
-		// value_compare( Compare c ) : comp(c) {}
-		value_compare( Compare c );
-		// bool operator() (const value_type& x, const value_type& y) const
-		// { return (comp(x.first, y.first)); }
-		bool operator() (const value_type& x, const value_type& y) const;
+		value_compare( Compare c ) : _comp(c) {}
+
+		bool operator() (const value_type& x, const value_type& y) const{
+			return (this->_comp(x.first, y.first));
+		}
 	};
 
 
@@ -396,12 +396,17 @@ public:
 	/* *************************************************** */
 
 	key_compare key_comp() const {
-		return (_tree.key_comp());
+		return (Compare());
 	}
 
 	value_compare value_comp() const {
-		return (_tree.value_comp());
+		return (value_compare(key_comp()));
 	}
+
+
+
+
+
 
 
 	/* *************************************************** */
