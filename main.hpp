@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 14:57:17 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/21 15:08:48 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/21 19:44:26 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,16 +19,21 @@
 # define MAG "\033[0;35m"
 # define CYA "\033[0;36m"
 # define END "\033[0m"
+# define BILLION 1000000000L
 
 # include <iostream>
 # include <sstream>
 # include <string>
 
-
-
 # include <map>
 # include "map.hpp"
+# include "chrono.hpp"
 
+
+
+
+
+/* CHRONO */
 
 /* VECTOR */
 void tester_vector(void);

@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 14:16:17 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/21 15:51:36 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/21 20:05:08 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ std::string to_string(T value)
 	os << value ;
 	return os.str() ;
 }
-
 
 
 void str_comp(std::string str, std::string ft_str, std::string msg) {
@@ -146,19 +145,18 @@ void fill_map(T_map *map) {
 
 void tester_map(void)
 {
+
 	std::stringstream sstr;
 	std::stringstream ft_sstr;
 
 	std::string str;
 	std::string ft_str;
 
-/* ***************************************************** */
-/*                                                       */
-/*                                                       */
-/*                          MAPS                         */
-/*                                                       */
-/*                                                       */
-/* ***************************************************** */
+	struct time_diff chrono;
+	struct time_diff ft_chrono;
+
+	double time;
+	double ft_time;
 
 
 	typedef	std::string		type_key_map1;
@@ -166,6 +164,11 @@ void tester_map(void)
 
 	// typedef int						type_key_map2;
 	// typedef int						type_value_map2;
+
+
+
+
+
 
 
 	/* ***************************************************** */
@@ -206,6 +209,10 @@ void tester_map(void)
 
 
 
+
+
+
+
 	/* ***************************************************** */
 	/*                     INSERT(value)                     */
 	/*                  pair< string, int >                  */
@@ -213,11 +220,30 @@ void tester_map(void)
 	// ft_map.display_tree();
 	std::cout << MAG "\n\nTEST insert( value )" END << std::endl;
 
+
+
 	/* insert ("b", 2) */
+	chrono.start_chrono();
 	std::pair< it_type, bool > ret_insert_value 		= map.insert(pair("b", 2));
+	time = chrono.end_chrono();
+
+	ft_chrono.start_chrono();
 	ft::pair< ft_it_type, bool > ft_ret_insert_value 	= ft_map.insert(ft_pair("b", 2));
+	ft_time = ft_chrono.end_chrono();
+
+	if (ft_time * 20 > time) {
+		std::cout << "time to long" << std::endl;
+
+		std::cout << "stl time : "; chrono.display_chrono();
+		std::cout << "\nft time  : "; ft_chrono.display_chrono();
+	}
+	else 
+		std::cout << "time ok" << std::endl;
+	
 	str_comp(ret_insert_value.first->first, ft_ret_insert_value.first->first, "insert(value(ft_pair(\"b\", 2)))");
 	str_comp(to_string(ret_insert_value.first->second), to_string(ft_ret_insert_value.first->second), "insert(value(ft_pair(\"b\", 2)))");
+
+
 
 	/* insert ("a", 1) */
 	ret_insert_value 	= map.insert(pair("a", 1));
@@ -1530,8 +1556,10 @@ void tester_map(void)
 	// ft_map.display_tree();
 
   // map_cp.clear();
-	
-  
+
+
+
+
 
 
 
