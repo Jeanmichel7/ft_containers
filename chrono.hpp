@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 17:30:03 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/22 11:46:06 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/22 17:12:44 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 #include <time.h>
 #include <cstdio>
 #include "main.hpp"
+// #include <sys/time.h>
+#include <iomanip>
 
 // struct timespec {
 //         time_t   tv_sec;        /* seconds */
@@ -23,8 +25,14 @@
 // };
 
 
+// int operation (int x, int y,int (*function)(int,int)){return function(x,y);}
+// int operation2(int x, int y,std::function<int(int, int)> function){return function(x,y);}
 
-struct time_diff
+// void time_diff( void (*function)(int,int), void (*function)(int,int)) {
+
+// }
+
+struct s_time_diff
 	{
 		struct timespec stl_start;
 		struct timespec stl_stop;
@@ -32,6 +40,7 @@ struct time_diff
 		struct timespec ft_stop;
 		double stl_time;
 		double ft_time;
+
 
 		/* stl chrono */
 		void stl_start_chrono() {
@@ -97,12 +106,14 @@ struct time_diff
 			// std::cout << "FT chrono : " << ft_time << "sec" << std::endl;
 
 			if (ft_time / 20 > stl_time) {
-				std::cout << RED "\n[Time KO] " END << std::endl;
+				std::cout << RED "\n[TKO] " END << std::endl;
 				std::cout << "STL chrono : " << stl_time << "sec" << std::endl;
 				std::cout << "FT chrono : " << ft_time << "sec" << std::endl;
 			}
-			else 
-				std::cout << GRN "[Time OK] " END ;
+			else if (ft_time / 2 > stl_time)
+				std::cout << YEL "[TOK "<< std::setprecision(1) << ft_time / stl_time << "x] " END ;
+			else
+				std::cout << GRN "[TOK "<< std::setprecision(1) << ft_time / stl_time << "x] " END ;
 			}
 
 	};

@@ -6,7 +6,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Thu Oct 20 12:12:23 2022
+# Make data base, printed on Sat Oct 22 14:50:41 2022
 
 # Variables
 
@@ -43,7 +43,6 @@ CFLAGS = -Wall -Wextra -std=c++98
 # makefile (from 'Makefile', line 1)
 MAKEFILE_LIST :=  Makefile
 # 'override' directive
- 
 GNUMAKEFLAGS := 
 # environment
 XDG_DATA_DIRS = /usr/local/share:/usr/share:/var/lib/snapd/desktop
@@ -62,13 +61,13 @@ NAME = prog
 # makefile (from 'Makefile', line 17)
 END = \033[0m
 # makefile (from 'Makefile', line 28)
-DEBEUG = -g -fsanitize=address
+DEBEUG = -g
 # environment
 NVM_BIN = /home/jrasser/.nvm/versions/node/v16.14.2/bin
 # environment
 ELECTRON_RUN_AS_NODE = 1
 # environment
-VSCODE_IPC_HOOK_CLI = /mnt/wslg/runtime-dir/vscode-ipc-08f3ebd0-db8e-458f-a8df-3f7733a03346.sock
+VSCODE_IPC_HOOK_CLI = /mnt/wslg/runtime-dir/vscode-ipc-0887650a-bffd-447c-9c58-d086c11b44cc.sock
 # default
 .FEATURES := target-specific order-only second-expansion else-if shortest-stem undefine oneshell archives jobserver output-sync check-symlink load
 # makefile (from 'Makefile', line 14)
@@ -90,7 +89,7 @@ PULSE_SERVER = /mnt/wslg/PulseServer
 # makefile (from 'Makefile', line 13)
 BLU = \033[0;34m
 # environment
-WT_SESSION = 2816992b-cfa9-43a2-a052-ee71abde2fda
+WT_SESSION = e02ab61c-bb38-4394-a6e1-9114715cdcea
 # environment
 VSCODE_AMD_ENTRYPOINT = vs/workbench/api/node/extensionHostProcess
 # environment
@@ -100,7 +99,7 @@ LESSCLOSE = /usr/bin/lesspipe %s %s
 # environment
 LOGNAME = jrasser
 # environment
-APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = true
+APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = 1
 # environment
 NVM_CD_FLAGS = 
 # environment
@@ -187,10 +186,8 @@ LANG = C
 TERM = xterm-256color
 # environment
 WSL_DISTRO_NAME = Ubuntu
-# environment
-MOTD_SHOWN = update-motd
 # variable set hash-table stats:
-# Load=89/1024=9%, Rehash=0, Collisions=11/120=9%
+# Load=88/1024=9%, Rehash=0, Collisions=11/119=9%
 
 # Pattern-specific Variable Values
 
@@ -198,10 +195,10 @@ MOTD_SHOWN = update-motd
 
 # Directories
 
-# . (device 2080, inode 350623): 16 files, no impossibilities.
+# . (device 2080, inode 350623): 17 files, no impossibilities.
 # srcs (device 2080, inode 350711): 2 files, no impossibilities.
 
-# 18 files, no impossibilities in 2 directories.
+# 19 files, no impossibilities in 2 directories.
 
 # Implicit Rules
 
@@ -224,7 +221,7 @@ objs/%.o: srcs/**%.cpp
 objs/main.o: main.cpp
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: 'main'
-#  Last modified 2022-10-20 12:12:07.309147
+#  Last modified 2022-10-22 11:57:48.578143
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'Makefile', line 31):
@@ -246,22 +243,36 @@ all: prog
 #  File has not been updated.
 
 # Not a target:
+tester_map.cpp:
+#  Implicit rule search has been done.
+#  Last modified 2022-10-22 11:57:45.458143
+#  File has been updated.
+#  Successfully updated.
+
+# Not a target:
 Makefile:
 #  Implicit rule search has been done.
-#  Last modified 2022-10-20 12:12:04.629147
+#  Last modified 2022-10-21 10:24:14.543343
+#  File has been updated.
+#  Successfully updated.
+
+# Not a target:
+tester_vector.cpp:
+#  Implicit rule search has been done.
+#  Last modified 2022-10-22 00:58:04.364874
 #  File has been updated.
 #  Successfully updated.
 
 # Not a target:
 main.cpp:
 #  Implicit rule search has been done.
-#  Last modified 2022-10-19 22:15:40.681895
+#  Last modified 2022-10-22 00:58:04.364874
 #  File has been updated.
 #  Successfully updated.
 
-prog: objs/main.o
+prog: objs/tester_map.o objs/tester_vector.o objs/main.o
 #  Implicit rule search has not been done.
-#  Last modified 2022-10-20 12:12:07.439147
+#  Last modified 2022-10-22 11:57:48.718143
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'Makefile', line 41):
@@ -269,6 +280,7 @@ prog: objs/main.o
 			@echo "$(ERASE)$(GRN) [Successfully compiled]$(END)	$(CHECK) \n"
 			@echo "Executable ./$(NAME) \n"
 
+ 
 fclean: clean
 #  Phony target (prerequisite of .PHONY).
 #  Implicit rule search has not been done.
@@ -283,6 +295,17 @@ fclean: clean
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
+
+objs/tester_map.o: tester_map.cpp
+#  Implicit rule search has been done.
+#  Implicit/static pattern stem: 'tester_map'
+#  Last modified 2022-10-22 11:57:47.958143
+#  File has been updated.
+#  Successfully updated.
+#  recipe to execute (from 'Makefile', line 31):
+			@mkdir -p $(OBJS_DIR)
+			@${CC} $(CPPFLAGS) -o $@ -c $< ${CFLAGS} ${DEBEUG}
+			@printf	"$(ERASE) ${BLU}$ [BUILD]${RST} '$<' $(END)"
 
 re: fclean all
 #  Phony target (prerequisite of .PHONY).
@@ -299,20 +322,31 @@ clean:
 			${RM} $(OBJS)
 			@echo "$(GRN) [Clean]$(END) 			$(CHECK)"
 
+objs/tester_vector.o: tester_vector.cpp
+#  Implicit rule search has been done.
+#  Implicit/static pattern stem: 'tester_vector'
+#  Last modified 2022-10-22 11:57:48.238143
+#  File has been updated.
+#  Successfully updated.
+#  recipe to execute (from 'Makefile', line 31):
+			@mkdir -p $(OBJS_DIR)
+			@${CC} $(CPPFLAGS) -o $@ -c $< ${CFLAGS} ${DEBEUG}
+			@printf	"$(ERASE) ${BLU}$ [BUILD]${RST} '$<' $(END)"
+
 # files hash-table stats:
-# Load=11/1024=1%, Rehash=0, Collisions=0/34=0%
+# Load=15/1024=1%, Rehash=0, Collisions=0/46=0%
 # VPATH Search Paths
 
 # No 'vpath' search paths.
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 30 / storage = 252 B / avg = 8 B
-# current buf: size = 8162 B / used = 252 B / count = 30 / avg = 8 B
+# strcache buffers: 1 (0) / strings = 35 / storage = 328 B / avg = 9 B
+# current buf: size = 8162 B / used = 328 B / count = 35 / avg = 9 B
 
-# strcache performance: lookups = 56 / hit rate = 46%
+# strcache performance: lookups = 65 / hit rate = 46%
 # hash-table stats:
-# Load=30/8192=0%, Rehash=0, Collisions=2/56=4%
-# Finished Make data base on Thu Oct 20 12:12:23 2022
+# Load=35/8192=0%, Rehash=0, Collisions=2/65=3%
+# Finished Make data base on Sat Oct 22 14:50:41 2022
 
  

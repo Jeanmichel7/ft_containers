@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 14:57:17 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/21 19:44:26 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/22 17:13:00 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,11 @@
 
 # define RED "\033[0;31m"
 # define GRN "\033[0;32m"
+# define YEL "\033[0;33m"
 # define BLU "\033[0;34m"
 # define MAG "\033[0;35m"
 # define CYA "\033[0;36m"
+# define WHT "\033[0;37m"
 # define END "\033[0m"
 # define BILLION 1000000000L
 

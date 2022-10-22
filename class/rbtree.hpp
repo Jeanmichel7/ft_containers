@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 12:54:45 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/21 16:23:27 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/22 15:32:15 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -385,19 +385,41 @@ public:
 				return insert_pair(to_insert).first;
 			}
 		}
-		
-		if ( p && gp &&
-			(( gp > p && _comp(p->_content.first, to_insert.first) 
-				&& _comp(to_insert.first, gp->_content.first)) 
-			||
-			(p < gp && _comp(gp->_content.first, to_insert.first) 
-				&& _comp(to_insert.first, p->_content.first)))) {
-			// std::cout << "hint is good";
-			return insert_pair_pos(hint._node, to_insert);
+
+		if (hint._node == p->_left) {
+			if (_comp(to_insert.first, p->_content.first) && _comp(p->_content.first, gp->_content.first)) {
+				// std::cout << "hint is good1";
+				return insert_pair_pos(hint._node, to_insert);
+			}
+			else {
+				// std::cout << "hint not good1";
+				return insert_pair(to_insert).first;
+			}
 		} else {
-			// std::cout << "hint not good";
-			return insert_pair(to_insert).first;
+			if (_comp(gp->_content.first, p->_content.first) && _comp(p->_content.first, to_insert.first)) {
+				// std::cout << "hint is good2";
+				return insert_pair_pos(hint._node, to_insert);
+			}
+			else {
+				// std::cout << "hint not good2";
+				return insert_pair(to_insert).first;
+			}
 		}
+
+		// 	if ( p && gp &&
+		// 	(( gp > p && _comp(p->_content.first, to_insert.first) 
+		// 		&& _comp(to_insert.first, gp->_content.first)) 
+		// 	||
+		// 	(p < gp && _comp(gp->_content.first, to_insert.first) 
+		// 		&& _comp(to_insert.first, p->_content.first)))) {
+		// 	std::cout << "hint is good";
+		// 	return insert_pair_pos(hint._node->_parent, to_insert);
+		// } else {
+		// 	std::cout << "hint not good";
+		// 	return insert_pair(to_insert).first;
+		// }
+		
+	
 	}
 
 
