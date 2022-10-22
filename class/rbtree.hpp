@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 12:54:45 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/22 15:32:15 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/23 01:23:33 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -444,6 +444,9 @@ public:
 		while (it != end()){
 			erase(it++);
 		}
+		_size = 0;
+		_root = _nil;
+		_last_node = _nil;
 	}
 
 
@@ -510,6 +513,18 @@ public:
 		_node_alloc.destroy(z);
 		_node_alloc.deallocate(z, 1);
 		_size--;
+
+		//set last node
+		if (_size == 0) {
+			_last_node = _nil;
+		}
+		else {
+			_last_node = _root;
+			while (_last_node->_right != _nil) {
+				_last_node = _last_node->_right;
+			}
+		}
+
   }
 
 
@@ -559,17 +574,13 @@ public:
 
 
 
-
-
 	/* *************************************************** */
 	/*                                                     */
 	/*                       LOOKUP                        */
 	/*                                                     */
 	/* *************************************************** */
 
-
-	iterator find(value_type to_find)
-	{
+	iterator find(value_type to_find) {
 		if (_root == NULL)
 			return end();
 		node_pointer current = _root;
@@ -599,6 +610,56 @@ public:
 		return end();
 	}
 
+	ft::pair<iterator,iterator> equal_range( const typename value_type::first_type& key ) {
+		node_pointer x = this->_root;
+    node_pointer y = NULL;
+		iterator it1;
+		iterator it2;
+
+    while (x != _nil) {
+			// std::cout << "x->first : " << x->_content.first << std::endl;
+      y = x;
+      if (key < x->_content.first) {
+        x = x->_left;
+      } else if (x->_content.first < key){
+        x = x->_right;
+      } else {
+				it1 = iterator(x, _last_node, _nil);
+				it2 = iterator(x, _last_node, _nil);
+				return ft::pair<iterator,iterator>(it1, ++it2);
+			}
+    }
+		it2 = iterator(y, _last_node, _nil);
+		return ft::pair<iterator,iterator>(it2, ++it2);
+	}
+
+	ft::pair<const_iterator,const_iterator> equal_range( const typename value_type::first_type& key ) const {
+		
+		node_pointer 							x = this->_root;
+		node_pointer 							y = NULL;
+		const_iterator it1;
+		const_iterator it2;
+
+		while (x != _nil) {
+			// std::cout << "x->first : " << x->_content.first << std::endl;
+			y = x;
+			if (key < x->_content.first) {
+				x = x->_left;
+			} else if (x->_content.first < key){
+				x = x->_right;
+			} else {
+				it1 = const_iterator(x, _last_node, _nil);
+				it2 = const_iterator(x, _last_node, _nil);
+				return ft::pair<const_iterator,const_iterator>(it1, ++it2);
+			}
+		}
+		it1 = const_iterator(y, _last_node, _nil);
+		it2 = const_iterator(y, _last_node, _nil);
+		return ft::pair<const_iterator,const_iterator>(it2, ++it2);
+	}
+
+
+
 
 
 
@@ -612,15 +673,51 @@ public:
 	/*                                                     */
 	/* *************************************************** */
 
+	bool operator==(const self& x) const {
+		if (this->_size != x._size)
+			return false;
+		const_iterator it1 = this->begin();
+		const_iterator it2 = x.begin();
+		while (it1 != this->end()) {
+			if (*it1 != *it2)
+				return false;
+			it1++;
+			it2++;
+		}
+		return true;
+	}
 
-	bool operator==(const self& x) const;
-	bool operator!=(const self& x) const;
+	bool operator!=(const self& x) const {
+		return !(*this == x);
+	}
 
-	bool operator<(const self& x) const;
-	bool operator<=(const self& x) const;
+	bool operator<(const self& x) const {
+		const_iterator it1 = this->begin();
+		const_iterator it2 = x.begin();
+		while (it1 != this->end() && it2 != x.end()) {
+			if (*it1 < *it2)
+				return true;
+			else if (*it2 < *it1)
+				return false;
+			it1++;
+			it2++;
+		}
+		if (it1 == this->end() && it2 != x.end())
+			return true;
+		return false;
+	}
 
-	bool operator>(const self& x) const;
-	bool operator>=(const self& x) const;
+	bool operator<=(const self& x) const {
+		return (*this < x || *this == x);
+	}
+
+	bool operator>(const self& x) const {
+		return !(*this <= x);
+	}
+
+	bool operator>=(const self& x) const {
+		return !(*this < x);
+	}
 
 
 

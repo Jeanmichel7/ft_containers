@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 16:58:53 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/20 17:45:19 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/23 00:39:19 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,7 @@ template <typename T, class Compare >
 			RB_iterator& operator++(void)
 			{
 				// std::cout << "actuel node : " << _node->_content.first << std::endl;
+				// std::cout << "last node : " << _last_node->_content.first << std::endl;
 				if (_node == _last_node) {
 					// std::cout << "Error: incrementing a NULL iterator" << std::endl;
 					_node = _last_node->_right;
@@ -128,6 +129,8 @@ template <typename T, class Compare >
 						_node = _node->_parent;
 					_node = _node->_parent;
 				}
+				// std::cout << "after node : " << _node->_content.first << std::endl;
+
 				return (*this);
 			}
 

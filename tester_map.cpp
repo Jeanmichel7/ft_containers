@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 14:16:17 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/22 16:57:12 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/23 00:35:05 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -1882,6 +1882,9 @@ void tester_map(void)
 
 
 
+	ft_map.display_tree();
+
+
 
 	/* ***************************************************** */
 	/*                        LOOKUP                         */
@@ -1889,6 +1892,8 @@ void tester_map(void)
 	/* ***************************************************** */
 	
 	std::cout << MAG "\n\nTEST equal_range()" END << std::endl;
+
+
 
 	/* l */
 	chrono.stl_start_chrono();
@@ -1903,6 +1908,7 @@ void tester_map(void)
 	str_comp( to_string(ret_equal_range.second->first), to_string(ft_ret_equal_range.second->first), "equal_range second first(\"l\")");
 	str_comp( to_string(ret_equal_range.second->second), to_string(ft_ret_equal_range.second->second), "equal_range second second(\"l\")");
 	chrono.diff_chrono();
+
 
 
 
@@ -1924,12 +1930,36 @@ void tester_map(void)
 
 
 	/* y */
-	// ret_equal_range = map.equal_range("y");
-	// ft_ret_equal_range = ft_map.equal_range("y");
-	// str_comp( to_string(ret_equal_range.first->first), to_string(ft_ret_equal_range.first->first), "equal_range(\"y\")");
-	// str_comp( to_string(ret_equal_range.first->second), to_string(ft_ret_equal_range.first->second), "equal_range(\"y\")");
-	// str_comp( ret_equal_range.second->first, ft_ret_equal_range.second->first, "equal_range(\"y\")");
-	// str_comp( to_string(ret_equal_range.second->second), to_string(ft_ret_equal_range.second->second), "equal_range(\"y\")");
+	chrono.stl_start_chrono();
+	ret_equal_range = map.equal_range("y");
+	chrono.stl_end_chrono();
+	chrono.ft_start_chrono();
+	ft_ret_equal_range = ft_map.equal_range("y");
+	chrono.ft_end_chrono();
+
+	str_comp( to_string(ret_equal_range.first->first), to_string(ft_ret_equal_range.first->first), "equal_range(\"y\")");
+	str_comp( to_string(ret_equal_range.first->second), to_string(ft_ret_equal_range.first->second), "equal_range(\"y\")");
+	str_comp( ret_equal_range.second->first, ft_ret_equal_range.second->first, "equal_range(\"y\")");
+	str_comp( to_string(ret_equal_range.second->second), to_string(ft_ret_equal_range.second->second), "equal_range(\"y\")");
+	chrono.diff_chrono();
+
+
+
+
+	/* zshu SEGV*/
+	// chrono.stl_start_chrono();
+	// ret_equal_range = map.equal_range("zshu");
+	// chrono.stl_end_chrono();
+	// chrono.ft_start_chrono();
+	// ft_ret_equal_range = ft_map.equal_range("zshu");
+	// chrono.ft_end_chrono();
+
+	// str_comp( to_string(ret_equal_range.first->first), to_string(ft_ret_equal_range.first->first), "equal_range(\"zshu\")");
+	// str_comp( to_string(ret_equal_range.first->second), to_string(ft_ret_equal_range.first->second), "equal_range(\"zshu\")");
+	// str_comp( ret_equal_range.second->first, ft_ret_equal_range.second->first, "equal_range(\"zshu\")");
+	// str_comp( to_string(ret_equal_range.second->second), to_string(ft_ret_equal_range.second->second), "equal_range(\"zshu\")");
+	// chrono.diff_chrono();
+
 
 
 

@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 18:14:05 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/21 12:13:53 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/23 01:19:15 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -349,36 +349,64 @@ public:
 	}
 
 	ft::pair<iterator,iterator> equal_range( const Key& key ) {
-		iterator it = find(key);
-		if (it == end())
-			return (ft::make_pair(end(), end()));
-		return (ft::make_pair(it, ++it));
+		// iterator it = find(key);
+		// if (it == end())
+		// 	return (ft::make_pair(end(), end()));
+		// return (ft::make_pair(it, ++it));
+		return (_tree.equal_range(key));
 	}
 
 	ft::pair<const_iterator,const_iterator> equal_range( const Key& key ) const {
-		const_iterator it = find(key);
-		if (it == end())
-			return (ft::make_pair(end(), end()));
-		return (ft::make_pair(it, ++it));
+		// const_iterator it = find(key);
+		// if (it == end())
+		// 	return (ft::make_pair(end(), end()));
+		// return (ft::make_pair(it, ++it));
+		return (_tree.equal_range(key));
 	}
+
+
 
 	iterator lower_bound( const Key& key ) {
-		iterator it = find(key);
-		if (it == end())
-			return (end());
-		return (it);
+		iterator it = begin();
+		while (it != end()) {
+			if (it->first >= key)
+				return it;
+			it++;
+		}
+		return it;
 	}
 
-	const_iterator lower_bound( const Key& key ) const;
+	const_iterator lower_bound( const Key& key ) const {
+		const_iterator it = begin();
+		while (it != end()) {
+			if (it->first >= key)
+				return it;
+			it++;
+		}
+		return it;
+	}
+
+
 
 	iterator upper_bound( const Key& key ) {
-		iterator it = find(key);
-		if (it == end())
-			return (end());
-		return (++it);
+		iterator it = begin();
+		while (it != end()) {
+			if (it->first > key)
+				return it;
+			it++;
+		}
+		return it;
 	}
 	
-	const_iterator upper_bound( const Key& key ) const;
+	const_iterator upper_bound( const Key& key ) const {
+		const_iterator it = begin();
+		while (it != end()) {
+			if (it->first > key)
+				return it;
+			it++;
+		}
+		return it;
+	}
 
 
 
