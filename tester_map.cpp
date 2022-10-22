@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 14:16:17 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/23 00:35:05 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/23 01:28:22 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -199,8 +199,15 @@ void tester_map(void)
 
 
 	std::cout << MAG "TEST constructor map() " END << std::endl;
+
+	chrono.stl_start_chrono();
 	std_map_str_int map;
-	 ft_map_str_int ft_map;
+	chrono.stl_end_chrono();
+	chrono.ft_start_chrono();
+	ft_map_str_int ft_map;
+	chrono.ft_end_chrono();
+
+	chrono.diff_chrono();
 
 
 
@@ -2259,7 +2266,7 @@ void tester_map(void)
 	
 
 
-
+	chrono.display_average();
 
 
 

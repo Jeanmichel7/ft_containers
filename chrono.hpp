@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 17:30:03 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/22 17:12:44 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/23 01:38:55 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ struct s_time_diff
 		struct timespec ft_stop;
 		double stl_time;
 		double ft_time;
+		double average = 0;
 
 
 		/* stl chrono */
@@ -105,6 +106,9 @@ struct s_time_diff
 			// std::cout << "STL chrono : " << stl_time << "sec" << std::endl;
 			// std::cout << "FT chrono : " << ft_time << "sec" << std::endl;
 
+			average += ft_time / stl_time;
+			average /= 2;
+
 			if (ft_time / 20 > stl_time) {
 				std::cout << RED "\n[TKO] " END << std::endl;
 				std::cout << "STL chrono : " << stl_time << "sec" << std::endl;
@@ -114,8 +118,12 @@ struct s_time_diff
 				std::cout << YEL "[TOK "<< std::setprecision(1) << ft_time / stl_time << "x] " END ;
 			else
 				std::cout << GRN "[TOK "<< std::setprecision(1) << ft_time / stl_time << "x] " END ;
-			}
+		}
 
+		void display_average() {
+			std::cout << fixed;
+			std::cout << "\n\nAverage time : " << std::setprecision(2) << average << "x less performant" << std::endl;
+		}
 	};
 
 #endif
