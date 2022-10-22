@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 14:16:17 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/21 20:05:08 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/22 11:57:45 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,11 +153,6 @@ void tester_map(void)
 	std::string ft_str;
 
 	struct time_diff chrono;
-	struct time_diff ft_chrono;
-
-	double time;
-	double ft_time;
-
 
 	typedef	std::string		type_key_map1;
 	typedef	int						type_value_map1;
@@ -223,34 +218,33 @@ void tester_map(void)
 
 
 	/* insert ("b", 2) */
-	chrono.start_chrono();
+	chrono.stl_start_chrono();
 	std::pair< it_type, bool > ret_insert_value 		= map.insert(pair("b", 2));
-	time = chrono.end_chrono();
+	chrono.stl_end_chrono();
 
-	ft_chrono.start_chrono();
+	chrono.ft_start_chrono();
 	ft::pair< ft_it_type, bool > ft_ret_insert_value 	= ft_map.insert(ft_pair("b", 2));
-	ft_time = ft_chrono.end_chrono();
+	chrono.ft_end_chrono();
 
-	if (ft_time * 20 > time) {
-		std::cout << "time to long" << std::endl;
-
-		std::cout << "stl time : "; chrono.display_chrono();
-		std::cout << "\nft time  : "; ft_chrono.display_chrono();
-	}
-	else 
-		std::cout << "time ok" << std::endl;
-	
 	str_comp(ret_insert_value.first->first, ft_ret_insert_value.first->first, "insert(value(ft_pair(\"b\", 2)))");
 	str_comp(to_string(ret_insert_value.first->second), to_string(ft_ret_insert_value.first->second), "insert(value(ft_pair(\"b\", 2)))");
+	chrono.diff_chrono();
 
 
 
 	/* insert ("a", 1) */
+	chrono.stl_start_chrono();
 	ret_insert_value 	= map.insert(pair("a", 1));
+	chrono.stl_end_chrono();
+
+	chrono.ft_start_chrono();
 	ft_ret_insert_value = ft_map.insert(ft_pair("a", 1));
+	chrono.ft_end_chrono();
+
 	str_comp(ret_insert_value.first->first, ft_ret_insert_value.first->first, "insert(value(ft_pair(\"a\", 1))) -> first");
 	str_comp(to_string(ret_insert_value.first->second), to_string(ft_ret_insert_value.first->second), "insert(value(ft_pair(\"a\", 1))) -> second");
-	ft_map.display_tree();
+	chrono.diff_chrono();
+	// ft_map.display_tree();
 
 	/* insert ("c", 3) */
 	ret_insert_value 	= map.insert(pair("c", 3));
