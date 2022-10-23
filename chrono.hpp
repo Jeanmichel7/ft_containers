@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 17:30:03 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/23 01:38:55 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/23 22:43:02 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,14 @@ struct s_time_diff
 		struct timespec stl_stop;
 		struct timespec ft_start;
 		struct timespec ft_stop;
-		double stl_time;
-		double ft_time;
-		double average = 0;
+		double 					stl_time;
+		double 					ft_time;
+		double 					diff;
+		int 						count;
+		double 					sum;
 
+
+		s_time_diff() : count(0), sum(0) {}
 
 		/* stl chrono */
 		void stl_start_chrono() {
@@ -103,26 +107,36 @@ struct s_time_diff
 		/* diff chrono */
 		void diff_chrono() {
 			std::cout << fixed;
-			// std::cout << "STL chrono : " << stl_time << "sec" << std::endl;
-			// std::cout << "FT chrono : " << ft_time << "sec" << std::endl;
-
-			average += ft_time / stl_time;
-			average /= 2;
+			stl_time == 0 ? diff = 0 : diff = ft_time / stl_time;
 
 			if (ft_time / 20 > stl_time) {
-				std::cout << RED "\n[TKO] " END << std::endl;
-				std::cout << "STL chrono : " << stl_time << "sec" << std::endl;
-				std::cout << "FT chrono : " << ft_time << "sec" << std::endl;
+				std::cout << RED "\n[TKO " << std::setprecision(2) << diff << "x] " END << std::endl;
+				std::cout << "STL chrono : " << std::setprecision(6) << stl_time << "s" << std::endl;
+				std::cout << "FT chrono  : " << std::setprecision(6) << ft_time << "s" << std::endl;
 			}
+			else if (ft_time / 10 > stl_time)
+				std::cout << YEL "[TOK "<< std::setprecision(1) << diff << "x] " END ;
 			else if (ft_time / 2 > stl_time)
-				std::cout << YEL "[TOK "<< std::setprecision(1) << ft_time / stl_time << "x] " END ;
+				std::cout << CYA "[TOK "<< std::setprecision(1) << diff << "x] " END ;
 			else
-				std::cout << GRN "[TOK "<< std::setprecision(1) << ft_time / stl_time << "x] " END ;
+				std::cout << GRN "[TOK "<< std::setprecision(1) << diff << "x] " END ;
+			
+			if (stl_time != (double)0 ) {
+				sum += diff;
+				count++;
+			}
 		}
 
 		void display_average() {
+			std::cout << MAG "\n\nTEST performance" END << std::endl;
 			std::cout << fixed;
-			std::cout << "\n\nAverage time : " << std::setprecision(2) << average << "x less performant" << std::endl;
+			if (sum / count < 2)
+				std::cout << GRN;
+			else if (sum / count < 10)
+				std::cout << CYA;
+			else if (sum / count < 20)
+				std::cout << RED;
+			std::cout << "Average time : " << std::setprecision(3) << sum / count << "x less performant" END << std::endl;
 		}
 	};
 

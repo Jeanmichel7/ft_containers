@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 12:54:45 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/23 01:23:33 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/23 22:00:39 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include "utils.hpp"
 #include "rbtree_iterator.hpp"
 #include "map.hpp"
+# include "convert.hpp"
 
 using namespace std;
 
@@ -250,22 +251,21 @@ public:
 		ft::pair<iterator, bool> 	ret;
     node_pointer 							x = this->_root;
     node_pointer 							y = NULL;
+		node_pointer 							node;
 
-		node_pointer node = _node_alloc.allocate(1);
-		_node_alloc.construct(node, Node(val, NULL, _nil, _nil, N_RED));
     while (x != _nil) {
       y = x;
-      if (node->_content < x->_content) {
+      if (val.first < x->_content.first) {
         x = x->_left;
       } else if (x->_content.first < val.first){
         x = x->_right;
       } else {
-				_node_alloc.destroy(node);
-				_node_alloc.deallocate(node, 1);
-				return ft::make_pair(iterator(x, _last_node, _nil), false);
+				return ft::pair<iterator, bool>(iterator(x, _last_node, _nil), false);
 			}
     }
 
+		node = _node_alloc.allocate(1);
+		_node_alloc.construct(node, Node(val, NULL, _nil, _nil, N_RED));
     node->_parent = y;
     if (y == NULL) {
       _root = node;
@@ -279,19 +279,20 @@ public:
     if (node->_parent == NULL) {
       node->_color = N_BLACK;
 			_last_node = node;
+
       return ft::make_pair(iterator(node, _last_node, _nil), true);
     }
 
     if (node->_parent->_parent == NULL) {
-			_last_node = node;
+			if (node->_parent->_left == node)
+				_last_node = node->_parent;
+			else if (node->_parent->_right == node)
+				_last_node = _root->_right;
 			return ft::make_pair(iterator(node, _last_node, _nil), true);
-    }
-
+		}
     insertFix(node);
-		// display_tree("");
 		return ft::make_pair(iterator(node, _last_node, _nil), true);
 	}
-  
 
 
 
@@ -612,7 +613,7 @@ public:
 
 	ft::pair<iterator,iterator> equal_range( const typename value_type::first_type& key ) {
 		node_pointer x = this->_root;
-    node_pointer y = NULL;
+    node_pointer y = x;
 		iterator it1;
 		iterator it2;
 
@@ -636,7 +637,7 @@ public:
 	ft::pair<const_iterator,const_iterator> equal_range( const typename value_type::first_type& key ) const {
 		
 		node_pointer 							x = this->_root;
-		node_pointer 							y = NULL;
+		node_pointer 							y = x;
 		const_iterator it1;
 		const_iterator it2;
 
@@ -930,6 +931,7 @@ public:
 	/*                                                     */
 	/* *************************************************** */
 
+
 	void display_tree(std::string msg)
 	{
 		std::cout << "\n**********  Display tree (" << msg << ") ************\n" << std::endl;
@@ -938,55 +940,64 @@ public:
 		node_pointer parent = NULL;
 
 		int space_root = 60 + _size;
-		int level = 0;
-		int node_in_line = 0;
+
 
 		if (current == NULL )
 			std::cout << "Tree is NULL" << std::endl;
 		else if (current == _nil)
 			std::cout << "Tree is empty" << std::endl;
 		else if (!empty()){
-			display_tree(parent = _root, space_root, level, node_in_line);
+			display_tree(parent = _root, space_root, 0);
 		}
 
 		if (_last_node == _nil)
-			std::cout << RED "\n\nlast node is nil" END << std::endl;
-		if (_last_node == _root)
-			std::cout << RED "\n\nlast node is root" END << std::endl;
+			std::cout << "\n\nlast node is nil" << std::endl;
+		else if (_last_node == _root)
+			std::cout << "\n\nlast node is root" << std::endl;
 		else if ( _last_node == NULL)
-			std::cout << RED "\n\nlast node is NULL" END << std::endl;
+			std::cout << "\n\nlast node is NULL" << std::endl;
 		else {
-			std::cout << RED "\n\nlast node" END << std::endl
-			<< "content	:" << _last_node->_content.first << std::endl
-			<< "color	:" << _last_node->_color << std::endl
-			<< "parent	:"<< (_last_node->_parent != NULL ? _last_node->_parent->_content.first : "") << std::endl
-			<< "left	:" << (_last_node->_left == _nil ? "NIL" : _last_node->_left->_content.first) << std::endl
-			<< "right	:" << (_last_node->_right == _nil ? "NIL" : _last_node->_right->_content.first) << std::endl;
+			std::cout << "\n\nlast node : " << std::endl;
+			display_tree(parent = _last_node, 30, 1);
+
+			// std::cout << RED "\n\nlast node" END << std::endl
+			// << "content	:" << _last_node->_content.first << std::endl
+			// << "color	:" << _last_node->_color << std::endl
+			// << "parent	:"<< (_last_node->_parent != NULL ? _last_node->_parent->_content.first : "") << std::endl
+			// << "left	:" << (_last_node->_left == _nil ? "NIL" : _last_node->_left->_content.first) << std::endl
+			// << "right	:" << (_last_node->_right == _nil ? "NIL" : _last_node->_right->_content.first) << std::endl;
 		}
 		std::cout << "\n**********  End display tree ************\n" << std::endl;
 	}
 
 
-	void display_tree(node_pointer parent, int space_root, int level, int node_in_line)
+	void display_tree(node_pointer current, int space_root, bool is_last)
 	{
-		if (parent == NULL)
+		// bool is_not_nil = 0;
+		if (current == NULL)
 			return;
 		space_root -= 8;
 		
-		display_tree(parent->_left, space_root, level + 1, node_in_line);
+		display_tree(current->_left, space_root, is_last);
 		// std::cout << std::endl;
 		for (int i = 10; i < space_root; i++)
 			std::cout << " ";
-		if (parent->_color == N_RED)
+		if (current->_color == N_RED)
 			std::cout << RED;
-		// std::cout << parent->_content.first << " : " << parent->_content.second << " c: " << parent->_color << std::endl;
-		if (parent->_content.second != 0) {
-			std::cout << parent->_content.first << " : " << parent->_content.second << std::endl;
+		
+		if (current != _nil) {
+			std::cout << current->_content.first << " : " << current->_content.second;
+			if (current == _last_node && is_last) {
+				current->_parent->_color == N_RED ? std::cout << RED : std::cout << END ;
+				std::cout << "	" << current->_parent->_content.first 
+									<< " : " << current->_parent->_content.second;
+			}
+			std::cout << std::endl;
 		} else
 			std::cout << "NIL" << std::endl;
 		std::cout << END ;
 
-		display_tree(parent->_right, space_root, level + 1, node_in_line);
+		display_tree(current->_right, space_root, is_last);
 	}
 };
 

@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 18:14:05 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/23 01:19:15 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/23 21:49:40 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -233,17 +233,29 @@ public:
 	/* *************************************************** */
 
 	T& at( const Key& key ) {
-		iterator it = find(key);
-		if (it == end())
-			throw std::out_of_range("ft_map::at");
-		return (it->second);
+		// try{
+			iterator it = find(key);
+			if (it == end())
+				throw std::out_of_range("ft_map::at");
+			return (it->second);
+		// }
+		// catch (std::exception &e){
+			// std::cout << e.what() << std::endl;
+			// return end()->second;
+		// }
 	}
 
 	const T& at( const Key& key ) const {
-		const_iterator it = find(key);
-		if (it == end())
-			throw std::out_of_range("const ft_map::at");
-		return (it->second);
+		// try {
+			const_iterator it = find(key);
+			if (it == end())
+				throw std::out_of_range("ft_map::at");
+			return (it->second);
+		// }
+		// catch (std::exception &e){
+			// std::cout << e.what() << std::endl;
+			// return end()->second;
+		// }
 	}
 
 	T& operator[]( const Key& key ) {
@@ -330,10 +342,25 @@ public:
 		while (it != end())
 		{
 			if (it->first == key)
-				return it;
+				return (it);
 			it++;
 		}
-		return it;
+		return (end());
+
+		// try {
+		// 	iterator it = begin();
+		// 	while (it != end())
+		// 	{
+		// 		if (it->first == key)
+		// 			return it;
+		// 		it++;
+		// 	}
+		// 	throw std::out_of_range("key not found");
+		// }
+		// catch (std::exception &e){
+		// 	std::cout << e.what() << std::endl;
+		// }
+		// return end();
 	};
 	
 	const_iterator find( const Key& key ) const {
@@ -342,10 +369,24 @@ public:
 		while (it != end())
 		{
 			if (it->first == key)
-				return it;
+				return (it);
 			it++;
 		}
-		return it;
+		return (end());
+		// try {
+		// 	const_iterator it = begin();
+		// 	while (it != end())
+		// 	{
+		// 		if (it->first == key)
+		// 			return it;
+		// 		it++;
+		// 	}
+		// 	throw std::out_of_range("key not found");
+		// }
+		// catch (std::exception &e){
+		// 	std::cout << e.what() << std::endl;
+		// }
+		// return end();
 	}
 
 	ft::pair<iterator,iterator> equal_range( const Key& key ) {
@@ -450,6 +491,7 @@ public:
 	void display_tree()
 	{
 		_tree.display_tree("");
+		// _tree.display_tree< key_type, mapped_type >("");
 	}
 
 };

@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 14:57:17 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/22 17:13:00 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/23 15:30:57 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,12 @@
 # include <iostream>
 # include <sstream>
 # include <string>
+# include <typeinfo>
 
 # include <map>
 # include "map.hpp"
 # include "chrono.hpp"
+# include "convert.hpp"
 
 
 
@@ -53,6 +55,9 @@ void tester_vector(void);
 
 
 /* MAP */
+template< typename type_key_map, typename type_value_map >
+void tester_map_type();
+
 template <typename T>
 std::string to_string(T value);
 
@@ -68,5 +73,14 @@ template < class T_map, class T_pair>
 void fill_map(T_map *map);
 
 void tester_map(void);
+
+
+
+// /* CONVERT */
+// template <typename T>
+// T convert(std::string str);
+
+// template< >
+// int convert<int>(std::string str);
 
 #endif
