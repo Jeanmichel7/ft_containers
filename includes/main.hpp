@@ -5,16 +5,86 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/08/30 02:03:15 by jrasser           #+#    #+#             */
-/*   Updated: 2022/08/30 18:40:48 by jrasser          ###   ########.fr       */
+/*   Created: 2022/10/21 14:57:17 by jrasser           #+#    #+#             */
+/*   Updated: 2022/10/23 23:22:57 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MAIN_HPP
-# define MAIN_HPP
+#ifndef __MAIN_HPP__
+# define __MAIN_HPP__
 
-// #include <typeinfo>
-// #include <bits/c++config.h>
+# define RED "\033[0;31m"
+# define GRN "\033[0;32m"
+# define YEL "\033[0;33m"
+# define BLU "\033[0;34m"
+# define MAG "\033[0;35m"
+# define CYA "\033[0;36m"
+# define WHT "\033[0;37m"
+# define END "\033[0m"
+# define BILLION 1000000000L
 
+# include <iostream>
+# include <sstream>
+# include <string>
+# include <typeinfo>
+
+# include <map>
+# include "map.hpp"
+# include "chrono.hpp"
+# include "convert.hpp"
+
+// # include "tester_map.hpp"
+
+
+
+
+
+/* CHRONO */
+
+/* VECTOR */
+void tester_vector(void);
+
+/* include vector
+#include "utils.hpp"
+#include "pair.hpp"
+
+#include <vector>
+#include "vector.hpp"
+
+// #include <typeinfo>     // typeid
+*/
+
+
+
+/* MAP */
+template< typename type_key_map, typename type_value_map >
+void tester_map_type();
+
+template <typename T>
+std::string to_string(T value);
+
+void str_comp(std::string str, std::string ft_str, std::string msg);
+
+// template< typename T1, typename T2>
+// void sstr_comp(T1 it, T2 ft_it, std::string msg);
+
+template< typename T1, typename T2>
+void sstr_comp(T1 it, T2 ft_it, std::string msg);
+
+template <typename M1, typename M2>
+void	comp_map( M1 &map, M2 &ft_map, std::string msg);
+
+template < typename T_map, typename T_pair, typename type_key_map, typename type_value_map>
+void fill_map(T_map *map);
+
+void tester_map(void);
+
+// void display_title(std::string title);
+
+
+
+// /* CONVERT */
+// template <typename T>
+// std::string tostr(T value);
 
 #endif

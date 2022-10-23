@@ -6,19 +6,55 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 14:16:17 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/23 22:48:41 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/23 23:24:02 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "main.hpp"
+#include "tester_map.hpp"
 
-template <typename T>
-std::string tostr(T value)
-{
-	std::ostringstream os ;
-	os << value ;
-	return os.str() ;
+
+
+// template <typename T>
+// std::string tostr(T value)
+// {
+// 	std::ostringstream os ;
+// 	os << value ;
+// 	return os.str() ;
+// }
+
+
+void display_title(std::string title) {
+	std::cout << "\n\n\n\n\n" << BLU
+						<< "/* ***************************************************** */" << std::endl
+						<< "/*                                                       */" << std::endl
+						<< "/* ";
+
+						for (int i = 0; i < (int)((53 - title.length()) / 2); i++)
+							std::cout << " ";
+						std::cout << title ;
+						for (int i = 0; i < (int)((53 - title.length()) / 2); i++)
+							std::cout << " ";
+						std::cout << ((53 - title.length()) % 2 != 0 ? " " : "");
+						std::cout << " */" << std::endl
+						<< "/*                                                       */" << std::endl
+						<< "/* ***************************************************** */\n" END << std::endl;
 }
+
+
+
+template< typename T1, typename T2>
+void sstr_comp(T1 it, T2 ft_it, std::string msg) {
+
+	std::stringstream sstr;
+	std::stringstream ft_sstr;
+
+	sstr << it->first << " " << it->second;
+	ft_sstr << ft_it->first << " " << ft_it->second;
+	str_comp(sstr.str(), ft_sstr.str(), msg);
+	sstr.str(""); sstr.clear(); ft_sstr.str(""); ft_sstr.clear();
+}
+
 
 
 void str_comp(std::string str, std::string ft_str, std::string msg) {
@@ -37,21 +73,7 @@ void str_comp(std::string str, std::string ft_str, std::string msg) {
 
 
 
-template<class T1, class T2>
-void sstr_comp(T1 it, T2 ft_it, std::string msg) {
-
-	std::stringstream sstr;
-	std::stringstream ft_sstr;
-
-	sstr << it->first << " " << it->second;
-	ft_sstr << ft_it->first << " " << ft_it->second;
-	str_comp(sstr.str(), ft_sstr.str(), msg);
-	sstr.str(""); sstr.clear(); ft_sstr.str(""); ft_sstr.clear();
-}
-
-
-
-template <class M1, class M2>
+template <typename M1, typename M2>
 void	comp_map( M1 &map, M2 &ft_map, std::string msg) {
 	std::stringstream sstr;
 	std::stringstream ft_sstr;
@@ -70,8 +92,9 @@ void	comp_map( M1 &map, M2 &ft_map, std::string msg) {
 }
 
 
+
 /* insert 20 values following and 20 random*/
-template < class T_map, class T_pair, typename type_key_map, typename type_value_map>
+template < typename T_map, typename T_pair, typename type_key_map, typename type_value_map>
 void fill_map(T_map *map) {
 
 	int 	i = 0;
@@ -181,23 +204,6 @@ void fill_map(T_map *map) {
 }
 
 
-void display_title(std::string title) {
-	std::cout << "\n\n\n\n\n" << BLU
-						<< "/* ***************************************************** */" << std::endl
-						<< "/*                                                       */" << std::endl
-						<< "/* ";
-
-						for (int i = 0; i < (int)((53 - title.length()) / 2); i++)
-							std::cout << " ";
-						std::cout << title ;
-						for (int i = 0; i < (int)((53 - title.length()) / 2); i++)
-							std::cout << " ";
-						std::cout << ((53 - title.length()) % 2 != 0 ? " " : "");
-						std::cout << " */" << std::endl
-						<< "/*                                                       */" << std::endl
-						<< "/* ***************************************************** */\n" END << std::endl;
-}
-
 void tester_map(void)
 {
 	display_title("MAP < String, Int >");
@@ -214,213 +220,6 @@ void tester_map(void)
 
 	display_title("MAP < Int, Float >");
 	tester_map_type< int, float >();
-
-{
-  // 	/* ***************************************************** */
-  // 	/*                                                       */
-  // 	/*                          MAPS                         */
-  // 	/*                  std::map< int, int >                 */
-  // 	/*                                                       */
-  // 	/* ***************************************************** */
-
-  // 	/* define type map */
-  // 	typedef std::map<int, int>							std_map_int_int;
-  // 	typedef  ft::map<int, int>							ft_map_int_int;
-  
-  // 	/* define type iterator */
-  // 	typedef std_map_int_int::iterator 					it_type2;
-  // 	typedef std_map_int_int::const_iterator 			const_it_type2;
-  // 	typedef std_map_int_int::reverse_iterator 			r_it_type2;
-  // 	typedef std_map_int_int::const_reverse_iterator 	const_r_it_type2;
-
-  // 	typedef  ft_map_int_int::iterator 					ft_it_type2;
-  // 	typedef  ft_map_int_int::const_iterator 			ft_const_it_type2;
-  // 	typedef  ft_map_int_int::reverse_iterator 			ft_r_it_type2;
-  // 	typedef  ft_map_int_int::const_reverse_iterator 	ft_const_r_it_type2;
-  
-  // 	/* define type pair */
-  // 	typedef std::pair<int, int> 						pair2;
-  // 	typedef  ft::pair<int, int> 						ft_pair2;
-
-
-
-  // 	std::cout << BLU "\n\n\nCreate map<int, int> " END << std::endl;
-
-  // 	std_map_int_int map2;
-  // 	 ft_map_int_int ft_map2;
-
-  // 	// std::cout << BLU "\nTEST insert(value) : " END << std::endl;
-  // 	map2.insert(pair2(1, 1));
-  // 	map2.insert(pair2(2, 2));
-  // 	map2.insert(pair2(3, 3));
-  // 	map2.insert(pair2(4, 4));
-  // 	map2.insert(pair2(5, 5));
-
-  // 	ft_map2.insert(ft_pair2(1, 1));
-  // 	ft_map2.insert(ft_pair2(2, 2));
-  // 	ft_map2.insert(ft_pair2(3, 3));
-  // 	ft_map2.insert(ft_pair2(4, 4));
-  // 	ft_map2.insert(ft_pair2(5, 5));
-
-
-
-
-
-
-
-  // /* ***************************************************** */
-  // /*                                                       */
-  // /*                     pair<INT, INT>                    */
-  // /*                                                       */
-  // /* ***************************************************** */
-  // std::cout << MAG "\n\nTEST iterator" END << std::endl;
-
-
-  // 	/* ***************************************************** */
-  // 	/*                       ITERATOR                        */
-  // 	/*                    pair< int, int >                   */
-  // 	/* ***************************************************** */
-  
-
-  // 	/* begin() */
-  // 	it_type2 it2 		= map2.begin();
-  // 	ft_it_type2 ft_it2 	= ft_map2.begin();
-  // 	sstr_comp< it_type2, ft_it_type2 >(it2, ft_it2, "begin()");
-
-  // 	/* end()-- */
-  // 	it2 = map2.end(); it2--;
-  // 	ft_it2 = ft_map2.end(); ft_it2--;
-  // 	sstr_comp< it_type2, ft_it_type2 >(it2, ft_it2, "end()--");
-
-  // 	/* end()++ */
-  // 	// it2 = map2.end(); it2++;
-  // 	// ft_it2 = ft_map2.end(); ft_it2++;
-  // 	// sstr_comp< it_type2, ft_it_type2 >(it2, ft_it2, "end()++");
-
-  // 																						// gerer test segfault
-  // 	// it2 = map2.end(); it2++; it2++;
-  // 	// ft_it2 = ft_map2.end(); ft_it2++; ft_it2++;
-  // 	// sstr_comp< it_type2, ft_it_type2 >(it2, ft_it2, "end()++");
-
-  // 	/* begin() -> end() */
-  // 	for (it2 = map2.begin(); it2 != map2.end(); it2++)
-  // 		sstr << it2->first << ":" << it2->second << " ";
-  // 	for (ft_it2 = ft_map2.begin(); ft_it2 != ft_map2.end(); ft_it2++)
-  // 		ft_sstr << ft_it2->first << ":" << ft_it2->second << " ";
-  
-  // 	str_comp(sstr.str(), ft_sstr.str(), "begin() -> end()");
-  // 	sstr.str(""); sstr.clear(); ft_sstr.str(""); ft_sstr.clear();
-
-
-
-
-
-
-  // 	/* ***************************************************** */
-  // 	/*                    REVERSE_ ITERATOR                  */
-  // 	/*                    pair< int, int >                   */
-  // 	/* ***************************************************** */
-  
-
-  // 	/* rbegin() */
-  // 	r_it_type2 		r_it2 		= map2.rbegin();
-  // 	ft_r_it_type2 	ft_r_it2 	= ft_map2.rbegin();
-  // 	sstr_comp< r_it_type2, ft_r_it_type2 >(r_it2, ft_r_it2, "rbegin()");
-
-  // 	/* rend()-- */
-  // 	r_it2 		= map2.rend(); r_it2--;
-  // 	ft_r_it2 	= ft_map2.rend(); ft_r_it2--;
-  // 	sstr_comp< r_it_type2, ft_r_it_type2 >(r_it2, ft_r_it2, "rend()--");
-
-  // 	/* rend()++  sur linux */
-  // 	// r_it2 		= map2.rend(); r_it2++;
-  // 	// ft_r_it2 	= ft_map2.rend(); ft_r_it2++;
-  // 	// sstr_comp< r_it_type2, ft_r_it_type2 >(r_it2, ft_r_it2, "rend()++");
-
-  // 	/* rbegin() -> rend() */
-  // 	for (r_it2 = map2.rbegin(); r_it2 != map2.rend(); r_it2++)
-  // 		sstr << r_it2->first << ":" << r_it2->second << " ";
-  // 	for (ft_r_it2 = ft_map2.rbegin(); ft_r_it2 != ft_map2.rend(); ft_r_it2++)
-  // 		ft_sstr << ft_r_it2->first << ":" << ft_r_it2->second << " ";
-
-  // 	str_comp(sstr.str(), ft_sstr.str(), "rbegin() -> rend()");
-  // 	sstr.str(""); sstr.clear(); ft_sstr.str(""); ft_sstr.clear();
-
-
-
-
-
-
-
-
-
-
-
-
-  // 	/* ***************************************************** */
-  // 	/*                    CONST_ITERATOR                     */
-  // 	/*                    pair<int, int>                     */
-  // 	/* ***************************************************** */
-  
-
-  // 	/* begin() */
-  // 	const_it_type2 		const_it2 		= map2.begin();
-  // 	ft_const_it_type2 	const_ft_it2 	= ft_map2.begin();
-  // 	sstr_comp< const_it_type2, ft_const_it_type2 >(const_it2, const_ft_it2, "const begin()");
-
-  // 	/* end()-- */
-  // 	const_it2 		= map2.end(); const_it2--;
-  // 	const_ft_it2 	= ft_map2.end(); const_ft_it2--;
-  // 	sstr_comp< const_it_type2, ft_const_it_type2 >(const_it2, const_ft_it2, "const end()--");
-
-  // 	/* end()++ */
-  // 	// const_it2 		= map2.end(); const_it2++;
-  // 	// const_ft_it2 	= ft_map2.end(); const_ft_it2++;
-  // 	// sstr_comp< const_it_type2, ft_const_it_type2 >(const_it2, const_ft_it2, "const end()++");
-
-  // 	/* begin() -> end() */
-  // 	for (const_it2 = map2.begin(); const_it2 != map2.end(); const_it2++)
-  // 		sstr << const_it2->first << ":" << const_it2->second << " ";
-  // 	for (const_ft_it2 = ft_map2.begin(); const_ft_it2 != ft_map2.end(); const_ft_it2++)
-  // 		ft_sstr << const_ft_it2->first << ":" << const_ft_it2->second << " ";
-
-  // 	str_comp(sstr.str(), ft_sstr.str(), "const begin() -> end()");
-  // 	sstr.str(""); sstr.clear(); ft_sstr.str(""); ft_sstr.clear();
-
-
-
-
-  // 	/* ***************************************************** */
-  // 	/*                CONST_REVERSE_ITERATOR                 */
-  // 	/*                    pair<int, int>                     */
-  // 	/* ***************************************************** */
-  
-
-
-  // 	/* rbegin() */
-  // 	const_r_it_type2 	const_r_it2 = map2.rbegin();
-  // 	ft_const_r_it_type2 const_ft_r_it2 = ft_map2.rbegin();
-  // 	sstr_comp< const_r_it_type2, ft_const_r_it_type2 >(const_r_it2, const_ft_r_it2, "const rbegin()");
-  
-  // 	/* rend()-- */
-  // 	const_r_it2 	= map2.rend(); const_r_it2--;
-  // 	const_ft_r_it2	= ft_map2.rend(); const_ft_r_it2--;
-  // 	sstr_comp< const_r_it_type2, ft_const_r_it_type2 >(const_r_it2, const_ft_r_it2, "const rend()--");
-
-  // 	/* rend()++  sur linux */
-  // 	// const_r_it2 	= map2.rend(); const_r_it2++;
-  // 	// const_ft_r_it2 	= ft_map2.rend(); const_ft_r_it2++;
-  // 	// sstr_comp< const_r_it_type2, ft_const_r_it_type2 >(const_r_it2, const_ft_r_it2, "const rend()++");
-
-  // 	/* rbegin() -> rend() */
-  // 	for (const_r_it2 = map2.rbegin(); const_r_it2 != map2.rend(); const_r_it2++)
-  // 		sstr << const_r_it2->first << ":" << const_r_it2->second << " ";
-  // 	for (const_ft_r_it2 = ft_map2.rbegin(); const_ft_r_it2 != ft_map2.rend(); const_ft_r_it2++)
-  // 		ft_sstr << const_ft_r_it2->first << ":" << const_ft_r_it2->second << " ";
-  
-  // 	str_comp(sstr.str(), ft_sstr.str(), "const rbegin() -> rend()");
-  // 	sstr.str(""); sstr.clear(); ft_sstr.str(""); ft_sstr.clear();
-}
 
 }
 
