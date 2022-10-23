@@ -6,14 +6,12 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 16:58:53 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/23 00:39:19 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/23 23:36:06 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef RBTREE_ITERATOR_HPP
 # define RBTREE_ITERATOR_HPP
-
-#include "Iterator_traits.hpp"
 
 namespace ft
 {

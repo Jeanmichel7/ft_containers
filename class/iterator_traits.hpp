@@ -1,24 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Iterator_traits.hpp                                :+:      :+:    :+:   */
+/*   iterator_traits.hpp                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/10 18:24:21 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/09 21:42:00 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/23 23:35:16 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef __ITERATOR_TRAIT__
 # define __ITERATOR_TRAIT__
 
-#include <typeinfo>
-#include <memory>
-#include <cstddef>
-#include <iterator>
-#include <iostream>
-#include <limits>
+# include <typeinfo>
+# include <memory>
+# include <cstddef>
+# include <iterator>
+# include <iostream>
+# include <limits>
 
 namespace ft
 {

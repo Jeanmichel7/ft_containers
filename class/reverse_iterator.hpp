@@ -1,19 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   my_reverse_iterator.hpp                            :+:      :+:    :+:   */
+/*   reverse_iterator.hpp                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/04 16:25:38 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/09 14:12:15 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/23 23:35:25 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MY_REVERE_ITERATOR
-#define MY_REVERE_ITERATOR
+# define MY_REVERE_ITERATOR
 
-#include "Iterator_traits.hpp"
+# include "iterator_traits.hpp"
 
 namespace ft
 {

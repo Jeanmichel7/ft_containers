@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/23 12:15:58 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/23 23:26:35 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/23 23:30:54 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 # define __CONVERT_HPP__
 
 # include "main.hpp"
-
 
 template <typename T>
 std::string tostr(T value)
@@ -64,12 +63,6 @@ T convert(std::string str)
   // std::cout << "ss = " << ss << std::endl;
   // std::cout << "ret = " << ret << std::endl;
   return ret;
-
 }
 
-
 #endif
-
-
-		
-		

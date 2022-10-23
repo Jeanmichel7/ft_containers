@@ -6,31 +6,17 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 17:30:03 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/23 22:43:02 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/23 23:30:42 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef __CHRONO_HPP__
 # define __CHRONO_HPP__
 
-#include <time.h>
-#include <cstdio>
-#include "main.hpp"
-// #include <sys/time.h>
-#include <iomanip>
-
-// struct timespec {
-//         time_t   tv_sec;        /* seconds */
-//         long     tv_nsec;       /* nanoseconds */
-// };
-
-
-// int operation (int x, int y,int (*function)(int,int)){return function(x,y);}
-// int operation2(int x, int y,std::function<int(int, int)> function){return function(x,y);}
-
-// void time_diff( void (*function)(int,int), void (*function)(int,int)) {
-
-// }
+# include <time.h>
+# include <cstdio>
+# include "main.hpp"
+# include <iomanip>
 
 struct s_time_diff
 	{

@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 14:57:17 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/23 23:22:57 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/23 23:42:47 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,18 +33,13 @@
 # include "chrono.hpp"
 # include "convert.hpp"
 
-// # include "tester_map.hpp"
 
-
-
-
-
-/* CHRONO */
-
-/* VECTOR */
+/* ***************************************************** */
+/*                        VECTOR                         */
+/* ***************************************************** */
 void tester_vector(void);
 
-/* include vector
+/* include vector */
 #include "utils.hpp"
 #include "pair.hpp"
 
@@ -52,11 +47,13 @@ void tester_vector(void);
 #include "vector.hpp"
 
 // #include <typeinfo>     // typeid
-*/
 
 
 
-/* MAP */
+
+/* ***************************************************** */
+/*                         MAP                           */
+/* ***************************************************** */
 template< typename type_key_map, typename type_value_map >
 void tester_map_type();
 
@@ -83,7 +80,19 @@ void tester_map(void);
 
 
 
-// /* CONVERT */
+
+
+/* ***************************************************** */
+/*                        CHRONO                         */
+/* ***************************************************** */
+
+
+
+
+/* ***************************************************** */
+/*                       CONVERT                         */
+/* ***************************************************** */
+
 // template <typename T>
 // std::string tostr(T value);
 

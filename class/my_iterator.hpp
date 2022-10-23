@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/04 16:23:50 by jrasser           #+#    #+#             */
-/*   Updated: 2022/09/12 13:47:46 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/23 23:45:13 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,10 @@ namespace ft
 		// my_iterator(const my_iterator<U, typename enable_if<(std::__are_same<U, iterator_type>::value)>::type> &__i)
 		// : it(__i.base()) {}
 
-		template <typename U>
-		my_iterator( my_iterator<U> const &u,
-						typename enable_if<std::is_convertible<U, iterator_type>::value>::type * = NULL) :
-		it(u.base()) {}
+		// template <typename U>
+		// my_iterator( my_iterator<U> const &u,
+		// 				typename enable_if<std::is_convertible<U, iterator_type>::value>::type * = NULL) :
+		// it(u.base()) {}
 
 		my_iterator() : it() {}
 		my_iterator(iterator_type it) : it(it) {}

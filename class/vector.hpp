@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/14 22:06:29 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/09 21:12:03 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/23 23:45:38 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@
 #define ERASE "\033[2K\r"
 #define END "\033[0m"
 
-#include "Iterator_traits.hpp"
+#include "iterator_traits.hpp"
 #include "my_iterator.hpp"
-#include "my_reverse_iterator.hpp"
+#include "reverse_iterator.hpp"
 #include "enable_if.hpp"
 #include "is_integral.hpp"
 
@@ -57,8 +57,8 @@ public:
 	typedef const T 									*const_pointer;
 	typedef my_iterator<pointer>						iterator;
 	typedef my_iterator<const_pointer>					const_iterator;
-	typedef reverse_iterator<iterator> 				reverse_iterator;
-	typedef reverse_iterator<const_iterator> 		const_reverse_iterator;
+	typedef ft::reverse_iterator<iterator> 				reverse_iterator;
+	typedef ft::reverse_iterator<const_iterator> 		const_reverse_iterator;
 
 
 
