@@ -6,14 +6,215 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 15:05:46 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/23 23:47:35 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/24 22:29:27 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "main.hpp"
 
+// template< typename T1, typename T2>
+// void sstr_comp(T1 it, T2 ft_it, std::string msg) {
+
+// 	std::stringstream sstr;
+// 	std::stringstream ft_sstr;
+
+// 	sstr << it->first << " " << it->second;
+// 	ft_sstr << ft_it->first << " " << ft_it->second;
+// 	str_comp(sstr.str(), ft_sstr.str(), msg);
+// 	sstr.str(""); sstr.clear(); ft_sstr.str(""); ft_sstr.clear();
+// }
+
+
+
+// void str_comp(std::string str, std::string ft_str, std::string msg) {
+// 	if (str.compare(ft_str) != 0)
+// 	{
+// 		std::cout << RED "\n[KO] " END << msg << std::endl;
+		
+// 		std::cout << "std::map = " << str << std::endl;
+// 		std::cout << "ft::map  = " << ft_str << std::endl << std::endl;
+// 	}
+// 	else {
+// 		std::cout << GRN "[OK] " END ;
+// 		// std::cout << str << std::endl << ft_str << std::endl << msg << std::endl;
+// 	}
+// }
+
+template < typename V1, typename V2 >
+void	comp_vector( V1 &stl_vector, V2 &ft_vector, std::string msg ) {
+	std::stringstream sstr;
+	std::stringstream ft_sstr;
+
+	typename V1::iterator stl_it = stl_vector.begin();
+	typename V2::iterator ft_it = ft_vector.begin();
+
+	for(; stl_it != stl_vector.end(); stl_it++) {
+		sstr << *stl_it << " ";
+		// std::cout << " " << *stl_it;
+	}
+	// std::cout << std::endl;
+	for(; ft_it != ft_vector.end(); ft_it++) {
+		ft_sstr << *ft_it << " ";
+		// std::cout << *ft_it << " ";
+	}
+
+	str_comp(sstr.str(), ft_sstr.str(), msg);
+	sstr.str(""); sstr.clear(); ft_sstr.str(""); ft_sstr.clear();
+}
+
+
+
 void tester_vector(void)
 {
+	display_title("VECTOR < string >");
+	tester_vector_type< std::string >();
+
+}
+
+template< typename vector_type >
+void tester_vector_type()
+{
+	std::stringstream 	sstr;
+	std::stringstream 	ft_sstr;
+	std::string 				str;
+	std::string 				ft_str;
+	struct s_time_diff 	chrono;
+
+	/* define type vector */
+	typedef std::vector< vector_type > std_vector_t;
+	typedef ft::vector< vector_type > ft_vector_t;
+
+	/* define type iterator */
+	typedef typename std_vector_t::iterator 							std_it_type;
+	typedef typename std_vector_t::const_iterator 				std_cit_type;
+	typedef typename std_vector_t::reverse_iterator 			std_rit_type;
+	typedef typename std_vector_t::const_reverse_iterator std_rcit_type;
+
+	typedef typename ft_vector_t::iterator 								ft_it_type;
+	typedef typename ft_vector_t::const_iterator 					ft_cit_type;
+	typedef typename ft_vector_t::reverse_iterator 				ft_rit_type;
+	typedef typename ft_vector_t::const_reverse_iterator 	ft_crit_type;
+
+
+
+
+
+
+	/* ***************************************************** */
+	/*                                                       */
+	/*                       CONSTRUCTORS                    */
+	/*                                                       */
+	/* ***************************************************** */
+
+	std::cout << MAG "\nTEST constructor vector() " END << std::endl;
+
+	/* empty */
+	chrono.stl_start_chrono();
+	std_vector_t stl_vector;
+	chrono.stl_end_chrono();
+	chrono.ft_start_chrono();
+	ft_vector_t ft_vector;
+	chrono.ft_end_chrono();
+
+	chrono.diff_chrono();
+
+
+
+	// /* construcotr with alloc */
+	// chrono.stl_start_chrono();
+	// std_vector_t std_vector_alloc(std::allocator< vector_type >());
+	// chrono.stl_end_chrono();
+
+	// chrono.ft_start_chrono();
+	// ft_vector_t ft_vector_alloc(std::allocator< vector_type >());
+	// chrono.ft_end_chrono();
+
+	// chrono.diff_chrono();
+
+
+
+	/* constructor with count */
+	chrono.stl_start_chrono();
+	std_vector_t stl_vector_count(5);
+	chrono.stl_end_chrono();
+
+	chrono.ft_start_chrono();
+	ft_vector_t ft_vector_count(5);
+	chrono.ft_end_chrono();
+
+
+	comp_vector(stl_vector_count, ft_vector_count, "constructor with count");
+	chrono.diff_chrono();
+
+
+
+
+
+	/* ***************************************************** */
+	/*                                                       */
+	/*                       CONSTRUCTORS                    */
+	/*                                                       */
+	/* ***************************************************** */
+	std::cout << MAG "\nTEST at() " END << std::endl;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	/* ***************************************************** */
+	/*                                                       */
+	/*                         Insert                        */
+	/*                                                       */
+	/* ***************************************************** */
+	
+	std::cout << MAG "\nTEST insert() " END << std::endl;
+
+	chrono.stl_start_chrono();
+	stl_vector.push_back(convert<vector_type>("10"));
+	chrono.stl_end_chrono();
+
+	chrono.ft_start_chrono();
+	ft_vector.push_back(convert<vector_type>("10"));
+	chrono.ft_end_chrono();
+
+	comp_vector(stl_vector, ft_vector, "insert 10");
+	chrono.diff_chrono();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* 
   std::vector<int> v;
 	v.push_back(1);
 	v.push_back(2);
@@ -748,5 +949,8 @@ void tester_vector(void)
 	// ft::swap(foo2,bar2);
 	// std::cout << "foo2 contains: " << foo2.first << " and " << foo2.second << '\n';
 	// std::cout << "bar2 contains: " << bar2.first << " and " << bar2.second << '\n';
+*/
+
+
 
 }

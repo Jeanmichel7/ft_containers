@@ -6,41 +6,11 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 14:16:17 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/23 23:24:02 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/24 15:50:40 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "main.hpp"
-#include "tester_map.hpp"
-
-
-
-// template <typename T>
-// std::string tostr(T value)
-// {
-// 	std::ostringstream os ;
-// 	os << value ;
-// 	return os.str() ;
-// }
-
-
-void display_title(std::string title) {
-	std::cout << "\n\n\n\n\n" << BLU
-						<< "/* ***************************************************** */" << std::endl
-						<< "/*                                                       */" << std::endl
-						<< "/* ";
-
-						for (int i = 0; i < (int)((53 - title.length()) / 2); i++)
-							std::cout << " ";
-						std::cout << title ;
-						for (int i = 0; i < (int)((53 - title.length()) / 2); i++)
-							std::cout << " ";
-						std::cout << ((53 - title.length()) % 2 != 0 ? " " : "");
-						std::cout << " */" << std::endl
-						<< "/*                                                       */" << std::endl
-						<< "/* ***************************************************** */\n" END << std::endl;
-}
-
 
 
 template< typename T1, typename T2>
@@ -220,7 +190,6 @@ void tester_map(void)
 
 	display_title("MAP < Int, Float >");
 	tester_map_type< int, float >();
-
 }
 
 

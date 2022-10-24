@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 14:57:17 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/23 23:42:47 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/24 15:47:03 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ void tester_vector(void);
 #include <vector>
 #include "vector.hpp"
 
+template< typename vector_type >
+void tester_vector_type();
 // #include <typeinfo>     // typeid
 
 
@@ -76,7 +78,13 @@ void fill_map(T_map *map);
 
 void tester_map(void);
 
-// void display_title(std::string title);
+
+
+
+/* ***************************************************** */
+/*                        UTILS                          */
+/* ***************************************************** */
+void display_title(std::string title);
 
 
 
