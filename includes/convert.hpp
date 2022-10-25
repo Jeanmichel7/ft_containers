@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/23 12:15:58 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/23 23:30:54 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/24 23:07:58 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,10 @@ T convert(std::string str)
     // std::cout << "ret = " << ret << std::endl;
     return ret;
   }
-	else if ( typeid(T).name() == typeid(1.1).name()) {
+  else if ( typeid(T).name() == typeid(1.1).name()) {
+		// std::cout << "double" << std::endl;
+  }
+	else if ( typeid(T).name() == typeid(1.1F).name()) {
 		// std::cout << "float" << std::endl;
   }
 	else if ( typeid(T).name() == typeid(std::string("1")).name()) {

@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/14 22:06:29 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/24 22:30:10 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/25 00:22:23 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,10 +47,11 @@ public:
 	typedef T 									*pointer;
 	typedef const T 						*const_pointer;
 
-	typedef my_iterator<pointer> 									iterator;
-	typedef my_iterator<const_pointer> 						const_iterator;
+	typedef ft::my_iterator<pointer> 							iterator;
+	typedef ft::my_iterator<const_pointer> 				const_iterator;
 	typedef ft::reverse_iterator<iterator> 				reverse_iterator;
 	typedef ft::reverse_iterator<const_iterator> 	const_reverse_iterator;
+
 
 private:
 	Allocator _alloc;
@@ -59,6 +60,7 @@ private:
 	pointer 	_end_of_storage;
 	size_type _nb_elems;
 	size_type _capacity;
+
 
 public:
 	/* *************************************************** */
@@ -111,26 +113,28 @@ public:
 
 	template <class InputIt>
 	vector(InputIt first,
-					typename enable_if<!ft::is_integral<InputIt>::value, InputIt>::type last,
-					const Allocator &alloc = Allocator())
-			: _alloc(alloc),
-				_start(_alloc.allocate(last - first)),
-				_finish(_start + (last - first)),
-				_end_of_storage(_start + (last - first)),
-				_nb_elems(last - first),
-				_capacity(last - first)
+				typename enable_if<!ft::is_integral<InputIt>::value, InputIt>::type last,
+				const Allocator &alloc = Allocator())
+	:
+		_alloc(alloc),
+		_start(_alloc.allocate(last - first)),
+		_finish(_start + (last - first)),
+		_end_of_storage(_start + (last - first)),
+		_nb_elems(last - first),
+		_capacity(last - first)
 	{
 		std::cout << "Constructor with InputIt" << std::endl;
 		std::uninitialized_copy(first, last, _start);
 	};
 
-	vector(const vector &other) : //(6)
-																_alloc(Allocator()),
-																_start(_alloc.allocate(other._nb_elems)),
-																_finish(_start + other._nb_elems),
-																_end_of_storage(_start + other._nb_elems),
-																_nb_elems(other._nb_elems),
-																_capacity(other._capacity)
+	vector(const vector &other)
+	:
+		_alloc(Allocator()),
+		_start(_alloc.allocate(other._nb_elems)),
+		_finish(_start + other._nb_elems),
+		_end_of_storage(_start + other._nb_elems),
+		_nb_elems(other._nb_elems),
+		_capacity(other._capacity)
 	{
 		std::cout << "Copy constructor" << std::endl;
 		// std::uninitialized_copy(other._start, other._finish, _start);
@@ -145,8 +149,7 @@ public:
 		std::cout << "Assignment operator" << std::endl;
 
 		// del
-		for (size_type i = 0; i < _nb_elems; i++)
-		{
+		for (size_type i = 0; i < _nb_elems; i++) {
 			_alloc.destroy(_start + i);
 		}
 		_alloc.deallocate(_start, _capacity);
@@ -156,8 +159,7 @@ public:
 		_end_of_storage = _start + other._nb_elems;
 		_nb_elems = other._nb_elems;
 		_capacity = other._capacity;
-		for (size_type i = 0; i < other._nb_elems; i++)
-		{
+		for (size_type i = 0; i < other._nb_elems; i++) {
 			_alloc.construct(_start + i, other._start[i]);
 		}
 		return *this;
@@ -166,8 +168,7 @@ public:
 	~vector()
 	{
 		// std::cout << "Destructor" << std::endl;
-		for (size_type i = 0; i < _nb_elems; i++)
-		{
+		for (size_type i = 0; i < _nb_elems; i++) {
 			_alloc.destroy(_start + i);
 		}
 		_alloc.deallocate(_start, _capacity);
@@ -187,14 +188,12 @@ public:
 	reference at(size_type pos)
 	{
 		// std::cout << "at" << std::endl;
-		try
-		{
+		try {
 			if (pos >= _nb_elems)
 				throw std::out_of_range("out of range");
 			return _start[pos];
 		}
-		catch (const std::exception &e)
-		{
+		catch (const std::exception &e) {
 			std::cerr << REDE << e.what() << END "\n";
 			std::terminate();
 		}
@@ -203,14 +202,12 @@ public:
 	const_reference at(size_type pos) const
 	{
 		// std::cout << "const_reference at" << std::endl;
-		try
-		{
+		try {
 			if (pos >= _nb_elems)
 				throw std::out_of_range("out of range");
 			return const_cast<vector *>(this)->at(pos);
 		}
-		catch (const std::exception &e)
-		{
+		catch (const std::exception &e) {
 			std::cerr << REDE << e.what() << END "\n";
 			std::terminate();
 		}
@@ -219,14 +216,12 @@ public:
 	reference operator[](size_type pos)
 	{
 		// std::cout << "operator[]" << std::endl;
-		try
-		{
+		try {
 			if (pos >= _nb_elems)
 				throw std::out_of_range("out of range");
 			return _start[pos];
 		}
-		catch (const std::exception &e)
-		{
+		catch (const std::exception &e) {
 			std::cerr << REDE << e.what() << END "\n";
 			std::terminate();
 		}
@@ -235,14 +230,12 @@ public:
 	const_reference operator[](size_type pos) const
 	{
 		// std::cout << "const_reference operator[]" << std::endl;
-		try
-		{
+		try {
 			if (pos >= _nb_elems)
 				throw std::out_of_range("out of range");
 			return const_cast<vector *>(this)->operator[](pos);
 		}
-		catch (const std::exception &e)
-		{
+		catch (const std::exception &e) {
 			std::cerr << REDE << e.what() << END "\n";
 			std::terminate();
 		}
@@ -293,8 +286,7 @@ public:
 	void assign(size_type count, const T &value)
 	{
 		std::cout << "assign()" << std::endl;
-		for (size_type i = 0; i < _nb_elems; i++)
-		{
+		for (size_type i = 0; i < _nb_elems; i++) {
 			_alloc.destroy(_start + i);
 		}
 		_alloc.deallocate(_start, _capacity);
@@ -304,8 +296,7 @@ public:
 		_end_of_storage = _start + count;
 		_nb_elems = count;
 		_capacity = count;
-		for (size_type i = 0; i < count; i++)
-		{
+		for (size_type i = 0; i < count; i++) {
 			_alloc.construct(_start + i, value);
 		}
 	};
@@ -316,12 +307,10 @@ public:
 	{
 		std::cout << "template assign()" << std::endl;
 		pointer new_start;
-		try
-		{
+		try {
 			_alloc = Allocator();
 			new_start = _alloc.allocate(last - first);
-			for (size_type i = 0; i < _nb_elems; i++)
-			{
+			for (size_type i = 0; i < _nb_elems; i++) {
 				_alloc.destroy(_start + i);
 			}
 			_alloc.deallocate(_start, _capacity);
@@ -334,8 +323,7 @@ public:
 			_capacity = last - first;
 			std::uninitialized_copy(first, last, _start);
 		}
-		catch (const std::exception &e)
-		{
+		catch (const std::exception &e) {
 			std::cerr << REDE << e.what() << END "\n";
 		}
 	};
@@ -860,15 +848,21 @@ public:
 	{
 		std::cout << GRN << msg << END << std::endl;
 		std::cout << "----------------------------------------" << std::endl;
-		std::cout << "start 		: " << &_start << std::endl;
-		std::cout << "finish 		: " << &_finish << std::endl;
-		std::cout << "end_of_storage 	: " << &_end_of_storage << std::endl;
+		// std::cout << "start 		: " << &_start << std::endl;
+		// std::cout << "finish 		: " << &_finish << std::endl;
+		// std::cout << "end_of_storage 	: " << &_end_of_storage << std::endl;
 		std::cout << "nb_elems 	: " << _nb_elems << std::endl;
 		std::cout << "capacity 	: " << _capacity << std::endl;
 		std::cout << "content 	: ";
-		for (size_type i = 0; i < _nb_elems; i++)
+
+		iterator it = begin();
+		while (it != end())
 		{
-			std::cout << _start[i] << " ";
+			if (it != --end())
+				std::cout << *it << ", ";
+			else
+				std::cout << *it;
+			it++;
 		}
 		std::cout << std::endl;
 		std::cout << "----------------------------------------\n\n"

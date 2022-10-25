@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 15:05:46 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/24 22:29:27 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/24 23:42:30 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,25 @@ void tester_vector(void)
 {
 	display_title("VECTOR < string >");
 	tester_vector_type< std::string >();
-
 }
+
+
+
+template < typename V >
+void stl_display (std::vector<V> &v) {
+	std::cout << "std::vector = ";
+	typename std::vector<V>::iterator it = v.begin();
+	for(; it != v.end(); it++) {
+		if (it != --v.end())
+			std::cout << *it << ", ";
+		else
+			std::cout << *it;
+		// std::cout << *it << ", ";
+	}
+	std::cout << std::endl;
+}
+
+
 
 template< typename vector_type >
 void tester_vector_type()
@@ -81,8 +98,9 @@ void tester_vector_type()
 	struct s_time_diff 	chrono;
 
 	/* define type vector */
-	typedef std::vector< vector_type > std_vector_t;
-	typedef ft::vector< vector_type > ft_vector_t;
+	typedef vector_type 						T;
+	typedef std::vector< vector_type >			std_vector_t;
+	typedef ft::vector< vector_type > 			ft_vector_t;
 
 	/* define type iterator */
 	typedef typename std_vector_t::iterator 							std_it_type;
@@ -94,8 +112,6 @@ void tester_vector_type()
 	typedef typename ft_vector_t::const_iterator 					ft_cit_type;
 	typedef typename ft_vector_t::reverse_iterator 				ft_rit_type;
 	typedef typename ft_vector_t::const_reverse_iterator 	ft_crit_type;
-
-
 
 
 
@@ -142,7 +158,6 @@ void tester_vector_type()
 	ft_vector_t ft_vector_count(5);
 	chrono.ft_end_chrono();
 
-
 	comp_vector(stl_vector_count, ft_vector_count, "constructor with count");
 	chrono.diff_chrono();
 
@@ -152,7 +167,7 @@ void tester_vector_type()
 
 	/* ***************************************************** */
 	/*                                                       */
-	/*                       CONSTRUCTORS                    */
+	/*                         MODIFIER                      */
 	/*                                                       */
 	/* ***************************************************** */
 	std::cout << MAG "\nTEST at() " END << std::endl;
@@ -179,17 +194,117 @@ void tester_vector_type()
 	/*                                                       */
 	/* ***************************************************** */
 	
-	std::cout << MAG "\nTEST insert() " END << std::endl;
+	std::cout << MAG "\nTEST insert(pos, value) " END << std::endl;
 
+
+	/* insert end 123 */
 	chrono.stl_start_chrono();
-	stl_vector.push_back(convert<vector_type>("10"));
+	stl_vector_count.insert(stl_vector_count.end(), "123");
 	chrono.stl_end_chrono();
 
 	chrono.ft_start_chrono();
-	ft_vector.push_back(convert<vector_type>("10"));
+	ft_vector_count.insert(ft_vector_count.end(), "123");
 	chrono.ft_end_chrono();
 
-	comp_vector(stl_vector, ft_vector, "insert 10");
+	comp_vector(stl_vector_count, ft_vector_count, "insert end 123");
+	chrono.diff_chrono();
+
+
+
+	/* insert begin a */
+	chrono.stl_start_chrono();
+	stl_vector.insert(stl_vector.begin(), convert<T>("a"));
+	chrono.stl_end_chrono();
+
+	chrono.ft_start_chrono();
+	ft_vector.insert(ft_vector.begin(), convert<T>("a"));
+	chrono.ft_end_chrono();
+
+	comp_vector(stl_vector, ft_vector, "insert begin a");
+	chrono.diff_chrono();
+
+
+
+	/* insert begin b */
+	chrono.stl_start_chrono();
+	stl_vector.insert(stl_vector.begin(), convert<T>("b"));
+	chrono.stl_end_chrono();
+
+	chrono.ft_start_chrono();
+	ft_vector.insert(ft_vector.begin(), convert<T>("b"));
+	chrono.ft_end_chrono();
+
+	comp_vector(stl_vector, ft_vector, "insert begin b");
+	chrono.diff_chrono();
+
+
+
+	/* insert end c */
+	chrono.stl_start_chrono();
+	stl_vector.insert(stl_vector.end(), convert<T>("c"));
+	chrono.stl_end_chrono();
+
+	chrono.ft_start_chrono();
+	ft_vector.insert(ft_vector.end(), convert<T>("c"));
+	chrono.ft_end_chrono();
+
+	comp_vector(stl_vector, ft_vector, "insert end c");
+	chrono.diff_chrono();
+
+
+
+	/* insert middle d */
+	chrono.stl_start_chrono();
+	stl_vector.insert(stl_vector.begin() + 1, convert<T>("d"));
+	chrono.stl_end_chrono();
+	
+	chrono.ft_start_chrono();
+	ft_vector.insert(ft_vector.begin() + 1, convert<T>("d"));
+	chrono.ft_end_chrono();
+
+	comp_vector(stl_vector, ft_vector, "insert middle d");
+	chrono.diff_chrono();
+
+
+
+	/* insert middle e */
+	chrono.stl_start_chrono();
+	stl_vector.insert(stl_vector.begin() + 2, convert<T>("e"));
+	chrono.stl_end_chrono();
+
+	chrono.ft_start_chrono();
+	ft_vector.insert(ft_vector.begin() + 2, convert<T>("e"));
+	chrono.ft_end_chrono();
+
+	comp_vector(stl_vector, ft_vector, "insert middle e");
+	chrono.diff_chrono();
+
+
+
+
+	ft_vector.display("");
+	stl_display<T>(stl_vector);
+
+
+
+
+	/* ***************************************************** */
+	/*                                                       */
+	/*                        Iterator                       */
+	/*                                                       */
+	/* ***************************************************** */
+
+	std::cout << MAG "\nTEST iterator " END << std::endl;
+
+	/* iterator */
+	chrono.stl_start_chrono();
+	std_it_type stl_it = stl_vector.begin();
+	chrono.stl_end_chrono();
+	chrono.ft_start_chrono();
+	ft_it_type ft_it = ft_vector.begin();
+	chrono.ft_end_chrono();
+
+	str_comp(*stl_it, *ft_it, "iterator");
 	chrono.diff_chrono();
 
 
@@ -199,16 +314,23 @@ void tester_vector_type()
 
 
 
+	/* ***************************************************** */
+	/*                                                       */
+	/*                        push_back                      */
+	/*                                                       */
+	/* ***************************************************** */
 
 
+	chrono.stl_start_chrono();
+	stl_vector.push_back(convert<T>("10"));
+	chrono.stl_end_chrono();
 
+	chrono.ft_start_chrono();
+	ft_vector.push_back(convert<T>("10"));
+	chrono.ft_end_chrono();
 
-
-
-
-
-
-
+	comp_vector(stl_vector, ft_vector, "insert 10");
+	chrono.diff_chrono();
 
 
 

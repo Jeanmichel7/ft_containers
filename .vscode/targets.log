@@ -6,7 +6,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Sun Oct 23 22:15:54 2022
+# Make data base, printed on Mon Oct 24 22:31:42 2022
 
 # Variables
 
@@ -55,7 +55,7 @@ VSCODE_CWD = /mnt/c/Users/michm/AppData/Local/Programs/Microsoft VS Code
 # default
 MAKE_HOST := x86_64-pc-linux-gnu
 # environment
-PATH = /home/jrasser/.local/bin:/home/jrasser/bin:/home/jrasser/.nvm/versions/node/v16.14.2/bin:/home/jrasser/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/lib/wsl/lib:/mnt/c/Program Files (x86)/Common Files/Oracle/Java/javapath:/mnt/c/Windows/system32:/mnt/c/Windows:/mnt/c/Windows/System32/Wbem:/mnt/c/Windows/System32/WindowsPowerShell/v1.0/:/mnt/c/Windows/System32/OpenSSH/:/mnt/c/Program Files/NVIDIA Corporation/NVIDIA NvDLISR:/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common:/mnt/c/Program Files/Git/cmd:/mnt/c/Program Files/Docker/Docker/resources/bin:/mnt/c/ProgramData/DockerDesktop/version-bin:/mnt/c/WINDOWS/system32:/mnt/c/WINDOWS:/mnt/c/WINDOWS/System32/Wbem:/mnt/c/WINDOWS/System32/WindowsPowerShell/v1.0/:/mnt/c/WINDOWS/System32/OpenSSH/:/mnt/c/Program Files/Git LFS:/mnt/c/Program Files (x86)/Windows Kits/10/Windows Performance Toolkit/:/mnt/c/Program Files/dotnet/:/mnt/c/Users/michm/AppData/Local/Microsoft/WindowsApps:/mnt/c/Users/michm/AppData/Local/GitHubDesktop/bin:/mnt/c/Users/michm/AppData/Local/Programs/Microsoft VS Code/bin:/mnt/c/Users/michm/.dotnet/tools:/snap/bin
+PATH = /home/jrasser/.vscode-server/bin/d045a5eda657f4d7b676dedbfa7aab8207f8a075/bin/remote-cli:/home/jrasser/.local/bin:/home/jrasser/bin:/home/jrasser/.nvm/versions/node/v16.14.2/bin:/home/jrasser/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/lib/wsl/lib:/mnt/c/Program Files (x86)/Common Files/Oracle/Java/javapath:/mnt/c/Windows/system32:/mnt/c/Windows:/mnt/c/Windows/System32/Wbem:/mnt/c/Windows/System32/WindowsPowerShell/v1.0/:/mnt/c/Windows/System32/OpenSSH/:/mnt/c/Program Files/NVIDIA Corporation/NVIDIA NvDLISR:/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common:/mnt/c/Program Files/Git/cmd:/mnt/c/Program Files/Docker/Docker/resources/bin:/mnt/c/ProgramData/DockerDesktop/version-bin:/mnt/c/WINDOWS/system32:/mnt/c/WINDOWS:/mnt/c/WINDOWS/System32/Wbem:/mnt/c/WINDOWS/System32/WindowsPowerShell/v1.0/:/mnt/c/WINDOWS/System32/OpenSSH/:/mnt/c/Program Files/Git LFS:/mnt/c/Program Files (x86)/Windows Kits/10/Windows Performance Toolkit/:/mnt/c/Program Files/dotnet/:/mnt/c/Users/michm/AppData/Local/Microsoft/WindowsApps:/mnt/c/Users/michm/AppData/Local/GitHubDesktop/bin:/mnt/c/Users/michm/AppData/Local/Programs/Microsoft VS Code/bin:/mnt/c/Users/michm/.dotnet/tools:/snap/bin
 # makefile (from 'Makefile', line 21)
 NAME = prog
 # makefile (from 'Makefile', line 17)
@@ -67,7 +67,7 @@ NVM_BIN = /home/jrasser/.nvm/versions/node/v16.14.2/bin
 # environment
 ELECTRON_RUN_AS_NODE = 1
 # environment
-VSCODE_IPC_HOOK_CLI = /mnt/wslg/runtime-dir/vscode-ipc-0887650a-bffd-447c-9c58-d086c11b44cc.sock
+VSCODE_IPC_HOOK_CLI = /mnt/wslg/runtime-dir/vscode-ipc-2cec9692-1ebe-4ccc-bd1e-50f7bb7cdb3e.sock
 # default
 .FEATURES := target-specific order-only second-expansion else-if shortest-stem undefine oneshell archives jobserver output-sync check-symlink load
 # makefile (from 'Makefile', line 14)
@@ -83,14 +83,13 @@ PWD = /home/jrasser/42/ft_containers
 # default
 .LOADED := 
 # environment
-WSL_INTEROP = /run/WSL/9_interop
+WSL_INTEROP = /run/WSL/471_interop
 # environment
- 
 PULSE_SERVER = /mnt/wslg/PulseServer
 # makefile (from 'Makefile', line 13)
 BLU = \033[0;34m
 # environment
-WT_SESSION = e02ab61c-bb38-4394-a6e1-9114715cdcea
+WT_SESSION = 522d2e4f-e4da-400a-8e3c-52011b16e6b3
 # environment
 VSCODE_AMD_ENTRYPOINT = vs/workbench/api/node/extensionHostProcess
 # environment
@@ -100,7 +99,7 @@ LESSCLOSE = /usr/bin/lesspipe %s %s
 # environment
 LOGNAME = jrasser
 # environment
-APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = true
+APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = 1
 # environment
 NVM_CD_FLAGS = 
 # environment
@@ -196,10 +195,10 @@ WSL_DISTRO_NAME = Ubuntu
 
 # Directories
 
-# . (device 2080, inode 350623): 18 files, no impossibilities.
-# srcs (device 2080, inode 350711): 2 files, no impossibilities.
+# . (device 2080, inode 350623): 12 files, no impossibilities.
+# srcs (device 2080, inode 350711): 5 files, no impossibilities.
 
-# 20 files, no impossibilities in 2 directories.
+# 17 files, no impossibilities in 2 directories.
 
 # Implicit Rules
 
@@ -219,10 +218,17 @@ objs/%.o: srcs/**%.cpp
 
 # Files
 
+# Not a target:
+srcs/tester_map.cpp:
+#  Implicit rule search has been done.
+#  Last modified 2022-10-23 23:24:02.376136
+#  File has been updated.
+#  Successfully updated.
+
 objs/main.o: main.cpp
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: 'main'
-#  Last modified 2022-10-23 22:15:27.712402
+#  Last modified 2022-10-24 00:40:06.902685
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'Makefile', line 31):
@@ -244,9 +250,9 @@ all: prog
 #  File has not been updated.
 
 # Not a target:
-tester_map.cpp:
+srcs/tester_vector.cpp:
 #  Implicit rule search has been done.
-#  Last modified 2022-10-23 22:14:40.228214
+#  Last modified 2022-10-23 23:47:35.364474
 #  File has been updated.
 #  Successfully updated.
 
@@ -257,23 +263,28 @@ Makefile:
 #  File has been updated.
 #  Successfully updated.
 
-# Not a target:
-tester_vector.cpp:
+objs/tester_map_utils.o: srcs/tester_map_utils.cpp
 #  Implicit rule search has been done.
-#  Last modified 2022-10-23 15:29:55.003196
+#  Implicit/static pattern stem: 'tester_map_utils'
+#  Last modified 2022-10-24 00:40:06.912685
 #  File has been updated.
 #  Successfully updated.
+#  recipe to execute (from 'Makefile', line 36):
+			@mkdir -p $(OBJS_DIR)
+			@${CC} $(CPPFLAGS) -o $@ -c $< ${CFLAGS} ${DEBEUG}
+			@printf	"$(ERASE) ${BLU}$ [BUILD]${RST} '$<' $(END)"
 
 # Not a target:
+ 
 main.cpp:
 #  Implicit rule search has been done.
-#  Last modified 2022-10-23 15:30:49.031262
+#  Last modified 2022-10-24 00:38:43.337699
 #  File has been updated.
 #  Successfully updated.
 
-prog: objs/tester_map.o objs/tester_vector.o objs/main.o
+prog: objs/main.o objs/tester_map_utils.o objs/tester_map.o objs/tester_vector.o
 #  Implicit rule search has not been done.
-#  Last modified 2022-10-23 22:15:27.882402
+#  Last modified 2022-10-24 00:40:11.512685
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'Makefile', line 41):
@@ -296,13 +307,13 @@ fclean: clean
 #  Modification time never checked.
 #  File has not been updated.
 
-objs/tester_map.o: tester_map.cpp
+objs/tester_map.o: srcs/tester_map.cpp
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: 'tester_map'
-#  Last modified 2022-10-23 22:15:27.362402
+#  Last modified 2022-10-24 00:40:10.822685
 #  File has been updated.
 #  Successfully updated.
-#  recipe to execute (from 'Makefile', line 31):
+#  recipe to execute (from 'Makefile', line 36):
 			@mkdir -p $(OBJS_DIR)
 			@${CC} $(CPPFLAGS) -o $@ -c $< ${CFLAGS} ${DEBEUG}
 			@printf	"$(ERASE) ${BLU}$ [BUILD]${RST} '$<' $(END)"
@@ -322,31 +333,38 @@ clean:
 			${RM} $(OBJS)
 			@echo "$(GRN) [Clean]$(END) 			$(CHECK)"
 
-objs/tester_vector.o: tester_vector.cpp
+# Not a target:
+srcs/tester_map_utils.cpp:
 #  Implicit rule search has been done.
-#  Implicit/static pattern stem: 'tester_vector'
-#  Last modified 2022-10-23 22:15:27.542402
+#  Last modified 2022-10-23 23:18:25.673279
 #  File has been updated.
 #  Successfully updated.
-#  recipe to execute (from 'Makefile', line 31):
+
+objs/tester_vector.o: srcs/tester_vector.cpp
+#  Implicit rule search has been done.
+#  Implicit/static pattern stem: 'tester_vector'
+#  Last modified 2022-10-24 00:40:11.322685
+#  File has been updated.
+#  Successfully updated.
+#  recipe to execute (from 'Makefile', line 36):
 			@mkdir -p $(OBJS_DIR)
 			@${CC} $(CPPFLAGS) -o $@ -c $< ${CFLAGS} ${DEBEUG}
 			@printf	"$(ERASE) ${BLU}$ [BUILD]${RST} '$<' $(END)"
 
 # files hash-table stats:
-# Load=15/1024=1%, Rehash=0, Collisions=0/46=0%
+# Load=17/1024=2%, Rehash=0, Collisions=0/55=0%
 # VPATH Search Paths
 
 # No 'vpath' search paths.
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 36 / storage = 340 B / avg = 9 B
-# current buf: size = 8162 B / used = 340 B / count = 36 / avg = 9 B
+# strcache buffers: 1 (0) / strings = 41 / storage = 486 B / avg = 11 B
+# current buf: size = 8162 B / used = 486 B / count = 41 / avg = 11 B
 
-# strcache performance: lookups = 66 / hit rate = 45%
+# strcache performance: lookups = 70 / hit rate = 41%
 # hash-table stats:
-# Load=36/8192=0%, Rehash=0, Collisions=2/66=3%
-# Finished Make data base on Sun Oct 23 22:15:54 2022
+# Load=41/8192=1%, Rehash=0, Collisions=2/70=3%
+# Finished Make data base on Mon Oct 24 22:31:42 2022
 
  

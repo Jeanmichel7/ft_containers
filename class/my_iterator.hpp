@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/04 16:23:50 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/23 23:45:13 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/25 01:15:12 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,12 @@ namespace ft
 	{
 
 	protected:
-		_Iter                                           it;
-		typedef ft::iterator_traits<_Iter>              traits_type;
+		iterator_type                                   it;
 
 	public:
 		typedef _Iter                                   iterator_type;
+		typedef ft::iterator_traits<iterator_type>      traits_type;
+
 		typedef typename traits_type::iterator_category iterator_category;
 		typedef typename traits_type::value_type        value_type;
 		typedef typename traits_type::difference_type   difference_type;
@@ -34,31 +35,25 @@ namespace ft
 		typedef typename traits_type::reference         reference;
 
 
-		// Allow iterator to const_iterator conversion					REAL
-		// template <typename _Iter>
-		// __normal_iterator(const __normal_iterator<_Iter,
-		// 										  typename __enable_if<
-		// 											  (std::__are_same<_Iter, typename _Container::pointer>::__value),
-		// 											  _Container>::__type> &__i) _GLIBCXX_NOEXCEPT
-		// 	: _M_current(__i.base()) {}
+		my_iterator()
+		: 
+			it()
+		{
+			return ;
+		}
 
-		// template <typename U>
-		// my_iterator(const my_iterator<U, typename enable_if<(std::__are_same<U, iterator_type>::value)>::type> &__i)
-		// : it(__i.base()) {}
+		my_iterator(iterator_type it)
+		:
+		it(it)
+		{}
 
-		// template <typename U>
-		// my_iterator( my_iterator<U> const &u,
-		// 				typename enable_if<std::is_convertible<U, iterator_type>::value>::type * = NULL) :
-		// it(u.base()) {}
-
-		my_iterator() : it() {}
-		my_iterator(iterator_type it) : it(it) {}
 		my_iterator(const my_iterator &src) : it(src.it) {}
+
 		~my_iterator() {}
 
 		iterator_type base() const { return (it); }
 
-		my_iterator &operator=(const my_iterator &rhs)                  // a revoir ?
+		my_iterator &operator=(const my_iterator &rhs)
 		{
 			if (this != &rhs)
 				this->it = rhs.it;
