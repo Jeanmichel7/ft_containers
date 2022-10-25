@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/14 22:06:29 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/25 00:22:23 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/25 18:10:54 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -506,6 +506,7 @@ public:
 			_alloc.construct(_start + i, value);
 			++_finish;
 			++_nb_elems;
+			return (iterator(_start + i));
 		}
 		catch (const std::length_error &el)
 		{
@@ -516,7 +517,7 @@ public:
 		{
 			std::cerr << REDE "dfddsfsdfdsfdsffsfds " << e.what() << END "\n";
 		}
-		return (pos);
+		return (iterator(_start));
 	};
 
 	void insert(iterator pos, size_type count, const T &value)
@@ -524,56 +525,50 @@ public:
 		// std::cout << "insert(pos, count, value) : " << count << std::endl;
 		try
 		{
-			// std::cout << "max_size : " << max_size() << std::endl;
-			iterator ite = end();
-			iterator itb = begin();
+			iterator it = begin();
 			size_t i;
-			size_t j;
-			size_type new_capacity = _capacity;
 
-			if (count >= max_size())
-				throw std::bad_alloc();
-			while (new_capacity < _nb_elems + count)
+			if (_nb_elems + count > _capacity)
 			{
+				// std::cout << "new allocation " << std::endl;
 				if (_capacity + count >= max_size() || _capacity * 2 >= max_size())
 					throw std::bad_alloc();
 				if (_capacity == 0)
-					new_capacity += 1;
-				new_capacity *= 2;
+					_capacity += 1;
+				_capacity *= 2;
+				T *new_start = _alloc.allocate(_capacity);
+				for (size_type i = 0; i < _nb_elems; i++)
+				{
+					_alloc.construct(new_start + i, _start[i]);
+				}
+				_alloc.deallocate(_start, _capacity);
+				_start = new_start;
+				_finish = new_start + _nb_elems;
+				_end_of_storage = new_start + _capacity;
 			}
-			T *new_start = _alloc.allocate(new_capacity);
 			i = 0;
-			while (itb != pos && i != _nb_elems)
-			{
-				_alloc.construct(new_start + i, *(_start + i));
-				itb++;
+			
+			while(it != end()) {
 				i++;
+				it++;
 			}
-			if (_nb_elems != 0)
-				j = _nb_elems + count;
-			else
-				j = 0;
-			while (ite != pos && j != i)
+
+			
+
+			while (it != pos && i != 0)
 			{
-				_alloc.construct(new_start + j, *(_start + j - count));
-				_alloc.destroy(new_start + j - count);
-				ite--;
-				j--;
+				_alloc.construct(_start + i, *(_start + i - 1));
+				_alloc.destroy(_start + i - 1);
+				it--;
+				i--;
 			}
-			_alloc.construct(new_start + j, *(_start + j - count));
-			_alloc.destroy(new_start + j - count);
-			_alloc.deallocate(_start, _capacity);
-			_start = new_start;
-			_nb_elems += count;
-			_finish = new_start + _nb_elems;
-			_end_of_storage = new_start + new_capacity;
-			_capacity = new_capacity;
-			while (count != 0)
+			for (size_type j = 0; j < count; j++)
 			{
-				_alloc.construct(_start + i, value);
-				i++;
-				count--;
+				_alloc.construct(_start + _nb_elems - i, value);
+				i--;
 			}
+			_finish += count;
+			// _nb_elems += count;
 		}
 		catch (const std::length_error &el)
 		{
@@ -582,9 +577,73 @@ public:
 		}
 		catch (std::exception const &e)
 		{
-			std::cerr << e.what() << std::endl;
+			std::cerr << REDE "dfddsfsdfdsfdsffsfds " << e.what() << END "\n";
 		}
 	};
+
+
+			// // std::cout << "max_size : " << max_size() << std::endl;
+			// iterator ite = end();
+			// iterator itb = begin();
+			// size_t i;
+			// size_t j;
+			// size_type new_capacity = _capacity;
+
+			// if (count >= max_size())
+			// 	throw std::bad_alloc();
+			// while (new_capacity < _nb_elems + count)
+			// {
+			// 	if (_capacity + count >= max_size() || _capacity * 2 >= max_size())
+			// 		throw std::bad_alloc();
+			// 	if (_capacity == 0)
+			// 		new_capacity += 1;
+			// 	new_capacity *= 2;
+			// }
+			// T *new_start = _alloc.allocate(new_capacity);
+			// i = 0;
+			// while (itb != pos && i != _nb_elems)
+			// {
+			// 	_alloc.construct(new_start + i, *(_start + i));
+			// 	itb++;
+			// 	i++;
+			// }
+			// if (_nb_elems != 0)
+			// 	j = _nb_elems + count;
+			// else
+			// 	j = 0;
+			// while (ite != pos && j != i)
+			// {
+			// 	std::cout << "hereQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ " << std::endl;
+			// 	_alloc.construct(new_start + j, *(_start + j - count));
+			// 	_alloc.destroy(new_start + j - count);
+			// 	ite--;
+			// 	j--;
+			// }
+			// _alloc.construct(new_start + j, *(_start + j - count));
+			// _alloc.destroy(new_start + j - count);
+			// _alloc.deallocate(_start, _capacity);
+			// _start = new_start;
+			// _nb_elems += count;
+			// _finish = new_start + _nb_elems;
+			// _end_of_storage = new_start + new_capacity;
+			// _capacity = new_capacity;
+			// while (count != 0)
+			// {
+			// 	_alloc.construct(_start + i, value);
+			// 	i++;
+			// 	count--;
+			// }
+		// }
+		// catch (const std::length_error &el)
+		// {
+		// 	std::cerr << REDE "length_error : " << el.what() << END "\n";
+		// 	std::terminate();
+		// }
+		// catch (std::exception const &e)
+		// {
+		// 	std::cerr << e.what() << std::endl;
+		// }
+	// };
 
 	template <class InputIt>
 	void insert(iterator pos,
@@ -844,10 +903,9 @@ public:
 	/*                        MY TEST                      */
 	/*                                                     */
 	/* *************************************************** */
-	void display(std::string msg) const
+	void display(std::string msg)
 	{
-		std::cout << GRN << msg << END << std::endl;
-		std::cout << "----------------------------------------" << std::endl;
+		std::cout << "\n------------------- " << msg << " ---------------------" << std::endl;
 		// std::cout << "start 		: " << &_start << std::endl;
 		// std::cout << "finish 		: " << &_finish << std::endl;
 		// std::cout << "end_of_storage 	: " << &_end_of_storage << std::endl;
@@ -864,8 +922,8 @@ public:
 				std::cout << *it;
 			it++;
 		}
-		std::cout << std::endl;
-		std::cout << "----------------------------------------\n\n"
+		std::cout << std::endl
+							<< "----------------------------------------\n\n"
 							<< std::endl;
 	}
 };

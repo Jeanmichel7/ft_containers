@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/04 16:23:50 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/25 01:15:12 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/25 14:12:14 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ namespace ft
 	{
 
 	protected:
-		iterator_type                                   it;
+		_Iter                                   it;
 
 	public:
 		typedef _Iter                                   iterator_type;
