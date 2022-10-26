@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/04 16:25:38 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/23 23:35:25 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/25 23:13:48 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,9 @@ namespace ft
 			return (*(--tmp));
 		}
 
+		reverse_iterator operator+(difference_type n)
+		{ return (reverse_iterator(_elem - n)); }
+
 		reverse_iterator operator+(difference_type n) const 
 		{ return (reverse_iterator(_elem - n)); }
 
@@ -87,6 +90,11 @@ namespace ft
 		{
 			_elem -= n;
 			return (*this);
+		}
+
+		reverse_iterator operator-(difference_type n)
+		{
+			return (reverse_iterator(_elem + n));
 		}
 
 		reverse_iterator operator-(difference_type n) const 

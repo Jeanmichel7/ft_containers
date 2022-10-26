@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/14 22:06:29 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/25 18:10:54 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/26 00:00:29 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ public:
 		_nb_elems(0),
 		_capacity(0)
 	{
-		std::cout << "Constructor" << std::endl;
+		// std::cout << "Constructor" << std::endl;
 	};
 
 	explicit vector(const Allocator &alloc)
@@ -117,14 +117,23 @@ public:
 				const Allocator &alloc = Allocator())
 	:
 		_alloc(alloc),
-		_start(_alloc.allocate(last - first)),
-		_finish(_start + (last - first)),
-		_end_of_storage(_start + (last - first)),
-		_nb_elems(last - first),
-		_capacity(last - first)
+		_start(_alloc.allocate(last - first))
 	{
-		std::cout << "Constructor with InputIt" << std::endl;
-		std::uninitialized_copy(first, last, _start);
+		// std::cout << "Constructor with iterator" << std::endl;
+		_finish = _start;
+		_end_of_storage = _start;
+		_nb_elems = 0;
+		_capacity = 0;
+		while (first != last)
+		{
+			push_back(*first);
+			first++;
+		}
+
+
+		// insert(begin(), first, last);
+
+		// std::uninitialized_copy(first, last, _start);
 	};
 
 	vector(const vector &other)
@@ -136,7 +145,7 @@ public:
 		_nb_elems(other._nb_elems),
 		_capacity(other._capacity)
 	{
-		std::cout << "Copy constructor" << std::endl;
+		// std::cout << "Copy constructor" << std::endl;
 		// std::uninitialized_copy(other._start, other._finish, _start);
 		for (size_type i = 0; i < other._nb_elems; i++)
 		{
@@ -146,7 +155,7 @@ public:
 
 	vector &operator=(const vector &other)
 	{
-		std::cout << "Assignment operator" << std::endl;
+		// std::cout << "Assignment operator" << std::endl;
 
 		// del
 		for (size_type i = 0; i < _nb_elems; i++) {
@@ -178,6 +187,12 @@ public:
 	{
 		return _alloc;
 	};
+
+
+
+
+
+
 
 	/* *************************************************** */
 	/*                                                     */
@@ -249,7 +264,7 @@ public:
 
 	const_reference front() const
 	{
-		// std::cout << "const_reference front" << std::endl;
+		std::cout << "const_reference front" << std::endl;
 		return const_cast<vector *>(this)->front();
 	};
 
@@ -261,7 +276,7 @@ public:
 
 	const_reference back() const
 	{
-		// std::cout << "const_reference back" << std::endl;
+		std::cout << "const_reference back" << std::endl;
 		return const_cast<vector *>(this)->back();
 	};
 
@@ -273,7 +288,7 @@ public:
 
 	const T *data() const
 	{
-		// std::cout << "const_data" << std::endl;
+		std::cout << "const_data" << std::endl;
 		return const_cast<vector *>(this)->data();
 	};
 
@@ -328,6 +343,12 @@ public:
 		}
 	};
 
+
+
+
+
+
+
 	/* *************************************************** */
 	/*                                                     */
 	/*                       ITERATOR                      */
@@ -342,7 +363,7 @@ public:
 
 	const_iterator begin() const
 	{
-		// std::cout << "const_iterator begin()" << std::endl;
+		std::cout << "const_iterator begin()" << std::endl;
 		return const_iterator(this->_start);
 		// return const_cast<vector*>(this)->_start;
 	};
@@ -377,6 +398,11 @@ public:
 	{
 		return const_reverse_iterator(this->_start);
 	};
+
+
+
+
+
 
 	/* *************************************************** */
 	/*                                                     */
@@ -526,49 +552,11 @@ public:
 		try
 		{
 			iterator it = begin();
-			size_t i;
 
-			if (_nb_elems + count > _capacity)
-			{
-				// std::cout << "new allocation " << std::endl;
-				if (_capacity + count >= max_size() || _capacity * 2 >= max_size())
-					throw std::bad_alloc();
-				if (_capacity == 0)
-					_capacity += 1;
-				_capacity *= 2;
-				T *new_start = _alloc.allocate(_capacity);
-				for (size_type i = 0; i < _nb_elems; i++)
-				{
-					_alloc.construct(new_start + i, _start[i]);
-				}
-				_alloc.deallocate(_start, _capacity);
-				_start = new_start;
-				_finish = new_start + _nb_elems;
-				_end_of_storage = new_start + _capacity;
+			for(size_t i = 0; i < count; i++) {
+				insert(pos, value);
+				pos++;
 			}
-			i = 0;
-			
-			while(it != end()) {
-				i++;
-				it++;
-			}
-
-			
-
-			while (it != pos && i != 0)
-			{
-				_alloc.construct(_start + i, *(_start + i - 1));
-				_alloc.destroy(_start + i - 1);
-				it--;
-				i--;
-			}
-			for (size_type j = 0; j < count; j++)
-			{
-				_alloc.construct(_start + _nb_elems - i, value);
-				i--;
-			}
-			_finish += count;
-			// _nb_elems += count;
 		}
 		catch (const std::length_error &el)
 		{
@@ -581,69 +569,6 @@ public:
 		}
 	};
 
-
-			// // std::cout << "max_size : " << max_size() << std::endl;
-			// iterator ite = end();
-			// iterator itb = begin();
-			// size_t i;
-			// size_t j;
-			// size_type new_capacity = _capacity;
-
-			// if (count >= max_size())
-			// 	throw std::bad_alloc();
-			// while (new_capacity < _nb_elems + count)
-			// {
-			// 	if (_capacity + count >= max_size() || _capacity * 2 >= max_size())
-			// 		throw std::bad_alloc();
-			// 	if (_capacity == 0)
-			// 		new_capacity += 1;
-			// 	new_capacity *= 2;
-			// }
-			// T *new_start = _alloc.allocate(new_capacity);
-			// i = 0;
-			// while (itb != pos && i != _nb_elems)
-			// {
-			// 	_alloc.construct(new_start + i, *(_start + i));
-			// 	itb++;
-			// 	i++;
-			// }
-			// if (_nb_elems != 0)
-			// 	j = _nb_elems + count;
-			// else
-			// 	j = 0;
-			// while (ite != pos && j != i)
-			// {
-			// 	std::cout << "hereQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ " << std::endl;
-			// 	_alloc.construct(new_start + j, *(_start + j - count));
-			// 	_alloc.destroy(new_start + j - count);
-			// 	ite--;
-			// 	j--;
-			// }
-			// _alloc.construct(new_start + j, *(_start + j - count));
-			// _alloc.destroy(new_start + j - count);
-			// _alloc.deallocate(_start, _capacity);
-			// _start = new_start;
-			// _nb_elems += count;
-			// _finish = new_start + _nb_elems;
-			// _end_of_storage = new_start + new_capacity;
-			// _capacity = new_capacity;
-			// while (count != 0)
-			// {
-			// 	_alloc.construct(_start + i, value);
-			// 	i++;
-			// 	count--;
-			// }
-		// }
-		// catch (const std::length_error &el)
-		// {
-		// 	std::cerr << REDE "length_error : " << el.what() << END "\n";
-		// 	std::terminate();
-		// }
-		// catch (std::exception const &e)
-		// {
-		// 	std::cerr << e.what() << std::endl;
-		// }
-	// };
 
 	template <class InputIt>
 	void insert(iterator pos,
@@ -659,8 +584,8 @@ public:
 			// std::cout << "max_size : " << max_size() << std::endl;
 			iterator ite = end();
 			iterator itb = begin();
-			size_t i;
-			size_t j;
+			size_t i = 0;
+			size_t j = 0;
 			size_type new_capacity = _capacity;
 			size_type count = last - first;
 			if (count >= max_size())
@@ -675,19 +600,17 @@ public:
 				new_capacity *= 2;
 			}
 			T *new_start = _alloc.allocate(new_capacity);
-			// copie avant pos
-			i = 0;
+
 			while (itb != pos && i != _nb_elems)
 			{
 				_alloc.construct(new_start + i, *(_start + i));
 				itb++;
 				i++;
 			}
+
 			// deplace de end a pos sur une distance count
 			if (_nb_elems != 0)
 				j = _nb_elems + count;
-			else
-				j = 0;
 			while (ite != pos && j != i)
 			{
 				_alloc.construct(new_start + j, *(_start + j - count));
@@ -721,6 +644,8 @@ public:
 			std::cerr << e.what() << std::endl;
 		}
 	};
+
+
 
 	iterator erase(iterator pos)
 	{

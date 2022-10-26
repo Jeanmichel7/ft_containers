@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/10 18:24:21 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/23 23:35:16 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/25 23:11:05 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,11 @@ template <typename _Category, typename _Tp, typename _Distance = ptrdiff_t,
 		  typename _Pointer = _Tp *, typename _Reference = _Tp &>
 struct iterator
 {
-	typedef _Category iterator_category;
-	typedef _Tp value_type;
-	typedef _Distance difference_type;
-	typedef _Pointer pointer;
-	typedef _Reference reference;
+	typedef _Category                                   iterator_category;
+	typedef _Tp                                         value_type;
+	typedef _Distance                                   difference_type;
+	typedef _Pointer                                    pointer;
+	typedef _Reference                                  reference;
 };
 
 template <typename _Iterator>
@@ -53,22 +53,22 @@ struct iterator_traits
 template <typename _Tp>
 struct iterator_traits<_Tp *>
 {
-    typedef std::random_access_iterator_tag     iterator_category;
-    typedef _Tp                                 value_type;
-    typedef ptrdiff_t                           difference_type;
-    typedef _Tp                                 *pointer;
-    typedef _Tp                                 &reference;
+    typedef std::random_access_iterator_tag             iterator_category;
+    typedef _Tp                                         value_type;
+    typedef ptrdiff_t                                   difference_type;
+    typedef _Tp                                         *pointer;
+    typedef _Tp                                         &reference;
 };
 
 // Partial specialization for const pointer types.
 template <typename _Tp>
 struct iterator_traits<const _Tp *>
 {
-    typedef std::random_access_iterator_tag     iterator_category;
-    typedef _Tp                                 value_type;
-    typedef ptrdiff_t                           difference_type;
-    typedef const _Tp                           *pointer;
-    typedef const _Tp                           &reference;
+    typedef std::random_access_iterator_tag             iterator_category;
+    typedef _Tp                                         value_type;
+    typedef ptrdiff_t                                   difference_type;
+    typedef const _Tp                                   *pointer;
+    typedef const _Tp                                   &reference;
 };
 
 struct input_iterator_tag  {};

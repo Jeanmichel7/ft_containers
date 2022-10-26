@@ -4,15 +4,15 @@ mkdir -p objs/
 g++ -I. -I./class -I./includes -o objs/main.o -c main.cpp -Wall -Wextra -std=c++98 -g
 printf	"\033[2K\r \033[0;34m[BUILD] 'main.cpp' \033[0m"
 mkdir -p objs/
-g++ -I. -I./class -I./includes -o objs/tester_map_utils.o -c srcs/tester_map_utils.cpp -Wall -Wextra -std=c++98 -g
-printf	"\033[2K\r \033[0;34m[BUILD] 'srcs/tester_map_utils.cpp' \033[0m"
-mkdir -p objs/
 g++ -I. -I./class -I./includes -o objs/tester_map.o -c srcs/tester_map.cpp -Wall -Wextra -std=c++98 -g
 printf	"\033[2K\r \033[0;34m[BUILD] 'srcs/tester_map.cpp' \033[0m"
 mkdir -p objs/
 g++ -I. -I./class -I./includes -o objs/tester_vector.o -c srcs/tester_vector.cpp -Wall -Wextra -std=c++98 -g
 printf	"\033[2K\r \033[0;34m[BUILD] 'srcs/tester_vector.cpp' \033[0m"
-g++ objs/main.o objs/tester_map_utils.o objs/tester_map.o objs/tester_vector.o -o prog -Wall -Wextra -std=c++98 -g
+mkdir -p objs/
+g++ -I. -I./class -I./includes -o objs/tester_utils.o -c srcs/tester_utils.cpp -Wall -Wextra -std=c++98 -g
+printf	"\033[2K\r \033[0;34m[BUILD] 'srcs/tester_utils.cpp' \033[0m"
+g++ objs/main.o objs/tester_map.o objs/tester_vector.o objs/tester_utils.o -o prog -Wall -Wextra -std=c++98 -g
 echo "\033[2K\r\033[0;32m [Successfully compiled]\033[0m	✓ \n"
 echo "Executable ./prog \n"
 make: Leaving directory '/home/jrasser/42/ft_containers'
