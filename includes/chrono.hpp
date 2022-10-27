@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 17:30:03 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/23 23:30:42 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/27 11:41:59 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,11 @@
 
 # include <time.h>
 # include <cstdio>
-# include "main.hpp"
 # include <iomanip>
+# include <cstdlib>
+
+
+# include "main.hpp"
 
 struct s_time_diff
 	{
@@ -57,7 +60,7 @@ struct s_time_diff
 		}
 
 		void stl_display_chrono() {
-      std::cout << fixed;
+      std::cout << std::fixed;
 			std::cout << stl_time << "sec";
 		}
 
@@ -85,14 +88,14 @@ struct s_time_diff
 		}
 
 		void ft_display_chrono() {
-      std::cout << fixed;
+      std::cout << std::fixed;
 			std::cout << ft_time << "sec";
 		}
 
 
 		/* diff chrono */
 		void diff_chrono() {
-			std::cout << fixed;
+			std::cout << std::fixed;
 			stl_time == 0 ? diff = 0 : diff = ft_time / stl_time;
 
 			if (ft_time / 20 > stl_time) {
@@ -115,7 +118,7 @@ struct s_time_diff
 
 		void display_average() {
 			std::cout << MAG "\n\nTEST performance" END << std::endl;
-			std::cout << fixed;
+			std::cout << std::fixed;
 			if (sum / count < 2)
 				std::cout << GRN;
 			else if (sum / count < 10)

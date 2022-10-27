@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 14:57:17 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/24 15:47:03 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/27 12:14:03 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,17 @@
 # include <string>
 # include <typeinfo>
 
-# include <map>
-# include "map.hpp"
 # include "chrono.hpp"
 # include "convert.hpp"
+# include "utils.hpp"
+
+# include <vector>
+# include "vector.hpp"
+# include <map>
+# include "map.hpp"
+# include <stack>
+# include "stack.hpp"
+# include <queue>
 
 
 /* ***************************************************** */
@@ -40,11 +47,8 @@
 void tester_vector(void);
 
 /* include vector */
-#include "utils.hpp"
-#include "pair.hpp"
 
-#include <vector>
-#include "vector.hpp"
+
 
 template< typename vector_type >
 void tester_vector_type();
@@ -56,13 +60,10 @@ void tester_vector_type();
 /* ***************************************************** */
 /*                         MAP                           */
 /* ***************************************************** */
+
 template< typename type_key_map, typename type_value_map >
 void tester_map_type();
 
-template <typename T>
-std::string to_string(T value);
-
-void str_comp(std::string str, std::string ft_str, std::string msg);
 
 // template< typename T1, typename T2>
 // void sstr_comp(T1 it, T2 ft_it, std::string msg);
@@ -80,6 +81,22 @@ void tester_map(void);
 
 
 
+/* ***************************************************** */
+/*                        STACK                          */
+/* ***************************************************** */
+
+void tester_stack(void);
+
+// template< typename type_value, typename type_container >
+// void tester_stack_type();
+
+template< typename type_value >
+void tester_stack_type();
+
+
+
+
+
 
 /* ***************************************************** */
 /*                        UTILS                          */
@@ -87,6 +104,10 @@ void tester_map(void);
 void display_title(std::string title);
 
 
+template <typename T>
+std::string to_string(T value);
+
+void str_comp(std::string str, std::string ft_str, std::string msg);
 
 
 

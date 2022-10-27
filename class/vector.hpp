@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/14 22:06:29 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/26 00:00:29 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/27 11:19:58 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,10 @@
 
 // #include "main.hpp"
 #include "iterator_traits.hpp"
-#include "my_iterator.hpp"
 #include "reverse_iterator.hpp"
 #include "enable_if.hpp"
 #include "is_integral.hpp"
+#include "utils/iterator_vector.hpp"
 
 #include <stdexcept>
 
@@ -40,6 +40,7 @@ class vector
 
 public:
 	/* Typedef */
+	typedef T 									value_type;
 	typedef std::size_t 				size_type;
 	typedef Allocator 					allocator_type;
 	typedef T 									&reference;
@@ -47,10 +48,19 @@ public:
 	typedef T 									*pointer;
 	typedef const T 						*const_pointer;
 
-	typedef ft::my_iterator<pointer> 							iterator;
-	typedef ft::my_iterator<const_pointer> 				const_iterator;
-	typedef ft::reverse_iterator<iterator> 				reverse_iterator;
-	typedef ft::reverse_iterator<const_iterator> 	const_reverse_iterator;
+	typedef ft::iterator_vector<T> iterator;
+	typedef ft::const_iterator_vector<const T> const_iterator;
+	typedef ft::reverse_iterator<iterator> reverse_iterator;
+	typedef ft::reverse_iterator<const_iterator> const_reverse_iterator;
+
+	typedef typename ft::iterator_traits<iterator>::difference_type difference_type;
+
+	
+
+	// typedef ft::iterator_vector< value_type > 					iterator;
+	// typedef ft::iterator_vector< const value_type > 		const_iterator;
+	// typedef ft::reverse_iterator< iterator > 						reverse_iterator;
+	// typedef ft::reverse_iterator< const_iterator > 			const_reverse_iterator;
 
 
 private:
@@ -363,7 +373,7 @@ public:
 
 	const_iterator begin() const
 	{
-		std::cout << "const_iterator begin()" << std::endl;
+		// std::cout << "const_iterator begin()" << std::endl;
 		return const_iterator(this->_start);
 		// return const_cast<vector*>(this)->_start;
 	};
@@ -649,7 +659,7 @@ public:
 
 	iterator erase(iterator pos)
 	{
-		std::cout << "erase(pos) : " << *pos << std::endl;
+		// std::cout << "erase(pos) : " << *pos << std::endl;
 
 		iterator itb = begin();
 		size_type i = 0;
@@ -669,9 +679,7 @@ public:
 		--_finish;
 		--_nb_elems;
 		size_t j = 1;
-		for (; j < _nb_elems; j *= 2)
-		{
-		}
+		for (; j < _nb_elems; j *= 2) {}
 		_capacity = j;
 		T *new_start = _alloc.allocate(_capacity);
 		i = 0;
@@ -690,7 +698,7 @@ public:
 
 	iterator erase(iterator first, iterator last)
 	{
-		std::cout << "erase(first, last) : " << *first << " " << *last << std::endl;
+		// std::cout << "erase(first, last) : " << *first << " " << *last << std::endl;
 		iterator itb = begin();
 		size_type i = 0;
 		size_type count = last - first;
@@ -754,17 +762,13 @@ public:
 	void resize(size_type count, T value = T())
 	{
 		// std::cout << "resize" << std::endl;
-		if (count > _nb_elems)
-		{
-			for (size_type i = _nb_elems; i < count; i++)
-			{
+		if (count > _nb_elems) {
+			for (size_type i = _nb_elems; i < count; i++) {
 				push_back(value);
 			}
 		}
-		else if (count < _nb_elems)
-		{
-			for (size_type i = _nb_elems; i > count; i--)
-			{
+		else if (count < _nb_elems) {
+			for (size_type i = _nb_elems; i > count; i--) {
 				pop_back();
 			}
 		}
@@ -779,6 +783,13 @@ public:
 		std::swap(_nb_elems, other._nb_elems);
 		std::swap(_capacity, other._capacity);
 	};
+
+
+
+
+
+
+
 
 	/* *************************************************** */
 	/*                                                     */
