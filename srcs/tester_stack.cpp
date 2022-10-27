@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 11:38:03 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/27 12:34:27 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/27 19:10:40 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,11 +51,35 @@ void stack_display (S &stack, std::string msg) {
 
 void tester_stack(void) 
 {
-	display_title("STACK < String, Container >");
-	tester_stack_type< std::string >();
+  typedef int                               c_type_int;
+  typedef char                              c_type_char;
+  typedef std::string                       c_type_string;
+
+
+
+  display_title("STACK < Char >");
+	tester_stack_type< c_type_int >();
+
+  display_title("STACK < Char >");
+	tester_stack_type< c_type_char >();
+
+	display_title("STACK < String >");
+	tester_stack_type< c_type_string >();
+
+
+
+  display_title("STACK < String, std::deque >");
+	tester_stack_container_type< int, std::deque<int> >();
+
+  display_title("STACK < String, std::list >");
+	tester_stack_container_type< int, std::list<int> >();
+
+  display_title("STACK < String, std::vector >");
+	tester_stack_container_type< char, std::vector<char> >();
+
 }
 
-// template< typename type_value, typename type_container >
+
 template< typename type_value >
 void tester_stack_type() {
 
@@ -87,22 +111,17 @@ void tester_stack_type() {
   chrono.ft_end_chrono();
 
   chrono.diff_chrono();
-
-  // std::cout << "std_stack.size() = " << std_stack.size() << std::endl;
-  // std::cout << "ft_stack.size() = " << ft_stack.size() << std::endl;
+  comp_stack(std_stack, ft_stack, "stack with custom container");
 
 
-  
-  /* constuctor with container */
-  // std_stack_t std_stack_container(std::deque<type_value>(
-  //   3,
-  //   convert<type_value>("10"))
-  // );
 
-  // ft_stack_t ft_stack_container(std::deque<type_value>(
-  //   3,
-  //   convert<type_value>("10"))
-  // );
+  // stack_display(std_stack, "std_stack");
+  // stack_display(ft_stack , "ft_stack");
+
+
+
+
+
 
 
 
@@ -165,8 +184,44 @@ void tester_stack_type() {
 		i++;
 	}
 
-  stack_display(std_stack, "std_stack");
-  stack_display(ft_stack , "ft_stack");
+  // stack_display(std_stack, "std_stack");
+  // stack_display(ft_stack , "ft_stack");
+
+
+
+  /* *************************************************** */
+  /*                       CANONIQUE                     */
+  /* *************************************************** */
+  std::cout << MAG "\n\nTEST copy + affectation() " END << std::endl;
+
+  /* constructor de copy */
+  chrono.stl_start_chrono();
+  std_stack_t std_stack_copy(std_stack);
+  chrono.stl_end_chrono();
+
+  chrono.ft_start_chrono();
+  ft_stack_t ft_stack_copy(ft_stack);
+  chrono.ft_end_chrono();
+
+  comp_stack(std_stack_copy, ft_stack_copy, "stack with custom container");
+  chrono.diff_chrono();
+
+  
+  
+  /* new onstructor d'affectation */
+  chrono.stl_start_chrono();
+  std_stack_t std_stack_assign = std_stack_copy;
+  chrono.stl_end_chrono();
+
+  chrono.ft_start_chrono();
+  ft_stack_t ft_stack_assign = ft_stack_copy;
+  chrono.ft_end_chrono();
+
+  comp_stack(std_stack_assign, ft_stack_assign, "stack with custom container");
+  chrono.diff_chrono();
+
+
+
 
 
 
@@ -187,6 +242,24 @@ void tester_stack_type() {
   comp_stack(std_stack, ft_stack, "pop");
   chrono.diff_chrono();
 
+
+
+  /* randon pop */
+	srand (time(NULL));
+  int  end = rand() % std_stack.size() /2;
+
+  for( int i = 0; i < end; i++) {
+    chrono.stl_start_chrono();
+    std_stack.pop();
+    chrono.stl_end_chrono();
+
+    chrono.ft_start_chrono();
+    ft_stack.pop();
+    chrono.ft_end_chrono();
+
+    comp_stack(std_stack, ft_stack, "pop");
+    chrono.diff_chrono();
+  }
 
 
   //   stack_display(std_stack, "std_stack");
@@ -263,13 +336,268 @@ void tester_stack_type() {
 
 
 
+}
 
+// template< typename type_value, typename type_container >
+template< typename type_value, class type_container >
+void tester_stack_container_type() {
+
+  std::stringstream 	sstr;
+	std::stringstream 	ft_sstr;
+	std::string 				str;
+	std::string 				ft_str;
+	struct s_time_diff 	chrono;
+
+  /* define type stack */
+  typedef std::stack< type_value, type_container >  std_stack_t;
+  typedef ft::stack< type_value, type_container >   ft_stack_t;
+
+
+
+
+
+	/* ***************************************************** */
+	/*                       CONSTRUCTORS                    */
+	/* ***************************************************** */
+	std::cout << MAG "\n\nTEST constructor stack() " END << std::endl;
+
+  /* constructr default container */
+  chrono.stl_start_chrono();
+  std_stack_t std_stack;
+  chrono.stl_end_chrono();
+  chrono.ft_start_chrono();
+  ft_stack_t  ft_stack;
+  chrono.ft_end_chrono();
+
+  chrono.diff_chrono();
+  comp_stack(std_stack, ft_stack, "stack with custom container");
 
 
   
+  /* constuctor with container */
+  chrono.stl_start_chrono();
+  std_stack_t std_stack_container(type_container(
+    3,
+    convert<type_value>("10"))
+  );
+  chrono.stl_end_chrono();
+
+  chrono.ft_start_chrono();
+  ft_stack_t ft_stack_container(type_container(
+    3,
+    convert<type_value>("10"))
+  );
+  chrono.ft_end_chrono();
+
+  comp_stack(std_stack_container, ft_stack_container, 
+  "stack with custom container");
+  chrono.diff_chrono();
+
+
+  
+  // stack_display(std_stack_container, "std_stack");
+  // stack_display(ft_stack_container , "ft_stack");
+
+
+  /* constructor de copy */
+  chrono.stl_start_chrono();
+  std_stack_t std_stack_copy(std_stack_container);
+  chrono.stl_end_chrono();
+
+  chrono.ft_start_chrono();
+  ft_stack_t ft_stack_copy(ft_stack_container);
+  chrono.ft_end_chrono();
+
+  comp_stack(std_stack_copy, ft_stack_copy, "stack with custom container");
+  chrono.diff_chrono();
+
+  
+  
+  /* new onstructor d'affectation */
+  chrono.stl_start_chrono();
+  std_stack_t std_stack_assign = std_stack_copy;
+  chrono.stl_end_chrono();
+
+  chrono.ft_start_chrono();
+  ft_stack_t ft_stack_assign = ft_stack_copy;
+  chrono.ft_end_chrono();
+
+  comp_stack(std_stack_assign, ft_stack_assign, "stack with custom container");
+  chrono.diff_chrono();
+
+
+
+
+
+
+
   /* *************************************************** */
+  /*                       PUSH                          */
+  /* *************************************************** */
+  std::cout << MAG "\n\nTEST Push() " END << std::endl;
+
+  /* push 10 */
+  chrono.stl_start_chrono();
+  std_stack.push(convert<type_value>("10"));
+  chrono.stl_end_chrono();
+
+  chrono.ft_start_chrono();
+  ft_stack.push(convert<type_value>("10"));
+  chrono.ft_end_chrono();
+
+  comp_stack(std_stack, ft_stack, "push");
+  chrono.diff_chrono();
+
+
+
+
+
+  /* push 20 */
+  chrono.stl_start_chrono();
+  std_stack.push(convert<type_value>("20"));
+  chrono.stl_end_chrono();
+
+  chrono.ft_start_chrono();
+  ft_stack.push(convert<type_value>("20"));
+  chrono.ft_end_chrono();
+
+  comp_stack(std_stack, ft_stack, "push");
+  chrono.diff_chrono();
+
+
+
+
+  /* push random value */
+	std::string value_str;
+  int 	i = 0;
+	srand (time(NULL));
+
+	while (i < 20)
+	{
+		value_str = tostr(rand() % 200 + 1);
+
+		chrono.stl_start_chrono();
+		std_stack.push( convert< type_value >(value_str));
+		chrono.stl_end_chrono();
+
+		chrono.ft_start_chrono();
+		ft_stack.push( convert< type_value >(value_str));
+		chrono.ft_end_chrono();
+
+		comp_stack(std_stack, ft_stack, "push");
+		chrono.diff_chrono();
+		i++;
+	}
+
+  // stack_display(std_stack, "std_stack");
+  // stack_display(ft_stack , "ft_stack");
+
+
+
+  /* *************************************************** */
+  /*                       POP                           */
+  /* *************************************************** */
+  std::cout << MAG "\n\nTEST Pop() " END << std::endl;
+
+  /* pop */
+  chrono.stl_start_chrono();
+  std_stack.pop();
+  chrono.stl_end_chrono();
+
+  chrono.ft_start_chrono();
+  ft_stack.pop();
+  chrono.ft_end_chrono();
+
+  comp_stack(std_stack, ft_stack, "pop");
+  chrono.diff_chrono();
+
+
+
+  //   stack_display(std_stack, "std_stack");
+  // stack_display(ft_stack , "ft_stack");
+
+
+  /* randon pop */
+	srand (time(NULL));
+  int  end = rand() % std_stack.size() /2;
+
+  for( int i = 0; i < end; i++) {
+    chrono.stl_start_chrono();
+    std_stack.pop();
+    chrono.stl_end_chrono();
+
+    chrono.ft_start_chrono();
+    ft_stack.pop();
+    chrono.ft_end_chrono();
+
+    comp_stack(std_stack, ft_stack, "pop");
+    chrono.diff_chrono();
+  }
+
+
+
+
+  /* *************************************************** */
+  /*                                                     */
   /*                     ELEMENT ACCESS                  */
+  /*                                                     */
   /* *************************************************** */
+  std::cout << MAG "\n\nTEST top() " END << std::endl;
+
+  type_value std_top;
+  type_value ft_top;
+
+  chrono.stl_start_chrono();
+  std_top = std_stack.top();
+  chrono.stl_end_chrono();
+
+  chrono.ft_start_chrono();
+  ft_top = ft_stack.top();
+  chrono.ft_end_chrono();
+
+  str_comp(tostr(std_top), tostr(ft_top), "top");
+  chrono.diff_chrono();
+
+
+
+
+
+
+
+  /* *************************************************** */
+  /*                     CAPACITY                        */
+  /* *************************************************** */
+  std::cout << MAG "\n\nTEST Capacity " END << std::endl;
+
+  bool stl_bool;
+	bool ft_bool;
+
+  /* empty */
+  chrono.stl_start_chrono();
+  stl_bool = std_stack.empty();
+  chrono.stl_end_chrono();
+
+  chrono.ft_start_chrono();
+  ft_bool = ft_stack.empty();
+  chrono.ft_end_chrono();
+
+  str_comp(tostr(stl_bool), tostr(ft_bool), "empty()");
+  chrono.diff_chrono();
+
+
+  /* size */
+  chrono.stl_start_chrono();
+  size_t stl_size = std_stack.size();
+  chrono.stl_end_chrono();
+
+  chrono.ft_start_chrono();
+  size_t ft_size = ft_stack.size();
+  chrono.ft_end_chrono();
+
+  str_comp(tostr(stl_size), tostr(ft_size), "size()");
+  chrono.diff_chrono();
+
+
 
 
 

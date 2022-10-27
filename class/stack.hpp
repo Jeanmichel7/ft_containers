@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 11:13:00 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/27 11:52:14 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/27 14:59:52 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,13 @@ public:
   /*                                                     */
   /* *************************************************** */
 
-  explicit stack (const container_type& ctnr = container_type()) {
-    c = ctnr;
-  }
+  explicit stack(container_type const &ctnr = container_type())
+  : c(ctnr)
+   {}
+
+  // explicit stack (const container_type& ctnr = container_type()) {
+  //   c = ctnr;
+  // }
 
   ~stack() {}
 
