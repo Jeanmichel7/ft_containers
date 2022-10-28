@@ -6,7 +6,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Thu Oct 27 11:11:43 2022
+# Make data base, printed on Fri Oct 28 12:42:20 2022
 
 # Variables
 
@@ -67,7 +67,7 @@ NVM_BIN = /home/jrasser/.nvm/versions/node/v16.14.2/bin
 # environment
 ELECTRON_RUN_AS_NODE = 1
 # environment
-VSCODE_IPC_HOOK_CLI = /mnt/wslg/runtime-dir/vscode-ipc-59651f4e-95a9-4976-9d35-5fbb102da965.sock
+VSCODE_IPC_HOOK_CLI = /mnt/wslg/runtime-dir/vscode-ipc-097e82ef-c547-48fa-b873-21212ba610d1.sock
 # default
 .FEATURES := target-specific order-only second-expansion else-if shortest-stem undefine oneshell archives jobserver output-sync check-symlink load
 # makefile (from 'Makefile', line 14)
@@ -89,7 +89,7 @@ PULSE_SERVER = /mnt/wslg/PulseServer
 # makefile (from 'Makefile', line 13)
 BLU = \033[0;34m
 # environment
-WT_SESSION = 6f156938-4fc7-4734-8245-469fbb84d9d9
+WT_SESSION = 8f6c99c2-3730-48b0-8929-5bc54c5f8dc8
 # environment
 VSCODE_AMD_ENTRYPOINT = vs/workbench/api/node/extensionHostProcess
 # environment
@@ -197,10 +197,10 @@ MOTD_SHOWN = update-motd
 
 # Directories
 
-# . (device 2080, inode 350623): 12 files, no impossibilities.
-# srcs (device 2080, inode 350711): 5 files, no impossibilities.
+# . (device 2080, inode 350623): 13 files, no impossibilities.
+# srcs (device 2080, inode 350711): 6 files, no impossibilities.
 
-# 17 files, no impossibilities in 2 directories.
+# 19 files, no impossibilities in 2 directories.
 
 # Implicit Rules
 
@@ -230,7 +230,7 @@ srcs/tester_map.cpp:
 objs/main.o: main.cpp
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: 'main'
-#  Last modified 2022-10-27 11:10:42.085327
+#  Last modified 2022-10-27 23:04:26.174315
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'Makefile', line 31):
@@ -254,7 +254,14 @@ all: prog
 # Not a target:
 srcs/tester_vector.cpp:
 #  Implicit rule search has been done.
-#  Last modified 2022-10-26 23:56:41.795577
+#  Last modified 2022-10-27 21:58:55.896648
+#  File has been updated.
+#  Successfully updated.
+
+# Not a target:
+srcs/tester_stack.cpp:
+#  Implicit rule search has been done.
+#  Last modified 2022-10-27 21:59:53.408877
 #  File has been updated.
 #  Successfully updated.
 
@@ -268,7 +275,8 @@ Makefile:
 # Not a target:
 main.cpp:
 #  Implicit rule search has been done.
-#  Last modified 2022-10-27 11:10:41.905327
+#  Last modified 2022-10-27 21:59:06.156648
+ 
 #  File has been updated.
 #  Successfully updated.
 
@@ -279,10 +287,9 @@ srcs/tester_utils.cpp:
 #  File has been updated.
 #  Successfully updated.
 
-prog: objs/main.o objs/tester_map.o objs/tester_vector.o objs/tester_utils.o
+prog: objs/main.o objs/tester_map.o objs/tester_stack.o objs/tester_vector.o objs/tester_utils.o
 #  Implicit rule search has not been done.
- 
-#  Last modified 2022-10-27 11:10:54.535327
+#  Last modified 2022-10-27 23:04:32.904315
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'Makefile', line 41):
@@ -308,7 +315,7 @@ fclean: clean
 objs/tester_map.o: srcs/tester_map.cpp
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: 'tester_map'
-#  Last modified 2022-10-27 11:10:48.385327
+#  Last modified 2022-10-27 23:04:30.234315
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'Makefile', line 36):
@@ -334,7 +341,18 @@ clean:
 objs/tester_vector.o: srcs/tester_vector.cpp
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: 'tester_vector'
-#  Last modified 2022-10-27 11:10:53.945327
+#  Last modified 2022-10-27 23:04:32.434315
+#  File has been updated.
+#  Successfully updated.
+#  recipe to execute (from 'Makefile', line 36):
+			@mkdir -p $(OBJS_DIR)
+			@${CC} $(CPPFLAGS) -o $@ -c $< ${CFLAGS} ${DEBEUG}
+			@printf	"$(ERASE) ${BLU}$ [BUILD]${RST} '$<' $(END)"
+
+objs/tester_stack.o: srcs/tester_stack.cpp
+#  Implicit rule search has been done.
+#  Implicit/static pattern stem: 'tester_stack'
+#  Last modified 2022-10-27 23:04:31.144315
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'Makefile', line 36):
@@ -345,7 +363,7 @@ objs/tester_vector.o: srcs/tester_vector.cpp
 objs/tester_utils.o: srcs/tester_utils.cpp
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: 'tester_utils'
-#  Last modified 2022-10-27 11:10:54.355327
+#  Last modified 2022-10-27 23:04:32.674315
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'Makefile', line 36):
@@ -354,19 +372,19 @@ objs/tester_utils.o: srcs/tester_utils.cpp
 			@printf	"$(ERASE) ${BLU}$ [BUILD]${RST} '$<' $(END)"
 
 # files hash-table stats:
-# Load=17/1024=2%, Rehash=0, Collisions=0/55=0%
+# Load=19/1024=2%, Rehash=0, Collisions=0/62=0%
 # VPATH Search Paths
 
 # No 'vpath' search paths.
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 41 / storage = 466 B / avg = 11 B
-# current buf: size = 8162 B / used = 466 B / count = 41 / avg = 11 B
+# strcache buffers: 1 (0) / strings = 47 / storage = 580 B / avg = 12 B
+# current buf: size = 8162 B / used = 580 B / count = 47 / avg = 12 B
 
-# strcache performance: lookups = 70 / hit rate = 41%
+# strcache performance: lookups = 77 / hit rate = 38%
 # hash-table stats:
-# Load=41/8192=1%, Rehash=0, Collisions=2/70=3%
-# Finished Make data base on Thu Oct 27 11:11:43 2022
+# Load=47/8192=1%, Rehash=0, Collisions=2/77=3%
+# Finished Make data base on Fri Oct 28 12:42:20 2022
 
  

@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/14 22:06:29 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/27 11:19:58 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/27 22:33:48 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -310,7 +310,7 @@ public:
 	*/
 	void assign(size_type count, const T &value)
 	{
-		std::cout << "assign()" << std::endl;
+		// std::cout << "assign()" << std::endl;
 		for (size_type i = 0; i < _nb_elems; i++) {
 			_alloc.destroy(_start + i);
 		}
@@ -330,7 +330,7 @@ public:
 	void assign(InputIt first,
 							typename enable_if<!ft::is_integral<InputIt>::value, InputIt>::type last)
 	{
-		std::cout << "template assign()" << std::endl;
+		// std::cout << "template assign()" << std::endl;
 		pointer new_start;
 		try {
 			_alloc = Allocator();
@@ -827,12 +827,12 @@ public:
 	{
 		return (this->_start >= rhs._start);
 	};
-	template <class O, class Alloc>
-	void swap(vector<O, Alloc> &lhs,
-						vector<O, Alloc> &rhs)
-	{
-		lhs.swap(rhs);
-	};
+	// template <class O, class Alloc>
+	// void swap(vector<O, Alloc> &lhs,
+	// 					vector<O, Alloc> &rhs)
+	// {
+	// 	lhs.swap(rhs);
+	// };
 
 	/* *************************************************** */
 	/*                                                     */

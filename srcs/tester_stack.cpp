@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 11:38:03 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/27 19:10:40 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/27 21:59:53 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -336,9 +336,21 @@ void tester_stack_type() {
 
 
 
+  /* AVERAGE TIME */
+	chrono.display_average();
+
 }
 
-// template< typename type_value, typename type_container >
+
+
+
+
+
+
+
+
+
+
 template< typename type_value, class type_container >
 void tester_stack_container_type() {
 
@@ -599,7 +611,8 @@ void tester_stack_container_type() {
 
 
 
-
+/* AVERAGE TIME */
+	chrono.display_average();
 
 
 }

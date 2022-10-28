@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   rbtree_iterator.hpp                                :+:      :+:    :+:   */
+/*   iterator_map.hpp                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 16:58:53 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/23 23:36:06 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/27 23:18:30 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,8 @@ template <typename T, class Compare >
 				_last_node(tree_it._last_node),
 				_nil(tree_it._nil),
 				_comp()
-			{}
+			{
+			}
 
 			virtual ~RB_iterator() { }
 

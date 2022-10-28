@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 17:30:03 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/27 11:41:59 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/27 22:01:05 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,8 +100,8 @@ struct s_time_diff
 
 			if (ft_time / 20 > stl_time) {
 				std::cout << RED "\n[TKO " << std::setprecision(2) << diff << "x] " END << std::endl;
-				std::cout << "STL chrono : " << std::setprecision(6) << stl_time << "s" << std::endl;
-				std::cout << "FT chrono  : " << std::setprecision(6) << ft_time << "s" << std::endl;
+				std::cout << "STL chrono : " << std::setprecision(8) << stl_time << "s" << std::endl;
+				std::cout << "FT chrono  : " << std::setprecision(8) << ft_time << "s" << std::endl;
 			}
 			else if (ft_time / 10 > stl_time)
 				std::cout << YEL "[TOK "<< std::setprecision(1) << diff << "x] " END ;

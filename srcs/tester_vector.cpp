@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 15:05:46 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/26 23:56:41 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/27 21:58:55 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -502,7 +502,8 @@ void tester_vector_type()
 
 
 
-
+	// stl_display<T>(stl_vector);
+	// ft_vector.display("");
 
 
 	/* *************************************************** */
@@ -510,6 +511,85 @@ void tester_vector_type()
 	/*                    ELEMENT ACCESS                   */
 	/*                                                     */
 	/* *************************************************** */
+	std::cout << MAG "\n\nTEST assign()" END << std::endl;
+
+
+	std_vector_t stl_vector_assign(100, convert<T>("42"));
+	ft_vector_t 	ft_vector_assign(100, convert<T>("42"));
+
+
+	// stl_display<T>(stl_vector_assign);
+	// ft_vector_assign.display("");
+
+	/* assign(10, "24") */
+	chrono.stl_start_chrono();
+	stl_vector_assign.assign(10, convert<T>("24"));
+	chrono.stl_end_chrono();
+
+	chrono.ft_start_chrono();
+	ft_vector_assign.assign(10, convert<T>("24"));
+	chrono.ft_end_chrono();
+
+	comp_vector(stl_vector_assign, ft_vector_assign, "assign(10, \"24\")");
+	chrono.diff_chrono();
+
+
+	// stl_display<T>(stl_vector_assign);
+	// ft_vector_assign.display("");
+
+
+
+
+	std_vector_t stl_vector_assign2(1, convert<T>("a"));
+	ft_vector_t 	ft_vector_assign2(1, convert<T>("a"));
+
+	/* assign 100, "b" */
+	chrono.stl_start_chrono();
+	stl_vector_assign2.assign(100, convert<T>("b"));
+	chrono.stl_end_chrono();
+
+	chrono.ft_start_chrono();
+	ft_vector_assign2.assign(100, convert<T>("b"));
+	chrono.ft_end_chrono();
+
+	comp_vector(stl_vector_assign2, ft_vector_assign2, "assign(100, \"b\")");
+	chrono.diff_chrono();
+
+
+
+
+
+	/* assign begin, begin + 2 */
+	chrono.stl_start_chrono();
+	stl_vector_assign2.assign(stl_vector.begin(), stl_vector.begin() + 2);
+	chrono.stl_end_chrono();
+
+	chrono.ft_start_chrono();
+	ft_vector_assign2.assign(ft_vector.begin(), ft_vector.begin() + 2);
+	chrono.ft_end_chrono();
+
+	comp_vector(stl_vector_assign2, ft_vector_assign2, "assign(begin, begin + 2)");
+	chrono.diff_chrono();
+
+
+
+	/* assign begin end */
+	chrono.stl_start_chrono();
+	stl_vector_assign2.assign(stl_vector.begin(), stl_vector.end());
+	chrono.stl_end_chrono();
+
+	chrono.ft_start_chrono();
+	ft_vector_assign2.assign(ft_vector.begin(), ft_vector.end());
+	chrono.ft_end_chrono();
+
+	comp_vector(stl_vector_assign2, ft_vector_assign2, "assign(begin, end)");
+	chrono.diff_chrono();
+
+
+
+
+
+
 
 	std::cout << MAG "\n\nTEST operator []" END << std::endl;
 
@@ -1435,9 +1515,10 @@ void tester_vector_type()
 
 
 
-	// stl_display<T>(stl_vector);
-	// ft_vector.display("ft_vector");
-	// stl_display<T>(stl_vector2);
-	// ft_vector2.display("ft_vector2");
+
+
+
+/* AVERAGE TIME */
+	chrono.display_average();
 
 }

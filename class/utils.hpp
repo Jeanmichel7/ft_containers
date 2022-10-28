@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/10 21:23:15 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/27 11:23:14 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/27 22:41:33 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@
 #include <iostream>
 #include <math.h>
 #include <deque>
+#include <string.h>
+#include <cstring>
 #include "enable_if.hpp"
 
 namespace ft

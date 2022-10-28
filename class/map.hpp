@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 18:14:05 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/27 11:19:28 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/27 23:05:51 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -498,41 +498,92 @@ public:
 
 
 
-	/* *************************************************** */
-	/*                                                     */
-	/*                 NON MEMBER FUNCTION                 */
-	/*                                                     */
-	/* *************************************************** */
+/* *************************************************** */
+/*                                                     */
+/*                 NON MEMBER FUNCTION                 */
+/*                                                     */
+/* *************************************************** */
 
-	template <class O_Key, class O_T, class O_Compare, class O_Alloc>
-	bool operator==(const map<O_Key, O_T, O_Compare, O_Alloc> &lhs,
-					const map<O_Key, O_T, O_Compare, O_Alloc> &rhs);
+template <class O_Key, class O_T, class O_Compare, class O_Alloc>
+bool operator==(const map<O_Key, O_T, O_Compare, O_Alloc> &lhs,
+								const map<O_Key, O_T, O_Compare, O_Alloc> &rhs)
+{
+	if (lhs.size() != rhs.size())
+		return (false);
+	typename map<O_Key, O_T, O_Compare, O_Alloc>::const_iterator it = lhs.begin();
+	typename map<O_Key, O_T, O_Compare, O_Alloc>::const_iterator ite = lhs.end();
+	typename map<O_Key, O_T, O_Compare, O_Alloc>::const_iterator it2 = rhs.begin();
+	while (it != ite)
+	{
+		if (it->first != it2->first || it->second != it2->second)
+			return (false);
+		it++;
+		it2++;
+	}
+	return (true);
+}
 
-	template <class O_Key, class O_T, class O_Compare, class O_Alloc>
-	bool operator!=(const map<O_Key, O_T, O_Compare, O_Alloc> &lhs,
-					const map<O_Key, O_T, O_Compare, O_Alloc> &rhs);
+template <class O_Key, class O_T, class O_Compare, class O_Alloc>
+bool operator!=(const map<O_Key, O_T, O_Compare, O_Alloc> &lhs,
+								const map<O_Key, O_T, O_Compare, O_Alloc> &rhs)
+{
+	return (!(lhs == rhs));
+}
 
-	template <class O_Key, class O_T, class O_Compare, class O_Alloc>
-	bool operator<(const map<O_Key, O_T, O_Compare, O_Alloc> &lhs,
-				   const map<O_Key, O_T, O_Compare, O_Alloc> &rhs);
+template <class O_Key, class O_T, class O_Compare, class O_Alloc>
+bool operator<(const map<O_Key, O_T, O_Compare, O_Alloc> &lhs,
+			   const map<O_Key, O_T, O_Compare, O_Alloc> &rhs) {
+	if (lhs.size() < rhs.size())
+		return (true);
+	if (lhs.size() > rhs.size())
+		return (false);
+	typename map<O_Key, O_T, O_Compare, O_Alloc>::const_iterator it = lhs.begin();
+	typename map<O_Key, O_T, O_Compare, O_Alloc>::const_iterator ite = lhs.end();
+	typename map<O_Key, O_T, O_Compare, O_Alloc>::const_iterator it2 = rhs.begin();
+	while (it != ite)
+	{
+		if (it->first < it2->first)
+			return (true);
+		if (it->first > it2->first)
+			return (false);
+		if (it->second < it2->second)
+			return (true);
+		if (it->second > it2->second)
+			return (false);
+		it++;
+		it2++;
+	}
+	return (false);
+}
 
-	template <class O_Key, class O_T, class O_Compare, class O_Alloc>
-	bool operator<=(const map<O_Key, O_T, O_Compare, O_Alloc> &lhs,
-					const map<O_Key, O_T, O_Compare, O_Alloc> &rhs);
+template <class O_Key, class O_T, class O_Compare, class O_Alloc>
+bool operator<=(const map<O_Key, O_T, O_Compare, O_Alloc> &lhs,
+								const map<O_Key, O_T, O_Compare, O_Alloc> &rhs)
+{
+	return (!(rhs < lhs));
+}
 
-	template <class O_Key, class O_T, class O_Compare, class O_Alloc>
-	bool operator>(const map<O_Key, O_T, O_Compare, O_Alloc> &lhs,
-				   const map<O_Key, O_T, O_Compare, O_Alloc> &rhs);
+template <class O_Key, class O_T, class O_Compare, class O_Alloc>
+bool operator>(const map<O_Key, O_T, O_Compare, O_Alloc> &lhs,
+							 const map<O_Key, O_T, O_Compare, O_Alloc> &rhs)
+{
+	return (rhs < lhs);
+}
 
-	template <class O_Key, class O_T, class O_Compare, class O_Alloc>
-	bool operator>=(const map<O_Key, O_T, O_Compare, O_Alloc> &lhs,
-					const map<O_Key, O_T, O_Compare, O_Alloc> &rhs);
+template <class O_Key, class O_T, class O_Compare, class O_Alloc>
+bool operator>=(const map<O_Key, O_T, O_Compare, O_Alloc> &lhs,
+								const map<O_Key, O_T, O_Compare, O_Alloc> &rhs)
+{
+	return (!(lhs < rhs));
+}
 
-	template <class Key, class T, class Compare, class Alloc>
-	void swap(map<Key, T, Compare, Alloc> &lhs,
-			  map<Key, T, Compare, Alloc> &rhs);
+template <class Key, class T, class Compare, class Alloc>
+void swap(map<Key, T, Compare, Alloc> &lhs,
+					map<Key, T, Compare, Alloc> &rhs)
+{
+	lhs.swap(rhs);
+}
 
-}	// namespace ft
-
+} // namespace ft
 
 #endif
