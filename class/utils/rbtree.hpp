@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 12:54:45 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/27 22:58:04 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/29 00:33:34 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,11 @@ public:
 	typedef Node const 														*node_const_pointer;
 	typedef Node_Alloc  													node_alloc;
 	typedef size_t 																size_type;
-	typedef ft::RB_iterator<Node, Compare> 				iterator;
-	typedef ft::RB_const_iterator<Node, Compare>  const_iterator;
-	typedef ft::reverse_iterator<iterator> 				reverse_iterator;
-	typedef ft::reverse_iterator<const_iterator>  const_reverse_iterator;
+
+	typedef ft::RB_iterator< Node, Compare > 							iterator;
+	typedef ft::RB_const_iterator< Node, Compare>  				const_iterator;
+	typedef ft::reverse_iterator< iterator > 							reverse_iterator;
+	typedef ft::reverse_iterator< const_iterator >  			const_reverse_iterator;
 
 
 private:
@@ -249,9 +250,9 @@ public:
 	ft::pair<iterator, bool> insert_pair(const value_type& val ) {
 
 		ft::pair<iterator, bool> 	ret;
-    node_pointer 							x = this->_root;
-    node_pointer 							y = NULL;
-		node_pointer 							node;
+    node_pointer	x = this->_root;
+    node_pointer	y = NULL;
+		node_pointer	node;
 
     while (x != _nil) {
       y = x;
@@ -264,16 +265,23 @@ public:
 			}
     }
 
-		node = _node_alloc.allocate(1);
-		_node_alloc.construct(node, Node(val, NULL, _nil, _nil, N_RED));
-    node->_parent = y;
-    if (y == NULL) {
-      _root = node;
-    } else if (node->_content < y->_content) {
-      y->_left = node;
-    } else {
-      y->_right = node;
-    }
+		try {
+			node = _node_alloc.allocate(1);
+			_node_alloc.construct(node, Node(val, NULL, _nil, _nil, N_RED));
+		} catch (std::exception &e) {
+			throw;
+			return ft::pair<iterator, bool>(iterator(x, _last_node, _nil), false);
+		}
+
+
+		node->_parent = y;
+		if (y == NULL) {
+			_root = node;
+		} else if (node->_content < y->_content) {
+			y->_left = node;
+		} else {
+			y->_right = node;
+		}
 		_size++;
 
     if (node->_parent == NULL) {
@@ -290,32 +298,37 @@ public:
 				_last_node = _root->_right;
 			return ft::make_pair(iterator(node, _last_node, _nil), true);
 		}
-    insertFix(node);
+    insert_fix(node);
 		return ft::make_pair(iterator(node, _last_node, _nil), true);
 	}
 
 
 
 
-	iterator insert_pair_pos( node_pointer start, const value_type& val ) {
-    node_pointer 							x = start;
-    node_pointer 							y = NULL;
 
-		node_pointer node = _node_alloc.allocate(1);
-		_node_alloc.construct(node, Node(val, NULL, _nil, _nil, N_RED));
+	iterator insert_pair_pos( node_pointer start, const value_type& val ) {
+    node_pointer	x = start;
+    node_pointer	y = NULL;
+		node_pointer	node;
 
     while (x != _nil) {
       y = x;
-      if (node->_content < x->_content) {
+      if (val.first < x->_content.first) {
         x = x->_left;
       } else if (x->_content.first < val.first){
         x = x->_right;
       } else {
-				_node_alloc.destroy(node);
-				_node_alloc.deallocate(node, 1);
 				return iterator(x, _last_node, _nil);
 			}
     }
+
+		try {
+			node = _node_alloc.allocate(1);
+			_node_alloc.construct(node, Node(val, NULL, _nil, _nil, N_RED));
+		} catch (std::exception &e) {
+			throw;
+			return (iterator(x, _last_node, _nil));
+		}
 
     node->_parent = y;
     if (y == NULL) {
@@ -338,7 +351,7 @@ public:
 			return iterator(node, _last_node, _nil);
     }
 
-    insertFix(node);
+    insert_fix(node);
 		// display_tree("");
 		return iterator(node, _last_node, _nil);
 	}
@@ -376,51 +389,18 @@ public:
 		
 		node_pointer p = hint._node->_parent;
 		node_pointer gp = p->_parent;
-		if (hint == begin()) {
-			if (_comp(to_insert.first, p->_content.first)) {
-				// std::cout << "hint is good";
-				return insert_pair_pos(hint._node, to_insert);
-			}
-			else {
-				// std::cout << "hint not good";
-				return insert_pair(to_insert).first;
-			}
-		}
-
-		if (hint._node == p->_left) {
-			if (_comp(to_insert.first, p->_content.first) && _comp(p->_content.first, gp->_content.first)) {
-				// std::cout << "hint is good1";
-				return insert_pair_pos(hint._node, to_insert);
-			}
-			else {
-				// std::cout << "hint not good1";
-				return insert_pair(to_insert).first;
-			}
+		if ( p && gp &&
+			(( gp > p && _comp(p->_content.first, to_insert.first) 
+				&& _comp(to_insert.first, gp->_content.first)) 
+			||
+			(p < gp && _comp(gp->_content.first, to_insert.first) 
+				&& _comp(to_insert.first, p->_content.first)))) {
+			// std::cout << "hint is good";
+			return insert_pair_pos(hint._node->_parent, to_insert);
 		} else {
-			if (_comp(gp->_content.first, p->_content.first) && _comp(p->_content.first, to_insert.first)) {
-				// std::cout << "hint is good2";
-				return insert_pair_pos(hint._node, to_insert);
-			}
-			else {
-				// std::cout << "hint not good2";
-				return insert_pair(to_insert).first;
-			}
+			// std::cout << "hint not good";
+			return insert_pair(to_insert).first;
 		}
-
-		// 	if ( p && gp &&
-		// 	(( gp > p && _comp(p->_content.first, to_insert.first) 
-		// 		&& _comp(to_insert.first, gp->_content.first)) 
-		// 	||
-		// 	(p < gp && _comp(gp->_content.first, to_insert.first) 
-		// 		&& _comp(to_insert.first, p->_content.first)))) {
-		// 	std::cout << "hint is good";
-		// 	return insert_pair_pos(hint._node->_parent, to_insert);
-		// } else {
-		// 	std::cout << "hint not good";
-		// 	return insert_pair(to_insert).first;
-		// }
-		
-	
 	}
 
 
@@ -430,7 +410,6 @@ public:
 	template< class InputIt >
 	void insert( InputIt first, InputIt last ) {
 		while (first != last && _size < max_size()) {
-			// std::cout << "insert " << first->first << std::endl;
 			insert_pair(*first);
 			first++;
 		}
@@ -805,7 +784,7 @@ public:
     v->_parent = u->_parent;
   }
 
-  void insertFix(node_pointer current) {
+  void insert_fix(node_pointer current) {
     node_pointer u;
     while (current->_parent->_color == N_RED && current->_parent != NULL) {
       if (current->_parent == current->_parent->_parent->_right) {

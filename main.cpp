@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/14 22:19:53 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/27 21:59:06 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/28 23:17:45 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 int main()
 {
-	tester_vector();
+	// tester_vector();
 	tester_map();
-	tester_stack();
+	// tester_stack();
 
 
 	std::cout << std::endl;

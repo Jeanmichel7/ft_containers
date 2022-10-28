@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 18:14:05 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/27 23:05:51 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/29 00:03:07 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@
 // #include <memory>
 // #include <cstddef>
 // #include <iterator>
-#include <exception>
 // #include <limits>
 
 namespace ft
@@ -214,7 +213,7 @@ public:
 
 	size_type size() const {
 		return (_tree.size());
-	};
+	}
 
 	size_type max_size() const {
 		return _tree.max_size();
@@ -232,35 +231,23 @@ public:
 	/* *************************************************** */
 
 	T& at( const Key& key ) {
-		// try{
 			iterator it = find(key);
 			if (it == end())
 				throw std::out_of_range("ft_map::at");
 			return (it->second);
-		// }
-		// catch (std::exception &e){
-			// std::cout << e.what() << std::endl;
-			// return end()->second;
-		// }
 	}
 
 	const T& at( const Key& key ) const {
-		// try {
 			const_iterator it = find(key);
 			if (it == end())
 				throw std::out_of_range("ft_map::at");
 			return (it->second);
-		// }
-		// catch (std::exception &e){
-			// std::cout << e.what() << std::endl;
-			// return end()->second;
-		// }
 	}
 
 	T& operator[]( const Key& key ) {
 		iterator it = find(key);
-		if (it == end())
-			it = insert(ft::make_pair(key, T())).first;
+			if (it == end())
+				it = insert(ft::make_pair(key, T())).first;
 		return (it->second);
 	}
 

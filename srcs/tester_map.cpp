@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 14:16:17 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/24 15:50:40 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/29 00:33:08 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,93 +84,6 @@ void fill_map(T_map *map) {
 		i++;
 		c++;
 	}
-
-
-
-	// insert random values
-	// i = 0;
-	// while(i < 20) {
-	// 	key_str = tostr(rand() % 1000);
-	// 	value_str = tostr(rand() % 1000);
-
-	// 	map->insert(T_pair(
-	// 		convert<type_key_map>(key_str),
-	// 	 	convert<type_value_map>(value_str)
-	// 	));
-	// 	i++;
-	// }
-
-
-
-	// map->insert(T_pair("g", 1));
-	// map->insert(T_pair("h", 2));
-	// map->insert(T_pair("i", 3));
-	// map->insert(T_pair("j", 4));
-	// map->insert(T_pair("k", 5));
-	// map->insert(T_pair("l", 6));
-	// map->insert(T_pair("m", 7));
-	// map->insert(T_pair("n", 8));
-	// map->insert(T_pair("o", 9));
-	// map->insert(T_pair("p", 10));
-	// map->insert(T_pair("q", 11));
-	// map->insert(T_pair("r", 12));
-	// map->insert(T_pair("s", 13));
-	// map->insert(T_pair("t", 14));
-	// map->insert(T_pair("u", 15));
-	// map->insert(T_pair("v", 16));
-	// map->insert(T_pair("w", 17));
-	// map->insert(T_pair("x", 18));
-	// map->insert(T_pair("y", 19));
-	// map->insert(T_pair("aa", 1));
-	// map->insert(T_pair("ab", 1));
-	// map->insert(T_pair("za", 1));
-	// map->insert(T_pair("zaa", 1));
-	// map->insert(T_pair("zab", 1));
-	// map->insert(T_pair("zac", 1));
-	// map->insert(T_pair("zad", 1));
-	// map->insert(T_pair("zae", 1));
-	// map->insert(T_pair("zaf", 1));
-	// map->insert(T_pair("zag", 1));
-	// map->insert(T_pair("zah", 1));
-	// map->insert(T_pair("zai", 1));
-	// map->insert(T_pair("zaj", 1));
-	// map->insert(T_pair("zak", 1));
-	// map->insert(T_pair("zal", 1));
-	// map->insert(T_pair("zb", 1));
-	// map->insert(T_pair("zbq", 1));
-	// map->insert(T_pair("zs", 1));
-	// map->insert(T_pair("zs", 1));
-	// map->insert(T_pair("zsa", 1));
-	// map->insert(T_pair("zsb", 1));
-	// map->insert(T_pair("zsc", 1));
-	// map->insert(T_pair("zsd", 1));
-	// map->insert(T_pair("zse", 1));
-	// map->insert(T_pair("zsf", 1));
-	// map->insert(T_pair("zsg", 1));
-	// map->insert(T_pair("zsh", 1));
-	// map->insert(T_pair("zsha", 1));
-	// map->insert(T_pair("zshb", 1));
-	// map->insert(T_pair("zshc", 1));
-	// map->insert(T_pair("zshd", 1));
-	// map->insert(T_pair("zshq", 1));
-	// map->insert(T_pair("zshw", 1));
-	// map->insert(T_pair("zshe", 1));
-	// map->insert(T_pair("zshr", 1));
-	// map->insert(T_pair("zsht", 1));
-	// map->insert(T_pair("zshy", 1));
-	// map->insert(T_pair("zshu", 1));
-	// map->insert(T_pair("zshi", 1));
-	// map->insert(T_pair("zsho", 1));
-	// map->insert(T_pair("zshp", 1));
-	// map->insert(T_pair("zsha", 1));
-	// map->insert(T_pair("zshs", 1));
-	// map->insert(T_pair("zshd", 1));
-	// map->insert(T_pair("zshf", 1));
-	// map->insert(T_pair("zshg", 1));
-	// map->insert(T_pair("zshh", 1));
-	// map->insert(T_pair("zshj", 1));
-	// map->insert(T_pair("zshk", 1));
-	// map->insert(T_pair("zci", 1));
 }
 
 
@@ -669,70 +582,66 @@ void tester_map_type() {
 
 	// ft_map.display_tree();
 
-
-
-	/* insert begin()+5, "ee" hint not good*/
-	// std::string key_to_insert = "ee";
-	// int 		pos_to_insert = 17;
-	// int			value_to_insert = 42;
-
-
-	// it_type 		it_hint 		= map.begin();
-	// ft_it_type 	ft_it_hint 	= ft_map.begin();
-	// for(int i = 0; i < pos_to_insert; i++) { it_hint++; ft_it_hint++; }
-
-	// std::cout << "hint : " << it_hint->first << std::endl;
-	// std::cout << "ft_hint : " << ft_it_hint->first << std::endl;
-	// std::cout << "value to insert : " << key_to_insert << std::endl;
-
-	// chrono.stl_start_chrono();
-	// it_type 		it_hint2 		= map.insert(it_hint, pair(
-	// 	convert<type_key_map>(key_to_insert),
-	// 	convert<type_value_map>(tostr(value_to_insert))
-	// ));
-	// chrono.stl_end_chrono();
-
-	// chrono.ft_start_chrono();
-	// ft_it_type 	ft_it_hint2 = ft_map.insert(ft_it_hint, ft_pair(
-	// 	convert<type_key_map>(key_to_insert),
-	// 	convert<type_value_map>(tostr(value_to_insert))
-	// ));
-	// chrono.ft_end_chrono();
-
-	// sstr << it_hint2->first << ":" << it_hint2->second << std::endl;
-	// ft_sstr << ft_it_hint2->first << ":" << ft_it_hint2->second << std::endl;
-	// str_comp(sstr.str(), ft_sstr.str(), "begin() -> end()");
-	// sstr.str(""); sstr.clear(); ft_sstr.str(""); ft_sstr.clear();
-	// chrono.diff_chrono();
+	
 
 
 
-	// ft_map.display_tree();
 
 
 
-	// /* insert begin()+7, "ef" hint good*/
-	// key_to_insert = "ef";
-	// pos_to_insert = 7;
-	// value_to_insert = 42;
+	/* random hint */
+	int 				nb_test = 0;
+	int 				hint 		= 0;
+	it_type 		it_rand_hint;
+	ft_it_type 	ft_it_rand_hint;
 
-	// it_hint 		= map.begin();
-	// ft_it_hint 	= ft_map.begin();
-	// for(int i = 0; i < pos_to_insert; i++) { it_hint++; ft_it_hint++; }
+	srand (time(NULL));
+	for(int i = 0; i < nb_test; i++) {
+		/* set random hint */
+		it_rand_hint 		= map.begin();
+		ft_it_rand_hint = ft_map.begin();
+		hint = rand() % map.size();
+		while (hint--)
+		{
+			it_rand_hint++;
+			ft_it_rand_hint++;
+		}
 
-	// chrono.stl_start_chrono();
-	// it_hint2 		= map.insert(it_hint, pair(key_to_insert, value_to_insert));
-	// chrono.stl_end_chrono();
+		/* set random value */
+		key_str = tostr(rand() % 500 + 1);
+		value_str = tostr(rand() % 500 + 1);
+	}
 
-	// chrono.ft_start_chrono();
-	// ft_it_hint2 = ft_map.insert(ft_it_hint, ft_pair(key_to_insert, value_to_insert));
-	// chrono.ft_end_chrono();
+	chrono.stl_start_chrono();
+	for(int i = 0; i < nb_test; i++) {
+		it_insert_hint = map.insert(
+			it_rand_hint,
+			pair(
+				convert<type_key_map>(key_str),
+				convert<type_value_map>(value_str)
+			)
+		);
+	}
+	chrono.stl_end_chrono();
 
-	// sstr << it_hint2->first << ":" << it_hint2->second << std::endl;
-	// ft_sstr << ft_it_hint2->first << ":" << ft_it_hint2->second << std::endl;
-	// str_comp(sstr.str(), ft_sstr.str(), "begin() -> end()");
-	// sstr.str(""); sstr.clear(); ft_sstr.str(""); ft_sstr.clear();
-	// chrono.diff_chrono();
+	chrono.ft_start_chrono();
+	for(int i = 0; i < nb_test; i++) {
+		ft_it_insert_hint = ft_map.insert(
+			ft_it_rand_hint,
+			ft_pair(
+				convert<type_key_map>(key_str),
+				convert<type_value_map>(value_str)
+			)
+		);
+	}
+	chrono.ft_end_chrono();
+
+	str_comp(tostr(it_insert_hint->first), tostr(ft_it_insert_hint->first), "insert(hint, value(ft_pair(\"" + key_str + "\", " + value_str + "))) -> first");
+	str_comp(tostr(it_insert_hint->second), tostr(ft_it_insert_hint->second), "insert(hint, value(ft_pair(\"" + key_str + "\", " + value_str + "))) -> second");
+	chrono.diff_chrono();
+
+
+
 
 
 
@@ -740,6 +649,7 @@ void tester_map_type() {
 
 	/* compare maps */
 	comp_map(map, ft_map, "compare map - ft_map");
+
 
 
 
