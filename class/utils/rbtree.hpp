@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 12:54:45 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/29 00:33:34 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/29 17:51:02 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -605,16 +605,20 @@ public:
         x = x->_right;
       } else {
 				it1 = iterator(x, _last_node, _nil);
-				it2 = iterator(x, _last_node, _nil);
-				return ft::pair<iterator,iterator>(it1, ++it2);
+				it2 = it1;
+				it2++;
+				return ft::make_pair<iterator,iterator>(it1, it2);
 			}
     }
-		it2 = iterator(y, _last_node, _nil);
-		return ft::pair<iterator,iterator>(it2, ++it2);
+		if (y == _last_node) {
+			return ft::pair<iterator,iterator>(end(), end());
+		}
+		it1 = iterator(y, _last_node, _nil);
+		it1++;
+		return ft::pair<iterator,iterator>(it1, it1);
 	}
 
 	ft::pair<const_iterator,const_iterator> equal_range( const typename value_type::first_type& key ) const {
-		
 		node_pointer 							x = this->_root;
 		node_pointer 							y = x;
 		const_iterator it1;
@@ -902,16 +906,13 @@ public:
 
 
 
-
-
 	/* *************************************************** */
 	/*                                                     */
 	/*                      DISPLAY                        */
 	/*                                                     */
 	/* *************************************************** */
 
-
-	void display_tree(std::string msg)
+	void display_tree(std::string msg) const
 	{
 		std::cout << "\n**********  Display tree (" << msg << ") ************\n" << std::endl;
 		// std::cout << "len tree : " << _size << std::endl << std::endl;
@@ -950,7 +951,7 @@ public:
 	}
 
 
-	void display_tree(node_pointer current, int space_root, bool is_last)
+	void display_tree(node_pointer current, int space_root, bool is_last) const
 	{
 		// bool is_not_nil = 0;
 		if (current == NULL)

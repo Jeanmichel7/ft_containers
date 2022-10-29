@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 18:14:05 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/29 00:03:07 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/29 18:08:36 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -233,14 +233,14 @@ public:
 	T& at( const Key& key ) {
 			iterator it = find(key);
 			if (it == end())
-				throw std::out_of_range("ft_map::at");
+				throw std::out_of_range("map::at");
 			return (it->second);
 	}
 
 	const T& at( const Key& key ) const {
 			const_iterator it = find(key);
 			if (it == end())
-				throw std::out_of_range("ft_map::at");
+				throw std::out_of_range("map::at");
 			return (it->second);
 	}
 
@@ -350,7 +350,7 @@ public:
 	};
 	
 	const_iterator find( const Key& key ) const {
-		// std::cout << "********** const fund ! ***********" << std::endl;
+		// std::cout << " const find()" << std::endl;
 		const_iterator it = begin();
 		while (it != end())
 		{
@@ -384,6 +384,8 @@ public:
 	}
 
 	ft::pair<const_iterator,const_iterator> equal_range( const Key& key ) const {
+		std::cout << " const equal rang()" << std::endl;
+
 		// const_iterator it = find(key);
 		// if (it == end())
 		// 	return (ft::make_pair(end(), end()));
@@ -404,6 +406,7 @@ public:
 	}
 
 	const_iterator lower_bound( const Key& key ) const {
+		std::cout << " const lower_bound()" << std::endl;
 		const_iterator it = begin();
 		while (it != end()) {
 			if (it->first >= key)
@@ -426,6 +429,7 @@ public:
 	}
 	
 	const_iterator upper_bound( const Key& key ) const {
+		std::cout << " const upper_bound()" << std::endl;
 		const_iterator it = begin();
 		while (it != end()) {
 			if (it->first > key)
@@ -469,12 +473,12 @@ public:
 	/*                       DISPLAY                       */
 	/*                                                     */
 	/* *************************************************** */
-	void display_tree(std::string msg)
+	void display_tree(std::string msg) const
 	{
 		_tree.display_tree(msg);
 	}
 
-	void display_tree()
+	void display_tree() const
 	{
 		_tree.display_tree("");
 		// _tree.display_tree< key_type, mapped_type >("");
@@ -491,15 +495,15 @@ public:
 /*                                                     */
 /* *************************************************** */
 
-template <class O_Key, class O_T, class O_Compare, class O_Alloc>
-bool operator==(const map<O_Key, O_T, O_Compare, O_Alloc> &lhs,
-								const map<O_Key, O_T, O_Compare, O_Alloc> &rhs)
+template <class Key, class T, class Compare, class Alloc>
+bool operator==(const map<Key, T, Compare, Alloc> &lhs,
+								const map<Key, T, Compare, Alloc> &rhs)
 {
 	if (lhs.size() != rhs.size())
 		return (false);
-	typename map<O_Key, O_T, O_Compare, O_Alloc>::const_iterator it = lhs.begin();
-	typename map<O_Key, O_T, O_Compare, O_Alloc>::const_iterator ite = lhs.end();
-	typename map<O_Key, O_T, O_Compare, O_Alloc>::const_iterator it2 = rhs.begin();
+	typename map<Key, T, Compare, Alloc>::const_iterator it = lhs.begin();
+	typename map<Key, T, Compare, Alloc>::const_iterator ite = lhs.end();
+	typename map<Key, T, Compare, Alloc>::const_iterator it2 = rhs.begin();
 	while (it != ite)
 	{
 		if (it->first != it2->first || it->second != it2->second)
@@ -510,23 +514,23 @@ bool operator==(const map<O_Key, O_T, O_Compare, O_Alloc> &lhs,
 	return (true);
 }
 
-template <class O_Key, class O_T, class O_Compare, class O_Alloc>
-bool operator!=(const map<O_Key, O_T, O_Compare, O_Alloc> &lhs,
-								const map<O_Key, O_T, O_Compare, O_Alloc> &rhs)
+template <class Key, class T, class Compare, class Alloc>
+bool operator!=(const map<Key, T, Compare, Alloc> &lhs,
+								const map<Key, T, Compare, Alloc> &rhs)
 {
 	return (!(lhs == rhs));
 }
 
-template <class O_Key, class O_T, class O_Compare, class O_Alloc>
-bool operator<(const map<O_Key, O_T, O_Compare, O_Alloc> &lhs,
-			   const map<O_Key, O_T, O_Compare, O_Alloc> &rhs) {
+template <class Key, class T, class Compare, class Alloc>
+bool operator<(const map<Key, T, Compare, Alloc> &lhs,
+			   const map<Key, T, Compare, Alloc> &rhs) {
 	if (lhs.size() < rhs.size())
 		return (true);
 	if (lhs.size() > rhs.size())
 		return (false);
-	typename map<O_Key, O_T, O_Compare, O_Alloc>::const_iterator it = lhs.begin();
-	typename map<O_Key, O_T, O_Compare, O_Alloc>::const_iterator ite = lhs.end();
-	typename map<O_Key, O_T, O_Compare, O_Alloc>::const_iterator it2 = rhs.begin();
+	typename map<Key, T, Compare, Alloc>::const_iterator it = lhs.begin();
+	typename map<Key, T, Compare, Alloc>::const_iterator ite = lhs.end();
+	typename map<Key, T, Compare, Alloc>::const_iterator it2 = rhs.begin();
 	while (it != ite)
 	{
 		if (it->first < it2->first)
@@ -543,23 +547,23 @@ bool operator<(const map<O_Key, O_T, O_Compare, O_Alloc> &lhs,
 	return (false);
 }
 
-template <class O_Key, class O_T, class O_Compare, class O_Alloc>
-bool operator<=(const map<O_Key, O_T, O_Compare, O_Alloc> &lhs,
-								const map<O_Key, O_T, O_Compare, O_Alloc> &rhs)
+template <class Key, class T, class Compare, class Alloc>
+bool operator<=(const map<Key, T, Compare, Alloc> &lhs,
+								const map<Key, T, Compare, Alloc> &rhs)
 {
 	return (!(rhs < lhs));
 }
 
-template <class O_Key, class O_T, class O_Compare, class O_Alloc>
-bool operator>(const map<O_Key, O_T, O_Compare, O_Alloc> &lhs,
-							 const map<O_Key, O_T, O_Compare, O_Alloc> &rhs)
+template <class Key, class T, class Compare, class Alloc>
+bool operator>(const map<Key, T, Compare, Alloc> &lhs,
+							 const map<Key, T, Compare, Alloc> &rhs)
 {
 	return (rhs < lhs);
 }
 
-template <class O_Key, class O_T, class O_Compare, class O_Alloc>
-bool operator>=(const map<O_Key, O_T, O_Compare, O_Alloc> &lhs,
-								const map<O_Key, O_T, O_Compare, O_Alloc> &rhs)
+template <class Key, class T, class Compare, class Alloc>
+bool operator>=(const map<Key, T, Compare, Alloc> &lhs,
+								const map<Key, T, Compare, Alloc> &rhs)
 {
 	return (!(lhs < rhs));
 }

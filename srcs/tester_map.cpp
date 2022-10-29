@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 14:16:17 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/29 00:33:08 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/29 18:08:20 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,19 @@ void sstr_comp(T1 it, T2 ft_it, std::string msg) {
 	sstr.str(""); sstr.clear(); ft_sstr.str(""); ft_sstr.clear();
 }
 
+void exception_comp( std::string ex, std::string ft_ex, std::string msg) {
+	if (ex.compare(ft_ex) != 0)
+	{
+		std::cout << RED "\n[\U0001F6E1 ] " END << msg << std::endl;
+		
+		std::cout << "std::map = " << ex << std::endl;
+		std::cout << "ft::map  = " << ft_ex << std::endl << std::endl;
+	}
+	else {
+		std::cout << GRN "[\U0001F6E1 ] " END ;
+		// std::cout << str << std::endl << ft_str << std::endl << msg << std::endl;
+	}
+}
 
 
 void str_comp(std::string str, std::string ft_str, std::string msg) {
@@ -32,8 +45,8 @@ void str_comp(std::string str, std::string ft_str, std::string msg) {
 	{
 		std::cout << RED "\n[KO] " END << msg << std::endl;
 		
-		std::cout << "std::map = " << str << std::endl;
-		std::cout << "ft::map  = " << ft_str << std::endl << std::endl;
+		std::cout << "std str = " << str << std::endl;
+		std::cout << "ft str  = " << ft_str << std::endl << std::endl;
 	}
 	else {
 		std::cout << GRN "[OK] " END ;
@@ -48,8 +61,8 @@ void	comp_map( M1 &map, M2 &ft_map, std::string msg) {
 	std::stringstream sstr;
 	std::stringstream ft_sstr;
 
-	typename M1::iterator it = map.begin();
-	typename M2::iterator ft_it = ft_map.begin();
+	typename M1::const_iterator it = map.begin();
+	typename M2::const_iterator ft_it = ft_map.begin();
 
 	for(; it != map.end(); it++) {
 		sstr << it->first << ":" << it->second << " ";
@@ -61,6 +74,14 @@ void	comp_map( M1 &map, M2 &ft_map, std::string msg) {
 	sstr.str(""); sstr.clear(); ft_sstr.str(""); ft_sstr.clear();
 }
 
+// template <typename M1, typename M2>
+// void	comp_exception( M1 &map, M2 &ft_map, std::string msg) {
+// 	std::stringstream sstr;
+// 	std::stringstream ft_sstr;
+
+
+
+// }
 
 
 /* insert 20 values following and 20 random*/
@@ -590,7 +611,7 @@ void tester_map_type() {
 
 
 	/* random hint */
-	int 				nb_test = 0;
+	int 				nb_test = 10;
 	int 				hint 		= 0;
 	it_type 		it_rand_hint;
 	ft_it_type 	ft_it_rand_hint;
@@ -621,6 +642,7 @@ void tester_map_type() {
 				convert<type_value_map>(value_str)
 			)
 		);
+		sstr << tostr(it_insert_hint->first) << " " << tostr(it_insert_hint->second) << ", ";
 	}
 	chrono.stl_end_chrono();
 
@@ -633,11 +655,13 @@ void tester_map_type() {
 				convert<type_value_map>(value_str)
 			)
 		);
+		ft_sstr << tostr(ft_it_insert_hint->first) << " " << tostr(ft_it_insert_hint->second) << ", ";
 	}
 	chrono.ft_end_chrono();
 
-	str_comp(tostr(it_insert_hint->first), tostr(ft_it_insert_hint->first), "insert(hint, value(ft_pair(\"" + key_str + "\", " + value_str + "))) -> first");
-	str_comp(tostr(it_insert_hint->second), tostr(ft_it_insert_hint->second), "insert(hint, value(ft_pair(\"" + key_str + "\", " + value_str + "))) -> second");
+
+	str_comp(sstr.str(), ft_sstr.str(), "insert(random_hint, value(ft_pair(\"" + key_str + "\", " + value_str + ")))");
+	sstr.str(""); sstr.clear(); ft_sstr.str(""); ft_sstr.clear();
 	chrono.diff_chrono();
 
 
@@ -832,7 +856,7 @@ void tester_map_type() {
 
 
 
-	// /* end() --*/
+	/* end() --*/
 	chrono.stl_start_chrono();
 	it 		= map.end(); it--;
 	chrono.stl_end_chrono();
@@ -939,12 +963,21 @@ void tester_map_type() {
 
 
 
-	// /* ***************************************************** */
-	// /*                    CONST_ITERATOR                     */
-	// /*                  pair< string, int >                  */
-	// /* ***************************************************** */
+
+
+
+
+
+
+	/* ***************************************************** */
+	/*                    CONST_ITERATOR                     */
+	/*                  pair< string, int >                  */
+	/* ***************************************************** */
 	std::cout << MAG "\n\nTEST const iterator" END << std::endl;
 
+
+
+	
 	/* const begin() */
 	chrono.stl_start_chrono();
 	const_it_type 		const const_it3 	= map.begin();
@@ -1016,7 +1049,7 @@ void tester_map_type() {
 
 
 
-	/*const end()++  only linux */
+	/*const end()++  only stl linux */
 	// it_end 		= map.end(); 	it_end++;
 	// ft_it_end 	= ft_map.end(); ft_it_end++;
 	// const_it_type 		const_it_end_p 		= it_end;
@@ -1041,12 +1074,73 @@ void tester_map_type() {
 
 
 
+	
 
 
-	// /* ***************************************************** */
-	// /*                   REVERSE_ITERATOR                    */
-	// /*                  pair< string, int >                  */
-	// /* ***************************************************** */
+
+	/* CONST map */
+	std_map_t const const_map(map);
+	ft_map_t const const_ft_map(ft_map);
+
+	// comp_map(const_map, const_ft_map, "const map");
+	// const_ft_map.display_tree("");
+
+	/* const begin() */
+	chrono.stl_start_chrono();
+	const_it_type 		const const_it4 	= const_map.begin();
+	chrono.stl_end_chrono();
+
+	chrono.ft_start_chrono();
+	ft_const_it_type 	const const_ft_it4 	= const_ft_map.begin();
+	chrono.ft_end_chrono();
+
+	sstr_comp< const_it_type, ft_const_it_type >(const_it4, const_ft_it4, "const begin()");
+	chrono.diff_chrono();
+
+
+
+
+
+
+
+
+	/* const begin() end()*/
+	const_it_type  		const_it5;
+	ft_const_it_type 	const_ft_it5;
+
+	chrono.stl_start_chrono();
+	for (const_it5 = const_map.begin(); const_it5 != const_map.end(); const_it5++){
+		// std::cout << const_it5->first << " : " << const_it5->second << std::endl;
+		sstr << const_it5->first << ":" << const_it5->second << " ";
+	}
+	chrono.stl_end_chrono();
+
+
+
+	chrono.ft_start_chrono();
+	for (const_ft_it5 = const_ft_map.begin(); const_ft_it5 != const_ft_map.end(); const_ft_it5++) {
+		// std::cout << const_ft_it5->first << " : " << const_ft_it5->second << std::endl;
+		ft_sstr << const_ft_it5->first << ":" << const_ft_it5->second << " ";
+	}
+	chrono.ft_end_chrono();
+
+	str_comp(sstr.str(), ft_sstr.str(), "const begin() -> const end()");
+	sstr.str(""); sstr.clear(); ft_sstr.str(""); ft_sstr.clear();
+	chrono.diff_chrono();
+
+
+
+
+
+
+
+
+
+
+	/* ***************************************************** */
+	/*                   REVERSE_ITERATOR                    */
+	/*                  pair< string, int >                  */
+	/* ***************************************************** */
 	std::cout << MAG "\n\nTEST reverse iterator" END << std::endl;
 	
 
@@ -1184,6 +1278,55 @@ void tester_map_type() {
 
 
 	// ft_map.display_tree();
+
+
+
+
+
+
+	/* CONST MAP */
+	
+	/*const rbegin()*/
+	chrono.stl_start_chrono();
+	const_r_it_type 	const_r_it3 		= const_map.rbegin();
+	chrono.stl_end_chrono();	
+
+	chrono.ft_start_chrono();
+	ft_const_r_it_type 	const_ft_r_it3 		= const_ft_map.rbegin();
+	chrono.ft_end_chrono();
+
+	sstr_comp< const_r_it_type, ft_const_r_it_type >(const_r_it3, const_ft_r_it3, "const rbegin()");
+	chrono.diff_chrono();
+
+
+
+
+
+	/*const rbegin() + 4*/
+	const_r_it_type 	const_r_it5 		= const_map.rbegin(); const_r_it5++; const_r_it5++; const_r_it5++; const_r_it5++;
+	ft_const_r_it_type 	const_ft_r_it5 		= const_ft_map.rbegin(); const_ft_r_it5++; const_ft_r_it5++; const_ft_r_it5++; const_ft_r_it5++;
+
+	sstr_comp< const_r_it_type, ft_const_r_it_type >(const_r_it5, const_ft_r_it5, "const rbegin() + 4");
+
+
+
+
+
+	/* const rend()-- */
+	chrono.stl_start_chrono();
+	const_r_it_type 	const_r_it6 		= const_map.rend(); const_r_it6 --;
+	chrono.stl_end_chrono();
+
+	chrono.ft_start_chrono();
+	ft_const_r_it_type 	const_ft_r_it6 		= const_ft_map.rend(); const_ft_r_it6 --;
+	chrono.ft_end_chrono();
+
+	sstr_comp< const_r_it_type, ft_const_r_it_type >(const_r_it6, const_ft_r_it6, "const rend()--");
+	chrono.diff_chrono();
+
+
+
+	
 
 
 
@@ -1907,11 +2050,11 @@ void tester_map_type() {
 
 
 	/* ***************************************************** */
-	/*                     test at && []                     */
+	/*                        test at                        */
 	/*                  pair< string, int >                  */
 	/* ***************************************************** */
 
-	std::cout << MAG "\n\nTEST at && []" END << std::endl;
+	std::cout << MAG "\n\nTEST at" END << std::endl;
 
 	/* at @ */
 	chrono.stl_start_chrono();
@@ -1939,14 +2082,6 @@ void tester_map_type() {
 
 
 
-	// // /* at a */																																		tester excetion
-	// // ret_at = map.at("a");
-	// // ft_ret_at = ft_map.at("a");
-	// // str_comp( tostr(ret_at), tostr(ft_ret_at), "at(\"a\")");
-	// // str_comp( tostr(map.at("a")), tostr(ft_map.at("a")), "at(\"a\")");
-
-
-
 
 	/* at inexist */
 	try {
@@ -1955,7 +2090,7 @@ void tester_map_type() {
 		chrono.stl_end_chrono();
 	}
 	catch (std::exception &e) {
-		std::cout << RED "\nstl exception: " << e.what() << END;
+		sstr << e.what() << std::endl;
 	}
 
 	try {
@@ -1964,26 +2099,26 @@ void tester_map_type() {
 		chrono.ft_end_chrono();
 	}
 	catch (std::exception &e) {
-		std::cout << RED "\nft exception: " <<  e.what() << END << std::endl;
+		ft_sstr << e.what() << std::endl;
 	}
 
-	str_comp( tostr(ret_at), tostr(ft_ret_at), "at(\"inexist\")");
+	exception_comp(sstr.str(), ft_sstr.str(), "at(\"inexist\")");
+	sstr.str(""); sstr.clear(); ft_sstr.str(""); ft_sstr.clear();
+	str_comp( tostr(ret_at), tostr(ft_ret_at), "ret at(\"inexist\")");
 	chrono.diff_chrono();
 
-	// chrono.stl_start_chrono();
-	// ret_at = map.at(convert<type_key_map>("inexist"));
-	// chrono.stl_end_chrono();
-	// chrono.ft_start_chrono();
-	// ft_ret_at = ft_map.at(convert<type_key_map>("inexist"));
-	// chrono.ft_end_chrono();
-
-	// str_comp( tostr(ret_at), tostr(ft_ret_at), "at(\"inexist\")");
-	// chrono.diff_chrono();
 
 
 
 
 
+
+	/* ***************************************************** */
+	/*                        test []                        */
+	/*                  pair< string, int >                  */
+	/* ***************************************************** */
+
+	std::cout << MAG "\n\nTEST []" END << std::endl;
 
 
 
@@ -2014,22 +2149,40 @@ void tester_map_type() {
 
 
 
-	/* [] inexist */
-	chrono.stl_start_chrono();
-	ret_at = map[convert<type_key_map>("inexist")];
-	chrono.stl_end_chrono();
-	chrono.ft_start_chrono();
-	ft_ret_at = ft_map[convert<type_key_map>("inexist")];
-	chrono.ft_end_chrono();
+	/* insert [] inexist */
+	try {
+		chrono.stl_start_chrono();
+		ret_at = map[convert<type_key_map>("inexist")];
+		chrono.stl_end_chrono();
+	}
+	catch (std::exception &e) {
+		std::cout << "bloublbjbuboihb"	<< std::endl;
+		sstr << e.what() << std::endl;
+	}
 
-	str_comp( tostr(ret_at), tostr(ft_ret_at), "[](\"inexist\")");
+	try {
+		chrono.ft_start_chrono();
+		ft_ret_at = ft_map[convert<type_key_map>("inexist")];
+		chrono.ft_end_chrono();
+	}
+	catch (std::exception &e) {
+		ft_sstr << e.what() << std::endl;
+	}
+
+	exception_comp(sstr.str(), ft_sstr.str(), "at(\"inexist\")");
+	sstr.str(""); sstr.clear(); ft_sstr.str(""); ft_sstr.clear();
+	str_comp( tostr(ret_at), tostr(ft_ret_at), "ret at(\"inexist\")");
 	chrono.diff_chrono();
+
+
 
 
 
 	comp_map(map, ft_map, "map");
 
-	// // ft_map.display_tree();
+
+
+	// ft_map.display_tree();
 
 
 
@@ -2095,103 +2248,81 @@ void tester_map_type() {
 	std::cout << MAG "\n\nTEST equal_range()" END << std::endl;
 
 	std::pair<it_type, it_type> 			ret_equal_range;
-	ft::pair<ft_it_type, ft_it_type> ft_ret_equal_range;
+	ft::pair<ft_it_type, ft_it_type> 	ft_ret_equal_range;
 
 
-	// /* l */
+
+	// ft_map.display_tree();
+
+
+	/* inexist */
 	// chrono.stl_start_chrono();
-	// ret_equal_range 	= map.equal_range(convert<type_key_map>("l"));
+	// ret_equal_range 	= map.equal_range(convert<type_key_map>("ldsfsdffsdsf"));
 	// chrono.stl_end_chrono();
 	// chrono.ft_start_chrono();
-	// ft_ret_equal_range = ft_map.equal_range(convert<type_key_map>("l"));
+	// ft_ret_equal_range = ft_map.equal_range(convert<type_key_map>("ldsfsdffsdsf"));
 	// chrono.ft_end_chrono();
 
-	// str_comp( tostr(ret_equal_range.first->first), tostr(ft_ret_equal_range.first->first), "equal_range first first(\"l\")");
-	// str_comp( tostr(ret_equal_range.first->second), tostr(ft_ret_equal_range.first->second), "equal_range first second(\"l\")");
-	// str_comp( tostr(ret_equal_range.second->first), tostr(ft_ret_equal_range.second->first), "equal_range second first(\"l\")");
+	// str_comp( tostr(ret_equal_range.first->first), tostr(ft_ret_equal_range.first->first),     "equal_range first first(\"l\")");
+	// str_comp( tostr(ret_equal_range.first->second), tostr(ft_ret_equal_range.first->second),   "equal_range first second(\"l\")");
+	// str_comp( tostr(ret_equal_range.second->first), tostr(ft_ret_equal_range.second->first),   "equal_range second first(\"l\")");
 	// str_comp( tostr(ret_equal_range.second->second), tostr(ft_ret_equal_range.second->second), "equal_range second second(\"l\")");
 	// chrono.diff_chrono();
 
 
 
 
-	/* @ */
+	/* random */
+	nb_test = 100;
+	hint 		= 0;
+
+	srand (time(NULL));
+	for(int i = 0; i < nb_test; i++) {
+		/* set random hint */
+		it_rand_hint 		= map.begin();
+		ft_it_rand_hint = ft_map.begin();
+		hint = rand() % map.size();
+		while (hint--)
+		{
+			it_rand_hint++;
+			ft_it_rand_hint++;
+		}
+	}
+
 	chrono.stl_start_chrono();
-	ret_equal_range = map.equal_range(convert<type_key_map>("@"));
+	for(int i = 0; i < nb_test; i++) {
+		ret_equal_range = map.equal_range(it_rand_hint->first);
+		if ( ret_equal_range.first != map.end() )
+			sstr << tostr(ret_equal_range.first->first) << " " 
+						<< tostr(ret_equal_range.first->second) << " " ;
+		if ( ret_equal_range.second != map.end() )
+			sstr << tostr(ret_equal_range.second->first) << " "
+						<< tostr(ret_equal_range.second->second) << " " ;
+	}
 	chrono.stl_end_chrono();
+
 	chrono.ft_start_chrono();
-	ft_ret_equal_range = ft_map.equal_range(convert<type_key_map>("@"));
+	for(int i = 0; i < nb_test; i++) {
+		ft_ret_equal_range = ft_map.equal_range(ft_it_rand_hint->first);
+		if ( ft_ret_equal_range.first != ft_map.end() )
+			ft_sstr << tostr(ft_ret_equal_range.first->first) << " " 
+							<< tostr(ft_ret_equal_range.first->second) << " " ;
+		if ( ft_ret_equal_range.second != ft_map.end() )
+			ft_sstr << tostr(ft_ret_equal_range.second->first) << " "
+							<< tostr(ft_ret_equal_range.second->second) << " " ;
+	}
 	chrono.ft_end_chrono();
 
-	str_comp( tostr(ret_equal_range.first->first), tostr(ft_ret_equal_range.first->first), "equal_range(\"@\")");
-	str_comp( tostr(ret_equal_range.first->second), tostr(ft_ret_equal_range.first->second), "equal_range(\"@\")");
-	str_comp( tostr(ret_equal_range.second->first), tostr(ft_ret_equal_range.second->first), "equal_range(\"@\")");
-	str_comp( tostr(ret_equal_range.second->second), tostr(ft_ret_equal_range.second->second), "equal_range(\"@\")");
+	str_comp(sstr.str(), ft_sstr.str(), "equal_range random");
+	sstr.str(""); sstr.clear(); ft_sstr.str(""); ft_sstr.clear();
 	chrono.diff_chrono();
 
 
-	// ft_map.display_tree();
 
-
-	/* y bad alloc */
-	// chrono.stl_start_chrono();
-	// ret_equal_range = map.equal_range(convert<type_key_map>("y"));
-	// chrono.stl_end_chrono();
-	// chrono.ft_start_chrono();
-	// ft_ret_equal_range = ft_map.equal_range(convert<type_key_map>("y"));
-	// chrono.ft_end_chrono();
-
-	// str_comp( tostr(ret_equal_range.first->first), tostr(ft_ret_equal_range.first->first), "equal_range(\"y\")");
-	// str_comp( tostr(ret_equal_range.first->second), tostr(ft_ret_equal_range.first->second), "equal_range(\"y\")");
-	// str_comp( tostr(ret_equal_range.second->first), tostr(ft_ret_equal_range.second->first), "equal_range(\"y\")");
-	// str_comp( tostr(ret_equal_range.second->second), tostr(ft_ret_equal_range.second->second), "equal_range(\"y\")");
-	// chrono.diff_chrono();
-
-
-
-
-	// /* zshu SEGV*/
-	// // chrono.stl_start_chrono();
-	// // ret_equal_range = map.equal_range("zshu");
-	// // chrono.stl_end_chrono();
-	// // chrono.ft_start_chrono();
-	// // ft_ret_equal_range = ft_map.equal_range("zshu");
-	// // chrono.ft_end_chrono();
-
-	// // str_comp( tostr(ret_equal_range.first->first), tostr(ft_ret_equal_range.first->first), "equal_range(\"zshu\")");
-	// // str_comp( tostr(ret_equal_range.first->second), tostr(ft_ret_equal_range.first->second), "equal_range(\"zshu\")");
-	// // str_comp( ret_equal_range.second->first, ft_ret_equal_range.second->first, "equal_range(\"zshu\")");
-	// // str_comp( tostr(ret_equal_range.second->second), tostr(ft_ret_equal_range.second->second), "equal_range(\"zshu\")");
-	// // chrono.diff_chrono();
-
-
-
-
-	// /* z SEGV */
-	// // ret_equal_range = map.equal_range("z");
-	// // ft_ret_equal_range = ft_map.equal_range("z");
-	// // str_comp( tostr(ret_equal_range.first->first), tostr(ft_ret_equal_range.first->first), "equal_range(\"z\")");
-	// // str_comp( tostr(ret_equal_range.first->second), tostr(ft_ret_equal_range.first->second), "equal_range(\"z\")");
-	
-	// // std::cout << "ret first first = " << ret_equal_range.first->first << std::endl;
-	// // std::cout << "ft first first = " << ft_ret_equal_range.first->first << std::endl;
-	// // std::cout << "ret second first = " << ret_equal_range.second->first << std::endl;
-	// // std::cout << "ft second first= " << ft_ret_equal_range.second->first << std::endl;
-
-	// // std::cout << "ret second first = " << ret_equal_range.second->first << std::endl;
-	// // std::cout << "ft_ret second first = " << ft_ret_equal_range.second->first << std::endl;
-	// // std::cout << "ret second second = " << ret_equal_range.second->second << std::endl;
-	// // std::cout << "ft_ret second second = " << ft_ret_equal_range.second->second << std::endl;
-
-	// // str_comp( tostr(ret_equal_range.second->first), tostr(ft_ret_equal_range.second->first), "equal_range(\"z\")");
-	// // str_comp( tostr(ret_equal_range.second->second), tostr(ft_ret_equal_range.second->second), "equal_range(\"z\")");
 
 
 
 	// ft_map.display_tree();
-
-
-
 
 
 
@@ -2205,39 +2336,8 @@ void tester_map_type() {
 	ft_it_type 	ft_ret_lower_bound;
 
 
-	
-	// /* insert ("aaaaaaaaa", 123) */
-	// chrono.stl_start_chrono();
-	// ret_insert_value 	= map.insert(pair(
-	// 	convert<type_key_map>("aaaaaaaaa"),
-	// 	convert<type_value_map>("123")));
-	// chrono.stl_end_chrono();
 
-	// chrono.ft_start_chrono();
-	// ft_ret_insert_value = ft_map.insert(ft_pair(
-	// 	convert<type_key_map>("aaaaaaaaa"),
-	// 	convert<type_value_map>("123")));
-	// chrono.ft_end_chrono();
-
-	// str_comp(tostr(ret_insert_value.first->first), tostr(ft_ret_insert_value.first->first), "insert(value(ft_pair(\"aaaaaaaaa\", 123))) -> first -> first");
-	// str_comp(tostr(ret_insert_value.first->second), tostr(ft_ret_insert_value.first->second), "insert(value(ft_pair(\"aaaaaaaaa\", 123)))  -> first -> second");
-	// str_comp(tostr(ret_insert_value.second), tostr(ft_ret_insert_value.second), "insert(value(ft_pair(\"aaaaaaaaa\", 123))) -> second");
-	// chrono.diff_chrono();
-
-	// /* first */
-	// chrono.stl_start_chrono();
-	// ret_lower_bound = map.lower_bound(convert<type_key_map>("aaaaaaaaa"));
-	// chrono.stl_end_chrono();
-	// chrono.ft_start_chrono();
-	// ft_ret_lower_bound = ft_map.lower_bound(convert<type_key_map>("aaaaaaaaa"));
-	// chrono.ft_end_chrono();
-
-	// str_comp( tostr(ret_lower_bound->first), tostr(ft_ret_lower_bound->first), "lower_bound(\"first\")");
-	// str_comp( tostr(ret_lower_bound->second), tostr(ft_ret_lower_bound->second), "lower_bound(\"first\")");
-	// std::cout << "ret_lower_bound->first = " << ret_lower_bound->first << std::endl;
-	// std::cout << "ft_ret_lower_bound->first = " << ft_ret_lower_bound->first << std::endl;
-	// chrono.diff_chrono();
-
+	// ft_map.display_tree();
 
 
 	/* @ */
@@ -2268,12 +2368,48 @@ void tester_map_type() {
 
 
 
-	// /* z */
-	// // ret_lower_bound = map.lower_bound("z");
-	// // ft_ret_lower_bound = ft_map.lower_bound("z");
 
-	// // str_comp( tostr(ret_lower_bound->first), tostr(ft_ret_lower_bound->first), "lower_bound(\"z\")");
-	// // str_comp( tostr(ret_lower_bound->second), tostr(ft_ret_lower_bound->second), "lower_bound(\"z\")");
+
+	/* random */
+	nb_test = 100;
+	hint 		= 0;
+
+	srand (time(NULL));
+	for(int i = 0; i < nb_test; i++) {
+		/* set random hint */
+		it_rand_hint 		= map.begin();
+		ft_it_rand_hint = ft_map.begin();
+		hint = rand() % map.size();
+		while (hint--)
+		{
+			it_rand_hint++;
+			ft_it_rand_hint++;
+		}
+	}
+
+	chrono.stl_start_chrono();
+	for(int i = 0; i < nb_test; i++) {
+		ret_lower_bound = map.lower_bound(it_rand_hint->first);
+		if ( ret_lower_bound != map.end() )
+			sstr << tostr(ret_lower_bound->first) << " " 
+						<< tostr(ret_lower_bound->second) << " " ;
+	}
+	chrono.stl_end_chrono();
+
+	chrono.ft_start_chrono();
+	for(int i = 0; i < nb_test; i++) {
+		ft_ret_lower_bound = ft_map.lower_bound(ft_it_rand_hint->first);
+		if ( ft_ret_lower_bound != ft_map.end() )
+			ft_sstr << tostr(ft_ret_lower_bound->first) << " " 
+							<< tostr(ft_ret_lower_bound->second) << " " ;
+	}
+	chrono.ft_end_chrono();
+
+	str_comp(sstr.str(), ft_sstr.str(), "lower_bound random");
+	sstr.str(""); sstr.clear(); ft_sstr.str(""); ft_sstr.clear();
+	chrono.diff_chrono();
+
+
 
 
 
@@ -2300,11 +2436,6 @@ void tester_map_type() {
 	ft_ret_upper_bound = ft_map.upper_bound(convert<type_key_map>("@"));
 	chrono.ft_end_chrono();
 
-	// std::cout << "ret first = " << ret_upper_bound->first << std::endl;
-	// std::cout << "ft first = " << ft_ret_upper_bound->first << std::endl;
-	// std::cout << "ret second = " << ret_upper_bound->second << std::endl;
-	// std::cout << "ft second = " << ft_ret_upper_bound->second << std::endl;
-
 	str_comp( tostr(ret_upper_bound->first), tostr(ft_ret_upper_bound->first), "upper_bound(\"@\")");
 	str_comp( tostr(ret_upper_bound->second), tostr(ft_ret_upper_bound->second), "upper_bound(\"@\")");
 	chrono.diff_chrono();
@@ -2329,20 +2460,48 @@ void tester_map_type() {
 
 
 
+	/* random */
+	nb_test = 100;
+	hint 		= 0;
 
-	// /* y */
-	// // ret_upper_bound = map.upper_bound("y");
-	// // ft_ret_upper_bound = ft_map.upper_bound("y");
+	srand (time(NULL));
+	for(int i = 0; i < nb_test; i++) {
+		/* set random hint */
+		it_rand_hint 		= map.begin();
+		ft_it_rand_hint = ft_map.begin();
+		hint = rand() % map.size();
+		while (hint--)
+		{
+			it_rand_hint++;
+			ft_it_rand_hint++;
+		}
+	}
 
-	// // str_comp( ret_upper_bound->first, ft_ret_upper_bound->first, "upper_bound(\"y\")");
-	// // str_comp( tostr(ret_upper_bound->second), tostr(ft_ret_upper_bound->second), "upper_bound(\"y\")");
+	chrono.stl_start_chrono();
+	for(int i = 0; i < nb_test; i++) {
+		ret_upper_bound = map.upper_bound(it_rand_hint->first);
+		if (ret_upper_bound != map.end())
+			sstr << tostr(ret_upper_bound->first) << " " << tostr(ret_upper_bound->second) << " ";
+	}
+	chrono.stl_end_chrono();
 
-	// /* z */
-	// // ret_upper_bound = map.upper_bound("z");
-	// // ft_ret_upper_bound = ft_map.upper_bound("z");
+	chrono.ft_start_chrono();
+	for(int i = 0; i < nb_test; i++) {
+		ft_ret_upper_bound = ft_map.upper_bound(ft_it_rand_hint->first);
+		if (ft_ret_upper_bound != ft_map.end())
+			ft_sstr << tostr(ft_ret_upper_bound->first) << " " << tostr(ft_ret_upper_bound->second) << " ";
+	}
+	chrono.ft_end_chrono();
 
-	// // str_comp( ret_upper_bound->first, ft_ret_upper_bound->first, "upper_bound(\"z\")");
-	// // str_comp( tostr(ret_upper_bound->second), tostr(ft_ret_upper_bound->second), "upper_bound(\"z\")");
+	str_comp(sstr.str(), ft_sstr.str(), "upper_bound random");
+	sstr.str(""); sstr.clear(); ft_sstr.str(""); ft_sstr.clear();
+	chrono.diff_chrono();
+
+
+
+
+
+
 
 
 

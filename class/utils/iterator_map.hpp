@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 16:58:53 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/28 18:40:10 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/29 17:50:13 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,10 @@ template <typename T, class Compare >
 				return (*this);
 			}
 
+			/* test */
+			void get_last_node() const {
+				std::cout << "last node : " << _last_node->content.first << " : " << _last_node->_content.second << std::endl;
+			}
 
 
 			/* *************************************************** */
@@ -292,6 +296,7 @@ template <typename T, class Compare >
 				if (*this == tree_it)
 					return (*this);
 				_node = tree_it._node;
+				_nil = tree_it._nil;
 				_last_node = tree_it._last_node;
 				_comp = tree_it._comp;
 				return (*this);
@@ -303,7 +308,10 @@ template <typename T, class Compare >
 			}
 
 
-
+			/* test */
+			void get_last_node() const {
+				std::cout << "last node const it : " << _last_node->_content.first << " : " << _last_node->_content.second << std::endl;
+			}
 
 			/* *************************************************** */
 			/*                                                     */
@@ -334,9 +342,10 @@ template <typename T, class Compare >
 				// 					<< std::endl << std::endl;
 
 				// std::cout << "node" 
-				// 					<< "\ncontent : "<< _node->_content.first 
-				// 					// << "\nparent : " << _node->_parent->_content.first
-				// 					<< "\nleft : " << _node->_left->_content.first
+				// 					<< "\ncontent : "<< _node->_content.first ;
+				// 					if ( _node->_parent )
+				// 						std::cout << "\nparent : " << _node->_parent->_content.first;
+				// std::cout << "\nleft : " << _node->_left->_content.first
 				// 					<< "\nright : " << _node->_right->_content.first
 				// 					<< std::endl << std::endl;
 
@@ -347,9 +356,9 @@ template <typename T, class Compare >
 				}
 				if (_node->_right != _nil)
 				{
-					// std::cout << BLU "go right" END<< std::endl;
+					// std::cout << BLU "go right" END << std::endl;
 					_node = _node->_right;
-					while (_node->_left && _node->_left != _nil)
+					while (_node->_left != _nil)
 						_node = _node->_left;
 				}
 				else
