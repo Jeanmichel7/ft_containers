@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 12:54:45 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/29 18:24:31 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/30 00:16:06 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -490,8 +490,14 @@ public:
 			del_fix_tree(x);
 		}
 
-		_node_alloc.destroy(z);
-		_node_alloc.deallocate(z, 1);
+
+		try {
+			_node_alloc.destroy(z);
+			_node_alloc.deallocate(z, 1);
+		} catch (std::exception &e) {
+			throw;
+			return;
+		}
 		_size--;
 
 		//set last node
@@ -522,9 +528,6 @@ public:
 			next++;
 		}
 		// std::cout << "erase last (" << first->first << ")" << std::endl;
-		if (first._node == _last_node) {
-			// std::cout << "iterator node == last node" << std::endl;
-		}
 		if (first != last)
 			erase(first);
 	}
@@ -591,10 +594,10 @@ public:
 	}
 
 	ft::pair<iterator,iterator> equal_range( const typename value_type::first_type& key ) {
-		node_pointer x = this->_root;
-    node_pointer y = x;
-		iterator it1;
-		iterator it2;
+		node_pointer 	x = this->_root;
+    node_pointer 	y = x;
+		iterator 			it1;
+		iterator 			it2;
 
     while (x != _nil) {
 			// std::cout << "x->first : " << x->_content.first << std::endl;
@@ -619,10 +622,10 @@ public:
 	}
 
 	ft::pair<const_iterator,const_iterator> equal_range( const typename value_type::first_type& key ) const {
-		node_pointer 							x = this->_root;
-		node_pointer 							y = x;
-		const_iterator it1;
-		const_iterator it2;
+		node_pointer 		x = this->_root;
+		node_pointer 		y = x;
+		const_iterator 	it1;
+		const_iterator 	it2;
 
 		while (x != _nil) {
 			// std::cout << "x->first : " << x->_content.first << std::endl;
@@ -633,13 +636,14 @@ public:
 				x = x->_right;
 			} else {
 				it1 = const_iterator(x, _last_node, _nil);
-				it2 = const_iterator(x, _last_node, _nil);
-				return ft::pair<const_iterator,const_iterator>(it1, ++it2);
+				it2 = it1;
+				it2++;
+				return ft::pair<const_iterator,const_iterator>(it1, it2);
 			}
 		}
 		it1 = const_iterator(y, _last_node, _nil);
-		it2 = const_iterator(y, _last_node, _nil);
-		return ft::pair<const_iterator,const_iterator>(it2, ++it2);
+		it1++;
+		return ft::pair<const_iterator,const_iterator>(it1, it1);
 	}
 
 

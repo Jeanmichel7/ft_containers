@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 14:16:17 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/29 18:28:51 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/29 23:49:37 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ void	comp_map( M1 &map, M2 &ft_map, std::string msg) {
 // }
 
 
-/* insert 20 values following and 20 random*/
+/* insert 20 values following*/
 template < typename T_map, typename T_pair, typename type_key_map, typename type_value_map>
 void fill_map(T_map *map) {
 
@@ -379,13 +379,18 @@ void tester_map_type() {
 
 
 	/* insert random value */
+	int 				nb_test = 100;
+
 	std::string key_str;
 	std::string value_str;
 	int 	i = 0;
 	srand (time(NULL));
 
-	while (i < 10)
+	while (i < nb_test)
 	{
+		std::cout << "\033[1K\r";
+		std::cout << "test " << i + 1 << "/" << nb_test << " " << std::flush;
+		
 		key_str = tostr(rand() % 200 + 1);
 		value_str = tostr(rand() % 200 + 1);
 
@@ -393,19 +398,19 @@ void tester_map_type() {
 		map.insert(pair(
 			convert<type_key_map>(key_str),
 			convert<type_value_map>(value_str)));
-		chrono.stl_end_chrono();
+		chrono.stl_break_chrono();
 
 		chrono.ft_start_chrono();
 		ft_map.insert(ft_pair(
 			convert<type_key_map>(key_str),
 			convert<type_value_map>(value_str)));
-		chrono.ft_end_chrono();
+		chrono.ft_break_chrono();
 
-		comp_map(map, ft_map, "comp map - ft_map");
-		chrono.diff_chrono();
 		i++;
 	}
 
+	comp_map(map, ft_map, "comp map - ft_map");
+	chrono.diff_addition_chrono();
 
 
 
@@ -542,6 +547,7 @@ void tester_map_type() {
 
 
 
+
 	/* insert(end(), "za") */
 	chrono.stl_start_chrono();
 	it_insert_hint = map.insert(
@@ -611,13 +617,17 @@ void tester_map_type() {
 
 
 	/* random hint */
-	int 				nb_test = 100;
+	nb_test 						= 50;
 	int 				hint 		= 0;
 	it_type 		it_rand_hint;
 	ft_it_type 	ft_it_rand_hint;
 
 	srand (time(NULL));
 	for(int i = 0; i < nb_test; i++) {
+
+		std::cout << "\033[1K\r";
+		std::cout << "test " << i + 1 << "/" << nb_test << " " << std::flush;
+		
 		/* set random hint */
 		it_rand_hint 		= map.begin();
 		ft_it_rand_hint = ft_map.begin();
@@ -631,38 +641,38 @@ void tester_map_type() {
 		/* set random value */
 		key_str = tostr(rand() % 500 + 1);
 		value_str = tostr(rand() % 500 + 1);
-	}
 
-	chrono.stl_start_chrono();
-	for(int i = 0; i < nb_test; i++) {
-		it_insert_hint = map.insert(
-			it_rand_hint,
-			pair(
-				convert<type_key_map>(key_str),
-				convert<type_value_map>(value_str)
-			)
-		);
-		sstr << tostr(it_insert_hint->first) << " " << tostr(it_insert_hint->second) << ", ";
-	}
-	chrono.stl_end_chrono();
 
-	chrono.ft_start_chrono();
-	for(int i = 0; i < nb_test; i++) {
-		ft_it_insert_hint = ft_map.insert(
-			ft_it_rand_hint,
-			ft_pair(
-				convert<type_key_map>(key_str),
-				convert<type_value_map>(value_str)
-			)
-		);
-		ft_sstr << tostr(ft_it_insert_hint->first) << " " << tostr(ft_it_insert_hint->second) << ", ";
-	}
-	chrono.ft_end_chrono();
+		chrono.stl_start_chrono();
+		for(int i = 0; i < nb_test; i++) {
+			it_insert_hint = map.insert(
+				it_rand_hint,
+				pair(
+					convert<type_key_map>(key_str),
+					convert<type_value_map>(value_str)
+				)
+			);
+			sstr << tostr(it_insert_hint->first) << " " << tostr(it_insert_hint->second) << ", ";
+		}
+		chrono.stl_break_chrono();
 
+		chrono.ft_start_chrono();
+		for(int i = 0; i < nb_test; i++) {
+			ft_it_insert_hint = ft_map.insert(
+				ft_it_rand_hint,
+				ft_pair(
+					convert<type_key_map>(key_str),
+					convert<type_value_map>(value_str)
+				)
+			);
+			ft_sstr << tostr(ft_it_insert_hint->first) << " " << tostr(ft_it_insert_hint->second) << ", ";
+		}
+		chrono.ft_break_chrono();
+	}
 
 	str_comp(sstr.str(), ft_sstr.str(), "insert(random_hint, value(ft_pair(\"" + key_str + "\", " + value_str + ")))");
 	sstr.str(""); sstr.clear(); ft_sstr.str(""); ft_sstr.clear();
-	chrono.diff_chrono();
+	chrono.diff_addition_chrono();
 
 
 
@@ -2119,6 +2129,29 @@ void tester_map_type() {
 
 
 
+	/* at end()*/
+	it_type it_at = map.end(); it_at--;
+	ft_it_type ft_it_at = ft_map.end(); ft_it_at--;
+
+	chrono.stl_start_chrono();
+	ret_at = map.at((it_at->first));
+	chrono.stl_end_chrono();
+
+	chrono.ft_start_chrono();
+	ft_ret_at = ft_map.at((ft_it_at->first));
+	chrono.ft_end_chrono();
+
+	sstr.str(""); sstr.clear(); ft_sstr.str(""); ft_sstr.clear();
+	str_comp( tostr(ret_at), tostr(ft_ret_at), "ret at(\"end()\")");
+	chrono.diff_chrono();
+
+
+
+	
+
+
+
+
 
 
 	/* ***************************************************** */
@@ -2263,29 +2296,17 @@ void tester_map_type() {
 	// ft_map.display_tree();
 
 
-	/* inexist */
-	// chrono.stl_start_chrono();
-	// ret_equal_range 	= map.equal_range(convert<type_key_map>("ldsfsdffsdsf"));
-	// chrono.stl_end_chrono();
-	// chrono.ft_start_chrono();
-	// ft_ret_equal_range = ft_map.equal_range(convert<type_key_map>("ldsfsdffsdsf"));
-	// chrono.ft_end_chrono();
-
-	// str_comp( tostr(ret_equal_range.first->first), tostr(ft_ret_equal_range.first->first),     "equal_range first first(\"l\")");
-	// str_comp( tostr(ret_equal_range.first->second), tostr(ft_ret_equal_range.first->second),   "equal_range first second(\"l\")");
-	// str_comp( tostr(ret_equal_range.second->first), tostr(ft_ret_equal_range.second->first),   "equal_range second first(\"l\")");
-	// str_comp( tostr(ret_equal_range.second->second), tostr(ft_ret_equal_range.second->second), "equal_range second second(\"l\")");
-	// chrono.diff_chrono();
-
-
-
 
 	/* random */
-	nb_test = 100;
+	nb_test = 1000;
 	hint 		= 0;
 
 	srand (time(NULL));
-	for(int i = 0; i < nb_test; i++) {
+	for(int j = 0; j < nb_test; j++) {
+
+		std::cout << "\033[1K\r";
+		std::cout << "test " << j + 1 << "/" << nb_test << " " << std::flush;
+
 		/* set random hint */
 		it_rand_hint 		= map.begin();
 		ft_it_rand_hint = ft_map.begin();
@@ -2295,22 +2316,18 @@ void tester_map_type() {
 			it_rand_hint++;
 			ft_it_rand_hint++;
 		}
-	}
 
-	chrono.stl_start_chrono();
-	for(int i = 0; i < nb_test; i++) {
-		ret_equal_range = map.equal_range(it_rand_hint->first);
+		chrono.stl_start_chrono();
+		ret_equal_range 	= map.equal_range(it_rand_hint->first);
 		if ( ret_equal_range.first != map.end() )
 			sstr << tostr(ret_equal_range.first->first) << " " 
 						<< tostr(ret_equal_range.first->second) << " " ;
 		if ( ret_equal_range.second != map.end() )
 			sstr << tostr(ret_equal_range.second->first) << " "
 						<< tostr(ret_equal_range.second->second) << " " ;
-	}
-	chrono.stl_end_chrono();
+		chrono.stl_break_chrono();
 
-	chrono.ft_start_chrono();
-	for(int i = 0; i < nb_test; i++) {
+		chrono.ft_start_chrono();
 		ft_ret_equal_range = ft_map.equal_range(ft_it_rand_hint->first);
 		if ( ft_ret_equal_range.first != ft_map.end() )
 			ft_sstr << tostr(ft_ret_equal_range.first->first) << " " 
@@ -2318,12 +2335,84 @@ void tester_map_type() {
 		if ( ft_ret_equal_range.second != ft_map.end() )
 			ft_sstr << tostr(ft_ret_equal_range.second->first) << " "
 							<< tostr(ft_ret_equal_range.second->second) << " " ;
-	}
-	chrono.ft_end_chrono();
+		chrono.ft_break_chrono();
 
+	}
+
+	// std::cout << "stl: " << sstr.str() << std::endl;
+	// std::cout << "ft: " << ft_sstr.str() << std::endl;
 	str_comp(sstr.str(), ft_sstr.str(), "equal_range random");
 	sstr.str(""); sstr.clear(); ft_sstr.str(""); ft_sstr.clear();
-	chrono.diff_chrono();
+	chrono.diff_addition_chrono();
+
+
+
+
+
+
+	/* const equal range() */
+
+
+
+
+
+
+	// std_map_t const const_map(map);
+	// ft_map_t const const_ft_map(ft_map);
+	std::pair<const_it_type, const_it_type> 			ret_cequal_range;
+	ft::pair<ft_const_it_type, ft_const_it_type> 	ft_ret_cequal_range;
+
+	const_it_type 		cit_map;
+	ft_const_it_type 	cit_ft_map;
+
+	/* random */
+	nb_test 	= 1000;
+	int nrand	= 0;
+
+	srand (time(NULL));
+	for (int i = 0; i < nb_test; i++) {
+
+		std::cout << "\033[1K\r";
+		std::cout << "test " << i + 1 << "/" << nb_test << " " << std::flush;
+
+		/* set random hint */
+		cit_map 		= const_map.begin();
+		cit_ft_map 	= const_ft_map.begin();
+		nrand = rand() % const_map.size();
+		while (nrand--)
+		{
+			cit_map++;
+			cit_ft_map++;
+		}
+
+		chrono.stl_start_chrono();
+		ret_cequal_range 	= const_map.equal_range(cit_map->first);
+		if ( ret_cequal_range.first != const_map.end() )
+			sstr << tostr(ret_cequal_range.first->first) << " " 
+						<< tostr(ret_cequal_range.first->second) << " " ;
+		if ( ret_cequal_range.second != const_map.end() )
+			sstr << tostr(ret_cequal_range.second->first) << " "
+						<< tostr(ret_cequal_range.second->second) << " " ;
+		chrono.stl_break_chrono();
+
+		chrono.ft_start_chrono();
+		ft_ret_cequal_range = const_ft_map.equal_range(cit_ft_map->first);
+		if ( ft_ret_cequal_range.first != const_ft_map.end() )
+			ft_sstr << tostr(ft_ret_cequal_range.first->first) << " " 
+							<< tostr(ft_ret_cequal_range.first->second) << " " ;
+		if ( ft_ret_cequal_range.second != const_ft_map.end() )
+			ft_sstr << tostr(ft_ret_cequal_range.second->first) << " "
+							<< tostr(ft_ret_cequal_range.second->second) << " " ;
+		chrono.ft_break_chrono();
+	}
+
+	// std::cout << "stl: " << sstr.str() << std::endl;
+	// std::cout << "ft: " << ft_sstr.str() << std::endl;
+	str_comp(sstr.str(), ft_sstr.str(), "const equal_range random");
+	sstr.str(""); sstr.clear(); ft_sstr.str(""); ft_sstr.clear();
+	chrono.diff_addition_chrono();
+
+	
 
 
 
@@ -2339,13 +2428,9 @@ void tester_map_type() {
 
 
 	std::cout << MAG "\n\nTEST lower_bound()" END << std::endl;
-	
 	it_type 		ret_lower_bound;
 	ft_it_type 	ft_ret_lower_bound;
 
-
-
-	// ft_map.display_tree();
 
 
 	/* @ */
@@ -2378,12 +2463,18 @@ void tester_map_type() {
 
 
 
+
+
 	/* random */
-	nb_test = 100;
+	nb_test = 1000;
 	hint 		= 0;
 
 	srand (time(NULL));
 	for(int i = 0; i < nb_test; i++) {
+
+		std::cout << "\033[1K\r";
+		std::cout << "test " << i + 1 << "/" << nb_test << " " << std::flush;
+		
 		/* set random hint */
 		it_rand_hint 		= map.begin();
 		ft_it_rand_hint = ft_map.begin();
@@ -2393,29 +2484,77 @@ void tester_map_type() {
 			it_rand_hint++;
 			ft_it_rand_hint++;
 		}
-	}
 
-	chrono.stl_start_chrono();
-	for(int i = 0; i < nb_test; i++) {
+		chrono.stl_start_chrono();
 		ret_lower_bound = map.lower_bound(it_rand_hint->first);
 		if ( ret_lower_bound != map.end() )
 			sstr << tostr(ret_lower_bound->first) << " " 
 						<< tostr(ret_lower_bound->second) << " " ;
-	}
-	chrono.stl_end_chrono();
+		chrono.stl_break_chrono();
 
-	chrono.ft_start_chrono();
-	for(int i = 0; i < nb_test; i++) {
+		chrono.ft_start_chrono();
 		ft_ret_lower_bound = ft_map.lower_bound(ft_it_rand_hint->first);
 		if ( ft_ret_lower_bound != ft_map.end() )
 			ft_sstr << tostr(ft_ret_lower_bound->first) << " " 
 							<< tostr(ft_ret_lower_bound->second) << " " ;
+		chrono.ft_break_chrono();
 	}
-	chrono.ft_end_chrono();
+
+	// std::cout << "stl: " << sstr.str() << std::endl;
+	// std::cout << "ft: " << ft_sstr.str() << std::endl;
 
 	str_comp(sstr.str(), ft_sstr.str(), "lower_bound random");
 	sstr.str(""); sstr.clear(); ft_sstr.str(""); ft_sstr.clear();
-	chrono.diff_chrono();
+	chrono.diff_addition_chrono();
+
+
+
+
+
+
+
+
+
+	/* const lower_bound() */
+	for(int i = 0; i < nb_test; i++) {
+
+		const_it_type 		ret_clower_bound;
+		ft_const_it_type 	ft_ret_clower_bound;
+	
+		std::cout << "\033[1K\r";
+		std::cout << "test " << i + 1 << "/" << nb_test << " " << std::flush;
+		
+		/* set random hint */
+		cit_map 		= const_map.begin();
+		cit_ft_map 	= const_ft_map.begin();
+		nrand = rand() % const_map.size();
+		while (nrand--)
+		{
+			cit_map++;
+			cit_ft_map++;
+		}
+
+		chrono.stl_start_chrono();
+		ret_clower_bound = const_map.lower_bound(cit_map->first);
+		if ( ret_clower_bound != const_map.end() )
+			sstr << tostr(ret_clower_bound->first) << " " 
+					 << tostr(ret_clower_bound->second) << " " ;
+		chrono.stl_break_chrono();
+
+		chrono.ft_start_chrono();
+		ft_ret_clower_bound = const_ft_map.lower_bound(cit_ft_map->first);
+		if ( ft_ret_clower_bound != const_ft_map.end() )
+			ft_sstr << tostr(ft_ret_clower_bound->first) << " " 
+							<< tostr(ft_ret_clower_bound->second) << " " ;
+		chrono.ft_break_chrono();
+	}
+
+	// std::cout << "stl: " << sstr.str() << std::endl;
+	// std::cout << "ft: " << ft_sstr.str() << std::endl;
+
+	str_comp(sstr.str(), ft_sstr.str(), "const lower_bound random");
+	sstr.str(""); sstr.clear(); ft_sstr.str(""); ft_sstr.clear();
+	chrono.diff_addition_chrono();
 
 
 
@@ -2425,6 +2564,9 @@ void tester_map_type() {
 
 
 	// ft_map.display_tree();
+
+
+
 
 
 
@@ -2469,11 +2611,15 @@ void tester_map_type() {
 
 
 	/* random */
-	nb_test = 100;
+	nb_test = 1000;
 	hint 		= 0;
 
 	srand (time(NULL));
 	for(int i = 0; i < nb_test; i++) {
+		
+		std::cout << "\033[1K\r";
+		std::cout << "test " << i + 1 << "/" << nb_test << " " << std::flush;
+		std::cout << std::flush;
 		/* set random hint */
 		it_rand_hint 		= map.begin();
 		ft_it_rand_hint = ft_map.begin();
@@ -2483,29 +2629,68 @@ void tester_map_type() {
 			it_rand_hint++;
 			ft_it_rand_hint++;
 		}
-	}
-
-	chrono.stl_start_chrono();
-	for(int i = 0; i < nb_test; i++) {
+		chrono.stl_start_chrono();
 		ret_upper_bound = map.upper_bound(it_rand_hint->first);
+		chrono.stl_break_chrono();
 		if (ret_upper_bound != map.end())
 			sstr << tostr(ret_upper_bound->first) << " " << tostr(ret_upper_bound->second) << " ";
-	}
-	chrono.stl_end_chrono();
 
-	chrono.ft_start_chrono();
-	for(int i = 0; i < nb_test; i++) {
+		chrono.ft_start_chrono();
 		ft_ret_upper_bound = ft_map.upper_bound(ft_it_rand_hint->first);
+		chrono.ft_break_chrono();
 		if (ft_ret_upper_bound != ft_map.end())
 			ft_sstr << tostr(ft_ret_upper_bound->first) << " " << tostr(ft_ret_upper_bound->second) << " ";
 	}
-	chrono.ft_end_chrono();
 
 	str_comp(sstr.str(), ft_sstr.str(), "upper_bound random");
 	sstr.str(""); sstr.clear(); ft_sstr.str(""); ft_sstr.clear();
-	chrono.diff_chrono();
+	chrono.diff_addition_chrono();
 
 
+
+
+
+
+
+	/* const upper_bound() */
+
+	for(int i =0; i < nb_test; i++) {
+		
+		const_it_type 		ret_cupper_bound;
+		ft_const_it_type 	ft_ret_cupper_bound;
+
+		std::cout << "\033[1K\r";
+		std::cout << "test " << i + 1 << "/" << nb_test << " " << std::flush;
+		
+		/* set random hint */
+		cit_map 		= const_map.begin();
+		cit_ft_map 	= const_ft_map.begin();
+		nrand = rand() % const_map.size();
+		while (nrand--)
+		{
+			cit_map++;
+			cit_ft_map++;
+		}
+
+		chrono.stl_start_chrono();
+		ret_cupper_bound = const_map.upper_bound(cit_map->first);
+		if ( ret_cupper_bound != const_map.end() )
+			sstr << tostr(ret_cupper_bound->first) << " " 
+						<< tostr(ret_cupper_bound->second) << " " ;
+		chrono.stl_break_chrono();
+
+		chrono.ft_start_chrono();
+		ft_ret_cupper_bound = const_ft_map.upper_bound(cit_ft_map->first);
+		if ( ft_ret_cupper_bound != const_ft_map.end() )
+			ft_sstr << tostr(ft_ret_cupper_bound->first) << " " 
+							<< tostr(ft_ret_cupper_bound->second) << " " ;
+		chrono.ft_break_chrono();
+
+	}
+
+	str_comp(sstr.str(), ft_sstr.str(), "const upper_bound random");
+	sstr.str(""); sstr.clear(); ft_sstr.str(""); ft_sstr.clear();
+	chrono.diff_addition_chrono();
 
 
 
@@ -2616,6 +2801,8 @@ void tester_map_type() {
 	str_comp(tostr(ret_map_key_comp), tostr(ft_ret_map_key_comp), "key_comp()");
 	chrono.diff_chrono();
 	
+
+
 
 
 

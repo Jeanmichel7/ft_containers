@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 18:14:05 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/29 18:27:07 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/29 23:50:54 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,7 +157,6 @@ public:
 	/* *************************************************** */
 
 	iterator begin() {
-		// std::cout << "begin()" << std::endl;
 		return (_tree.begin());
 	}
 
@@ -167,7 +166,6 @@ public:
 	}
 
 	iterator end() {
-		// std::cout << "end()" << std::endl;
 		return (_tree.end());
 	}
 
@@ -177,7 +175,6 @@ public:
 	}
 
 	reverse_iterator rbegin() {
-		// std::cout << "rbegin()" << std::endl;
 		return (_tree.rbegin());
 	}
 
@@ -187,7 +184,6 @@ public:
 	}
 
 	reverse_iterator rend() {
-		// std::cout << "rend()" << std::endl;
 		return (_tree.rend());
 	}
 
@@ -246,8 +242,14 @@ public:
 
 	T& operator[]( const Key& key ) {
 		iterator it = find(key);
-			if (it == end())
-				it = insert(ft::make_pair(key, T())).first;
+			if (it == end()) {
+				try {
+					it = insert(ft::make_pair(key, T())).first;
+				}
+				catch (std::exception &e) {
+					throw ;
+				}
+			}
 		return (it->second);
 	}
 
@@ -268,13 +270,24 @@ public:
 	}
 
 	ft::pair<iterator, bool> insert( const value_type& value ) {
-		ft::pair<iterator, bool> ret = _tree.insert_pair(value);
+		try {
+			ft::pair<iterator, bool> ret = _tree.insert_pair(value);
+			return ( ret );
+		}
+		catch (std::exception &e) {
+			throw;
+		}
 		// display_tree("after insert");
-		return (ret);
 	}
 
 	iterator insert( iterator hint, const value_type& value ) {
-		return (_tree.insert_hint(hint, value));
+		try {
+			return (_tree.insert_hint(hint, value));
+		}
+		catch (std::exception &e) {
+			throw;
+		}
+		// return (_tree.insert_hint(hint, value));
 	}
 
 	template< class InputIt >
@@ -293,11 +306,25 @@ public:
 
 	void erase( iterator pos ) {
 		// std::cout << "erase(" << pos->first << ", " << pos->second << ")" << std::endl;
-		_tree.erase(pos);
+		try {
+			_tree.erase(pos);
+		}
+		catch (std::exception &e) {
+			throw;
+		}
 	}
 
 	void erase( iterator first, iterator last ) {
-		_tree.erase(first, last);
+		/* save tree */
+		tree_type tmp = _tree;
+
+		try {
+			_tree.erase(first, last);
+		}
+		catch (std::exception &e) {
+			_tree = tmp;
+			throw;
+		}
 	}
 
 	size_type erase( const Key& key ) {
@@ -305,7 +332,12 @@ public:
 		// size_type ret = size();
 		if (it == end())
 			return (0);
-		_tree.erase(it);
+		try {
+			_tree.erase(it);
+		}
+		catch (std::exception &e) {
+			throw;
+		}
 		// return (ret - size());
 		return (1);
 	}
@@ -393,7 +425,7 @@ public:
 	}
 
 	ft::pair<const_iterator,const_iterator> equal_range( const Key& key ) const {
-		std::cout << " const equal rang()" << std::endl;
+		// std::cout << " const equal rang()" << std::endl;
 
 		// const_iterator it = find(key);
 		// if (it == end())
@@ -415,7 +447,7 @@ public:
 	}
 
 	const_iterator lower_bound( const Key& key ) const {
-		std::cout << " const lower_bound()" << std::endl;
+		// std::cout << " const lower_bound()" << std::endl;
 		const_iterator it = begin();
 		while (it != end()) {
 			if (it->first >= key)
@@ -438,7 +470,7 @@ public:
 	}
 	
 	const_iterator upper_bound( const Key& key ) const {
-		std::cout << " const upper_bound()" << std::endl;
+		// std::cout << " const upper_bound()" << std::endl;
 		const_iterator it = begin();
 		while (it != end()) {
 			if (it->first > key)

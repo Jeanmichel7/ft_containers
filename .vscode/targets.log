@@ -6,7 +6,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Sat Oct 29 12:55:16 2022
+# Make data base, printed on Sat Oct 29 23:07:16 2022
 
 # Variables
 
@@ -55,13 +55,13 @@ VSCODE_CWD = /mnt/c/Users/michm/AppData/Local/Programs/Microsoft VS Code
 # default
 MAKE_HOST := x86_64-pc-linux-gnu
 # environment
-PATH = /home/jrasser/.vscode-server/bin/d045a5eda657f4d7b676dedbfa7aab8207f8a075/bin/remote-cli:/home/jrasser/.local/bin:/home/jrasser/bin:/home/jrasser/.nvm/versions/node/v16.14.2/bin:/home/jrasser/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/lib/wsl/lib:/mnt/c/Program Files (x86)/Common Files/Oracle/Java/javapath:/mnt/c/Windows/system32:/mnt/c/Windows:/mnt/c/Windows/System32/Wbem:/mnt/c/Windows/System32/WindowsPowerShell/v1.0/:/mnt/c/Windows/System32/OpenSSH/:/mnt/c/Program Files/NVIDIA Corporation/NVIDIA NvDLISR:/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common:/mnt/c/Program Files/Git/cmd:/mnt/c/Program Files/Docker/Docker/resources/bin:/mnt/c/ProgramData/DockerDesktop/version-bin:/mnt/c/WINDOWS/system32:/mnt/c/WINDOWS:/mnt/c/WINDOWS/System32/Wbem:/mnt/c/WINDOWS/System32/WindowsPowerShell/v1.0/:/mnt/c/WINDOWS/System32/OpenSSH/:/mnt/c/Program Files/Git LFS:/mnt/c/Program Files (x86)/Windows Kits/10/Windows Performance Toolkit/:/mnt/c/Program Files/dotnet/:/mnt/c/Users/michm/AppData/Local/Microsoft/WindowsApps:/mnt/c/Users/michm/AppData/Local/GitHubDesktop/bin:/mnt/c/Users/michm/AppData/Local/Programs/Microsoft VS Code/bin:/mnt/c/Users/michm/.dotnet/tools:/snap/bin
+PATH = /home/jrasser/.local/bin:/home/jrasser/bin:/home/jrasser/.nvm/versions/node/v16.14.2/bin:/home/jrasser/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/lib/wsl/lib:/mnt/c/Program Files (x86)/Common Files/Oracle/Java/javapath:/mnt/c/Windows/system32:/mnt/c/Windows:/mnt/c/Windows/System32/Wbem:/mnt/c/Windows/System32/WindowsPowerShell/v1.0/:/mnt/c/Windows/System32/OpenSSH/:/mnt/c/Program Files/NVIDIA Corporation/NVIDIA NvDLISR:/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common:/mnt/c/Program Files/Git/cmd:/mnt/c/Program Files/Docker/Docker/resources/bin:/mnt/c/ProgramData/DockerDesktop/version-bin:/mnt/c/WINDOWS/system32:/mnt/c/WINDOWS:/mnt/c/WINDOWS/System32/Wbem:/mnt/c/WINDOWS/System32/WindowsPowerShell/v1.0/:/mnt/c/WINDOWS/System32/OpenSSH/:/mnt/c/Program Files/Git LFS:/mnt/c/Program Files (x86)/Windows Kits/10/Windows Performance Toolkit/:/mnt/c/Program Files/dotnet/:/mnt/c/Users/michm/AppData/Local/Microsoft/WindowsApps:/mnt/c/Users/michm/AppData/Local/GitHubDesktop/bin:/mnt/c/Users/michm/AppData/Local/Programs/Microsoft VS Code/bin:/mnt/c/Users/michm/.dotnet/tools:/snap/bin
 # makefile (from 'Makefile', line 21)
 NAME = prog
 # makefile (from 'Makefile', line 17)
 END = \033[0m
 # makefile (from 'Makefile', line 28)
-DEBEUG = -g
+DEBEUG = -g3
 # environment
 NVM_BIN = /home/jrasser/.nvm/versions/node/v16.14.2/bin
 # environment
@@ -99,7 +99,7 @@ LESSCLOSE = /usr/bin/lesspipe %s %s
 # environment
 LOGNAME = jrasser
 # environment
-APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = 1
+APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = true
 # environment
 NVM_CD_FLAGS = 
 # environment
@@ -223,14 +223,14 @@ objs/%.o: srcs/**%.cpp
 # Not a target:
 srcs/tester_map.cpp:
 #  Implicit rule search has been done.
-#  Last modified 2022-10-29 05:29:59.860434
+#  Last modified 2022-10-29 23:04:56.308199
 #  File has been updated.
 #  Successfully updated.
 
 objs/main.o: main.cpp
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: 'main'
-#  Last modified 2022-10-29 05:30:27.882172
+#  Last modified 2022-10-29 23:07:08.873076
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'Makefile', line 31):
@@ -268,14 +268,14 @@ srcs/tester_stack.cpp:
 # Not a target:
 Makefile:
 #  Implicit rule search has been done.
-#  Last modified 2022-10-25 20:40:16.168582
+#  Last modified 2022-10-29 23:06:40.171889
 #  File has been updated.
 #  Successfully updated.
 
 # Not a target:
 main.cpp:
 #  Implicit rule search has been done.
-#  Last modified 2022-10-29 05:29:02.427453
+#  Last modified 2022-10-29 23:06:26.241889
  
 #  File has been updated.
 #  Successfully updated.
@@ -289,7 +289,7 @@ srcs/tester_utils.cpp:
 
 prog: objs/main.o objs/tester_map.o objs/tester_stack.o objs/tester_vector.o objs/tester_utils.o
 #  Implicit rule search has not been done.
-#  Last modified 2022-10-29 05:30:34.922172
+#  Last modified 2022-10-29 23:07:15.653076
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'Makefile', line 41):
@@ -315,7 +315,7 @@ fclean: clean
 objs/tester_map.o: srcs/tester_map.cpp
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: 'tester_map'
-#  Last modified 2022-10-29 05:30:31.972172
+#  Last modified 2022-10-29 23:07:13.003076
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'Makefile', line 36):
@@ -341,7 +341,7 @@ clean:
 objs/tester_vector.o: srcs/tester_vector.cpp
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: 'tester_vector'
-#  Last modified 2022-10-29 05:30:34.352172
+#  Last modified 2022-10-29 23:07:15.113076
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'Makefile', line 36):
@@ -352,7 +352,7 @@ objs/tester_vector.o: srcs/tester_vector.cpp
 objs/tester_stack.o: srcs/tester_stack.cpp
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: 'tester_stack'
-#  Last modified 2022-10-29 05:30:32.882172
+#  Last modified 2022-10-29 23:07:13.833076
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'Makefile', line 36):
@@ -363,7 +363,7 @@ objs/tester_stack.o: srcs/tester_stack.cpp
 objs/tester_utils.o: srcs/tester_utils.cpp
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: 'tester_utils'
-#  Last modified 2022-10-29 05:30:34.622172
+#  Last modified 2022-10-29 23:07:15.423076
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'Makefile', line 36):
@@ -385,6 +385,6 @@ objs/tester_utils.o: srcs/tester_utils.cpp
 # strcache performance: lookups = 78 / hit rate = 38%
 # hash-table stats:
 # Load=48/8192=1%, Rehash=0, Collisions=2/78=3%
-# Finished Make data base on Sat Oct 29 12:55:16 2022
+# Finished Make data base on Sat Oct 29 23:07:16 2022
 
  
