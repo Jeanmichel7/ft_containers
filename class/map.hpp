@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 18:14:05 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/29 18:08:36 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/29 18:27:07 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -279,7 +279,16 @@ public:
 
 	template< class InputIt >
 	void insert( InputIt first, InputIt last ) {
-		_tree.insert(first, last);
+		/* save tree */
+		tree_type tmp = _tree;
+		// tmp.clear();
+		try {
+			_tree.insert(first, last);
+		}
+		catch (std::exception &e) {
+			_tree = tmp;
+			throw;
+		}
 	};
 
 	void erase( iterator pos ) {

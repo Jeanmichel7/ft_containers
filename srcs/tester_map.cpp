@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 14:16:17 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/29 18:08:20 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/29 18:28:51 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -611,7 +611,7 @@ void tester_map_type() {
 
 
 	/* random hint */
-	int 				nb_test = 10;
+	int 				nb_test = 100;
 	int 				hint 		= 0;
 	it_type 		it_rand_hint;
 	ft_it_type 	ft_it_rand_hint;
@@ -816,6 +816,14 @@ void tester_map_type() {
 	/* compare maps */
 	comp_map(map, ft_map, "compare map - ft_map");
 	comp_map(map_insert_f_l, ft_map_insert_f_l, "compare map_insert_f_l - ft_map_insert_f_l");
+
+
+
+	/* test exception bad alloc */
+
+
+
+
 
 
 
