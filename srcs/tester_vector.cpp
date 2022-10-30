@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 15:05:46 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/30 21:45:23 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/30 21:54:00 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,94 +111,6 @@ void tester_vector(void)
 
 
 
-
-
-
-
-
-#define T_SIZE_TYPE typename ft::vector<T>::size_type
-
-template <typename T>
-void printSize(ft::vector<T> const &vct, bool print_content = true)
-{
-	const T_SIZE_TYPE size = vct.size();
-	const T_SIZE_TYPE capacity = vct.capacity();
-	const std::string isCapacityOk = (capacity >= size) ? "OK" : "KO";
-	// Cannot limit capacity's max value because it's implementation dependent
-
-	std::cout << "size: " << size << std::endl;
-	std::cout << "capacity: " << isCapacityOk << std::endl;
-	std::cout << "max_size: " << vct.max_size() << std::endl;
-	if (print_content)
-	{
-		typename ft::vector<T>::const_iterator it = vct.begin();
-		typename ft::vector<T>::const_iterator ite = vct.end();
-		std::cout << std::endl
-							<< "Content is:" << std::endl;
-		for (; it != ite; ++it)
-			std::cout << "- " << *it << std::endl;
-	}
-	std::cout << "###############################################" << std::endl;
-}
-
-#define TESTED_TYPE int
-
-void checkErase(ft::vector<TESTED_TYPE> const &vct,
-								ft::vector<TESTED_TYPE>::const_iterator const &it)
-{
-	static int i = 0;
-	std::cout << "[" << i++ << "] "
-						<< "erase: " << it - vct.begin() << std::endl;
-	printSize(vct);
-}
-
-
-
-
-
-void	prepost_incdec(ft::vector<TESTED_TYPE> &vct)
-{
-	ft::vector<TESTED_TYPE>::iterator it = vct.begin();
-	ft::vector<TESTED_TYPE>::iterator it_tmp;
-
-	std::cout << "Pre inc" << std::endl;
-	it_tmp = ++it;
-	std::cout << *it_tmp << " | " << *it << std::endl;
-
-	std::cout << "Pre dec" << std::endl;
-	it_tmp = --it;
-	std::cout << *it_tmp << " | " << *it << std::endl;
-
-	std::cout << "Post inc" << std::endl;
-	it_tmp = it++;
-	std::cout << *it_tmp << " | " << *it << std::endl;
-
-	std::cout << "Post dec" << std::endl;
-	it_tmp = it--;
-	std::cout << *it_tmp << " | " << *it << std::endl;
-	std::cout << "###############################################" << std::endl;
-}
-
-
-
-
-template <class T, class Alloc>
-void	cmp(const ft::vector<T, Alloc> &lhs, const ft::vector<T, Alloc> &rhs)
-{
-	static int i = 0;
-
-	std::cout << "############### [" << i++ << "] ###############"  << std::endl;
-	std::cout << "eq: " << (lhs == rhs) << " | ne: " << (lhs != rhs) << std::endl;
-	std::cout << "lt: " << (lhs <  rhs) << " | le: " << (lhs <= rhs) << std::endl;
-	std::cout << "gt: " << (lhs >  rhs) << " | ge: " << (lhs >= rhs) << std::endl;
-}
-
-
-
-
-
-
-
 template< typename vector_type >
 void tester_vector_type()
 {
@@ -238,56 +150,6 @@ void tester_vector_type()
 	typedef typename ft_vector_t::const_iterator 					ft_cit_type;
 	typedef typename ft_vector_t::reverse_iterator 				ft_rit_type;
 	typedef typename ft_vector_t::const_reverse_iterator 	ft_crit_type;
-
-
-
-
-
-	std::cout << MAG "\n\nTEST\n" END << std::endl;
-
-
-
-
-	const int size = 5;
-	ft::vector<TESTED_TYPE> vct(size);
-	ft::vector<TESTED_TYPE>::reverse_iterator it = vct.rbegin();
-	ft::vector<TESTED_TYPE>::const_reverse_iterator ite = vct.rbegin();
-
-	for (int i = 0; i < size; ++i)
-		it[i] = (size - i) * 5;
-
-	it = it + 5;
-	it = 1 + it;
-	it = it - 4;
-	std::cout << *(it += 2) << std::endl;
-	std::cout << *(it -= 1) << std::endl;
-
-	*(it -= 2) = 42;
-	*(it += 2) = 21;
-
-	std::cout << "const_ite +=/-=: " << *(ite += 2) << " | " << *(ite -= 2) << std::endl;
-
-	std::cout << "(it == const_it): " << (ite == it) << std::endl;
-	std::cout << "(const_ite - it): " << (ite - it) << std::endl;
-	std::cout << "(const_ite + it): " << (ite + it) << std::endl;
-	// std::cout << "(const_ite + it): " << (it + ite) << std::endl;
-	std::cout << "(ite + 3 == it): " << (ite + 3 == it) << std::endl;
-
-	printSize(vct, true);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

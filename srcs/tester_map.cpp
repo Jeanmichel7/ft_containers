@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 14:16:17 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/30 00:34:00 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/30 23:00:32 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,6 +128,181 @@ void tester_map(void)
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#define TESTED_NAMESPACE ft
+
+#include <list>
+# include <iostream>
+# include <string>
+#define _pair TESTED_NAMESPACE::pair
+
+template <typename T>
+std::string	printPair(const T &iterator, bool nl = true, std::ostream &o = std::cout)
+{
+	o << "key: " << iterator->first << " | value: " << iterator->second;
+	if (nl)
+		o << std::endl;
+	return ("");
+}
+
+template <typename T_MAP>
+void	printSize(T_MAP const &mp, bool print_content = 1)
+{
+	std::cout << "size: " << mp.size() << std::endl;
+	std::cout << "max_size: " << mp.max_size() << std::endl;
+	if (print_content)
+	{
+		typename T_MAP::const_iterator it = mp.begin(), ite = mp.end();
+		std::cout << std::endl << "Content is:" << std::endl;
+		for (; it != ite; ++it)
+			std::cout << "- " << printPair(it, false) << std::endl;
+	}
+	std::cout << "###############################################" << std::endl;
+}
+
+template <typename T1, typename T2>
+void	printReverse(TESTED_NAMESPACE::map<T1, T2> &mp)
+{
+	typename TESTED_NAMESPACE::map<T1, T2>::iterator it = mp.end(), ite = mp.begin();
+
+	std::cout << "printReverse:" << std::endl;
+	while (it != ite) {
+		it--;
+		std::cout << "-> " << printPair(it, false) << std::endl;
+	}
+	std::cout << "_______________________________________________" << std::endl;
+}
+
+
+
+// --- Class foo
+template <typename T>
+class foo {
+	public:
+		typedef T	value_type;
+
+		foo(void) : value(), _verbose(false) { };
+		foo(value_type src, const bool verbose = false) : value(src), _verbose(verbose) { };
+		foo(foo const &src, const bool verbose = false) : value(src.value), _verbose(verbose) { };
+		~foo(void) { if (this->_verbose) std::cout << "~foo::foo()" << std::endl; };
+		void m(void) { std::cout << "foo::m called [" << this->value << "]" << std::endl; };
+		void m(void) const { std::cout << "foo::m const called [" << this->value << "]" << std::endl; };
+		foo &operator=(value_type src) { this->value = src; return *this; };
+		foo &operator=(foo const &src) {
+			if (this->_verbose || src._verbose)
+				std::cout << "foo::operator=(foo) CALLED" << std::endl;
+			this->value = src.value;
+			return *this;
+		};
+		value_type	getValue(void) const { return this->value; };
+		void		switchVerbose(void) { this->_verbose = !(this->_verbose); };
+
+		operator value_type(void) const {
+			return value_type(this->value);
+		}
+	private:
+		value_type	value;
+		bool		_verbose;
+};
+
+template <typename T>
+std::ostream	&operator<<(std::ostream &o, foo<T> const &bar) {
+	o << bar.getValue();
+	return o;
+}
+// --- End of class foo
+
+template <typename T>
+T	inc(T it, int n)
+{
+	while (n-- > 0)
+		++it;
+	return (it);
+}
+
+template <typename T>
+T	dec(T it, int n)
+{
+	while (n-- > 0)
+		--it;
+	return (it);
+}
+
+
+
+
+#define T1 int
+#define T2 foo<int>
+typedef TESTED_NAMESPACE::map<T1, T2>::value_type T3;
+typedef TESTED_NAMESPACE::map<T1, T2>::iterator ft_iterator;
+typedef TESTED_NAMESPACE::map<T1, T2>::const_iterator ft_const_iterator;
+
+static int iter = 0;
+
+template <typename MAP>
+void	ft_bound(MAP &mp, const T1 &param)
+{
+	ft_iterator ite = mp.end(), it[2];
+	_pair<ft_iterator, ft_iterator> ft_range;
+
+	std::cout << "\t-- [" << iter++ << "] --" << std::endl;
+	std::cout << "with key [" << param << "]:" << std::endl;
+	it[0] = mp.lower_bound(param); it[1] = mp.upper_bound(param);
+	ft_range = mp.equal_range(param);
+	std::cout << "lower_bound: " << (it[0] == ite ? "end()" : printPair(it[0], false)) << std::endl;
+	std::cout << "upper_bound: " << (it[1] == ite ? "end()" : printPair(it[1], false)) << std::endl;
+	std::cout << "equal_range: " << (ft_range.first == it[0] && ft_range.second == it[1]) << std::endl;
+}
+
+template <typename MAP>
+void	ft_const_bound(const MAP &mp, const T1 &param)
+{
+	ft_const_iterator ite = mp.end(), it[2];
+	_pair<ft_const_iterator, ft_const_iterator> ft_range;
+
+	std::cout << "\t-- [" << iter++ << "] (const) --" << std::endl;
+	std::cout << "with key [" << param << "]:" << std::endl;
+	
+	
+	it[0] = mp.lower_bound(param); 
+	it[1] = mp.upper_bound(param);
+	ft_range = mp.equal_range(param);
+	std::cout << "lower_bound: " << (it[0] == ite ? "end()" : printPair(it[0], false)) << std::endl;
+	std::cout << "upper_bound: " << (it[1] == ite ? "end()" : printPair(it[1], false)) << std::endl;
+
+
+	std::cout << "ft_range.first : " << ft_range.first->first << " : " << ft_range.first->second <<std::endl;
+	std::cout << "it[0] : " << it[0]->first << " : " << it[0]->second <<std::endl <<std::endl <<std::endl;
+
+	std::cout << "ft_range.second : " << ft_range.second->first << " : " << ft_range.second->second <<std::endl;
+	std::cout << "it[1] : " << it[1]->first << " : " << it[1]->second <<std::endl;
+
+
+	std::cout << "equal_range: " << (ft_range.first == it[0] && ft_range.second == it[1]) << std::endl;
+}
+
+
+
+
+
 template< typename type_key_map, typename type_value_map >
 void tester_map_type() {
 	
@@ -160,6 +335,36 @@ void tester_map_type() {
 
 
 
+
+
+
+
+
+
+	std::cout << MAG "TEST " END << std::endl;
+
+
+	std::list<T3> lst;
+	unsigned int lst_size = 10;
+	for (unsigned int i = 0; i < lst_size; ++i)
+		lst.push_back(T3(i + 1, (i + 1) * 3));
+	TESTED_NAMESPACE::map<T1, T2> mp(lst.begin(), lst.end());
+	// printSize(mp);
+
+	ft_bound(mp, -10);
+	// ft_const_bound(mp, 1);
+	// ft_const_bound(mp, 5);
+	// ft_const_bound(mp, 10);
+	// ft_const_bound(mp, 50);
+
+	// printSize(mp);
+
+	// mp.lower_bound(3)->second = 404;
+	// mp.upper_bound(7)->second = 842;
+	// ft_bound(mp, 5);
+	// ft_bound(mp, 7);
+
+	// printSize(mp);
 
 
 
@@ -2293,7 +2498,20 @@ void tester_map_type() {
 
 
 
+
 	// ft_map.display_tree();
+
+	/* valeur plus petit que debut de map */
+	ret_equal_range = map.equal_range(convert<type_key_map>("-10"));
+	ft_ret_equal_range = ft_map.equal_range(convert<type_key_map>("-10"));
+
+	str_comp( tostr(ret_equal_range.first->first), tostr(ft_ret_equal_range.first->first), "equal_range(a).first");
+	str_comp( tostr(ret_equal_range.first->second), tostr(ft_ret_equal_range.first->second), "equal_range(a).first.second");
+	str_comp( tostr(ret_equal_range.second->first), tostr(ft_ret_equal_range.second->first), "equal_range(a).second");
+	str_comp( tostr(ret_equal_range.second->second), tostr(ft_ret_equal_range.second->second), "equal_range(a).second.second");
+
+
+	std::cout << std::endl;
 
 
 
@@ -2336,7 +2554,6 @@ void tester_map_type() {
 			ft_sstr << tostr(ft_ret_equal_range.second->first) << " "
 							<< tostr(ft_ret_equal_range.second->second) << " " ;
 		chrono.ft_break_chrono();
-
 	}
 
 	// std::cout << "stl: " << sstr.str() << std::endl;
@@ -2350,7 +2567,35 @@ void tester_map_type() {
 
 
 
+
+
+	// ft_map.display_tree();
+
+	// /* valeur plus petit que debut de map */
+	// ret_equal_range = map.equal_range(convert<type_key_map>("-10"));
+	// ft_ret_equal_range = ft_map.equal_range(convert<type_key_map>("-10"));
+
+	// str_comp( tostr(ret_equal_range.first->first), tostr(ft_ret_equal_range.first->first), "equal_range(a).first");
+	// str_comp( tostr(ret_equal_range.first->second), tostr(ft_ret_equal_range.first->second), "equal_range(a).first.second");
+
+	// str_comp( tostr(ret_equal_range.second->first), tostr(ft_ret_equal_range.second->first), "equal_range(a).second");
+	// str_comp( tostr(ret_equal_range.second->second), tostr(ft_ret_equal_range.second->second), "equal_range(a).second.second");
+
+
+
+
+
+
+	std::cout << std::endl;
+
+
+
+
+
+
+	/* ******************* */
 	/* const equal range() */
+	/* ******************* */
 
 
 
@@ -2365,6 +2610,23 @@ void tester_map_type() {
 	const_it_type 		cit_map;
 	ft_const_it_type 	cit_ft_map;
 
+
+
+
+
+	/* valeur plus petit que debut de map */
+	ret_cequal_range = map.equal_range(convert<type_key_map>("-10"));
+	ft_ret_cequal_range = ft_map.equal_range(convert<type_key_map>("-10"));
+
+	str_comp( tostr(ret_cequal_range.first->first), tostr(ft_ret_cequal_range.first->first), "equal_range(a).first");
+	str_comp( tostr(ret_cequal_range.first->second), tostr(ft_ret_cequal_range.first->second), "equal_range(a).first.second");
+	str_comp( tostr(ret_cequal_range.second->first), tostr(ft_ret_cequal_range.second->first), "equal_range(a).second");
+	str_comp( tostr(ret_cequal_range.second->second), tostr(ft_ret_cequal_range.second->second), "equal_range(a).second.second");
+	std::cout << std::endl;
+
+
+
+
 	/* random */
 	nb_test 	= 100;
 	int nrand	= 0;
@@ -2373,7 +2635,7 @@ void tester_map_type() {
 	for (int i = 0; i < nb_test; i++) {
 
 		std::cout << "\033[1K\r";
-		std::cout << "test " << i + 1 << "/" << nb_test << " " << std::flush;
+		std::cout << "test const " << i + 1 << "/" << nb_test << " " << std::flush;
 
 		/* set random hint */
 		cit_map 		= const_map.begin();
@@ -2426,12 +2688,25 @@ void tester_map_type() {
 
 
 
-
+	/* ********************************************** */
+	/*                    LOWER BOUND                 */
+	/* ********************************************** */
 	std::cout << MAG "\n\nTEST lower_bound()" END << std::endl;
 	it_type 		ret_lower_bound;
 	ft_it_type 	ft_ret_lower_bound;
 
 
+	/* before */
+	chrono.stl_start_chrono();
+	ret_lower_bound = map.lower_bound(convert<type_key_map>("-10"));
+	chrono.stl_break_chrono();
+	chrono.ft_start_chrono();
+	ft_ret_lower_bound = ft_map.lower_bound(convert<type_key_map>("-10"));
+	chrono.ft_break_chrono();
+
+	str_comp( tostr(ret_lower_bound->first), tostr(ft_ret_lower_bound->first), "lower_bound(-10).first");
+	str_comp( tostr(ret_lower_bound->second), tostr(ft_ret_lower_bound->second), "lower_bound(-10).second");
+	chrono.diff_chrono();
 
 	/* @ */
 	chrono.stl_start_chrono();
@@ -2458,7 +2733,7 @@ void tester_map_type() {
 	str_comp( tostr(ret_lower_bound->first), tostr(ft_ret_lower_bound->first), "lower_bound(\"s\")");
 	str_comp( tostr(ret_lower_bound->second), tostr(ft_ret_lower_bound->second), "lower_bound(\"s\")");
 	chrono.diff_chrono();
-
+	std::cout << std::endl;
 
 
 
@@ -2506,7 +2781,7 @@ void tester_map_type() {
 	str_comp(sstr.str(), ft_sstr.str(), "lower_bound random");
 	sstr.str(""); sstr.clear(); ft_sstr.str(""); ft_sstr.clear();
 	chrono.diff_addition_chrono();
-
+	std::cout << std::endl;
 
 
 
@@ -2522,7 +2797,7 @@ void tester_map_type() {
 		ft_const_it_type 	ft_ret_clower_bound;
 	
 		std::cout << "\033[1K\r";
-		std::cout << "test " << i + 1 << "/" << nb_test << " " << std::flush;
+		std::cout << "test const " << i + 1 << "/" << nb_test << " " << std::flush;
 		
 		/* set random hint */
 		cit_map 		= const_map.begin();
@@ -2578,6 +2853,20 @@ void tester_map_type() {
 	ft_it_type 	ft_ret_upper_bound;
 
 
+	/* before */
+	chrono.stl_start_chrono();
+	ret_upper_bound = map.upper_bound(convert<type_key_map>("-10"));
+	chrono.stl_end_chrono();
+	chrono.ft_start_chrono();
+	ft_ret_upper_bound = ft_map.upper_bound(convert<type_key_map>("-10"));
+	chrono.ft_end_chrono();
+
+	str_comp( tostr(ret_upper_bound->first), tostr(ft_ret_upper_bound->first), "upper_bound(\"-10\")");
+	str_comp( tostr(ret_upper_bound->second), tostr(ft_ret_upper_bound->second), "upper_bound(\"-10\")");
+	chrono.diff_chrono();
+
+	
+
 	/* @ */
 	chrono.stl_start_chrono();
 	ret_upper_bound = map.upper_bound(convert<type_key_map>("@"));
@@ -2605,7 +2894,7 @@ void tester_map_type() {
 	str_comp( tostr(ret_upper_bound->first), tostr(ft_ret_upper_bound->first), "upper_bound(\"r\")");
 	str_comp( tostr(ret_upper_bound->second), tostr(ft_ret_upper_bound->second), "upper_bound(\"r\")");
 	chrono.diff_chrono();
-
+	std::cout << std::endl;
 
 
 
@@ -2645,7 +2934,7 @@ void tester_map_type() {
 	str_comp(sstr.str(), ft_sstr.str(), "upper_bound random");
 	sstr.str(""); sstr.clear(); ft_sstr.str(""); ft_sstr.clear();
 	chrono.diff_addition_chrono();
-
+	std::cout << std::endl;
 
 
 
@@ -2660,7 +2949,7 @@ void tester_map_type() {
 		ft_const_it_type 	ft_ret_cupper_bound;
 
 		std::cout << "\033[1K\r";
-		std::cout << "test " << i + 1 << "/" << nb_test << " " << std::flush;
+		std::cout << "test const " << i + 1 << "/" << nb_test << " " << std::flush;
 		
 		/* set random hint */
 		cit_map 		= const_map.begin();

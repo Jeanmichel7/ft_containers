@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 12:54:45 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/30 00:42:21 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/30 23:12:02 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -610,20 +610,26 @@ public:
 				it1 = iterator(x, _last_node, _nil);
 				it2 = it1;
 				it2++;
-				return ft::make_pair<iterator,iterator>(it1, it2);
+				return ft::make_pair<iterator, iterator>(it1, it2);
 			}
     }
+		if (y == minimum(_root)) {
+			it1 = begin();
+			return ft::make_pair<iterator, iterator>(it1, it1);
+		}
 		if (y == _last_node) {
-			return ft::pair<iterator,iterator>(end(), end());
+			return ft::pair<iterator, iterator>(end(), end());
 		}
 		it1 = iterator(y, _last_node, _nil);
 		it1++;
-		return ft::pair<iterator,iterator>(it1, it1);
+		return ft::pair<iterator, iterator>(it1, it1);
 	}
 
 	ft::pair<const_iterator, const_iterator> equal_range( const typename value_type::first_type& key ) const {
 		node_pointer 		x = this->_root;
 		node_pointer 		y = x;
+		node_pointer 		node_min = _root;
+		node_pointer 		node_min_p = _root;
 		const_iterator 	it1;
 		const_iterator 	it2;
 
@@ -638,12 +644,30 @@ public:
 				it1 = const_iterator(x, _last_node, _nil);
 				it2 = it1;
 				it2++;
-				return ft::pair<const_iterator,const_iterator>(it1, it2);
+				return ft::make_pair<const_iterator, const_iterator>(it1, it2);
 			}
 		}
+
+		if (y == _last_node) {
+			return ft::pair<const_iterator, const_iterator>(end(), end());
+		}
+
+		/* find min node */
+		while(node_min != _nil) {
+			node_min_p = node_min;
+			if (node_min->_content.first < key) {
+				node_min = node_min->_right;
+			} else {
+				node_min = node_min->_left;
+			}
+		}
+		if (y == node_min_p) {
+			return ft::make_pair< const_iterator, const_iterator>(begin(), begin());
+		}
+
 		it1 = const_iterator(y, _last_node, _nil);
 		it1++;
-		return ft::pair<const_iterator,const_iterator>(it1, it1);
+		return ft::pair<const_iterator, const_iterator>(it1, it1);
 	}
 
 
