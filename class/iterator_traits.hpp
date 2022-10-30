@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/10 18:24:21 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/25 23:11:05 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/30 14:54:42 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,21 @@ struct output_iterator_tag {};
 struct forward_iterator_tag       : public input_iterator_tag         {};
 struct bidirectional_iterator_tag : public forward_iterator_tag       {};
 struct random_access_iterator_tag : public bidirectional_iterator_tag {};
+
+template <class InputIterator>
+typename ft::iterator_traits<InputIterator>::difference_type
+distance(InputIterator first, InputIterator last)
+{
+    typename ft::iterator_traits<InputIterator>::difference_type rtn = 0;
+    while (first != last)
+    {
+        first++;
+        rtn++;
+    }
+    return (rtn);
+}
+
+
 
 }
 #endif

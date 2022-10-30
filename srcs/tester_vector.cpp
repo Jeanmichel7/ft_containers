@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 15:05:46 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/27 21:58:55 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/30 21:45:23 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,14 @@ void	comp_vector( V1 &stl_vector, V2 &ft_vector, std::string msg ) {
 
 	str_comp(sstr.str(), ft_sstr.str(), msg);
 	sstr.str(""); sstr.clear(); ft_sstr.str(""); ft_sstr.clear();
+
+	if (stl_vector.size() != ft_vector.size())
+	{
+		std::cout << RED "\n[KO] " END << msg << std::endl;
+		
+		std::cout << "std::vector size = " << stl_vector.size() << std::endl;
+		std::cout << "ft::vector  size = " << ft_vector.size() << std::endl << std::endl;
+	}
 }
 
 
@@ -85,29 +93,110 @@ void stl_display (std::vector<V> &v) {
 }
 
 
-
-
-
-
-
-
-
-
-
 void tester_vector(void)
 {
 	display_title("VECTOR < string >");
 	tester_vector_type< std::string >();
 
-	display_title("VECTOR < int >");
-	tester_vector_type< int >();
+	// display_title("VECTOR < int >");
+	// tester_vector_type< int >();
 
-	display_title("VECTOR < char >");
-	tester_vector_type< char >();
+	// display_title("VECTOR < char >");
+	// tester_vector_type< char >();
 
 	// display_title("VECTOR < float >");
 	// tester_vector_type< float >();
 }
+
+
+
+
+
+
+
+
+
+#define T_SIZE_TYPE typename ft::vector<T>::size_type
+
+template <typename T>
+void printSize(ft::vector<T> const &vct, bool print_content = true)
+{
+	const T_SIZE_TYPE size = vct.size();
+	const T_SIZE_TYPE capacity = vct.capacity();
+	const std::string isCapacityOk = (capacity >= size) ? "OK" : "KO";
+	// Cannot limit capacity's max value because it's implementation dependent
+
+	std::cout << "size: " << size << std::endl;
+	std::cout << "capacity: " << isCapacityOk << std::endl;
+	std::cout << "max_size: " << vct.max_size() << std::endl;
+	if (print_content)
+	{
+		typename ft::vector<T>::const_iterator it = vct.begin();
+		typename ft::vector<T>::const_iterator ite = vct.end();
+		std::cout << std::endl
+							<< "Content is:" << std::endl;
+		for (; it != ite; ++it)
+			std::cout << "- " << *it << std::endl;
+	}
+	std::cout << "###############################################" << std::endl;
+}
+
+#define TESTED_TYPE int
+
+void checkErase(ft::vector<TESTED_TYPE> const &vct,
+								ft::vector<TESTED_TYPE>::const_iterator const &it)
+{
+	static int i = 0;
+	std::cout << "[" << i++ << "] "
+						<< "erase: " << it - vct.begin() << std::endl;
+	printSize(vct);
+}
+
+
+
+
+
+void	prepost_incdec(ft::vector<TESTED_TYPE> &vct)
+{
+	ft::vector<TESTED_TYPE>::iterator it = vct.begin();
+	ft::vector<TESTED_TYPE>::iterator it_tmp;
+
+	std::cout << "Pre inc" << std::endl;
+	it_tmp = ++it;
+	std::cout << *it_tmp << " | " << *it << std::endl;
+
+	std::cout << "Pre dec" << std::endl;
+	it_tmp = --it;
+	std::cout << *it_tmp << " | " << *it << std::endl;
+
+	std::cout << "Post inc" << std::endl;
+	it_tmp = it++;
+	std::cout << *it_tmp << " | " << *it << std::endl;
+
+	std::cout << "Post dec" << std::endl;
+	it_tmp = it--;
+	std::cout << *it_tmp << " | " << *it << std::endl;
+	std::cout << "###############################################" << std::endl;
+}
+
+
+
+
+template <class T, class Alloc>
+void	cmp(const ft::vector<T, Alloc> &lhs, const ft::vector<T, Alloc> &rhs)
+{
+	static int i = 0;
+
+	std::cout << "############### [" << i++ << "] ###############"  << std::endl;
+	std::cout << "eq: " << (lhs == rhs) << " | ne: " << (lhs != rhs) << std::endl;
+	std::cout << "lt: " << (lhs <  rhs) << " | le: " << (lhs <= rhs) << std::endl;
+	std::cout << "gt: " << (lhs >  rhs) << " | ge: " << (lhs >= rhs) << std::endl;
+}
+
+
+
+
+
 
 
 template< typename vector_type >
@@ -149,6 +238,57 @@ void tester_vector_type()
 	typedef typename ft_vector_t::const_iterator 					ft_cit_type;
 	typedef typename ft_vector_t::reverse_iterator 				ft_rit_type;
 	typedef typename ft_vector_t::const_reverse_iterator 	ft_crit_type;
+
+
+
+
+
+	std::cout << MAG "\n\nTEST\n" END << std::endl;
+
+
+
+
+	const int size = 5;
+	ft::vector<TESTED_TYPE> vct(size);
+	ft::vector<TESTED_TYPE>::reverse_iterator it = vct.rbegin();
+	ft::vector<TESTED_TYPE>::const_reverse_iterator ite = vct.rbegin();
+
+	for (int i = 0; i < size; ++i)
+		it[i] = (size - i) * 5;
+
+	it = it + 5;
+	it = 1 + it;
+	it = it - 4;
+	std::cout << *(it += 2) << std::endl;
+	std::cout << *(it -= 1) << std::endl;
+
+	*(it -= 2) = 42;
+	*(it += 2) = 21;
+
+	std::cout << "const_ite +=/-=: " << *(ite += 2) << " | " << *(ite -= 2) << std::endl;
+
+	std::cout << "(it == const_it): " << (ite == it) << std::endl;
+	std::cout << "(const_ite - it): " << (ite - it) << std::endl;
+	std::cout << "(const_ite + it): " << (ite + it) << std::endl;
+	// std::cout << "(const_ite + it): " << (it + ite) << std::endl;
+	std::cout << "(ite + 3 == it): " << (ite + 3 == it) << std::endl;
+
+	printSize(vct, true);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -375,7 +515,34 @@ void tester_vector_type()
 	comp_vector(stl_vector, ft_vector, "insert begin + 2, 2, 42");
 	chrono.diff_chrono();
 
+
+
+
+
+
+	// stl_display<T>(stl_vector);
+	// ft_vector.display("");
+
+
+
+
+	
+
+	/* insert end 4, 124 */
+	// chrono.stl_start_chrono();
+	// stl_vector.insert(stl_vector.end(), 4, convert<T>("124"));
+	// chrono.stl_end_chrono();
+
+	// chrono.ft_start_chrono();
+	// ft_vector.insert(ft_vector.end(), 4, convert<T>("124"));
+	// chrono.ft_end_chrono();
+
+	// comp_vector(stl_vector, ft_vector, "insert end, 4, 124");
+	// chrono.diff_chrono();
  
+
+
+
 
 
 	// stl_display<T>(stl_vector);
@@ -1281,8 +1448,6 @@ void tester_vector_type()
 	
 
 
-	// stl_display<T>(stl_vector);
-	// ft_vector.display("");
 
 
 	/* ---------------------------- */
@@ -1292,29 +1457,32 @@ void tester_vector_type()
 
 	/* erase begin */
 	chrono.stl_start_chrono();
-	stl_vector2.erase(stl_vector2.begin());
+	stl_it = stl_vector2.erase(stl_vector2.begin());
 	chrono.stl_end_chrono();
 
 	chrono.ft_start_chrono();
-	ft_vector2.erase(ft_vector2.begin());
+	ft_it = ft_vector2.erase(ft_vector2.begin());
 	chrono.ft_end_chrono();
 
-	str_comp(tostr(stl_vector2.size()), tostr(ft_vector2.size()), "erase begin");
+	str_comp(tostr(*stl_it), tostr(*ft_it), "ret erase begin");
+	comp_vector(stl_vector2, ft_vector2, "erase begin");
 	chrono.diff_chrono();
+
 
 
 
 
 	/* erase end */
 	chrono.stl_start_chrono();
-	stl_vector2.erase(stl_vector2.end() - 1);
+	stl_it = stl_vector2.erase(stl_vector2.end());
 	chrono.stl_end_chrono();
 
 	chrono.ft_start_chrono();
-	ft_vector2.erase(ft_vector2.end() - 1);
+	ft_it = ft_vector2.erase(ft_vector2.end());
 	chrono.ft_end_chrono();
 
-	str_comp(tostr(stl_vector2.size()), tostr(ft_vector2.size()), "erase end");
+	str_comp(tostr(*stl_it), tostr(*ft_it), "ret erase end");
+	comp_vector(stl_vector2, ft_vector2, "erase end");
 	chrono.diff_chrono();
 
 
@@ -1322,52 +1490,91 @@ void tester_vector_type()
 
 	/* erase middle */
 	chrono.stl_start_chrono();
-	stl_vector2.erase(stl_vector2.begin() + 2);
+	stl_it = stl_vector2.erase(stl_vector2.begin() + 2);
 	chrono.stl_end_chrono();
 
 	chrono.ft_start_chrono();
-	ft_vector2.erase(ft_vector2.begin() + 2);
+	ft_it = ft_vector2.erase(ft_vector2.begin() + 2);
 	chrono.ft_end_chrono();
 
-	str_comp(tostr(stl_vector2.size()), tostr(ft_vector2.size()), "erase middle");
+	str_comp(tostr(*stl_it), tostr(*ft_it), "ret erase begin + 2");
+	comp_vector(stl_vector2, ft_vector2, "erase begin + 2");
 	chrono.diff_chrono();
 
 
 
 
 
-	/* erase range */
+
+
+
+
+
+
+	/* erase range b+2 b+2*/
 	chrono.stl_start_chrono();
-	stl_vector2.erase(stl_vector2.begin() + 2, stl_vector2.begin() + 4);
+	stl_it = stl_vector2.erase(stl_vector2.begin() + 2, stl_vector2.begin() + 2);
 	chrono.stl_end_chrono();
 
 	chrono.ft_start_chrono();
-	ft_vector2.erase(ft_vector2.begin() + 2, ft_vector2.begin() + 4);
+	ft_it = ft_vector2.erase(ft_vector2.begin() + 2, ft_vector2.begin() + 2);
 	chrono.ft_end_chrono();
 
-	str_comp(tostr(stl_vector2.size()), tostr(ft_vector2.size()), "erase range");
+	str_comp(tostr(*stl_it), tostr(*ft_it), "ret erase range b+2 b+2");
+	comp_vector(stl_vector2, ft_vector2, "erase range b+2 b+2");
 	chrono.diff_chrono();
 
 
 
-	/* erase first last */
+
+	/* erase range b+2 b+4*/
 	chrono.stl_start_chrono();
-	stl_vector2.erase(stl_vector2.begin(), stl_vector2.end());
+	stl_it = stl_vector2.erase(stl_vector2.begin() + 2, stl_vector2.begin() + 4);
 	chrono.stl_end_chrono();
 
 	chrono.ft_start_chrono();
-	ft_vector2.erase(ft_vector2.begin(), ft_vector2.end());
+	ft_it = ft_vector2.erase(ft_vector2.begin() + 2, ft_vector2.begin() + 4);
 	chrono.ft_end_chrono();
 
-	str_comp(tostr(stl_vector2.size()), tostr(ft_vector2.size()), "erase first last");
+	str_comp(tostr(*stl_it), tostr(*ft_it), "ret erase range b+2 b+4");
+	comp_vector(stl_vector2, ft_vector2, "erase range b+2 b+4");
 	chrono.diff_chrono();
+
+
 
 
 
 
 
 	// stl_display<T>(stl_vector2);
-	// ft_vector2.display("ft_vector2");
+	// ft_vector2.display("");
+
+
+
+
+
+
+	/* erase first last */
+	chrono.stl_start_chrono();
+	stl_it = stl_vector2.erase(stl_vector2.begin(), stl_vector2.end());
+	chrono.stl_end_chrono();
+
+	chrono.ft_start_chrono();
+	ft_it = ft_vector2.erase(ft_vector2.begin(), ft_vector2.end());
+	chrono.ft_end_chrono();
+
+	str_comp(tostr(*stl_it), tostr(*ft_it), "ret erase first last");
+	comp_vector(stl_vector2, ft_vector2, "erase first last");
+	chrono.diff_chrono();
+
+
+
+
+
+
+	// stl_display<T>(stl_vector2);
+	// ft_vector2.display("ft_vector");
+
 
 
 

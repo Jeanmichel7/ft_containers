@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 12:54:45 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/30 00:16:06 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/30 00:42:21 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -593,7 +593,7 @@ public:
 		return end();
 	}
 
-	ft::pair<iterator,iterator> equal_range( const typename value_type::first_type& key ) {
+	ft::pair<iterator, iterator> equal_range( const typename value_type::first_type& key ) {
 		node_pointer 	x = this->_root;
     node_pointer 	y = x;
 		iterator 			it1;
@@ -621,7 +621,7 @@ public:
 		return ft::pair<iterator,iterator>(it1, it1);
 	}
 
-	ft::pair<const_iterator,const_iterator> equal_range( const typename value_type::first_type& key ) const {
+	ft::pair<const_iterator, const_iterator> equal_range( const typename value_type::first_type& key ) const {
 		node_pointer 		x = this->_root;
 		node_pointer 		y = x;
 		const_iterator 	it1;

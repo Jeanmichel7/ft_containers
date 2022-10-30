@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 14:16:17 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/29 23:49:37 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/30 00:34:00 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,17 +113,17 @@ void tester_map(void)
 	display_title("MAP < String, Int >");
 	tester_map_type< std::string, int >();
 
-	display_title("MAP < Int, String >");
-	tester_map_type< int, std::string >();
+	// display_title("MAP < Int, String >");
+	// tester_map_type< int, std::string >();
 
-	display_title("MAP < String, String >");
-	tester_map_type< std::string, std::string >();
+	// display_title("MAP < String, String >");
+	// tester_map_type< std::string, std::string >();
 
-	display_title("MAP < Int, Int >");
-	tester_map_type< int, int >();
+	// display_title("MAP < Int, Int >");
+	// tester_map_type< int, int >();
 
-	display_title("MAP < Int, Float >");
-	tester_map_type< int, float >();
+	// display_title("MAP < Int, Float >");
+	// tester_map_type< int, float >();
 }
 
 
@@ -2298,7 +2298,7 @@ void tester_map_type() {
 
 
 	/* random */
-	nb_test = 1000;
+	nb_test = 100;
 	hint 		= 0;
 
 	srand (time(NULL));
@@ -2366,7 +2366,7 @@ void tester_map_type() {
 	ft_const_it_type 	cit_ft_map;
 
 	/* random */
-	nb_test 	= 1000;
+	nb_test 	= 100;
 	int nrand	= 0;
 
 	srand (time(NULL));
@@ -2466,7 +2466,7 @@ void tester_map_type() {
 
 
 	/* random */
-	nb_test = 1000;
+	nb_test = 100;
 	hint 		= 0;
 
 	srand (time(NULL));
@@ -2611,7 +2611,7 @@ void tester_map_type() {
 
 
 	/* random */
-	nb_test = 1000;
+	nb_test = 100;
 	hint 		= 0;
 
 	srand (time(NULL));
