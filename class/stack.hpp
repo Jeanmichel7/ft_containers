@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 11:13:00 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/27 14:59:52 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/31 12:00:28 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,22 +112,34 @@ public:
   /* *************************************************** */
 
   template <class T1, class Container1>
-  friend bool operator== (const stack<T1,Container1>& lhs, const stack<T1,Container1>& rhs);
+  friend bool operator== (const stack<T1,Container1>& lhs, const stack<T1,Container1>& rhs) {
+    return (lhs.c == rhs.c);
+  }
 
   template <class T1, class Container1>
-  friend bool operator!= (const stack<T1,Container1>& lhs, const stack<T1,Container1>& rhs);
+  friend bool operator!= (const stack<T1,Container1>& lhs, const stack<T1,Container1>& rhs) {
+    return (lhs.c != rhs.c);
+  }
 
   template <class T1, class Container1>
-  friend bool operator<  (const stack<T1,Container1>& lhs, const stack<T1,Container1>& rhs);
+  friend bool operator<  (const stack<T1,Container1>& lhs, const stack<T1,Container1>& rhs) {
+    return (lhs.c < rhs.c);
+  }
 
   template <class T1, class Container1>
-  friend bool operator<= (const stack<T1,Container1>& lhs, const stack<T1,Container1>& rhs);
+  friend bool operator<= (const stack<T1,Container1>& lhs, const stack<T1,Container1>& rhs) {
+    return (lhs.c <= rhs.c);
+  }
 
   template <class T1, class Container1>
-  friend bool operator>  (const stack<T1,Container1>& lhs, const stack<T1,Container1>& rhs);
+  friend bool operator>  (const stack<T1,Container1>& lhs, const stack<T1,Container1>& rhs) {
+    return (lhs.c > rhs.c);
+  }
 
   template <class T1, class Container1>
-  friend bool operator>= (const stack<T1,Container1>& lhs, const stack<T1,Container1>& rhs);
+  friend bool operator>= (const stack<T1,Container1>& lhs, const stack<T1,Container1>& rhs) {
+    return (lhs.c >= rhs.c);
+  }
 
 
 

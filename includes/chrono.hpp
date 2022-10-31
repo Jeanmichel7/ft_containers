@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 17:30:03 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/29 22:56:27 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/31 14:27:51 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,14 +70,17 @@ struct s_time_diff
     }
 
     double stl_end_chrono() {
-      if (clock_gettime(CLOCK_REALTIME, &stl_stop) == -1) {
-				perror("clock gettime end");
-				exit(EXIT_FAILURE);
+			if (USE_CHRONO) {
+				if (clock_gettime(CLOCK_REALTIME, &stl_stop) == -1) {
+					perror("clock gettime end");
+					exit(EXIT_FAILURE);
+				}
+				stl_time = (stl_stop.tv_sec - stl_start.tv_sec) 
+							+	(double)(stl_stop.tv_nsec - stl_start.tv_nsec) 
+							/ (double)BILLION;
+				return stl_time;
 			}
-      stl_time = (stl_stop.tv_sec - stl_start.tv_sec) 
-						+	(double)(stl_stop.tv_nsec - stl_start.tv_nsec) 
-						/ (double)BILLION;
-      return stl_time;
+			return stl_break_chrono();
     }
 
 		double stl_get_chrono() {
@@ -117,14 +120,17 @@ struct s_time_diff
     }
 
     double ft_end_chrono() {
-      if (clock_gettime(CLOCK_REALTIME, &ft_stop) == -1) {
-				perror("clock gettime end");
-				exit(EXIT_FAILURE);
+			if (USE_CHRONO) {
+      	if (clock_gettime(CLOCK_REALTIME, &ft_stop) == -1) {
+					perror("clock gettime end");
+					exit(EXIT_FAILURE);
+				}
+      	ft_time = (ft_stop.tv_sec - ft_start.tv_sec) 
+							+	(double)(ft_stop.tv_nsec - ft_start.tv_nsec) 
+							/ (double)BILLION;
+      	return ft_time;
 			}
-      ft_time = (ft_stop.tv_sec - ft_start.tv_sec) 
-						+	(double)(ft_stop.tv_nsec - ft_start.tv_nsec) 
-						/ (double)BILLION;
-      return ft_time;
+			return ft_break_chrono();
     }
 
 		double ft_get_chrono() {
@@ -144,24 +150,29 @@ struct s_time_diff
 		/* DIFF Chrono */
 		/* ********** */
 		void diff_chrono() {
-			std::cout << std::fixed;
-			stl_time == 0 ? diff = 0 : diff = ft_time / stl_time;
+			if (USE_CHRONO) {
+				std::cout << std::fixed;
+				stl_time == 0 ? diff = 0 : diff = ft_time / stl_time;
 
-			if (ft_time / 20 > stl_time) {
-				std::cout << RED "\n[TKO " << std::setprecision(2) << diff << "x] " END << std::endl;
-				std::cout << "STL chrono : " << std::setprecision(8) << stl_time << "s" << std::endl;
-				std::cout << "FT chrono  : " << std::setprecision(8) << ft_time << "s" << std::endl;
+				if (ft_time / 20 > stl_time) {
+					std::cout << RED "\n[TKO " << std::setprecision(2) << diff << "x] " END << std::endl;
+					std::cout << "STL chrono : " << std::setprecision(8) << stl_time << "s" << std::endl;
+					std::cout << "FT chrono  : " << std::setprecision(8) << ft_time << "s" << std::endl;
+				}
+				else if (ft_time / 10 > stl_time)
+					std::cout << YEL "[TOK "<< std::setprecision(1) << diff << "x] " END ;
+				else if (ft_time / 2 > stl_time)
+					std::cout << CYA "[TOK "<< std::setprecision(1) << diff << "x] " END ;
+				else
+					std::cout << GRN "[TOK "<< std::setprecision(1) << diff << "x] " END ;
+				
+				if (stl_time != (double)0 ) {
+					sum += diff;
+					count++;
+				}
 			}
-			else if (ft_time / 10 > stl_time)
-				std::cout << YEL "[TOK "<< std::setprecision(1) << diff << "x] " END ;
-			else if (ft_time / 2 > stl_time)
-				std::cout << CYA "[TOK "<< std::setprecision(1) << diff << "x] " END ;
-			else
-				std::cout << GRN "[TOK "<< std::setprecision(1) << diff << "x] " END ;
-			
-			if (stl_time != (double)0 ) {
-				sum += diff;
-				count++;
+			else {
+				diff_addition_chrono();
 			}
 		}
 

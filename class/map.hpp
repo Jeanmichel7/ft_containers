@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 18:14:05 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/29 23:50:54 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/31 12:48:34 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -229,14 +229,14 @@ public:
 	T& at( const Key& key ) {
 			iterator it = find(key);
 			if (it == end())
-				throw std::out_of_range("map::at");
+				throw std::out_of_range("map::at:  key not found");
 			return (it->second);
 	}
 
 	const T& at( const Key& key ) const {
 			const_iterator it = find(key);
 			if (it == end())
-				throw std::out_of_range("map::at");
+				throw std::out_of_range("map::at:  key not found");
 			return (it->second);
 	}
 
@@ -562,13 +562,13 @@ bool operator!=(const map<Key, T, Compare, Alloc> &lhs,
 	return (!(lhs == rhs));
 }
 
+
+
+
+
 template <class Key, class T, class Compare, class Alloc>
 bool operator<(const map<Key, T, Compare, Alloc> &lhs,
 			   const map<Key, T, Compare, Alloc> &rhs) {
-	if (lhs.size() < rhs.size())
-		return (true);
-	if (lhs.size() > rhs.size())
-		return (false);
 	typename map<Key, T, Compare, Alloc>::const_iterator it = lhs.begin();
 	typename map<Key, T, Compare, Alloc>::const_iterator ite = lhs.end();
 	typename map<Key, T, Compare, Alloc>::const_iterator it2 = rhs.begin();
@@ -585,6 +585,10 @@ bool operator<(const map<Key, T, Compare, Alloc> &lhs,
 		it++;
 		it2++;
 	}
+	if (lhs.size() < rhs.size())
+		return (true);
+	if (lhs.size() > rhs.size())
+		return (false);
 	return (false);
 }
 

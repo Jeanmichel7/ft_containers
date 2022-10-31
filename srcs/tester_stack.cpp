@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 11:38:03 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/27 21:59:53 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/31 14:32:08 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ void comp_stack(S1 &std_stack, S2 &ft_stack, std::string msg) {
 
 template < typename S >
 void stack_display (S &stack, std::string msg) {
-
   S new_stack = stack;
 	std::cout << "\n--------------- " << msg << " ---------------" << std::endl;
   while (!new_stack.empty()) {
@@ -48,16 +47,13 @@ void stack_display (S &stack, std::string msg) {
 }
 
 
-
 void tester_stack(void) 
 {
   typedef int                               c_type_int;
   typedef char                              c_type_char;
   typedef std::string                       c_type_string;
 
-
-
-  display_title("STACK < Char >");
+  display_title("STACK < Int >");
 	tester_stack_type< c_type_int >();
 
   display_title("STACK < Char >");
@@ -65,8 +61,6 @@ void tester_stack(void)
 
 	display_title("STACK < String >");
 	tester_stack_type< c_type_string >();
-
-
 
   display_title("STACK < String, std::deque >");
 	tester_stack_container_type< int, std::deque<int> >();
@@ -76,8 +70,10 @@ void tester_stack(void)
 
   display_title("STACK < String, std::vector >");
 	tester_stack_container_type< char, std::vector<char> >();
-
 }
+
+
+
 
 
 template< typename type_value >
@@ -97,26 +93,18 @@ void tester_stack_type() {
 
 
 
+
+
+
 	/* ***************************************************** */
 	/*                       CONSTRUCTORS                    */
 	/* ***************************************************** */
 	std::cout << MAG "\n\nTEST constructor stack() " END << std::endl;
 
   /* constructr default container */
-  chrono.stl_start_chrono();
   std_stack_t std_stack;
-  chrono.stl_end_chrono();
-  chrono.ft_start_chrono();
   ft_stack_t  ft_stack;
-  chrono.ft_end_chrono();
-
-  chrono.diff_chrono();
   comp_stack(std_stack, ft_stack, "stack with custom container");
-
-
-
-  // stack_display(std_stack, "std_stack");
-  // stack_display(ft_stack , "ft_stack");
 
 
 
@@ -374,14 +362,8 @@ void tester_stack_container_type() {
 	std::cout << MAG "\n\nTEST constructor stack() " END << std::endl;
 
   /* constructr default container */
-  chrono.stl_start_chrono();
   std_stack_t std_stack;
-  chrono.stl_end_chrono();
-  chrono.ft_start_chrono();
   ft_stack_t  ft_stack;
-  chrono.ft_end_chrono();
-
-  chrono.diff_chrono();
   comp_stack(std_stack, ft_stack, "stack with custom container");
 
 

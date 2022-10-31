@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 14:57:17 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/27 18:34:45 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/31 14:11:11 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,12 @@
 # define WHT "\033[0;37m"
 # define END "\033[0m"
 # define BILLION 1000000000L
+
+# if defined(__linux__)
+#  define USE_CHRONO 1
+# else
+#  define USE_CHRONO 0
+# endif
 
 # include <iostream>
 # include <sstream>

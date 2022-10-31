@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 15:05:46 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/30 21:54:00 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/31 14:29:57 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,14 +98,14 @@ void tester_vector(void)
 	display_title("VECTOR < string >");
 	tester_vector_type< std::string >();
 
-	// display_title("VECTOR < int >");
-	// tester_vector_type< int >();
+	display_title("VECTOR < int >");
+	tester_vector_type< int >();
 
-	// display_title("VECTOR < char >");
-	// tester_vector_type< char >();
+	display_title("VECTOR < char >");
+	tester_vector_type< char >();
 
-	// display_title("VECTOR < float >");
-	// tester_vector_type< float >();
+	display_title("VECTOR < float >");
+	tester_vector_type< float >();
 }
 
 
@@ -179,30 +179,13 @@ void tester_vector_type()
 
 
 
-	// /* construcotr with alloc */
-	// chrono.stl_start_chrono();
-	// std_vector_t std_vector_alloc(std::allocator< vector_type >());
-	// chrono.stl_end_chrono();
-
-	// chrono.ft_start_chrono();
-	// ft_vector_t ft_vector_alloc(std::allocator< vector_type >());
-	// chrono.ft_end_chrono();
-
-	// chrono.diff_chrono();
-
 
 
 	/* constructor with count */
-	chrono.stl_start_chrono();
 	std_vector_t stl_vector_count(5);
-	chrono.stl_end_chrono();
-
-	chrono.ft_start_chrono();
 	ft_vector_t ft_vector_count(5);
-	chrono.ft_end_chrono();
 
 	comp_vector(stl_vector_count, ft_vector_count, "constructor with count");
-	chrono.diff_chrono();
 
 
 
@@ -1334,18 +1317,18 @@ void tester_vector_type()
 
 
 
-	/* erase end */
-	chrono.stl_start_chrono();
-	stl_it = stl_vector2.erase(stl_vector2.end());
-	chrono.stl_end_chrono();
+	/* erase end - 1*/
+	// chrono.stl_start_chrono();
+	// stl_it = stl_vector2.erase(stl_vector2.end());
+	// chrono.stl_end_chrono();
 
-	chrono.ft_start_chrono();
-	ft_it = ft_vector2.erase(ft_vector2.end());
-	chrono.ft_end_chrono();
+	// chrono.ft_start_chrono();
+	// ft_it = ft_vector2.erase(ft_vector2.end());
+	// chrono.ft_end_chrono();
 
-	str_comp(tostr(*stl_it), tostr(*ft_it), "ret erase end");
-	comp_vector(stl_vector2, ft_vector2, "erase end");
-	chrono.diff_chrono();
+	// str_comp(tostr(*stl_it), tostr(*ft_it), "ret erase end");
+	// comp_vector(stl_vector2, ft_vector2, "erase end");
+	// chrono.diff_chrono();
 
 
 
@@ -1374,17 +1357,19 @@ void tester_vector_type()
 
 
 	/* erase range b+2 b+2*/
-	chrono.stl_start_chrono();
-	stl_it = stl_vector2.erase(stl_vector2.begin() + 2, stl_vector2.begin() + 2);
-	chrono.stl_end_chrono();
+	// chrono.stl_start_chrono();
+	// stl_it = stl_vector2.erase(stl_vector2.begin() + 2, stl_vector2.begin() + 2);
+	// chrono.stl_end_chrono();
 
-	chrono.ft_start_chrono();
-	ft_it = ft_vector2.erase(ft_vector2.begin() + 2, ft_vector2.begin() + 2);
-	chrono.ft_end_chrono();
+	// chrono.ft_start_chrono();
+	// ft_it = ft_vector2.erase(ft_vector2.begin() + 2, ft_vector2.begin() + 2);
+	// chrono.ft_end_chrono();
 
-	str_comp(tostr(*stl_it), tostr(*ft_it), "ret erase range b+2 b+2");
-	comp_vector(stl_vector2, ft_vector2, "erase range b+2 b+2");
-	chrono.diff_chrono();
+	// str_comp(tostr(*stl_it), tostr(*ft_it), "ret erase range b+2 b+2");
+	// comp_vector(stl_vector2, ft_vector2, "erase range b+2 b+2");
+	// chrono.diff_chrono();
+
+
 
 
 
@@ -1407,9 +1392,11 @@ void tester_vector_type()
 
 
 
-
 	// stl_display<T>(stl_vector2);
 	// ft_vector2.display("");
+
+
+
 
 
 
@@ -1433,9 +1420,10 @@ void tester_vector_type()
 
 
 
-
 	// stl_display<T>(stl_vector2);
-	// ft_vector2.display("ft_vector");
+	// ft_vector2.display("");
+
+
 
 
 
