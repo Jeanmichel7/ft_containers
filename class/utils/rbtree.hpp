@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 12:54:45 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/30 23:12:02 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/31 20:50:32 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,15 +24,16 @@ namespace ft
 {
 
 template <class T,
-		  class Compare = std::less<T>,
-		  class Node = ft::Node<T>,
-		  class Type_Alloc = std::allocator<T>,
-		  class Node_Alloc = std::allocator<Node>
+					class T_key,
+					class T_value,
+					class Compare = std::less<T_key>,
+					class Node = ft::Node<T>,
+					class Type_Alloc = std::allocator<T>,
+					class Node_Alloc = std::allocator<Node>
 >
 class RedBlackTree
 {
 public:
-
 	typedef RedBlackTree  												self;
 	typedef self&   															self_reference;
 	typedef T   																	value_type;
@@ -75,7 +76,7 @@ public:
 	{
 		// std::cout << "Constructor tree called" << std::endl;
 		_nil = _node_alloc.allocate(1);
-		_node_alloc.construct(_nil, Node(NULL, NULL));
+		_node_alloc.construct(_nil, Node());
 		_root = _nil;
 		_last_node = _root;
 	}
@@ -89,7 +90,7 @@ public:
 	{
 		// std::cout << "construcotr tree called" << std::endl;
 		_nil = _node_alloc.allocate(1);
-		_node_alloc.construct(_nil, Node(NULL, NULL));
+		_node_alloc.construct(_nil, Node());
 		_root = _nil;
 		_last_node = _root;
 		insert(x.begin(), x.end());
@@ -206,7 +207,6 @@ public:
 	reverse_iterator rend() {
 		return reverse_iterator(begin());
 	}
-	
 
 	const_reverse_iterator rend() const {
 		// std::cout << "const rend" << std::endl;
@@ -386,7 +386,7 @@ public:
 				return insert_pair(to_insert).first;
 			}
 		} 
-		
+
 		node_pointer p = hint._node->_parent;
 		node_pointer gp = p->_parent;
 		if ( p && gp &&
@@ -421,6 +421,7 @@ public:
 
 	void clear() {
 		iterator it = begin();
+
 		while (it != end()){
 			erase(it++);
 		}
@@ -506,7 +507,7 @@ public:
 		}
 		else {
 			_last_node = _root;
-			while (_last_node->_right != _nil) {
+			while ( _last_node->_right != _nil) {
 				_last_node = _last_node->_right;
 			}
 		}
@@ -568,7 +569,7 @@ public:
 			return end();
 		node_pointer current = _root;
 		while (current != NULL) {
-			if (current->_content.first == to_find.first)
+			if (current == to_find)
 				return iterator(current, _nil);
 			else if (current->_content < to_find)
 				current = current->_right;
@@ -583,7 +584,7 @@ public:
 			return end();
 		node_pointer current = _root;
 		while (current != NULL) {
-			if (current->_content.first == to_find.first)
+			if (current == to_find)
 				return const_iterator(current, _nil);
 			else if (current->_content < to_find)
 				current = current->_right;
@@ -593,7 +594,7 @@ public:
 		return end();
 	}
 
-	ft::pair<iterator, iterator> equal_range( const typename value_type::first_type& key ) {
+	ft::pair<iterator, iterator> equal_range( const T_key& key ) {
 		node_pointer 	x = this->_root;
     node_pointer 	y = x;
 		iterator 			it1;
@@ -604,7 +605,7 @@ public:
       y = x;
       if (key < x->_content.first) {
         x = x->_left;
-      } else if (x->_content.first < key){
+      } else if (x->_content.first < key) {
         x = x->_right;
       } else {
 				it1 = iterator(x, _last_node, _nil);
@@ -625,7 +626,7 @@ public:
 		return ft::pair<iterator, iterator>(it1, it1);
 	}
 
-	ft::pair<const_iterator, const_iterator> equal_range( const typename value_type::first_type& key ) const {
+	ft::pair<const_iterator, const_iterator> equal_range( const T_key& key ) const {
 		node_pointer 		x = this->_root;
 		node_pointer 		y = x;
 		node_pointer 		node_min = _root;

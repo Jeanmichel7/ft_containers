@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 18:14:05 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/31 12:48:34 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/31 16:34:54 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ public:
 	typedef value_type																&reference;
 	typedef value_type const													&const_reference;
 	typedef typename Allocator::pointer								pointer;
-	typedef typename Allocator::const_pointer const			const_pointer;
+	typedef typename Allocator::const_pointer const		const_pointer;
 
 
 	class value_compare
@@ -73,7 +73,7 @@ public:
 
 
 	// typedef typename Allocator::template rebind<Node>::other			node_alloc_type;
-	typedef typename ft::RedBlackTree<value_type, key_compare>			tree_type;
+	typedef typename ft::RedBlackTree<value_type, key_type, mapped_type, key_compare>			tree_type;
 
 	typedef typename tree_type::iterator 									iterator;
 	typedef typename tree_type::const_iterator						const_iterator;
@@ -129,8 +129,12 @@ public:
 
 	map& operator=( const map& other )
 	{
-		clear();
-		_tree.insert(other.begin(), other.end());
+		if (this != &other) {
+			clear();
+			this->_alloc = other._alloc;
+			this->_comp = other._comp;
+			_tree.insert(other.begin(), other.end());
+		}
 		return (*this);
 	};
 

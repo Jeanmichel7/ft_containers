@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/10 21:23:15 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/28 22:20:41 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/31 20:20:21 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -185,6 +185,15 @@ struct Node
 	Node                *_left;
 	Node                *_right;
 	int                  _color;
+
+	Node()
+	{
+		_parent = NULL;
+		_left = NULL;
+		_right = NULL;
+		_color = N_BLACK;
+	}
+
 	Node(Node *left, Node *right) 
 	: _left(left), _right(right), _color(N_BLACK) {}
 	
@@ -219,6 +228,50 @@ struct Node
 		return (*this);
 	}
 };
+
+
+    // template <class T1, class T2>
+    //     bool operator== (const ft::pair<T1,T2>& lhs, const ft::pair<T1,T2>& rhs)
+    //     {
+    //         return (lhs.first == rhs.first && lhs.second == rhs.second);
+    //     }
+
+
+    // template <class T1, class T2>
+    //     bool operator!= (const ft::pair<T1,T2>& lhs, const ft::pair<T1,T2>& rhs)
+    //     {
+    //         return !(lhs == rhs);
+    //     }
+    
+
+    // template <class T1, class T2>
+    //     bool operator<  (const ft::pair<T1,T2>& lhs, const ft::pair<T1,T2>& rhs)
+    //     {
+    //         return (lhs.first < rhs.first || (!(rhs.first < lhs.first) && lhs.second < rhs.second));
+    //     }
+
+
+    // template <class T1, class T2>
+    //     bool operator<= (const ft::pair<T1,T2>& lhs, const ft::pair<T1,T2>& rhs)
+    //     {
+    //         return !(rhs < lhs);
+    //     }
+
+
+    // template <class T1, class T2>
+    //     bool operator>  (const ft::pair<T1,T2>& lhs, const ft::pair<T1,T2>& rhs)
+    //     {
+    //         return (rhs < lhs);
+    //     }
+
+
+    // template <class T1, class T2>
+    //     bool operator>= (const ft::pair<T1,T2>& lhs, const ft::pair<T1,T2>& rhs)
+    //     {
+    //         return !(lhs < rhs);
+    //     }
+    
+
 
 } // namespace ft
 

@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 14:57:17 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/31 14:11:11 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/10/31 15:37:46 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,7 @@
 # include <string>
 # include <typeinfo>
 # include <list>
-
-
-# include "chrono.hpp"
-# include "convert.hpp"
-# include "utils.hpp"
+# include <queue>
 
 # include <vector>
 # include "vector.hpp"
@@ -46,8 +42,12 @@
 # include "map.hpp"
 # include <stack>
 # include "stack.hpp"
-# include <queue>
+# include <set>
+# include "set.hpp"
 
+# include "chrono.hpp"
+# include "convert.hpp"
+# include "utils.hpp"
 
 /* ***************************************************** */
 /*                        VECTOR                         */
@@ -100,6 +100,18 @@ void tester_stack_container_type();
 
 template< typename type_value >
 void tester_stack_type();
+
+
+
+
+/* ***************************************************** */
+/*                         SET                           */
+/* ***************************************************** */
+void tester_set(void);
+
+template< typename type_value >
+void tester_set_type();
+
 
 
 
