@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 11:38:03 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/31 14:32:08 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/11/01 21:08:54 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,13 +62,13 @@ void tester_stack(void)
 	display_title("STACK < String >");
 	tester_stack_type< c_type_string >();
 
-  display_title("STACK < String, std::deque >");
+  display_title("STACK < Int, std::deque >");
 	tester_stack_container_type< int, std::deque<int> >();
 
   display_title("STACK < String, std::list >");
-	tester_stack_container_type< int, std::list<int> >();
+	tester_stack_container_type< std::string, std::list<std::string> >();
 
-  display_title("STACK < String, std::vector >");
+  display_title("STACK < char, std::vector >");
 	tester_stack_container_type< char, std::vector<char> >();
 }
 
@@ -590,6 +590,53 @@ void tester_stack_container_type() {
 
   str_comp(tostr(stl_size), tostr(ft_size), "size()");
   chrono.diff_chrono();
+
+
+
+
+
+
+  /* *************************************************** */
+  /*                     RELATIONAL                      */
+  /* *************************************************** */
+  std::cout << MAG "\n\nTEST Relational " END << std::endl;
+
+  std_stack_t std_stack10;
+  ft_stack_t  ft_stack10;
+  std_stack_t std_stack11;
+  ft_stack_t  ft_stack11;
+
+  /* insert 10 values */
+  for (int i = 0; i < 10; i++) {
+    std_stack10.push(convert<type_value>(tostr(i)));
+    ft_stack10.push(convert<type_value>(tostr(i)));
+    std_stack11.push(convert<type_value>(tostr(i)));
+    ft_stack11.push(convert<type_value>(tostr(i)));
+  }
+
+  str_comp(tostr(std_stack10 == std_stack11), tostr(ft_stack10 == ft_stack11), "==");
+  str_comp(tostr(std_stack10 != std_stack11), tostr(ft_stack10 != ft_stack11), "!=");
+  str_comp(tostr(std_stack10 < std_stack11), tostr(ft_stack10 < ft_stack11), "<");
+  str_comp(tostr(std_stack10 <= std_stack11), tostr(ft_stack10 <= ft_stack11), "<=");
+  str_comp(tostr(std_stack10 > std_stack11), tostr(ft_stack10 > ft_stack11), ">");
+  str_comp(tostr(std_stack10 >= std_stack11), tostr(ft_stack10 >= ft_stack11), ">=");
+
+  std_stack11.push(convert<type_value>(tostr(10)));
+  ft_stack11.push(convert<type_value>(tostr(10)));
+
+  str_comp(tostr(std_stack10 == std_stack11), tostr(ft_stack10 == ft_stack11), "==");
+  str_comp(tostr(std_stack10 != std_stack11), tostr(ft_stack10 != ft_stack11), "!=");
+  str_comp(tostr(std_stack10 < std_stack11), tostr(ft_stack10 < ft_stack11), "<");
+  str_comp(tostr(std_stack10 <= std_stack11), tostr(ft_stack10 <= ft_stack11), "<=");
+  str_comp(tostr(std_stack10 > std_stack11), tostr(ft_stack10 > ft_stack11), ">");
+  str_comp(tostr(std_stack10 >= std_stack11), tostr(ft_stack10 >= ft_stack11), ">=");
+
+
+
+
+  
+
+
 
 
 

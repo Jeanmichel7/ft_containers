@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 11:13:00 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/31 22:19:11 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/11/01 21:04:03 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ public:
   typedef size_t		size_type;
 
 
-private:
+// private:
   container_type c;
 
 
