@@ -6,39 +6,11 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 15:05:46 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/31 14:29:57 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/11/01 22:17:24 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "main.hpp"
-
-// template< typename T1, typename T2>
-// void sstr_comp(T1 it, T2 ft_it, std::string msg) {
-
-// 	std::stringstream sstr;
-// 	std::stringstream ft_sstr;
-
-// 	sstr << it->first << " " << it->second;
-// 	ft_sstr << ft_it->first << " " << ft_it->second;
-// 	str_comp(sstr.str(), ft_sstr.str(), msg);
-// 	sstr.str(""); sstr.clear(); ft_sstr.str(""); ft_sstr.clear();
-// }
-
-
-
-// void str_comp(std::string str, std::string ft_str, std::string msg) {
-// 	if (str.compare(ft_str) != 0)
-// 	{
-// 		std::cout << RED "\n[KO] " END << msg << std::endl;
-		
-// 		std::cout << "std::map = " << str << std::endl;
-// 		std::cout << "ft::map  = " << ft_str << std::endl << std::endl;
-// 	}
-// 	else {
-// 		std::cout << GRN "[OK] " END ;
-// 		// std::cout << str << std::endl << ft_str << std::endl << msg << std::endl;
-// 	}
-// }
 
 template < typename V1, typename V2 >
 void	comp_vector( V1 &stl_vector, V2 &ft_vector, std::string msg ) {
@@ -1316,7 +1288,6 @@ void tester_vector_type()
 
 
 
-
 	/* erase end - 1*/
 	// chrono.stl_start_chrono();
 	// stl_it = stl_vector2.erase(stl_vector2.end());
@@ -1392,15 +1363,13 @@ void tester_vector_type()
 
 
 
+
+	stl_vector2.insert(stl_vector2.begin(), 1, convert<T>("42"));
+	ft_vector2.insert(ft_vector2.begin(), 1, convert<T>("42"));
+
+
 	// stl_display<T>(stl_vector2);
 	// ft_vector2.display("");
-
-
-
-
-
-
-
 
 
 	/* erase first last */
@@ -1409,13 +1378,14 @@ void tester_vector_type()
 	chrono.stl_end_chrono();
 
 	chrono.ft_start_chrono();
-	ft_it = ft_vector2.erase(ft_vector2.begin(), ft_vector2.end());
+	ft_it = ft_vector2.erase(
+		ft_vector2.begin(), 
+		ft_vector2.end());
 	chrono.ft_end_chrono();
 
 	str_comp(tostr(*stl_it), tostr(*ft_it), "ret erase first last");
 	comp_vector(stl_vector2, ft_vector2, "erase first last");
 	chrono.diff_chrono();
-
 
 
 
@@ -1572,6 +1542,56 @@ void tester_vector_type()
 
 
 
+
+
+
+
+  /* *************************************************** */
+  /*                     RELATIONAL                      */
+  /* *************************************************** */
+  std::cout << MAG "\n\nTEST Relational " END << std::endl;
+
+	std_vector_t 	stl_vector10;
+	ft_vector_t 	ft_vector10;
+
+	std_vector_t 	stl_vector11;
+	ft_vector_t 	ft_vector11;
+
+	/* insert 10 values */
+	for (int i = 0; i < 10; i++)
+	{
+		stl_vector10.push_back(convert<T>(tostr(i)));
+		ft_vector10.push_back(convert<T> (tostr(i)));
+		stl_vector11.push_back(convert<T>(tostr(i)));
+		ft_vector11.push_back(convert<T> (tostr(i)));
+	}
+
+	str_comp(tostr(stl_vector10 == stl_vector11), tostr(ft_vector10 == ft_vector11), "==");
+	str_comp(tostr(stl_vector10 != stl_vector11), tostr(ft_vector10 != ft_vector11), "!=");
+	str_comp(tostr(stl_vector10 < stl_vector11), tostr(ft_vector10 < ft_vector11), "<");
+	str_comp(tostr(stl_vector10 <= stl_vector11), tostr(ft_vector10 <= ft_vector11), "<=");
+	str_comp(tostr(stl_vector10 > stl_vector11), tostr(ft_vector10 > ft_vector11), ">");
+	str_comp(tostr(stl_vector10 >= stl_vector11), tostr(ft_vector10 >= ft_vector11), ">=");
+
+	stl_vector11.pop_back();
+	ft_vector11.pop_back();
+
+	str_comp(tostr(stl_vector10 == stl_vector11), tostr(ft_vector10 == ft_vector11), "==");
+	str_comp(tostr(stl_vector10 != stl_vector11), tostr(ft_vector10 != ft_vector11), "!=");
+	str_comp(tostr(stl_vector10 < stl_vector11), tostr(ft_vector10 < ft_vector11), "<");
+	str_comp(tostr(stl_vector10 <= stl_vector11), tostr(ft_vector10 <= ft_vector11), "<=");
+	str_comp(tostr(stl_vector10 > stl_vector11), tostr(ft_vector10 > ft_vector11), ">");
+	str_comp(tostr(stl_vector10 >= stl_vector11), tostr(ft_vector10 >= ft_vector11), ">=");
+
+	stl_vector11.push_back(convert<T>("42"));
+	ft_vector11.push_back(convert<T>("42"));
+
+	str_comp(tostr(stl_vector10 == stl_vector11), tostr(ft_vector10 == ft_vector11), "==");
+	str_comp(tostr(stl_vector10 != stl_vector11), tostr(ft_vector10 != ft_vector11), "!=");
+	str_comp(tostr(stl_vector10 < stl_vector11), tostr(ft_vector10 < ft_vector11), "<");
+	str_comp(tostr(stl_vector10 <= stl_vector11), tostr(ft_vector10 <= ft_vector11), "<=");
+	str_comp(tostr(stl_vector10 > stl_vector11), tostr(ft_vector10 > ft_vector11), ">");
+	str_comp(tostr(stl_vector10 >= stl_vector11), tostr(ft_vector10 >= ft_vector11), ">=");
 
 
 

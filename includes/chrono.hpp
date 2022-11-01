@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 17:30:03 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/31 14:27:51 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/11/01 21:33:53 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,29 +150,31 @@ struct s_time_diff
 		/* DIFF Chrono */
 		/* ********** */
 		void diff_chrono() {
-			if (USE_CHRONO) {
-				std::cout << std::fixed;
-				stl_time == 0 ? diff = 0 : diff = ft_time / stl_time;
+			if (stl_time >= 0.000001) {
+				if (USE_CHRONO) {
+					std::cout << std::fixed;
+					stl_time == 0 ? diff = 0 : diff = ft_time / stl_time;
 
-				if (ft_time / 20 > stl_time) {
-					std::cout << RED "\n[TKO " << std::setprecision(2) << diff << "x] " END << std::endl;
-					std::cout << "STL chrono : " << std::setprecision(8) << stl_time << "s" << std::endl;
-					std::cout << "FT chrono  : " << std::setprecision(8) << ft_time << "s" << std::endl;
+					if (ft_time / 20 > stl_time) {
+						std::cout << RED "\n[TKO " << std::setprecision(2) << diff << "x] " END << std::endl;
+						std::cout << "STL chrono : " << std::setprecision(8) << stl_time << "s" << std::endl;
+						std::cout << "FT chrono  : " << std::setprecision(8) << ft_time << "s" << std::endl;
+					}
+					else if (ft_time / 10 > stl_time)
+						std::cout << YEL "[TOK "<< std::setprecision(1) << diff << "x] " END ;
+					else if (ft_time / 2 > stl_time)
+						std::cout << CYA "[TOK "<< std::setprecision(1) << diff << "x] " END ;
+					else
+						std::cout << GRN "[TOK "<< std::setprecision(1) << diff << "x] " END ;
+					
+					if (stl_time != (double)0 ) {
+						sum += diff;
+						count++;
+					}
 				}
-				else if (ft_time / 10 > stl_time)
-					std::cout << YEL "[TOK "<< std::setprecision(1) << diff << "x] " END ;
-				else if (ft_time / 2 > stl_time)
-					std::cout << CYA "[TOK "<< std::setprecision(1) << diff << "x] " END ;
-				else
-					std::cout << GRN "[TOK "<< std::setprecision(1) << diff << "x] " END ;
-				
-				if (stl_time != (double)0 ) {
-					sum += diff;
-					count++;
+				else {
+					diff_addition_chrono();
 				}
-			}
-			else {
-				diff_addition_chrono();
 			}
 		}
 

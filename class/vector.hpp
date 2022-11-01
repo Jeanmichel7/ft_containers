@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/14 22:06:29 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/30 20:39:26 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/11/01 22:23:42 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -566,7 +566,6 @@ public:
 							InputIt first,
 							typename enable_if<!ft::is_integral<InputIt>::value, InputIt>::type last)
 	{
-		// std::cout << "insert(pos, first, last) : " << std::endl;
 		try {
 			InputIt it = last;
 			it --;
@@ -677,35 +676,30 @@ public:
 	iterator erase(iterator first, iterator last)
 	{
 		iterator 				it = begin();
-		iterator				ret = begin();
+		// value_type			ret = *first;
 		size_type 			i = 0;
 		difference_type n = ft::distance(first, last);
 
-		for (; it != first; it++)
+		for (; it != first && it != end(); it++)
 			i++;
 		/* deplace rang de n */
-		while (it != last && i != _nb_elems - 1)
+		while (it != last && i + n < _nb_elems - 1 && it != end())
+		{
+			_alloc.construct(_start + i, *(_start + i + n));
+			it++;
+			i++;
+		}
+
+		/* deplace elem deriere */
+		while (it != end() && i + n < _nb_elems)
 		{
 			_alloc.construct(_start + i, *(_start + i + n));
 			_alloc.destroy(_start + i + n);
 			it++;
 			i++;
 		}
-
-		/* deplace elem deriere */
-		while (it != end() && i != _nb_elems - 1)
-		{
-			_alloc.construct(_start + i, *(_start + i + n));
-			it++;
-			i++;
-		}
 		_nb_elems -= n;
 		_finish -= n;
-
-		// if (_nb_elems == 0) {
-		// 	// std::cout << "nb elem : " << _nb_elems << std::endl;
-		// 	return (ret);
-		// }
 		return ( first );
 	};
 

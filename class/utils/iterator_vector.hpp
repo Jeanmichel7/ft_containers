@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/04 16:23:50 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/30 21:50:06 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/11/01 22:02:01 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ public :
 	{
 		if (this == &rhs)
 			return (*this);
-    this->_ptr = rhs._ptr;
+    this->_ptr = &(*rhs._ptr);
     return (*this);
 	}
 
