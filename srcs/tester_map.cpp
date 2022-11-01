@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 14:16:17 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/31 20:23:42 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/11/01 18:28:28 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,17 +103,17 @@ void tester_map(void)
 	display_title("MAP < String, Int >");
 	tester_map_type< std::string, int >();
 
-	// display_title("MAP < Int, String >");
-	// tester_map_type< int, std::string >();
+	display_title("MAP < Int, String >");
+	tester_map_type< int, std::string >();
 
-	// display_title("MAP < String, String >");
-	// tester_map_type< std::string, std::string >();
+	display_title("MAP < String, String >");
+	tester_map_type< std::string, std::string >();
 
-	// display_title("MAP < Int, Int >");
-	// tester_map_type< int, int >();
+	display_title("MAP < Int, Int >");
+	tester_map_type< int, int >();
 
-	// display_title("MAP < Int, Float >");
-	// tester_map_type< int, float >();
+	display_title("MAP < Int, Float >");
+	tester_map_type< int, float >();
 }
 
 
@@ -356,6 +356,7 @@ void tester_map_type() {
 
 	comp_map(map, ft_map, "comp map - ft_map");
 	chrono.diff_chrono();
+	std::cout << std::endl;
 
 
 
@@ -413,7 +414,7 @@ void tester_map_type() {
 	std::cout << MAG "\n\nTEST insert( hint, value )" END << std::endl;
 
 
-	/* insert(begin(), 1) */
+	/* insert(begin(), A 1) */
 	chrono.stl_start_chrono();
 	it_type it_insert_hint = map.insert(
 		map.begin(),
@@ -441,7 +442,7 @@ void tester_map_type() {
 
 
 
-	/* insert(begin(), 1) */
+	/* insert(begin(), AA 10) */
 	chrono.stl_start_chrono();
 	it_insert_hint = map.insert(
 		map.begin(),
@@ -1077,14 +1078,31 @@ void tester_map_type() {
 
 	
 
+	/* ****************** */
+	/*     CONST map      */
+	/* ****************** */
 
 
-	/* CONST map */
+	std_map_t const const_map_empty;
+	ft_map_t const const_ft_map_empty;
+
+	/* const begin empty() map */
+	// chrono.stl_start_chrono();
+	// const_it_type 		const_it_empty 	= const_map_empty.begin();
+	// chrono.stl_end_chrono();
+
+	// chrono.ft_start_chrono();
+	// ft_const_it_type 	const_ft_it_empty 	= const_ft_map_empty.begin();
+	// chrono.ft_end_chrono();
+
+	// sstr_comp< const_it_type, ft_const_it_type >(const_it_empty, const_ft_it_empty, "const empty()");
+	// chrono.diff_chrono();
+
+
+
+
 	std_map_t const const_map(map);
 	ft_map_t const const_ft_map(ft_map);
-
-	// comp_map(const_map, const_ft_map, "const map");
-	// const_ft_map.display_tree("");
 
 	/* const begin() */
 	chrono.stl_start_chrono();
@@ -1115,8 +1133,6 @@ void tester_map_type() {
 		sstr << const_it5->first << ":" << const_it5->second << " ";
 	}
 	chrono.stl_end_chrono();
-
-
 
 	chrono.ft_start_chrono();
 	for (const_ft_it5 = const_ft_map.begin(); const_ft_it5 != const_ft_map.end(); const_ft_it5++) {
@@ -1230,9 +1246,9 @@ void tester_map_type() {
 
 
 	/* rbegin() + 4 */
-	r_it_type		r_it4 		= map.rbegin(); r_it4++; r_it4++; r_it4++; r_it4++;
+	r_it_type			r_it4 		= map.rbegin(); r_it4++; r_it4++; r_it4++; r_it4++;
 	ft_r_it_type	ft_r_it4 	= ft_map.rbegin(); ft_r_it4++; ft_r_it4++; ft_r_it4++; ft_r_it4++;
-	const_r_it_type 	const_r_it4 	= r_it4;
+	const_r_it_type 		const_r_it4 	= r_it4;
 	ft_const_r_it_type 	const_ft_r_it4 	= ft_r_it4;
 	sstr_comp< const_r_it_type, ft_const_r_it_type >(const_r_it4, const_ft_r_it4, "const rbegin() + 4");
 
@@ -1285,7 +1301,9 @@ void tester_map_type() {
 
 
 
-	/* CONST MAP */
+	/* ****************** */
+	/*     CONST map      */
+	/* ****************** */
 	
 	/*const rbegin()*/
 	chrono.stl_start_chrono();
@@ -1327,7 +1345,23 @@ void tester_map_type() {
 
 
 
-	
+	/* const rbegin rend */
+	chrono.stl_start_chrono();
+	for (const_r_it = const_map.rbegin(); const_r_it != const_map.rend(); const_r_it++)
+		sstr << const_r_it->first << ":" << const_r_it->second << " ";
+	chrono.stl_end_chrono();
+
+	chrono.ft_start_chrono();
+	for (const_ft_r_it = const_ft_map.rbegin(); const_ft_r_it != const_ft_map.rend(); const_ft_r_it++)
+		ft_sstr << const_ft_r_it->first << ":" << const_ft_r_it->second << " ";
+	chrono.ft_end_chrono();
+
+	str_comp(sstr.str(), ft_sstr.str(), "const rbegin() -> rend()");
+	sstr.str(""); sstr.clear(); ft_sstr.str(""); ft_sstr.clear();
+	chrono.diff_chrono();
+
+
+
 
 
 
@@ -1447,24 +1481,13 @@ void tester_map_type() {
 	chrono.stl_start_chrono();
 	map.erase(map.begin());
 	chrono.stl_end_chrono();
+	
 	chrono.ft_start_chrono();
 	ft_map.erase(ft_map.begin());
 	chrono.ft_end_chrono();
 
 	comp_map(map, ft_map, "erase begin()");
 	chrono.diff_chrono();
-
-
-	/* erase("inexist") SEGV */
-	// map.erase(map.find("inexist"));
-	// ft_map.erase(ft_map.find("inexist"));
-	// comp_map(map, ft_map, "erase find(\"inexist\")");
-
-
-	/* std::map SEGV */
-	// map.erase(map.end());
-	// ft_map.erase(ft_map.end());
-	// comp_map(map, ft_map, "erase end()");
 
 
 
@@ -1815,6 +1838,7 @@ void tester_map_type() {
 	chrono.stl_start_chrono();
 	map.swap(map_swap);
 	chrono.stl_end_chrono();
+
 	chrono.ft_start_chrono();
 	ft_map.swap(ft_map_swap);
 	chrono.ft_end_chrono();
@@ -1826,27 +1850,17 @@ void tester_map_type() {
 	chrono.diff_chrono();
 
 
+
 	/* swap with empty */
 	std_map_t map_swap2;
 	ft_map_t ft_map_swap2;
-
-	map_swap.insert(pair(
-		convert<type_key_map>("&&"),
-		convert<type_value_map>("1234")
-		)
-	);
-	ft_map_swap.insert(ft_pair(
-		convert<type_key_map>("&&"),
-		convert<type_value_map>("1234")
-		)
-	);
-
 
 	// ft_map_swap.display_tree("ft_map_swap avant");
 	// ft_map_swap2.display_tree("ft_map_swap2 avant");
 	chrono.stl_start_chrono();
 	map_swap.swap(map_swap2);
 	chrono.stl_end_chrono();
+	
 	chrono.ft_start_chrono();
 	ft_map_swap.swap(ft_map_swap2);
 	chrono.ft_end_chrono();
@@ -2217,7 +2231,6 @@ void tester_map_type() {
 	/*                      tests size                       */
 	/*                  pair< string, int >                  */
 	/* ***************************************************** */
-	
 	std::cout << MAG "\n\nTEST size - max_size" END << std::endl;
 
 	str_comp( tostr(map.size()), tostr(ft_map.size()), "map.size()");
@@ -2287,8 +2300,6 @@ void tester_map_type() {
 	str_comp( tostr(ret_equal_range.first->second), tostr(ft_ret_equal_range.first->second), "equal_range(a).first.second");
 	str_comp( tostr(ret_equal_range.second->first), tostr(ft_ret_equal_range.second->first), "equal_range(a).second");
 	str_comp( tostr(ret_equal_range.second->second), tostr(ft_ret_equal_range.second->second), "equal_range(a).second.second");
-
-
 	std::cout << std::endl;
 
 
@@ -2973,7 +2984,87 @@ void tester_map_type() {
 
 
 
+	/* ***************************************************** */
+	/*                    relational op                      */
+	/* ***************************************************** */
+	std::cout << MAG "\n\nTEST relational operation" END << std::endl;
 
+	std_map_t map2;
+	ft_map_t 	ft_map2;
+
+	std_map_t map3;
+	ft_map_t 	ft_map3;
+	
+	/* insert 10 random value */
+	for (int i = 0; i < 10; i++)
+	{
+		key_str = tostr(rand() % 200 + 1);
+		value_str = tostr(rand() % 200 + 1);
+
+		map2.insert(std::make_pair(
+			convert<type_key_map>(key_str),
+			convert<type_value_map>(value_str)
+		));
+		ft_map2.insert(ft::make_pair(
+			convert<type_key_map>(key_str),
+			convert<type_value_map>(value_str)
+		));
+		map3.insert(std::make_pair(
+			convert<type_key_map>(key_str),
+			convert<type_value_map>(value_str)
+		));
+		ft_map3.insert(ft::make_pair(
+			convert<type_key_map>(key_str),
+			convert<type_value_map>(value_str)
+		));
+	}
+
+	// ft_map2.display_tree();
+
+	/* same map */
+	str_comp(tostr(map2 == map3), tostr(ft_map2 == ft_map3), "==");
+	str_comp(tostr(map2 != map3), tostr(ft_map2 != ft_map3), "!=");
+	str_comp(tostr(map2 < map3), tostr(ft_map2 < ft_map3), "<");
+	str_comp(tostr(map2 <= map3), tostr(ft_map2 <= ft_map3), "<=");
+	str_comp(tostr(map2 > map3), tostr(ft_map2 > ft_map3), ">");
+	str_comp(tostr(map2 >= map3), tostr(ft_map2 >= ft_map3), ">=");
+	
+
+
+	/* map2 > map3 */
+	map3.insert(std::make_pair(
+		convert<type_key_map>("100"),
+		convert<type_value_map>("100")
+	));
+	ft_map3.insert(ft::make_pair(
+		convert<type_key_map>("100"),
+		convert<type_value_map>("100")
+	));
+
+	str_comp(tostr(map2 == map3), tostr(ft_map2 == ft_map3), "==");
+	str_comp(tostr(map2 != map3), tostr(ft_map2 != ft_map3), "!=");
+	str_comp(tostr(map2 < map3), tostr(ft_map2 < ft_map3), "<");
+	str_comp(tostr(map2 <= map3), tostr(ft_map2 <= ft_map3), "<=");
+	str_comp(tostr(map2 > map3), tostr(ft_map2 > ft_map3), ">");
+	str_comp(tostr(map2 >= map3), tostr(ft_map2 >= ft_map3), ">=");
+
+	/* map2 < map3 */
+	map3.insert(std::make_pair(
+		convert<type_key_map>("200"),
+		convert<type_value_map>("200")
+	));
+	ft_map3.insert(ft::make_pair(
+		convert<type_key_map>("200"),
+		convert<type_value_map>("200")
+	));
+
+	str_comp(tostr(map2 == map3), tostr(ft_map2 == ft_map3), "==");
+	str_comp(tostr(map2 != map3), tostr(ft_map2 != ft_map3), "!=");
+	str_comp(tostr(map2 < map3), tostr(ft_map2 < ft_map3), "<");
+	str_comp(tostr(map2 <= map3), tostr(ft_map2 <= ft_map3), "<=");
+	str_comp(tostr(map2 > map3), tostr(ft_map2 > ft_map3), ">");
+	str_comp(tostr(map2 >= map3), tostr(ft_map2 >= ft_map3), ">=");
+	
 
 
 
@@ -2985,6 +3076,7 @@ void tester_map_type() {
 	/* ***************************************************** */
 	std::cout << MAG "\n\nTEST clear" END << std::endl;
 
+	/* clear */
 	chrono.stl_start_chrono();
 	map.clear();
 	chrono.stl_end_chrono();
@@ -2996,8 +3088,10 @@ void tester_map_type() {
 	chrono.diff_chrono();
 
 
+	/* clear empty */
 	std_map_t empty_map2;
 	ft_map_t ft_empty_map2;
+
 	chrono.stl_start_chrono();
 	empty_map2.clear();
 	chrono.stl_end_chrono();

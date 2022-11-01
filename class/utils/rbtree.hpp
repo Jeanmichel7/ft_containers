@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 12:54:45 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/31 20:50:32 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/11/01 19:48:14 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,6 @@
 
 # include "../utils.hpp"
 # include "iterator_map.hpp"
-# include "../map.hpp"
-// # include "convert.hpp"
 
 using namespace std;
 
@@ -26,7 +24,7 @@ namespace ft
 template <class T,
 					class T_key,
 					class T_value,
-					class Compare = std::less<T_key>,
+					class Compare,
 					class Node = ft::Node<T>,
 					class Type_Alloc = std::allocator<T>,
 					class Node_Alloc = std::allocator<Node>
@@ -110,6 +108,7 @@ public:
 	/* Destructor */
 	~RedBlackTree()
 	{
+		// clear();
 		// std::cout << "Destructor called" << std::endl;
 		node_pointer current = _root;
 		node_pointer prev;
@@ -239,8 +238,6 @@ public:
 
 
 
-
-
 	/* *************************************************** */
 	/*                                                     */
 	/*                       MODIFY                        */
@@ -254,16 +251,16 @@ public:
     node_pointer	y = NULL;
 		node_pointer	node;
 
-    while (x != _nil) {
-      y = x;
-      if (val.first < x->_content.first) {
-        x = x->_left;
-      } else if (x->_content.first < val.first){
-        x = x->_right;
-      } else {
+
+		while (x != this->_nil) {
+			y = x;
+			if (this->_comp(val, x->_content))
+				x = x->_left;
+			else if (this->_comp(x->_content, val))
+				x = x->_right;
+			else
 				return ft::pair<iterator, bool>(iterator(x, _last_node, _nil), false);
-			}
-    }
+		}
 
 		try {
 			node = _node_alloc.allocate(1);
@@ -273,15 +270,13 @@ public:
 			return ft::pair<iterator, bool>(iterator(x, _last_node, _nil), false);
 		}
 
-
 		node->_parent = y;
-		if (y == NULL) {
+		if (y == NULL)
 			_root = node;
-		} else if (node->_content < y->_content) {
+		else if (node->_content < y->_content)
 			y->_left = node;
-		} else {
+		else
 			y->_right = node;
-		}
 		_size++;
 
     if (node->_parent == NULL) {
@@ -313,13 +308,12 @@ public:
 
     while (x != _nil) {
       y = x;
-      if (val.first < x->_content.first) {
-        x = x->_left;
-      } else if (x->_content.first < val.first){
-        x = x->_right;
-      } else {
+     if (this->_comp(val, x->_content))
+				x = x->_left;
+			else if (this->_comp(x->_content, val))
+				x = x->_right;
+      else 
 				return iterator(x, _last_node, _nil);
-			}
     }
 
 		try {
@@ -331,15 +325,14 @@ public:
 		}
 
     node->_parent = y;
-    if (y == NULL) {
+    if (y == NULL)
       _root = node;
-    } else if (node->_content < y->_content) {
+    else if (node->_content < y->_content)
       y->_left = node;
-    } else {
+    else
       y->_right = node;
-    }
 		_size++;
-
+		
     if (node->_parent == NULL) {
       node->_color = N_BLACK;
 			_last_node = node;
@@ -367,17 +360,16 @@ public:
 
 		node_pointer x = _root;
 		while (x != _nil) {
-			if (to_insert.first < x->_content.first) {
+			if (this->_comp(to_insert, x->_content))
 				x = x->_left;
-			} else if (x->_content.first < to_insert.first) {
+			else if (this->_comp(x->_content, to_insert))
 				x = x->_right;
-			} else {
+			else 
 				return iterator(x, _last_node, _nil);
-			}
 		}
 
 		if (hint == end()) {
-			if (_comp(_last_node->_content.first, to_insert.first)) {
+			if (_comp(_last_node->_content, to_insert)) {
 				// std::cout << "hint is good";
 				return insert_pair_pos(_last_node, to_insert);
 			}
@@ -390,11 +382,11 @@ public:
 		node_pointer p = hint._node->_parent;
 		node_pointer gp = p->_parent;
 		if ( p && gp &&
-			(( gp > p && _comp(p->_content.first, to_insert.first) 
-				&& _comp(to_insert.first, gp->_content.first)) 
+			(( gp > p && _comp(p->_content, to_insert) 
+				&& _comp(to_insert, gp->_content)) 
 			||
-			(p < gp && _comp(gp->_content.first, to_insert.first) 
-				&& _comp(to_insert.first, p->_content.first)))) {
+			(p < gp && _comp(gp->_content, to_insert) 
+				&& _comp(to_insert, p->_content)))) {
 			// std::cout << "hint is good";
 			return insert_pair_pos(hint._node->_parent, to_insert);
 		} else {
@@ -440,14 +432,14 @@ public:
     node_pointer x, y;
 
     while (current != _nil) {
-      if (current->_content.first == pos->first) {
-        z = current;
+			if (current->_content == pos._node->_content) {
+				z = current;
 				break;
-      } else if (current->_content.first < pos->first) {
-        current = current->_right;
-      } else {
-        current = current->_left;
-      }
+			}
+			if (this->_comp(pos._node->_content, current->_content))
+				current = current->_left;
+			else if (this->_comp(current->_content, pos._node->_content))
+				current = current->_right;
     }
     if (z == _nil) {
       cout << "Key not found in the tree" << endl;
@@ -594,82 +586,159 @@ public:
 		return end();
 	}
 
-	ft::pair<iterator, iterator> equal_range( const T_key& key ) {
-		node_pointer 	x = this->_root;
-    node_pointer 	y = x;
-		iterator 			it1;
-		iterator 			it2;
 
-    while (x != _nil) {
-			// std::cout << "x->first : " << x->_content.first << std::endl;
-      y = x;
-      if (key < x->_content.first) {
-        x = x->_left;
-      } else if (x->_content.first < key) {
-        x = x->_right;
-      } else {
-				it1 = iterator(x, _last_node, _nil);
-				it2 = it1;
-				it2++;
-				return ft::make_pair<iterator, iterator>(it1, it2);
-			}
-    }
-		if (y == minimum(_root)) {
-			it1 = begin();
-			return ft::make_pair<iterator, iterator>(it1, it1);
-		}
-		if (y == _last_node) {
-			return ft::pair<iterator, iterator>(end(), end());
-		}
-		it1 = iterator(y, _last_node, _nil);
-		it1++;
-		return ft::pair<iterator, iterator>(it1, it1);
-	}
 
-	ft::pair<const_iterator, const_iterator> equal_range( const T_key& key ) const {
-		node_pointer 		x = this->_root;
-		node_pointer 		y = x;
-		node_pointer 		node_min = _root;
-		node_pointer 		node_min_p = _root;
-		const_iterator 	it1;
-		const_iterator 	it2;
+	iterator lower_bound(const T_key &key) {
+		node_pointer x = _root;
+    node_pointer y = _nil;
 
 		while (x != _nil) {
-			// std::cout << "x->first : " << x->_content.first << std::endl;
-			y = x;
-			if (key < x->_content.first) {
+			if (!this->_comp(x->_content, key)) {
+				y = x;
 				x = x->_left;
-			} else if (x->_content.first < key){
+			} else {
 				x = x->_right;
-			} else {
-				it1 = const_iterator(x, _last_node, _nil);
-				it2 = it1;
-				it2++;
-				return ft::make_pair<const_iterator, const_iterator>(it1, it2);
 			}
 		}
-
-		if (y == _last_node) {
-			return ft::pair<const_iterator, const_iterator>(end(), end());
-		}
-
-		/* find min node */
-		while(node_min != _nil) {
-			node_min_p = node_min;
-			if (node_min->_content.first < key) {
-				node_min = node_min->_right;
-			} else {
-				node_min = node_min->_left;
-			}
-		}
-		if (y == node_min_p) {
-			return ft::make_pair< const_iterator, const_iterator>(begin(), begin());
-		}
-
-		it1 = const_iterator(y, _last_node, _nil);
-		it1++;
-		return ft::pair<const_iterator, const_iterator>(it1, it1);
+		return iterator(y, _nil);
 	}
+
+	const_iterator lower_bound(const T_key &key) const {
+		node_pointer x = _root;
+		node_pointer y = _nil;
+
+		while (x != _nil) {
+			if (!this->_comp(x->_content, key)) {
+				y = x;
+				x = x->_left;
+			} else {
+				x = x->_right;
+			}
+		}
+		return const_iterator(y, _nil);
+	}
+
+	iterator upper_bound(const T_key &key) {
+		node_pointer x = _root;
+		node_pointer y = _nil;
+
+		while (x != _nil) {
+			if (this->_comp(key, x->_content)) {
+				y = x;
+				x = x->_left;
+			} else {
+				x = x->_right;
+			}
+		}
+		return iterator(y, _nil);
+	}
+
+	const_iterator upper_bound(const T_key &key) const {
+		node_pointer x = _root;
+		node_pointer y = _nil;
+
+		while (x != _nil) {
+			if (this->_comp(key, x->_content)) {
+				y = x;
+				x = x->_left;
+			} else {
+				x = x->_right;
+			}
+		}
+		return const_iterator(y, _nil);
+	}
+
+	ft::pair<iterator, iterator> equal_range(const T_key &key) {
+		return ft::make_pair(lower_bound(key), upper_bound(key));
+	}
+
+	ft::pair<const_iterator, const_iterator> equal_range(const T_key &key) const {
+		return ft::make_pair(lower_bound(key), upper_bound(key));
+	}
+
+
+
+
+
+
+	// ft::pair<iterator, iterator> equal_range( const T_key &key ) {
+	// 	node_pointer 	x = this->_root;
+  //   node_pointer 	y = x;
+	// 	iterator 			it1;
+	// 	iterator 			it2;
+
+	// 	std::cout << "key : " << key << std::endl;
+
+	// 	while (x != _nil && _comp(key, x->_content)) {
+	// 		y = x;
+	// 		if (this->_comp(key, x->_content))
+	// 			x = x->_left;
+	// 		else if (this->_comp(x->_content, key))
+	// 			x = x->_right;
+	// 		else {
+	// 			it1 = iterator(x, _last_node, _nil);
+	// 			it2 = it1;
+	// 			it2++;
+	// 			return ft::make_pair<iterator, iterator>(it1, it2);
+	// 		}
+	// 	}
+	// 	if (y == minimum(_root)) {
+	// 		it1 = begin();
+	// 		return ft::make_pair<iterator, iterator>(it1, it1);
+	// 	}
+	// 	if (y == _last_node) {
+	// 		return ft::pair<iterator, iterator>(end(), end());
+	// 	}
+	// 	it1 = iterator(y, _last_node, _nil);
+	// 	it1++;
+	// 	return ft::make_pair<iterator, iterator>(it1, it1);
+	// }
+
+	// ft::pair<const_iterator, const_iterator> equal_range( const T_key& key ) const {
+	// 	node_pointer 		x = this->_root;
+	// 	node_pointer 		y = x;
+	// 	node_pointer 		node_min = _root;
+	// 	node_pointer 		node_min_p = _root;
+	// 	const_iterator 	it1;
+	// 	const_iterator 	it2;
+
+	// 	while (x != _nil) {
+	// 		y = x;
+	// 		if (this->_comp(key, x->_content))
+	// 			x = x->_left;
+	// 		else if (this->_comp(x->_content, key))
+	// 			x = x->_right;
+	// 		else {
+	// 			it1 = const_iterator(x, _last_node, _nil);
+	// 			it2 = it1;
+	// 			it2++;
+	// 			return ft::make_pair<const_iterator, const_iterator>(it1, it2);
+	// 		}
+	// 	}
+
+	// 	std::cout << "on passe ici" << std::endl;
+
+	// 	if (y == _last_node) {
+	// 		return ft::pair<const_iterator, const_iterator>(end(), end());
+	// 	}
+
+	// 	/* find min node */
+	// 	while(node_min != _nil) {
+	// 		node_min_p = node_min;
+	// 		if (node_min->_content.first < key) {
+	// 			node_min = node_min->_right;
+	// 		} else {
+	// 			node_min = node_min->_left;
+	// 		}
+	// 	}
+	// 	if (y == node_min_p) {
+	// 		return ft::make_pair< const_iterator, const_iterator>(begin(), begin());
+	// 	}
+
+	// 	it1 = const_iterator(y, _last_node, _nil);
+	// 	it1++;
+	// 	return ft::pair<const_iterator, const_iterator>(it1, it1);
+	// }
 
 
 
@@ -944,13 +1013,10 @@ public:
 	void display_tree(std::string msg) const
 	{
 		std::cout << "\n**********  Display tree (" << msg << ") ************\n" << std::endl;
-		// std::cout << "len tree : " << _size << std::endl << std::endl;
 		node_pointer current = _root;
 		node_pointer parent = NULL;
 
 		int space_root = 60 + _size;
-
-
 		if (current == NULL )
 			std::cout << "Tree is NULL" << std::endl;
 		else if (current == _nil)
@@ -968,13 +1034,6 @@ public:
 		else {
 			std::cout << "\n\nlast node : " << std::endl;
 			display_tree(parent = _last_node, 30, 1);
-
-			// std::cout << RED "\n\nlast node" END << std::endl
-			// << "content	:" << _last_node->_content.first << std::endl
-			// << "color	:" << _last_node->_color << std::endl
-			// << "parent	:"<< (_last_node->_parent != NULL ? _last_node->_parent->_content.first : "") << std::endl
-			// << "left	:" << (_last_node->_left == _nil ? "NIL" : _last_node->_left->_content.first) << std::endl
-			// << "right	:" << (_last_node->_right == _nil ? "NIL" : _last_node->_right->_content.first) << std::endl;
 		}
 		std::cout << "\n**********  End display tree ************\n" << std::endl;
 	}
@@ -982,7 +1041,6 @@ public:
 
 	void display_tree(node_pointer current, int space_root, bool is_last) const
 	{
-		// bool is_not_nil = 0;
 		if (current == NULL)
 			return;
 		space_root -= 8;
@@ -1005,9 +1063,81 @@ public:
 		} else
 			std::cout << "NIL" << std::endl;
 		std::cout << END ;
-
 		display_tree(current->_right, space_root, is_last);
 	}
+
+
+
+	void display_tree_set(std::string msg) const
+	{
+		std::cout << "\n**********  Display tree (" << msg << ") ************\n" << std::endl;
+		node_pointer current = _root;
+		node_pointer parent = NULL;
+
+		int space_root = 60 + _size;
+		if (current == NULL )
+			std::cout << "Tree is NULL" << std::endl;
+		else if (current == _nil)
+			std::cout << "Tree is empty" << std::endl;
+		else if (!empty()){
+			display_tree_set(parent = _root, space_root, 0);
+		}
+
+		if (_last_node == _nil)
+			std::cout << "\n\nlast node is nil" << std::endl;
+		else if (_last_node == _root)
+			std::cout << "\n\nlast node is root" << std::endl;
+		else if ( _last_node == NULL)
+			std::cout << "\n\nlast node is NULL" << std::endl;
+		else {
+			std::cout << "\n\nlast node : " << std::endl;
+			display_tree_set(parent = _last_node, 30, 1);
+		}
+		std::cout << "\n**********  End display tree ************\n" << std::endl;
+	}
+
+
+	void display_tree_set(node_pointer current, int space_root, bool is_last) const
+	{
+		if (current == NULL)
+			return;
+		space_root -= 8;
+		
+		display_tree_set(current->_left, space_root, is_last);
+		// std::cout << std::endl;
+		for (int i = 10; i < space_root; i++)
+			std::cout << " ";
+		if (current->_color == N_RED)
+			std::cout << RED;
+		
+		if (current != _nil) {
+			std::cout << current->_content;
+			if (current == _last_node && is_last) {
+				current->_parent->_color == N_RED ? std::cout << RED : std::cout << END ;
+				std::cout << "	" << current->_parent->_content;
+			}
+			std::cout << std::endl;
+		} else
+			std::cout << "NIL" << std::endl;
+		std::cout << END ;
+		display_tree_set(current->_right, space_root, is_last);
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 };
 
 } // namespace ft

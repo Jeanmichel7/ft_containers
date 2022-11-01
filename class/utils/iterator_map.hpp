@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 16:58:53 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/29 17:50:13 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/11/01 19:47:55 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,11 +96,11 @@ template <typename T, class Compare >
 			/*                                                     */
 			/* *************************************************** */
 
-			bool operator==(const RB_iterator& tree_it)
-			{ return (_node == tree_it._node); }
+			// bool operator==(const RB_iterator& tree_it)
+			// { return (_node == tree_it._node); }
 
-			bool operator!=(const RB_iterator& tree_it)
-			{ return (_node != tree_it._node); }
+			// bool operator!=(const RB_iterator& tree_it)
+			// { return (_node != tree_it._node); }
 
 			reference operator*() const
 			{ return (_node->_content); }
@@ -117,7 +117,7 @@ template <typename T, class Compare >
 					_node = _last_node->_right;
 					return (*this);
 				}
-				if (_node->_right != _nil)
+				if (_node != _nil && _node->_right != _nil)
 				{
 					// std::cout << "go right" << std::endl;
 					_node = _node->_right;
@@ -201,8 +201,6 @@ template <typename T, class Compare >
 				return (*this);
 			}
 
-
-
 			T *			_node;
 			T *			_last_node;
 			T *			_nil;
@@ -277,13 +275,21 @@ template <typename T, class Compare >
 				_nil(tree_it._nil),
 				_comp()
 			{}
+			
+			// RB_const_iterator(const RB_iterator<T, Compare>& tree_it)
+			// :
+			// 	_node(tree_it._node),
+			// 	_last_node(tree_it._last_node),
+			// 	_nil(tree_it._nil),
+			// 	_comp()
+			// {}
 
 			RB_const_iterator(const RB_iterator<T, Compare>& tree_it)
 			:
 				_node(tree_it._node),
 				_last_node(tree_it._last_node),
 				_nil(tree_it._nil),
-				_comp(tree_it._comp)
+				_comp()
 			{
 				// std::cout << "RB_const_iterator(const RB_iterator<T, Compare>& tree_it)" << std::endl;
 			}
@@ -302,6 +308,19 @@ template <typename T, class Compare >
 				return (*this);
 			}
 
+			RB_const_iterator &operator=(const RB_iterator<T, Compare>& tree_it) {
+				_node = const_cast<T*>(tree_it._node);
+				_nil = const_cast<T*>(tree_it._nil);
+				_last_node = const_cast<T*>(tree_it._last_node);
+				_comp = tree_it._comp;
+				return (*this);
+				// _nil = tree_it._nil;
+				// _last_node = tree_it._last_node;
+				// _comp = tree_it._comp;
+				// return (*this);
+			}
+
+
 			iterator
 			_tree_const_cast() const {
 				return (iterator(const_cast<T*>(_node), const_cast<T*>(_last_node), _comp));
@@ -319,11 +338,11 @@ template <typename T, class Compare >
 			/*                                                     */
 			/* *************************************************** */
 
-			bool operator==(const RB_const_iterator& tree_it)
-			{ return (_node == tree_it._node); }
+			// bool operator==(const RB_const_iterator& tree_it)
+			// { return (_node == tree_it._node); }
 
-			bool operator!=(const RB_const_iterator& tree_it)
-			{ return (_node != tree_it._node); }
+			// bool operator!=(const RB_const_iterator& tree_it)
+			// { return (_node != tree_it._node); }
 
 			reference operator*() const
 			{ return (_node->_content); }
@@ -437,6 +456,165 @@ template <typename T, class Compare >
 			T *				 	_nil;
 			Compare     _comp;
 	};
-}
 
-#endif /* BST_ITERATOR_HPP */
+
+
+	/* it -> it */
+	template <class T, class Compare>
+	bool operator==(const RB_iterator<T, Compare> &lhs, const RB_iterator<T, Compare> &rhs)
+	{
+		return (lhs._node == rhs._node);
+	}
+
+	template <class T, class Compare>
+	bool operator!=(const RB_iterator<T, Compare> &lhs, const RB_iterator<T, Compare> &rhs)
+	{
+		return (lhs._node != rhs._node);
+	}
+
+	template <class T, class Compare>
+	bool operator<(const RB_iterator<T, Compare> &lhs, const RB_iterator<T, Compare> &rhs)
+	{
+		return (lhs._node < rhs._node);
+	}
+
+	template <class T, class Compare>
+	bool operator<=(const RB_iterator<T, Compare> &lhs, const RB_iterator<T, Compare> &rhs)
+	{
+		return (lhs._node <= rhs._node);
+	}
+
+	template <class T, class Compare>
+	bool operator>(const RB_iterator<T, Compare> &lhs, const RB_iterator<T, Compare> &rhs)
+	{
+		return (lhs._node > rhs._node);
+	}
+
+	template <class T, class Compare>
+	bool operator>=(const RB_iterator<T, Compare> &lhs, const RB_iterator<T, Compare> &rhs)
+	{
+		return (lhs._node >= rhs._node);
+	}
+
+
+
+	/* const it -> const it */
+	template <class T, class Compare>
+	bool operator==(const RB_const_iterator<T, Compare> &lhs, const RB_const_iterator<T, Compare> &rhs)
+	{
+		return (lhs._node == rhs._node);
+	}
+
+	template <class T, class Compare>
+	bool operator!=(const RB_const_iterator<T, Compare> &lhs, const RB_const_iterator<T, Compare> &rhs)
+	{
+		return (lhs._node != rhs._node);
+	}
+
+	template <class T, class Compare>
+	bool operator<(const RB_const_iterator<T, Compare> &lhs, const RB_const_iterator<T, Compare> &rhs)
+	{
+		return (lhs._node < rhs._node);
+	}
+
+	template <class T, class Compare>
+	bool operator<=(const RB_const_iterator<T, Compare> &lhs, const RB_const_iterator<T, Compare> &rhs)
+	{
+		return (lhs._node <= rhs._node);
+	}
+
+	template <class T, class Compare>
+	bool operator>(const RB_const_iterator<T, Compare> &lhs, const RB_const_iterator<T, Compare> &rhs)
+	{
+		return (lhs._node > rhs._node);
+	}
+
+	template <class T, class Compare>
+	bool operator>=(const RB_const_iterator<T, Compare> &lhs, const RB_const_iterator<T, Compare> &rhs)
+	{
+		return (lhs._node >= rhs._node);
+	}
+
+
+	/* it -> const it */
+	template <class T, class Compare>
+	bool operator==(const RB_iterator<T, Compare> &lhs, const RB_const_iterator<T, Compare> &rhs)
+	{
+		return (lhs._node == rhs._node);
+	}
+
+	template <class T, class Compare>
+	bool operator!=(const RB_iterator<T, Compare> &lhs, const RB_const_iterator<T, Compare> &rhs)
+	{
+		return (lhs._node != rhs._node);
+	}
+
+	template <class T, class Compare>
+	bool operator<(const RB_iterator<T, Compare> &lhs, const RB_const_iterator<T, Compare> &rhs)
+	{
+		return (lhs._node < rhs._node);
+	}
+
+	template <class T, class Compare>
+	bool operator<=(const RB_iterator<T, Compare> &lhs, const RB_const_iterator<T, Compare> &rhs)
+	{
+		return (lhs._node <= rhs._node);
+	}
+
+	template <class T, class Compare>
+	bool operator>(const RB_iterator<T, Compare> &lhs, const RB_const_iterator<T, Compare> &rhs)
+	{
+		return (lhs._node > rhs._node);
+	}
+
+	template <class T, class Compare>
+	bool operator>=(const RB_iterator<T, Compare> &lhs, const RB_const_iterator<T, Compare> &rhs)
+	{
+		return (lhs._node >= rhs._node);
+	}
+
+
+	/* const it -> it */
+	template <class T, class Compare>
+	bool operator==(const RB_const_iterator<T, Compare> &lhs, const RB_iterator<T, Compare> &rhs)
+	{
+		return (lhs._node == rhs._node);
+	}
+
+	template <class T, class Compare>
+	bool operator!=(const RB_const_iterator<T, Compare> &lhs, const RB_iterator<T, Compare> &rhs)
+	{
+		return (lhs._node != rhs._node);
+	}
+
+	template <class T, class Compare>
+	bool operator<(const RB_const_iterator<T, Compare> &lhs, const RB_iterator<T, Compare> &rhs)
+	{
+		return (lhs._node < rhs._node);
+	}
+
+	template <class T, class Compare>
+	bool operator<=(const RB_const_iterator<T, Compare> &lhs, const RB_iterator<T, Compare> &rhs)
+	{
+		return (lhs._node <= rhs._node);
+	}
+
+	template <class T, class Compare>
+	bool operator>(const RB_const_iterator<T, Compare> &lhs, const RB_iterator<T, Compare> &rhs)
+	{
+		return (lhs._node > rhs._node);
+	}
+
+	template <class T, class Compare>
+	bool operator>=(const RB_const_iterator<T, Compare> &lhs, const RB_iterator<T, Compare> &rhs)
+	{
+		return (lhs._node >= rhs._node);
+	}
+
+	
+
+
+
+}	// namespace ft
+
+#endif

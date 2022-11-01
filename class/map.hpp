@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 18:14:05 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/31 16:34:54 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/11/01 18:32:41 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,17 +63,31 @@ public:
 		Compare _comp;
 
 	public:
+
+		value_compare() : _comp() {}
 		value_compare( Compare c ) : _comp(c) {}
 
-		bool operator() (const value_type& x, const value_type& y) const{
+		bool operator() (const value_type& x, const value_type& y) const {
 			return (this->_comp(x.first, y.first));
+		}
+
+		bool operator() (const key_type& x, const value_type& y) const {
+			return (this->_comp(x, y.first));
+		}
+
+		bool operator() (const value_type& x, const key_type& y) const {
+			return (this->_comp(x.first, y));
+		}
+
+		bool operator() (const key_type& x, const key_type& y) const {
+			return (this->_comp(x, y));
 		}
 	};
 
 
 
 	// typedef typename Allocator::template rebind<Node>::other			node_alloc_type;
-	typedef typename ft::RedBlackTree<value_type, key_type, mapped_type, key_compare>			tree_type;
+	typedef typename ft::RedBlackTree<value_type, key_type, mapped_type, value_compare>			tree_type;
 
 	typedef typename tree_type::iterator 									iterator;
 	typedef typename tree_type::const_iterator						const_iterator;
@@ -84,7 +98,7 @@ public:
 
 private:
 	allocator_type		_alloc;
-	key_compare				_comp;
+	value_compare				_comp;
 	tree_type					_tree;
 
 
@@ -377,21 +391,6 @@ public:
 			it++;
 		}
 		return (end());
-
-		// try {
-		// 	iterator it = begin();
-		// 	while (it != end())
-		// 	{
-		// 		if (it->first == key)
-		// 			return it;
-		// 		it++;
-		// 	}
-		// 	throw std::out_of_range("key not found");
-		// }
-		// catch (std::exception &e){
-		// 	std::cout << e.what() << std::endl;
-		// }
-		// return end();
 	};
 	
 	const_iterator find( const Key& key ) const {
@@ -404,20 +403,6 @@ public:
 			it++;
 		}
 		return (end());
-		// try {
-		// 	const_iterator it = begin();
-		// 	while (it != end())
-		// 	{
-		// 		if (it->first == key)
-		// 			return it;
-		// 		it++;
-		// 	}
-		// 	throw std::out_of_range("key not found");
-		// }
-		// catch (std::exception &e){
-		// 	std::cout << e.what() << std::endl;
-		// }
-		// return end();
 	}
 
 	ft::pair<iterator,iterator> equal_range( const Key& key ) {
@@ -441,47 +426,51 @@ public:
 
 
 	iterator lower_bound( const Key& key ) {
-		iterator it = begin();
-		while (it != end()) {
-			if (it->first >= key)
-				return it;
-			it++;
-		}
-		return it;
+		return (_tree.lower_bound(key));
+		// iterator it = begin();
+		// while (it != end()) {
+		// 	if (it->first >= key)
+		// 		return it;
+		// 	it++;
+		// }
+		// return it;
 	}
 
 	const_iterator lower_bound( const Key& key ) const {
+		return (_tree.lower_bound(key));
 		// std::cout << " const lower_bound()" << std::endl;
-		const_iterator it = begin();
-		while (it != end()) {
-			if (it->first >= key)
-				return it;
-			it++;
-		}
-		return it;
+		// const_iterator it = begin();
+		// while (it != end()) {
+		// 	if (it->first >= key)
+		// 		return it;
+		// 	it++;
+		// }
+		// return it;
 	}
 
 
 
 	iterator upper_bound( const Key& key ) {
-		iterator it = begin();
-		while (it != end()) {
-			if (it->first > key)
-				return it;
-			it++;
-		}
-		return it;
+		return (_tree.upper_bound(key));
+		// iterator it = begin();
+		// while (it != end()) {
+		// 	if (it->first > key)
+		// 		return it;
+		// 	it++;
+		// }
+		// return it;
 	}
 	
 	const_iterator upper_bound( const Key& key ) const {
+		return (_tree.upper_bound(key));
 		// std::cout << " const upper_bound()" << std::endl;
-		const_iterator it = begin();
-		while (it != end()) {
-			if (it->first > key)
-				return it;
-			it++;
-		}
-		return it;
+		// const_iterator it = begin();
+		// while (it != end()) {
+		// 	if (it->first > key)
+		// 		return it;
+		// 	it++;
+		// }
+		// return it;
 	}
 
 

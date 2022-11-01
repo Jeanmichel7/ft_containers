@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/23 12:15:58 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/24 23:07:58 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/11/01 13:57:53 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ T convert(std::string str)
     T ret = 0;
 
     for(size_t i = 0; i < str.length(); i++){
-      ret += (str[i] - '0');
+      ret += (str[i] - '0' + i * 10);
     }
     // std::cout << "ret = " << ret << std::endl;
     return ret;
