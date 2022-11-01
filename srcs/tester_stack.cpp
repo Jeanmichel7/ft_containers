@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 11:38:03 by jrasser           #+#    #+#             */
-/*   Updated: 2022/11/01 21:08:54 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/11/01 23:07:52 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -630,11 +630,6 @@ void tester_stack_container_type() {
   str_comp(tostr(std_stack10 <= std_stack11), tostr(ft_stack10 <= ft_stack11), "<=");
   str_comp(tostr(std_stack10 > std_stack11), tostr(ft_stack10 > ft_stack11), ">");
   str_comp(tostr(std_stack10 >= std_stack11), tostr(ft_stack10 >= ft_stack11), ">=");
-
-
-
-
-  
 
 
 

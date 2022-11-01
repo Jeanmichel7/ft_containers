@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 15:05:46 by jrasser           #+#    #+#             */
-/*   Updated: 2022/11/01 22:17:24 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/11/01 22:40:43 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -1592,6 +1592,57 @@ void tester_vector_type()
 	str_comp(tostr(stl_vector10 <= stl_vector11), tostr(ft_vector10 <= ft_vector11), "<=");
 	str_comp(tostr(stl_vector10 > stl_vector11), tostr(ft_vector10 > ft_vector11), ">");
 	str_comp(tostr(stl_vector10 >= stl_vector11), tostr(ft_vector10 >= ft_vector11), ">=");
+
+
+
+
+
+	std::cout << MAG "\n\nTEST Relation iterator " END << std::endl;
+
+
+	/* iterator */
+	stl_it = stl_vector.begin();
+	ft_it = ft_vector.begin();
+
+	typename std_vector_t::iterator stl_it2 = stl_vector.end();
+	typename ft_vector_t::iterator ft_it2 = ft_vector.end();
+
+	str_comp(tostr(stl_it == stl_it2), tostr(ft_it == ft_it2), "==");
+	str_comp(tostr(stl_it != stl_it2), tostr(ft_it != ft_it2), "!=");
+	str_comp(tostr(stl_it < stl_it2), tostr(ft_it < ft_it2), "<");
+	str_comp(tostr(stl_it <= stl_it2), tostr(ft_it <= ft_it2), "<=");
+	str_comp(tostr(stl_it > stl_it2), tostr(ft_it > ft_it2), ">");
+	str_comp(tostr(stl_it >= stl_it2), tostr(ft_it >= ft_it2), ">=");
+
+	stl_it2--;
+	ft_it2--;
+
+	str_comp(tostr(stl_it == stl_it2), tostr(ft_it == ft_it2), "==");
+	str_comp(tostr(stl_it != stl_it2), tostr(ft_it != ft_it2), "!=");
+	str_comp(tostr(stl_it < stl_it2), tostr(ft_it < ft_it2), "<");
+	str_comp(tostr(stl_it <= stl_it2), tostr(ft_it <= ft_it2), "<=");
+	str_comp(tostr(stl_it > stl_it2), tostr(ft_it > ft_it2), ">");
+	str_comp(tostr(stl_it >= stl_it2), tostr(ft_it >= ft_it2), ">=");
+
+
+
+	/* comp iterator et const_iterator */
+	stl_cit = stl_vector.begin();
+	ft_cit = ft_vector.begin();
+
+	str_comp(tostr(stl_it == stl_cit), tostr(ft_it == ft_cit), "==");
+	str_comp(tostr(stl_it != stl_cit), tostr(ft_it != ft_cit), "!=");
+	str_comp(tostr(stl_it < stl_cit), tostr(ft_it < ft_cit), "<");
+	str_comp(tostr(stl_it <= stl_cit), tostr(ft_it <= ft_cit), "<=");
+	str_comp(tostr(stl_it > stl_cit), tostr(ft_it > ft_cit), ">");
+	str_comp(tostr(stl_it >= stl_cit), tostr(ft_it >= ft_cit), ">=");
+
+	str_comp(tostr(stl_cit == stl_it), tostr(ft_cit == ft_it), "==");
+	str_comp(tostr(stl_cit != stl_it), tostr(ft_cit != ft_it), "!=");
+	str_comp(tostr(stl_cit < stl_it), tostr(ft_cit < ft_it), "<");
+	str_comp(tostr(stl_cit <= stl_it), tostr(ft_cit <= ft_it), "<=");
+	str_comp(tostr(stl_cit > stl_it), tostr(ft_cit > ft_it), ">");
+	str_comp(tostr(stl_cit >= stl_it), tostr(ft_cit >= ft_it), ">=");
 
 
 

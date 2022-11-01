@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 14:41:48 by jrasser           #+#    #+#             */
-/*   Updated: 2022/11/01 18:43:16 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/11/01 23:10:50 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ public:
   typedef typename tree_type::const_iterator          const_iterator;
   typedef typename tree_type::reverse_iterator        reverse_iterator;
   typedef typename tree_type::const_reverse_iterator  const_reverse_iterator;
-  typedef typename tree_type::size_type               size_type;
+  typedef typename tree_type::size_type               size_type;	
 
 
 private:

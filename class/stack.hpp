@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 11:13:00 by jrasser           #+#    #+#             */
-/*   Updated: 2022/11/01 21:04:03 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/11/01 23:07:40 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,21 +18,17 @@
 namespace ft
 {
 
-
 template <class T, class Container = ft::vector<T> >
 class stack {
 
 public:
-  typedef T			    value_type;
+  typedef T const   value_type;
   typedef Container	container_type;
   typedef size_t		size_type;
 
 
-// private:
+protected:
   container_type c;
-
-
-
 
 
 public:
@@ -44,11 +40,7 @@ public:
 
   explicit stack(container_type const &ctnr = container_type())
   : c(ctnr)
-   {}
-
-  // explicit stack (const container_type& ctnr = container_type()) {
-  //   c = ctnr;
-  // }
+  {}
 
   ~stack() {}
 
@@ -62,6 +54,8 @@ public:
     }
     return (*this);
   }
+
+
 
   /* *************************************************** */
   /*                                                     */
@@ -77,6 +71,8 @@ public:
     return (c.size());
   }
 
+
+
   /* *************************************************** */
   /*                                                     */
   /*                     ELEMENT ACCESS                  */
@@ -91,6 +87,7 @@ public:
     return (c.back());
   }
 
+
   /* *************************************************** */
   /*                                                     */
   /*                     MODIFIERS                       */
@@ -104,42 +101,41 @@ public:
   void pop() {
     c.pop_back();
   }
+
+
+
+  /* *************************************************** */
+  /*                                                     */
+  /*                  RELATIONAL OPERATORS               */
+  /*                                                     */
+  /* *************************************************** */
+
+  bool operator==(const stack &rhs) const {
+    return (this->c == rhs.c);
+  }
+
+  bool operator!=(const stack &rhs) const {
+    return (this->c != rhs.c);
+  }
+
+  bool operator<(const stack &rhs) const {
+    return (this->c < rhs.c);
+  }
+
+  bool operator<=(const stack &rhs) const {
+    return (this->c <= rhs.c);
+  }
+
+  bool operator>(const stack &rhs) const {
+    return (this->c > rhs.c);
+  }
+
+  bool operator>=(const stack &rhs) const {
+    return (this->c >= rhs.c);
+  }
+
+
 };
-
-/* *************************************************** */
-/*                                                     */
-/*                  RELATIONAL OPERATORS               */
-/*                                                     */
-/* *************************************************** */
-template <class T1, class Container1>
-bool operator== (const stack<T1,Container1>& lhs, const stack<T1,Container1>& rhs) {
-  return (lhs.c == rhs.c);
-}
-
-template <class T1, class Container1>
-bool operator!= (const stack<T1,Container1>& lhs, const stack<T1,Container1>& rhs) {
-  return (lhs.c != rhs.c);
-}
-
-template <class T1, class Container1>
-bool operator<  (const stack<T1,Container1>& lhs, const stack<T1,Container1>& rhs) {
-  return (lhs.c < rhs.c);
-}
-
-template <class T1, class Container1>
-bool operator<= (const stack<T1,Container1>& lhs, const stack<T1,Container1>& rhs) {
-  return (lhs.c <= rhs.c);
-}
-
-template <class T1, class Container1>
-bool operator>  (const stack<T1,Container1>& lhs, const stack<T1,Container1>& rhs) {
-  return (lhs.c > rhs.c);
-}
-
-template <class T1, class Container1>
-bool operator>= (const stack<T1,Container1>& lhs, const stack<T1,Container1>& rhs) {
-  return (lhs.c >= rhs.c);
-}
 
 } // namespace ft
 
