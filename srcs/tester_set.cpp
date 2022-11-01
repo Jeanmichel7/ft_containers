@@ -6,12 +6,11 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 15:33:24 by jrasser           #+#    #+#             */
-/*   Updated: 2022/11/01 19:18:28 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/11/01 23:48:37 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "main.hpp"
-#include "tester.hpp"
 
 
 template <typename S1, typename S2>
@@ -45,20 +44,8 @@ void tester_set(void)
 
 	display_title("SET < float >");
 	tester_set_type< float >();
-
 }
 
-
-
-
-
-#define T1 int
-
-struct ft_more {
-	bool	operator()(const T1 &first, const T1 &second) const {
-		return (first > second);
-	}
-};
 
 
 template< typename type_value >

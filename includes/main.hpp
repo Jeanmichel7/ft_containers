@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 14:57:17 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/31 15:37:46 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/11/01 23:53:12 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,14 @@
 # define __MAIN_HPP__
 
 # define RED "\033[0;31m"
+# define REDB "\033[31;1m"
 # define GRN "\033[0;32m"
+# define GRNB "\033[32;1m"
 # define YEL "\033[0;33m"
 # define BLU "\033[0;34m"
 # define MAG "\033[0;35m"
 # define CYA "\033[0;36m"
+# define CYAB "\033[36;1m"
 # define WHT "\033[0;37m"
 # define END "\033[0m"
 # define BILLION 1000000000L
@@ -128,13 +131,6 @@ template <typename T>
 std::string to_string(T value);
 
 void str_comp(std::string str, std::string ft_str, std::string msg);
-
-
-
-/* ***************************************************** */
-/*                        CHRONO                         */
-/* ***************************************************** */
-
 
 
 

@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 12:54:45 by jrasser           #+#    #+#             */
-/*   Updated: 2022/11/01 20:10:11 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/11/01 23:37:24 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,7 @@ template <class T,
 					class T_value,
 					class Compare,
 					class Node = ft::Node<T>,
-					class Type_Alloc = std::allocator<T>,
-					class Node_Alloc = std::allocator<Node>
+					class Type_Alloc = std::allocator<T>
 >
 class RedBlackTree
 {
@@ -38,8 +37,9 @@ public:
 	typedef Node 																	node_type;
 	typedef Node 																	*node_pointer;
 	typedef Node const 														*node_const_pointer;
-	typedef Node_Alloc  													node_alloc;
 	typedef size_t 																size_type;
+
+	typedef typename Type_Alloc::template rebind<ft::Node<value_type> >::other node_alloc;
 
 	typedef ft::RB_iterator< Node, Compare > 							iterator;
 	typedef ft::RB_const_iterator< Node, Compare>  				const_iterator;
@@ -48,10 +48,8 @@ public:
 
 
 private:
-	// last_node parent = root of tree, last_node right = last node, last_node left = first node
 	node_alloc      _node_alloc;
 	node_pointer		_root;
-	// node_pointer		_node;
 	node_pointer		_last_node;
 	Compare         _comp;
 	size_type       _size;
@@ -108,7 +106,6 @@ public:
 	/* Destructor */
 	~RedBlackTree()
 	{
-		// clear();
 		// std::cout << "Destructor called" << std::endl;
 		node_pointer current = _root;
 		node_pointer prev;
@@ -345,7 +342,6 @@ public:
     }
 
     insert_fix(node);
-		// display_tree("");
 		return iterator(node, _last_node, _nil);
 	}
   
@@ -445,7 +441,6 @@ public:
       cout << "Key not found in the tree" << endl;
       return;
     }
-		// std::cout << "node : " << z->_content.first << std::endl;
 
     y = z;
     int y_original_color = y->_color;
@@ -515,12 +510,10 @@ public:
 		if (next != last)
 			next++;
 		while (first != last && next != last) {
-			// std::cout << "erase(" << first->first << ")" << std::endl;
 			erase(first);
 			first = next;
 			next++;
 		}
-		// std::cout << "erase last (" << first->first << ")" << std::endl;
 		if (first != last)
 			erase(first);
 	}
@@ -655,93 +648,6 @@ public:
 	ft::pair<const_iterator, const_iterator> equal_range(const T_key &key) const {
 		return ft::make_pair(lower_bound(key), upper_bound(key));
 	}
-
-
-
-
-
-
-	// ft::pair<iterator, iterator> equal_range( const T_key &key ) {
-	// 	node_pointer 	x = this->_root;
-  //   node_pointer 	y = x;
-	// 	iterator 			it1;
-	// 	iterator 			it2;
-
-	// 	std::cout << "key : " << key << std::endl;
-
-	// 	while (x != _nil && _comp(key, x->_content)) {
-	// 		y = x;
-	// 		if (this->_comp(key, x->_content))
-	// 			x = x->_left;
-	// 		else if (this->_comp(x->_content, key))
-	// 			x = x->_right;
-	// 		else {
-	// 			it1 = iterator(x, _last_node, _nil);
-	// 			it2 = it1;
-	// 			it2++;
-	// 			return ft::make_pair<iterator, iterator>(it1, it2);
-	// 		}
-	// 	}
-	// 	if (y == minimum(_root)) {
-	// 		it1 = begin();
-	// 		return ft::make_pair<iterator, iterator>(it1, it1);
-	// 	}
-	// 	if (y == _last_node) {
-	// 		return ft::pair<iterator, iterator>(end(), end());
-	// 	}
-	// 	it1 = iterator(y, _last_node, _nil);
-	// 	it1++;
-	// 	return ft::make_pair<iterator, iterator>(it1, it1);
-	// }
-
-	// ft::pair<const_iterator, const_iterator> equal_range( const T_key& key ) const {
-	// 	node_pointer 		x = this->_root;
-	// 	node_pointer 		y = x;
-	// 	node_pointer 		node_min = _root;
-	// 	node_pointer 		node_min_p = _root;
-	// 	const_iterator 	it1;
-	// 	const_iterator 	it2;
-
-	// 	while (x != _nil) {
-	// 		y = x;
-	// 		if (this->_comp(key, x->_content))
-	// 			x = x->_left;
-	// 		else if (this->_comp(x->_content, key))
-	// 			x = x->_right;
-	// 		else {
-	// 			it1 = const_iterator(x, _last_node, _nil);
-	// 			it2 = it1;
-	// 			it2++;
-	// 			return ft::make_pair<const_iterator, const_iterator>(it1, it2);
-	// 		}
-	// 	}
-
-	// 	std::cout << "on passe ici" << std::endl;
-
-	// 	if (y == _last_node) {
-	// 		return ft::pair<const_iterator, const_iterator>(end(), end());
-	// 	}
-
-	// 	/* find min node */
-	// 	while(node_min != _nil) {
-	// 		node_min_p = node_min;
-	// 		if (node_min->_content.first < key) {
-	// 			node_min = node_min->_right;
-	// 		} else {
-	// 			node_min = node_min->_left;
-	// 		}
-	// 	}
-	// 	if (y == node_min_p) {
-	// 		return ft::make_pair< const_iterator, const_iterator>(begin(), begin());
-	// 	}
-
-	// 	it1 = const_iterator(y, _last_node, _nil);
-	// 	it1++;
-	// 	return ft::pair<const_iterator, const_iterator>(it1, it1);
-	// }
-
-
-
 
 
 
@@ -936,7 +842,6 @@ public:
   }
 
 
-	// For balancing the tree after deletion
   void del_fix_tree(node_pointer current) {
 		node_pointer s;
 		while (current != _root && current->_color == N_BLACK) {
@@ -1122,21 +1027,6 @@ public:
 		std::cout << END ;
 		display_tree_set(current->_right, space_root, is_last);
 	}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 };
 

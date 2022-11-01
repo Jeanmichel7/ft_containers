@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/10 21:23:15 by jrasser           #+#    #+#             */
-/*   Updated: 2022/11/01 19:31:16 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/11/01 23:42:19 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,6 @@
 #include <string.h>
 #include <cstring>
 #include <exception>
-
-// #include "enable_if.hpp"
 
 namespace ft
 {
@@ -200,12 +198,16 @@ struct Node
 	
 	Node(Node *parent, Node *left, Node *right) 
 	: _parent(parent), _left(left), _right(right), _color(N_BLACK) {}
+
 	Node(T content, Node *parent, Node *left, Node *right, int color) 
 	: _content(content), _parent(parent), _left(left), _right(right), _color(color) {}
+
 	Node(T const &content) 
 	: _content(content), _parent(NULL), _left(NULL), _right(NULL), _color(N_RED) {}
+
 	Node(T const &content, int color) 
 	: _content(content), _parent(NULL), _left(NULL), _right(NULL), _color(color) {}
+
 	Node(Node const &src) 
 	:   _content(src._content),
 		_parent(src._parent),

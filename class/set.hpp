@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 14:41:48 by jrasser           #+#    #+#             */
-/*   Updated: 2022/11/01 23:10:50 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/11/01 23:41:25 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ public:
   typedef typename Alloc::const_reference   const_reference;
   typedef typename Alloc::pointer           pointer;
   typedef typename Alloc::const_pointer     const_pointer;
-
 
 
 	class value_compare
@@ -143,7 +142,6 @@ public:
 	}
 
 	const_iterator begin() const {
-		// std::cout << "const begin()" << std::endl;
 		return (_tree.begin());
 	}
 
@@ -152,7 +150,6 @@ public:
 	}
 
 	const_iterator end() const {
-		// std::cout << "const end()" << std::endl;
 		return (_tree.end());
 	}
 
@@ -161,7 +158,6 @@ public:
 	}
 
 	const_reverse_iterator rbegin() const {
-		// std::cout << "const_reverse_iterator rbegin() const" << std::endl;
 		return (_tree.rbegin());
 	}
 
@@ -170,7 +166,6 @@ public:
 	}
 
 	const_reverse_iterator rend() const {
-		// std::cout << "const_reverse_iterator rend() const" << std::endl;
 		return (_tree.rend());
 	}
 
@@ -218,7 +213,6 @@ public:
 		catch (std::exception &e) {
 			throw;
 		}
-		// display_tree("after insert");
 	}
 
 	iterator insert( iterator hint, const value_type& value ) {
@@ -228,14 +222,11 @@ public:
 		catch (std::exception &e) {
 			throw;
 		}
-		// return (_tree.insert_hint(hint, value));
 	}
 
 	template< class InputIt >
 	void insert( InputIt first, InputIt last ) {
-		/* save tree */
 		tree_type tmp = _tree;
-		// tmp.clear();
 		try {
 			_tree.insert(first, last);
 		}
@@ -246,7 +237,6 @@ public:
 	};
 
 	void erase( iterator pos ) {
-		// std::cout << "erase(" << pos->first << ", " << pos->second << ")" << std::endl;
 		try {
 			_tree.erase(pos);
 		}
@@ -256,9 +246,7 @@ public:
 	}
 
 	void erase( iterator first, iterator last ) {
-		/* save tree */
 		tree_type tmp = _tree;
-
 		try {
 			_tree.erase(first, last);
 		}
@@ -270,7 +258,6 @@ public:
 
 	size_type erase( const Key& key ) {
 		iterator it = find(key);
-		// size_type ret = size();
 		if (it == end())
 			return (0);
 		try {
@@ -279,7 +266,6 @@ public:
 		catch (std::exception &e) {
 			throw;
 		}
-		// return (ret - size());
 		return (1);
 	}
 
@@ -338,50 +324,20 @@ public:
 
 	iterator lower_bound( const Key& key ) {
 		return (_tree.lower_bound(key));
-		// iterator it = begin();
-		// while (it != end()) {
-		// 	if (it->first >= key)
-		// 		return it;
-		// 	it++;
-		// }
-		// return it;
 	}
 
 	const_iterator lower_bound( const Key& key ) const {
 		return (_tree.lower_bound(key));
-		// std::cout << " const lower_bound()" << std::endl;
-		// const_iterator it = begin();
-		// while (it != end()) {
-		// 	if (it->first >= key)
-		// 		return it;
-		// 	it++;
-		// }
-		// return it;
 	}
 
 
 
 	iterator upper_bound( const Key& key ) {
 		return (_tree.upper_bound(key));
-	// 	iterator it = begin();
-	// 	while (it != end()) {
-	// 		if (it->first > key)
-	// 			return it;
-	// 		it++;
-	// 	}
-	// 	return it;
 	}
 	
 	const_iterator upper_bound( const Key& key ) const {
 		return (_tree.upper_bound(key));
-		// // std::cout << " const upper_bound()" << std::endl;
-		// const_iterator it = begin();
-		// while (it != end()) {
-		// 	if (it->first > key)
-		// 		return it;
-		// 	it++;
-		// }
-		// return it;
 	}
 
 
@@ -417,7 +373,6 @@ public:
 	void display_tree() const
 	{
 		_tree.display_tree_set("");
-		// _tree.display_tree< key_type, mapped_type >("");
 	}
 };
 
@@ -497,8 +452,6 @@ template< class Key, class Compare, class Alloc >
 void swap( set<Key,Compare,Alloc>& x, set<Key,Compare,Alloc>& y ) {
 	x.swap(y);
 }
-
-
 
 
 

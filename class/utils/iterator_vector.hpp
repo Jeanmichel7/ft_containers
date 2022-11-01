@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/04 16:23:50 by jrasser           #+#    #+#             */
-/*   Updated: 2022/11/01 22:02:01 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/11/01 23:35:48 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,6 @@ public :
 		return (this->_ptr[n]); 
 	}
 
-	
 
 	operator iterator_vector< const T >() const {
 		return (iterator_vector< const T >(this->_ptr));
@@ -127,11 +126,6 @@ public :
 	bool operator>(const iterator_vector< const T > &rhs) const { return (this->_ptr > rhs.base()); }
 	bool operator>=(const iterator_vector< const T > &rhs) const { return (this->_ptr >= rhs.base()); }
 };
-
-/* operator */
-
-/* comparaison */
-
 
 
 template <typename T>

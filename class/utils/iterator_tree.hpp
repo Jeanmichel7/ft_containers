@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 16:58:53 by jrasser           #+#    #+#             */
-/*   Updated: 2022/11/01 20:10:36 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/11/01 23:37:09 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,36 +110,27 @@ template <typename T, class Compare >
 
 			RB_iterator& operator++(void)
 			{
-				// std::cout << "actuel node : " << _node->_content.first << std::endl;
-				// std::cout << "last node : " << _last_node->_content.first << std::endl;
 				if (_node == _last_node) {
-					// std::cout << "Error: incrementing a NULL iterator" << std::endl;
 					_node = _last_node->_right;
 					return (*this);
 				}
 				if (_node != _nil && _node->_right != _nil)
 				{
-					// std::cout << "go right" << std::endl;
 					_node = _node->_right;
 					while (_node->_left != _nil)
 						_node = _node->_left;
-					// _node = _node->_left;
 				}
 				else
 				{
-					// std::cout << "go up" << std::endl;
 					while (_node->_parent != NULL && _node->_parent->_right == _node)
 						_node = _node->_parent;
 					_node = _node->_parent;
 				}
-				// std::cout << "after node : " << _node->_content.first << std::endl;
-
 				return (*this);
 			}
 
 			RB_iterator operator++(int)
 			{
-				// std::cout << "operator++(int)" << std::endl;
 				RB_iterator tmp(*this);
 				operator++();
 				return (tmp);
@@ -147,16 +138,8 @@ template <typename T, class Compare >
 
 			RB_iterator& operator--(void)
 			{
-				// std::cout << "last node" 
-				// 					<< "\ncontent : "<< _last_node->_content.first 
-				// 					<< "\nparent : " << _last_node->_parent->_content.first
-				// 					<< "\nleft : " << _last_node->_left->_content.first
-				// 					<< "\nright : " << _last_node->_right->_content.first
-				// 					<< std::endl << std::endl;
-
 				if (_node == _nil)
 				{
-					// std::cout << "Error: decrementing a NULL iterator" << std::endl;
 					_node = _last_node;
 					return (*this);
 				}
@@ -249,15 +232,6 @@ template <typename T, class Compare >
 					_last_node = _last_node->_right;
 			}
 
-			// RB_const_iterator(T * node_p, const Compare& comp = Compare())
-			// :
-			// 	_node(node_p),
-			// 	_last_node(),
-			// 	_comp(comp)
-			// {
-			// 	// std::cout << "RB_const_iterator(T * node_p)" << std::endl;
-			// }
-
 			RB_const_iterator(T * node_p, T * last_node, T *nil, const Compare& comp = Compare())
 			:
 				_node(node_p),
@@ -265,7 +239,6 @@ template <typename T, class Compare >
 				_nil(nil),
 				_comp(comp)
 			{
-				// std::cout << "RB_const_iterator(T * node_p, T * last_node)" << std::endl;
 			}
 
 			RB_const_iterator(const RB_const_iterator& tree_it)
@@ -276,14 +249,6 @@ template <typename T, class Compare >
 				_comp()
 			{}
 			
-			// RB_const_iterator(const RB_iterator<T, Compare>& tree_it)
-			// :
-			// 	_node(tree_it._node),
-			// 	_last_node(tree_it._last_node),
-			// 	_nil(tree_it._nil),
-			// 	_comp()
-			// {}
-
 			RB_const_iterator(const RB_iterator<T, Compare>& tree_it)
 			:
 				_node(tree_it._node),
@@ -291,7 +256,6 @@ template <typename T, class Compare >
 				_nil(tree_it._nil),
 				_comp()
 			{
-				// std::cout << "RB_const_iterator(const RB_iterator<T, Compare>& tree_it)" << std::endl;
 			}
 
 			virtual ~RB_const_iterator() { }
@@ -314,10 +278,6 @@ template <typename T, class Compare >
 				_last_node = const_cast<T*>(tree_it._last_node);
 				_comp = tree_it._comp;
 				return (*this);
-				// _nil = tree_it._nil;
-				// _last_node = tree_it._last_node;
-				// _comp = tree_it._comp;
-				// return (*this);
 			}
 
 
@@ -352,50 +312,27 @@ template <typename T, class Compare >
 
 			RB_const_iterator& operator++(void)
 			{
-				// std::cout << "const operator++" << std::endl;
-				// std::cout << "last node" 
-				// 					<< "\ncontent : "<< _last_node->_content.first 
-				// 					<< "\nparent : " << _last_node->_parent->_content.first
-				// 					<< "\nleft : " << _last_node->_left->_content.first
-				// 					<< "\nright : " << _last_node->_right->_content.first
-				// 					<< std::endl << std::endl;
-
-				// std::cout << "node" 
-				// 					<< "\ncontent : "<< _node->_content.first ;
-				// 					if ( _node->_parent )
-				// 						std::cout << "\nparent : " << _node->_parent->_content.first;
-				// std::cout << "\nleft : " << _node->_left->_content.first
-				// 					<< "\nright : " << _node->_right->_content.first
-				// 					<< std::endl << std::endl;
-
 				if (_node == _last_node) {
-					// std::cout << "Error: incrementing a NULL iterator" << std::endl;
 					_node = _last_node->_right;
 					return (*this);
 				}
 				if (_node->_right != _nil)
 				{
-					// std::cout << BLU "go right" END << std::endl;
 					_node = _node->_right;
 					while (_node->_left != _nil)
 						_node = _node->_left;
 				}
 				else
 				{
-					// std::cout << "go up" << std::endl;
 					while (_node->_parent != NULL && _node->_parent->_right == _node)
 						_node = _node->_parent;
 					_node = _node->_parent;
 				}
-
-				// std::cout << "node after content : "<< _node->_content.first << std::endl;
 				return (*this);
 			}
 
 			RB_const_iterator operator++(int)
 			{
-				// std::cout << "const operator++(int)" << std::endl;
-
 				RB_const_iterator tmp(*this);
 				operator++();
 				return (tmp);
@@ -403,27 +340,9 @@ template <typename T, class Compare >
 
 			RB_const_iterator& operator--(void)
 			{
-				// std::cout << "const operator--" << std::endl;
-				// std::cout << "last node" 
-				// 					<< "\ncontent : "<< _last_node->_content.first 
-				// 					<< "\nparent : " << _last_node->_parent->_content.first
-				// 					<< "\nleft : " << _last_node->_left->_content.first
-				// 					<< "\nright : " << _last_node->_right->_content.first
-				// 					<< std::endl << std::endl;
-
-				// std::cout << "node" 
-				// 					<< "\ncontent : "<< _node->_content.first 
-				// 					// << "\nparent : " << _node->_parent->_content.first
-				// 					// << "\nleft : " << _node->_left->_content.first
-				// 					// << "\nright : " << _node->_right->_content.first
-				// 					<< std::endl << std::endl;
-
 				if (_node == _nil) {
 					_node = _last_node;
 					return (*this);
-
-					// RB_const_iterator tmp = this;
-					// return (tmp);
 				}
 				if (_node->_left != _nil)
 				{
@@ -437,15 +356,11 @@ template <typename T, class Compare >
 						_node = _node->_parent;
 					_node = _node->_parent;
 				}
-				// RB_const_iterator tmp = this;
-				// return (tmp);
 				return (*this);
 			}
 
 			RB_const_iterator operator--(int)
 			{
-				// std::cout << "const operator--(int)" << std::endl;
-
 				RB_const_iterator tmp(*this);
 				operator--();
 				return (tmp);
@@ -610,8 +525,6 @@ template <typename T, class Compare >
 	{
 		return (lhs._node >= rhs._node);
 	}
-
-	
 
 
 

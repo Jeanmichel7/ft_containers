@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/04 16:25:38 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/30 21:51:03 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/11/01 23:40:17 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,9 +67,6 @@ namespace ft
 			return (*(--tmp));
 		}
 
-		// reverse_iterator operator+(difference_type n)
-		// { return (reverse_iterator(_elem - n)); }
-
 		reverse_iterator operator+(difference_type n) const 
 		{ return (reverse_iterator(_elem - n)); }
 
@@ -91,11 +88,6 @@ namespace ft
 			_elem -= n;
 			return (*this);
 		}
-
-		// reverse_iterator operator-(difference_type n)
-		// {
-		// 	return (reverse_iterator(_elem + n));
-		// }
 
 		reverse_iterator operator-(difference_type n) const 
 		{ return (reverse_iterator(_elem + n)); }
@@ -125,10 +117,6 @@ namespace ft
 
 		reference operator[](difference_type n) const 
 		{ return (this->base()[-n - 1]); }
-
-		// operator reverse_iterator< const iterator_type >() const {
-		// 	return (reverse_iterator< const iterator_type >(this->_elem));
-		// }
 
 		operator reverse_iterator< const iterator_type >() const {
 			return (reverse_iterator< const iterator_type >(const_cast<iterator_type>(this->_elem)));
@@ -277,18 +265,6 @@ namespace ft
 	{
 		return ( reverse_iterator<IteratorL>(x.base()) - reverse_iterator<IteratorL>(y.base()) );
 	}
-
-	// template <typename IteratorL, typename IteratorR>
-	// typename reverse_iterator< IteratorL >::difference_type operator+ (const reverse_iterator<IteratorL> &lhs, const reverse_iterator<IteratorR> &rhs)
-	// {
-	// 	return (lhs.base() + rhs.base());
-	// }
-
-	// template <typename IteratorL, typename IteratorR>
-	// typename reverse_iterator< IteratorL >::difference_type operator- (const reverse_iterator<IteratorL> &lhs, const reverse_iterator<IteratorR> &rhs)
-	// {
-	// 	return (lhs.base() - rhs.base());
-	// }
 
 } // namespace ft
 

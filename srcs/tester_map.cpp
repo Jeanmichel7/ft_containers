@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 14:16:17 by jrasser           #+#    #+#             */
-/*   Updated: 2022/11/01 18:28:28 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/11/01 23:24:40 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -1810,7 +1810,6 @@ void tester_map_type() {
 
 
 
-
 	/* ***************************************************** */
 	/*                      swap()                           */
 	/*                  pair< string, int >                  */
@@ -1832,9 +1831,20 @@ void tester_map_type() {
 		)
 	);
 
+
+
+
+
+
 	/* swap() */
+	// it_type 		it_map_swap 		= map_swap.begin();
+	// ft_it_type 	ft_it_map_swap 	= ft_map_swap.begin();
+
 	// ft_map.display_tree("ft_map avant");
 	// ft_map_swap.display_tree("ft_map_swap avant");
+	// std::cout << "adress first stl element before swap : " << &(*it_map_swap) << std::endl;
+	// std::cout << "adress first ft element before swap : " << &(*ft_it_map_swap) << std::endl;
+
 	chrono.stl_start_chrono();
 	map.swap(map_swap);
 	chrono.stl_end_chrono();
@@ -1843,11 +1853,18 @@ void tester_map_type() {
 	ft_map.swap(ft_map_swap);
 	chrono.ft_end_chrono();
 
+	// std::cout << "adress first stl element after swap : " << &(*it_map_swap) << std::endl;
+	// std::cout << "adress first ft element after swap : " << &(*ft_it_map_swap) << std::endl;
 	// ft_map.display_tree("ft_map apres");
 	// ft_map_swap.display_tree("ft_map_swap apres");
+
 	comp_map(map, ft_map, "map swap()");
 	comp_map(map_swap, ft_map_swap, "swap original");
 	chrono.diff_chrono();
+
+
+
+
 
 
 
@@ -1870,9 +1887,6 @@ void tester_map_type() {
 	comp_map(map_swap, ft_map_swap, "map swap2");
 	comp_map(map_swap2, ft_map_swap2, "map_swap2 original");
 	chrono.diff_chrono();
-
-
-
 
 
 

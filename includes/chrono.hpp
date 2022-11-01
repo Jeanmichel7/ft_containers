@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 17:30:03 by jrasser           #+#    #+#             */
-/*   Updated: 2022/11/01 21:33:53 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/11/01 23:52:50 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 # include <cstdio>
 # include <iomanip>
 # include <cstdlib>
-
 
 # include "main.hpp"
 
@@ -63,9 +62,7 @@ struct s_time_diff
       stl_time = (stl_stop.tv_sec - stl_start.tv_sec) 
 						+	(double)(stl_stop.tv_nsec - stl_start.tv_nsec) 
 						/ (double)BILLION;
-			// std::cout <<  std::setprecision(9) << "STL chrono: " << stl_time << "s" << std::endl;
 			stl_additionnal_time += stl_time;
-			// std::cout <<  std::setprecision(9) << "stl additionnal time: " << stl_additionnal_time << std::endl;
       return stl_additionnal_time;
     }
 
@@ -180,8 +177,6 @@ struct s_time_diff
 
 		void diff_addition_chrono() {
 			std::cout << std::fixed;
-			// std::cout << std::setprecision(9) << "stl time : " << stl_additionnal_time << "\n ft_time : " 
-			// 					<< ft_additionnal_time << std::endl;
 			stl_additionnal_time == 0 ? diff = 0 : diff = ft_additionnal_time / stl_additionnal_time;
 
 			if (ft_additionnal_time / 20 > stl_additionnal_time) {
@@ -206,11 +201,11 @@ struct s_time_diff
 			std::cout << MAG "\n\nTEST performance" END << std::endl;
 			std::cout << std::fixed;
 			if (sum / count < 2)
-				std::cout << GRN;
+				std::cout << GRNB;
 			else if (sum / count < 10)
-				std::cout << CYA;
+				std::cout << CYAB;
 			else if (sum / count < 20)
-				std::cout << RED;
+				std::cout << REDB;
 			std::cout << "Average time : " << std::setprecision(3) << sum / count << "x less performant" END << std::endl;
 		}
 

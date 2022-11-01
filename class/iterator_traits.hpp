@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/10 18:24:21 by jrasser           #+#    #+#             */
-/*   Updated: 2022/10/30 14:54:42 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/11/01 23:38:07 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ namespace ft
 typedef __SIZE_TYPE__       size_t;
 typedef __PTRDIFF_TYPE__    ptrdiff_t;
 
-
 template <typename _Category, typename _Tp, typename _Distance = ptrdiff_t,
 		  typename _Pointer = _Tp *, typename _Reference = _Tp &>
 struct iterator
@@ -42,7 +41,6 @@ template <typename _Iterator>
 struct iterator_traits
 {
     typedef typename std::random_access_iterator_tag    iterator_category;
-    // typedef typename std::bidirectional_iterator_tag       iterator_category;
     typedef typename _Iterator::value_type              value_type;
     typedef typename _Iterator::difference_type         difference_type;
     typedef typename _Iterator::pointer                 pointer;
@@ -77,6 +75,7 @@ struct forward_iterator_tag       : public input_iterator_tag         {};
 struct bidirectional_iterator_tag : public forward_iterator_tag       {};
 struct random_access_iterator_tag : public bidirectional_iterator_tag {};
 
+
 template <class InputIterator>
 typename ft::iterator_traits<InputIterator>::difference_type
 distance(InputIterator first, InputIterator last)
@@ -90,7 +89,6 @@ distance(InputIterator first, InputIterator last)
     return (rtn);
 }
 
+} // namespace ft
 
-
-}
 #endif
