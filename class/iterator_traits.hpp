@@ -6,18 +6,14 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/10 18:24:21 by jrasser           #+#    #+#             */
-/*   Updated: 2022/11/01 23:38:07 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/11/02 12:54:56 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef __ITERATOR_TRAIT__
 # define __ITERATOR_TRAIT__
 
-# include <typeinfo>
-# include <memory>
 # include <cstddef>
-# include <iterator>
-# include <iostream>
 # include <limits>
 
 namespace ft

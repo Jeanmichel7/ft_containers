@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 12:54:45 by jrasser           #+#    #+#             */
-/*   Updated: 2022/11/01 23:37:24 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/11/02 15:48:32 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include "../utils.hpp"
 # include "iterator_tree.hpp"
 
-using namespace std;
+// using namespace std; 
 
 namespace ft
 {
@@ -42,7 +42,7 @@ public:
 	typedef typename Type_Alloc::template rebind<ft::Node<value_type> >::other node_alloc;
 
 	typedef ft::RB_iterator< Node, Compare > 							iterator;
-	typedef ft::RB_const_iterator< Node, Compare>  				const_iterator;
+	typedef ft::RB_const_iterator<  Node, Compare>  				const_iterator;
 	typedef ft::reverse_iterator< iterator > 							reverse_iterator;
 	typedef ft::reverse_iterator< const_iterator >  			const_reverse_iterator;
 
@@ -179,7 +179,6 @@ public:
 	}
 
 	const_iterator end() const {
-		// std::cout << "const end" << std::endl;
 		node_pointer current = _root;
 		if (current == _nil)
 			return const_iterator(current, _last_node, _nil);
@@ -279,14 +278,11 @@ public:
     if (node->_parent == NULL) {
       node->_color = N_BLACK;
 			_last_node = node;
-
       return ft::make_pair(iterator(node, _last_node, _nil), true);
     }
 
     if (node->_parent->_parent == NULL) {
-			if (node->_parent->_left == node)
-				_last_node = node->_parent;
-			else if (node->_parent->_right == node)
+			if (node->_parent->_right == node)
 				_last_node = _root->_right;
 			return ft::make_pair(iterator(node, _last_node, _nil), true);
 		}
@@ -398,7 +394,8 @@ public:
 	template< class InputIt >
 	void insert( InputIt first, InputIt last ) {
 		while (first != last && _size < max_size()) {
-			insert_pair(*first);
+			 const value_type& val = *first;
+			insert_pair(val);
 			first++;
 		}
 	};
@@ -438,7 +435,7 @@ public:
 				current = current->_right;
     }
     if (z == _nil) {
-      cout << "Key not found in the tree" << endl;
+      std::cout << "Key not found in the tree" << std::endl;
       return;
     }
 

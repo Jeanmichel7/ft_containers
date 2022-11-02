@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/10 21:23:15 by jrasser           #+#    #+#             */
-/*   Updated: 2022/11/01 23:42:19 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/11/02 12:57:03 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,6 @@
 #define MAG "\033[0;35m"
 #define CYA "\033[0;36m"
 #define END "\033[0m"
-
-#include <iostream>
-#include <math.h>
-#include <deque>
-#include <string.h>
-#include <cstring>
-#include <exception>
 
 namespace ft
 {

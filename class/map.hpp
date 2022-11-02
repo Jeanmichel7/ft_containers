@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 18:14:05 by jrasser           #+#    #+#             */
-/*   Updated: 2022/11/01 23:39:48 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/11/02 17:34:50 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ template <
 class map
 {
 public:
-	/* DEFINITION */
 
 	typedef Key																				key_type;
 	typedef T																					mapped_type;
@@ -89,7 +88,7 @@ public:
 
 private:
 	allocator_type		_alloc;
-	value_compare			_comp;
+	key_compare				_comp;
 	tree_type					_tree;
 
 
@@ -271,8 +270,7 @@ public:
 
 	ft::pair<iterator, bool> insert( const value_type& value ) {
 		try {
-			ft::pair<iterator, bool> ret = _tree.insert_pair(value);
-			return ( ret );
+			return ( _tree.insert_pair(value) );
 		}
 		catch (std::exception &e) {
 			throw;

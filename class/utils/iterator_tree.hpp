@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 16:58:53 by jrasser           #+#    #+#             */
-/*   Updated: 2022/11/01 23:37:09 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/11/02 15:23:47 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,10 @@ template <typename T, class Compare >
 			typedef typename ft::iterator<ft::bidirectional_iterator_tag, value_type>::pointer				pointer;
 			typedef typename ft::iterator<ft::bidirectional_iterator_tag, value_type>::reference 			reference;
 
+			T *				_node;
+			T *				_last_node;
+			T *				_nil;
+			Compare		_comp;
 
 			/* *************************************************** */
 			/*                                                     */
@@ -183,11 +187,6 @@ template <typename T, class Compare >
 					operator--();
 				return (*this);
 			}
-
-			T *			_node;
-			T *			_last_node;
-			T *			_nil;
-			Compare		_comp;
 	};
 
 	template <typename T, class Compare >
@@ -195,11 +194,11 @@ template <typename T, class Compare >
 	{
 		public :
 
-			typedef typename T::value_type    value_type;
+			typedef typename T::value_type     value_type;
 			typedef typename ft::iterator<ft::bidirectional_iterator_tag, value_type>::iterator_category 	iterator_category;
 			typedef typename ft::iterator<ft::bidirectional_iterator_tag, value_type>::difference_type		difference_type;
-			typedef typename ft::iterator<ft::bidirectional_iterator_tag, value_type>::pointer const 			pointer;
-			typedef typename ft::iterator<ft::bidirectional_iterator_tag, value_type>::reference const 		reference;
+			typedef typename ft::iterator<ft::bidirectional_iterator_tag, const value_type>::pointer  	const		pointer;
+			typedef typename ft::iterator<ft::bidirectional_iterator_tag, const value_type>::reference  const		reference;
 
 			typedef RB_iterator<T, Compare> iterator;
 			
@@ -366,9 +365,9 @@ template <typename T, class Compare >
 				return (tmp);
 			}
 
-			T *         _node;
-			T *         _last_node;
-			T *				 	_nil;
+			T const *      _node;
+			T const *      _last_node;
+			T const *	 	_nil;
 			Compare     _comp;
 	};
 

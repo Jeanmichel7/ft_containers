@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 14:41:48 by jrasser           #+#    #+#             */
-/*   Updated: 2022/11/01 23:41:25 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/11/02 17:31:37 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 #include "reverse_iterator.hpp"
 #include "utils/rbtree.hpp"
 #include "utils.hpp"
-
 
 namespace ft
 {
@@ -31,32 +30,34 @@ public:
   typedef Key         key_type;
   typedef Key         value_type;
   typedef Compare     key_compare;
+	typedef Compare     value_compare;
   typedef Alloc       allocator_type;
+
 
   typedef typename Alloc::reference         reference;
   typedef typename Alloc::const_reference   const_reference;
   typedef typename Alloc::pointer           pointer;
   typedef typename Alloc::const_pointer     const_pointer;
 
+	// class value_compare
+	// {
+	// 	typedef bool 					result_type;
+	// 	typedef value_type 		first_argument_type;
+	// 	typedef value_type 		second_argument_type;
 
-	class value_compare
-	{
-		typedef bool 					result_type;
-		typedef value_type 		first_argument_type;
-		typedef value_type 		second_argument_type;
+	// protected:
+	// 	Compare _comp;
 
-	protected:
-		Compare _comp;
+	// public:
+	// 	value_compare() : _comp() {}
+	// 	value_compare( Compare c ) : _comp(c) {}
+	// 	bool operator() (const value_type& x, const value_type& y) const{
+	// 		return (this->_comp(x, y));
+	// 	}
+	// };
 
-	public:
-		value_compare() : _comp() {}
-		value_compare( Compare c ) : _comp(c) {}
-		bool operator() (const value_type& x, const value_type& y) const{
-			return (this->_comp(x, y));
-		}
-	};
 
-  typedef typename ft::RedBlackTree<key_type, key_type, key_type, value_compare > tree_type;
+  typedef typename ft::RedBlackTree<key_type, key_type, key_type, key_compare > tree_type;
 
   typedef typename tree_type::iterator                iterator;
   typedef typename tree_type::const_iterator          const_iterator;
@@ -69,7 +70,6 @@ private:
 	allocator_type		_alloc;
 	value_compare			_comp;
 	tree_type					_tree;
-
 
 
 public:
