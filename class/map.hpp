@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 18:14:05 by jrasser           #+#    #+#             */
-/*   Updated: 2022/11/02 17:34:50 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/11/04 00:31:59 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ public:
 	};
 
 	
-	typedef typename ft::RedBlackTree<value_type, key_type, mapped_type, value_compare>			tree_type;
+	typedef typename ft::RedBlackTree<value_type, key_type, mapped_type, Compare>	tree_type;
 
 	typedef typename tree_type::iterator 									iterator;
 	typedef typename tree_type::const_iterator						const_iterator;
@@ -88,7 +88,7 @@ public:
 
 private:
 	allocator_type		_alloc;
-	key_compare				_comp;
+	Compare						_comp;
 	tree_type					_tree;
 
 
@@ -141,9 +141,6 @@ public:
 	{
 		return (this->_alloc);
 	};
-
-
-
 
 
 

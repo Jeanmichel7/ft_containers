@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/23 12:15:58 by jrasser           #+#    #+#             */
-/*   Updated: 2022/11/01 23:46:54 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/11/03 22:30:18 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define __CONVERT_HPP__
 
 # include "main.hpp"
+# include <typeinfo>
 
 template <typename T>
 std::string tostr(T value)

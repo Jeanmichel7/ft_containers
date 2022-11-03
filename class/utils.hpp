@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/10 21:23:15 by jrasser           #+#    #+#             */
-/*   Updated: 2022/11/02 12:57:03 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/11/04 00:42:56 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,11 @@ struct pair
 	T1 first;
 	T2 second;
 
-	/* ************************************************************************** */
-	/*                                                                            */
-	/*                                MEMBER FUNCTION                             */
-	/*                                                                            */
-	/* ************************************************************************** */
+	/* ************************************************ */
+	/*                                                  */
+	/*                 MEMBER FUNCTION                  */
+	/*                                                  */
+	/* ************************************************ */
 
 	pair() : first(T1()), second(T2()) {}
 
@@ -77,25 +77,25 @@ bool operator!=(const ft::pair<T1, T2> &lhs, const ft::pair<T1, T2> &rhs)
 template <class T1, class T2>
 bool operator<(const ft::pair<T1, T2> &lhs, const ft::pair<T1, T2> &rhs)
 {
-	return (lhs.first < rhs.first || (!(rhs.first < lhs.first) && lhs.second < rhs.second));
+	return (lhs.first < rhs.first);
 }
 
 template <class T1, class T2>
 bool operator<=(const ft::pair<T1, T2> &lhs, const ft::pair<T1, T2> &rhs)
 {
-	return !(rhs < lhs);
+	return !(rhs.first < lhs.first);
 }
 
 template <class T1, class T2>
 bool operator>(const ft::pair<T1, T2> &lhs, const ft::pair<T1, T2> &rhs)
 {
-	return (rhs < lhs);
+	return (rhs.first < lhs.first);
 }
 
 template <class T1, class T2>
 bool operator>=(const ft::pair<T1, T2> &lhs, const ft::pair<T1, T2> &rhs)
 {
-	return !(lhs < rhs);
+	return !(lhs.first < rhs.first);
 }
 
 
@@ -171,7 +171,8 @@ bool lexicographical_compare(InputIt1 first1, InputIt1 last1,
 template <typename T>
 struct Node
 {
-	typedef T   value_type;
+	typedef T   				value_type;
+
 	value_type           _content;
 	Node                *_parent;
 	Node                *_left;
@@ -211,6 +212,7 @@ struct Node
 		return;
 	}
 	~Node() {}
+	
 	Node &operator=(Node const &rhs)
 	{
 		if (this != &rhs)
@@ -265,6 +267,15 @@ bool operator>=(Node<T> const &lhs, Node<T> const &rhs)
 {
 	return !(lhs < rhs);
 }
+
+// template <typename TL, typename TR>
+// bool operator<(Node< ft::pair<const Key, T> > const &lhs, Node<TR> const &rhs)
+// {
+// 	return (lhs._content < rhs._content);
+// }
+
+
+
 
 
 } // namespace ft

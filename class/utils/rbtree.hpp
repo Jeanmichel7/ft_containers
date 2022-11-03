@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 12:54:45 by jrasser           #+#    #+#             */
-/*   Updated: 2022/11/02 15:48:32 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/11/04 00:31:53 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ namespace ft
 template <class T,
 					class T_key,
 					class T_value,
-					class Compare,
+					class Compare = std::less<T_key>,
 					class Node = ft::Node<T>,
 					class Type_Alloc = std::allocator<T>
 >
@@ -67,7 +67,7 @@ public:
 	:
 		_node_alloc(node_alloc_init),
 		_last_node(NULL),
-		_comp(Compare()),
+		_comp(),
 		_size(0)
 	{
 		// std::cout << "Constructor tree called" << std::endl;
@@ -81,7 +81,7 @@ public:
 	RedBlackTree(const self& x)
 	:
 		_node_alloc(node_alloc()),
-		_comp(Compare()),
+		_comp(x._comp),
 		_size(0)
 	{
 		// std::cout << "construcotr tree called" << std::endl;
@@ -234,13 +234,20 @@ public:
 
 
 
+
+	// recupere la cle de comparaison de l'arbre
+	// T_key key_comp() const {
+	// 	return _comp;
+	// }
+
+
 	/* *************************************************** */
 	/*                                                     */
 	/*                       MODIFY                        */
 	/*                                                     */
 	/* *************************************************** */
 
-	ft::pair<iterator, bool> insert_pair(const value_type& val ) {
+	ft::pair<iterator, bool> insert_pair(const value_type& val) {
 
 		ft::pair<iterator, bool> 	ret;
     node_pointer	x = this->_root;
@@ -250,9 +257,9 @@ public:
 
 		while (x != this->_nil) {
 			y = x;
-			if (this->_comp(val, x->_content))
+			if (val < x->_content)
 				x = x->_left;
-			else if (this->_comp(x->_content, val))
+			else if (x->_content < val)
 				x = x->_right;
 			else
 				return ft::pair<iterator, bool>(iterator(x, _last_node, _nil), false);
@@ -301,9 +308,9 @@ public:
 
     while (x != _nil) {
       y = x;
-     if (this->_comp(val, x->_content))
+     if (val < x->_content)
 				x = x->_left;
-			else if (this->_comp(x->_content, val))
+			else if (x->_content < val)
 				x = x->_right;
       else 
 				return iterator(x, _last_node, _nil);
@@ -352,16 +359,16 @@ public:
 
 		node_pointer x = _root;
 		while (x != _nil) {
-			if (this->_comp(to_insert, x->_content))
+			if (to_insert < x->_content)
 				x = x->_left;
-			else if (this->_comp(x->_content, to_insert))
+			else if (x->_content < to_insert)
 				x = x->_right;
 			else 
 				return iterator(x, _last_node, _nil);
 		}
 
 		if (hint == end()) {
-			if (_comp(_last_node->_content, to_insert)) {
+			if (_last_node->_content < to_insert) {
 				// std::cout << "hint is good";
 				return insert_pair_pos(_last_node, to_insert);
 			}
@@ -374,17 +381,16 @@ public:
 		node_pointer p = hint._node->_parent;
 		node_pointer gp = p->_parent;
 		if ( p && gp &&
-			(( gp > p && _comp(p->_content, to_insert) 
-				&& _comp(to_insert, gp->_content)) 
+			(( gp > p && p->_content < to_insert && to_insert < gp->_content )
 			||
-			(p < gp && _comp(gp->_content, to_insert) 
-				&& _comp(to_insert, p->_content)))) {
+			(p < gp && gp->_content < to_insert && to_insert < p->_content))) {
 			// std::cout << "hint is good";
 			return insert_pair_pos(hint._node->_parent, to_insert);
-		} else {
+		} 
+		// else {
 			// std::cout << "hint not good";
-			return insert_pair(to_insert).first;
-		}
+		return insert_pair(to_insert).first;
+		// }
 	}
 
 
@@ -429,9 +435,9 @@ public:
 				z = current;
 				break;
 			}
-			if (this->_comp(pos._node->_content, current->_content))
+			if (pos._node->_content < current->_content)
 				current = current->_left;
-			else if (this->_comp(current->_content, pos._node->_content))
+			else if (current->_content < pos._node->_content)
 				current = current->_right;
     }
     if (z == _nil) {
@@ -583,7 +589,7 @@ public:
     node_pointer y = _nil;
 
 		while (x != _nil) {
-			if (!this->_comp(x->_content, key)) {
+			if (!(x->_content < key)) {
 				y = x;
 				x = x->_left;
 			} else {
@@ -598,7 +604,7 @@ public:
 		node_pointer y = _nil;
 
 		while (x != _nil) {
-			if (!this->_comp(x->_content, key)) {
+			if (!(x->_content < key)) {
 				y = x;
 				x = x->_left;
 			} else {
@@ -613,7 +619,7 @@ public:
 		node_pointer y = _nil;
 
 		while (x != _nil) {
-			if (this->_comp(key, x->_content)) {
+			if (key < x->_content) {
 				y = x;
 				x = x->_left;
 			} else {
@@ -628,7 +634,7 @@ public:
 		node_pointer y = _nil;
 
 		while (x != _nil) {
-			if (this->_comp(key, x->_content)) {
+			if (key < x->_content) {
 				y = x;
 				x = x->_left;
 			} else {
@@ -704,6 +710,7 @@ public:
 		return !(*this < x);
 	}
 
+	
 
 
 
@@ -1024,8 +1031,31 @@ public:
 		std::cout << END ;
 		display_tree_set(current->_right, space_root, is_last);
 	}
+	
 
 };
+
+
+	/* *************************************************** */
+	/*                                                     */
+	/*                      OPERATOR                       */
+	/*                                                     */
+	/* *************************************************** */
+
+	template <class T1, class T2, typename T3>
+	bool operator<(const ft::pair<T1, T2> &lhs, const T3 &rhs)
+	{
+		return (lhs.first < rhs);
+	}
+
+	template <class T1, class T2, typename T3>
+	bool operator<(const T3 &rhs, const ft::pair<T1, T2> &lhs)
+	{
+		return (rhs < lhs.first);
+	}
+
+ 
+
 
 } // namespace ft
 
