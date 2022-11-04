@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/10 21:23:15 by jrasser           #+#    #+#             */
-/*   Updated: 2022/11/04 14:06:14 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/11/04 14:22:38 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -267,8 +267,6 @@ bool operator>=(Node<T> const &lhs, Node<T> const &rhs)
 {
 	return !(lhs < rhs);
 }
-
-
 
 
 } // namespace ft

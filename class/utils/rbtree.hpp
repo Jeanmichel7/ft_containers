@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 12:54:45 by jrasser           #+#    #+#             */
-/*   Updated: 2022/11/04 14:04:59 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/11/04 15:16:34 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 namespace ft
 {
 
-template <class T,
+template <typename T,
 					class T_key,
 					class T_value,
 					class Compare = std::less<T>,
@@ -39,10 +39,11 @@ public:
 	typedef Node const 														*node_const_pointer;
 	typedef size_t 																size_type;
 
-	typedef typename Type_Alloc::template rebind<ft::Node<value_type> >::other node_alloc;
+	typedef typename Type_Alloc::template rebind<Node >::other node_alloc;
+	// typedef Type_Alloc node_alloc;
 
 	typedef ft::RB_iterator< Node, Compare > 							iterator;
-	typedef ft::RB_const_iterator<  Node, Compare>  				const_iterator;
+	typedef ft::RB_const_iterator< Node, Compare>  				const_iterator;
 	typedef ft::reverse_iterator< iterator > 							reverse_iterator;
 	typedef ft::reverse_iterator< const_iterator >  			const_reverse_iterator;
 
@@ -64,38 +65,25 @@ public:
 	/* *************************************************** */
 
 	RedBlackTree(const node_alloc &node_alloc_init = node_alloc(), const Compare &comp = Compare()) 
-	: 
+	:
 		_node_alloc(node_alloc_init),
-	 	_comp(comp)
+		_last_node(NULL),
+		_comp(comp),
+		_size(0)
 	{
+		// std::cout << "Constructor tree called" << std::endl;
 		_nil = _node_alloc.allocate(1);
-		_nil->_color = N_BLACK;
-		_nil->_left = _nil;
-		_nil->_right = _nil;
-		_nil->_parent = _nil;
+		_node_alloc.construct(_nil, Node());
 		_root = _nil;
-		_last_node = _nil;
-		_size = 0;
+		_last_node = _root;
 	}
-	// :
-	// 	_node_alloc(node_alloc_init),
-	// 	_last_node(NULL),
-	// 	_comp(Compare()),
-	// 	_size(0)
-	// {
-	// 	// std::cout << "Constructor tree called" << std::endl;
-	// 	_nil = _node_alloc.allocate(1);
-	// 	_node_alloc.construct(_nil, Node());
-	// 	_root = _nil;
-	// 	_last_node = _root;
-	// }
 
 
 	RedBlackTree(const self& x)
 	:
 		_node_alloc(node_alloc()),
 		_comp(x._comp),
-		_size()
+		_size(0)
 	{
 		// std::cout << "construcotr tree called" << std::endl;
 		_nil = _node_alloc.allocate(1);
@@ -359,7 +347,7 @@ public:
 
 
 
-	iterator insert_hint( iterator hint, const value_type &to_insert ) {
+	iterator insert_hint( const_iterator hint, const value_type &to_insert ) {
 		if (hint._node == _root || hint._node == _root->_left || hint._node == _root->_right)
 			return insert_pair(to_insert).first;
 
@@ -433,7 +421,7 @@ public:
 
 
 
-	void erase(iterator pos) {
+	void erase(const_iterator pos) {
 		node_pointer current = _root;
     node_pointer z = _nil;
     node_pointer x, y;
@@ -518,8 +506,8 @@ public:
 
 
 
-	void erase(iterator first, iterator last) {
-		iterator next = first;
+	void erase(const_iterator first, const_iterator last) {
+		const_iterator next = first;
 		if (next != last)
 			next++;
 		while (first != last && next != last) {
@@ -1085,17 +1073,17 @@ public:
 	/*                                                     */
 	/* *************************************************** */
 
-	template <class T1, class T2, typename T3>
-	bool operator<(const ft::pair<T1, T2> &lhs, const T3 &rhs)
-	{
-		return (lhs.first < rhs);
-	}
+	// template <class T1, class T2, typename T3>
+	// bool operator<(const ft::pair<T1, T2> &lhs, const T3 &rhs)
+	// {
+	// 	return (lhs.first < rhs);
+	// }
 
-	template <class T1, class T2, typename T3>
-	bool operator<(const T3 &rhs, const ft::pair<T1, T2> &lhs)
-	{
-		return (rhs < lhs.first);
-	}
+	// template <class T1, class T2, typename T3>
+	// bool operator<(const T3 &rhs, const ft::pair<T1, T2> &lhs)
+	// {
+	// 	return (rhs < lhs.first);
+	// }
 
 
 

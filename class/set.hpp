@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 14:41:48 by jrasser           #+#    #+#             */
-/*   Updated: 2022/11/03 22:35:55 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/11/04 15:17:33 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,18 +57,18 @@ public:
 	// };
 
 
-  typedef typename ft::RedBlackTree<key_type, key_type, key_type, Compare > tree_type;
+  typedef typename ft::RedBlackTree< key_type, const key_type, const key_type, key_compare > tree_type;
 
-  typedef typename tree_type::iterator                iterator;
+  typedef typename tree_type::const_iterator          iterator;
   typedef typename tree_type::const_iterator          const_iterator;
-  typedef typename tree_type::reverse_iterator        reverse_iterator;
+  typedef typename tree_type::const_reverse_iterator        reverse_iterator;
   typedef typename tree_type::const_reverse_iterator  const_reverse_iterator;
   typedef typename tree_type::size_type               size_type;	
 
 
 private:
 	allocator_type		_alloc;
-	Compare						_comp;
+	key_compare				_comp;
 	tree_type					_tree;
 
 
@@ -207,8 +207,8 @@ public:
 
 	ft::pair<iterator, bool> insert( const value_type& value ) {
 		try {
-			ft::pair<iterator, bool> ret = _tree.insert_pair(value);
-			return ( ret );
+			// ft::pair<iterator, bool> ret = _tree.insert_pair(value);
+			return (  _tree.insert_pair(value) );
 		}
 		catch (std::exception &e) {
 			throw;
@@ -256,7 +256,7 @@ public:
 		}
 	}
 
-	size_type erase( const Key& key ) {
+	size_type erase( const key_type& key ) {
 		iterator it = find(key);
 		if (it == end())
 			return (0);
@@ -282,13 +282,13 @@ public:
 	/*                                                     */
 	/* *************************************************** */
 
-	size_type count( const Key& key ) const {
+	size_type count( const key_type& key ) const {
 		if (find(key) != end())
 			return (1);
 		return (0);
 	}
 
-	iterator find( const Key& key )
+	iterator find( const key_type& key )
 	{
 		iterator it = begin();
 		while (it != end())
@@ -300,7 +300,7 @@ public:
 		return (end());
 	};
 	
-	const_iterator find( const Key& key ) const {
+	const_iterator find( const key_type& key ) const {
 		// std::cout << " const find()" << std::endl;
 		const_iterator it = begin();
 		while (it != end())
@@ -312,31 +312,31 @@ public:
 		return (end());
 	}
 
-	ft::pair<iterator,iterator> equal_range( const Key& key ) {
+	ft::pair<iterator,iterator> equal_range( const key_type& key ) {
 		return (_tree.equal_range(key));
 	}
 
-	ft::pair<const_iterator,const_iterator> equal_range( const Key& key ) const {
+	ft::pair<const_iterator,const_iterator> equal_range( const key_type& key ) const {
 		return (_tree.equal_range(key));
 	}
 
 
 
-	iterator lower_bound( const Key& key ) {
+	iterator lower_bound( const key_type& key ) {
 		return (_tree.lower_bound(key));
 	}
 
-	const_iterator lower_bound( const Key& key ) const {
+	const_iterator lower_bound( const key_type& key ) const {
 		return (_tree.lower_bound(key));
 	}
 
 
 
-	iterator upper_bound( const Key& key ) {
+	iterator upper_bound( const key_type& key ) {
 		return (_tree.upper_bound(key));
 	}
 	
-	const_iterator upper_bound( const Key& key ) const {
+	const_iterator upper_bound( const key_type& key ) const {
 		return (_tree.upper_bound(key));
 	}
 
@@ -387,13 +387,13 @@ public:
 /* *************************************************** */
 
 
-template< class Key, class Compare, class Alloc >
-bool operator==( const set<Key,Compare,Alloc>& lhs, const set<Key,Compare,Alloc>& rhs ) {
+template< class key_type, class Compare, class Alloc >
+bool operator==( const set<key_type,Compare,Alloc>& lhs, const set<key_type,Compare,Alloc>& rhs ) {
 	if (lhs.size() != rhs.size())
 		return (false);
-	typename set<Key,Compare,Alloc>::const_iterator it = lhs.begin();
-	typename set<Key,Compare,Alloc>::const_iterator ite = lhs.end();
-	typename set<Key,Compare,Alloc>::const_iterator it2 = rhs.begin();
+	typename set<key_type,Compare,Alloc>::const_iterator it = lhs.begin();
+	typename set<key_type,Compare,Alloc>::const_iterator ite = lhs.end();
+	typename set<key_type,Compare,Alloc>::const_iterator it2 = rhs.begin();
 	while (it != ite) {
 		if (*it != *it2)
 			return (false);
@@ -403,16 +403,16 @@ bool operator==( const set<Key,Compare,Alloc>& lhs, const set<Key,Compare,Alloc>
 	return (true);
 }
 
-template< class Key, class Compare, class Alloc >
-bool operator!=( const set<Key,Compare,Alloc>& lhs, const set<Key,Compare,Alloc>& rhs ) {
+template< class key_type, class Compare, class Alloc >
+bool operator!=( const set<key_type,Compare,Alloc>& lhs, const set<key_type,Compare,Alloc>& rhs ) {
 	return (!(lhs == rhs));
 }
 
-template< class Key, class Compare, class Alloc >
-bool operator<( const set<Key,Compare,Alloc>& lhs, const set<Key,Compare,Alloc>& rhs ) {
-	typename set<Key,Compare,Alloc>::const_iterator it = lhs.begin();
-	typename set<Key,Compare,Alloc>::const_iterator ite = lhs.end();
-	typename set<Key,Compare,Alloc>::const_iterator it2 = rhs.begin();
+template< class key_type, class Compare, class Alloc >
+bool operator<( const set<key_type,Compare,Alloc>& lhs, const set<key_type,Compare,Alloc>& rhs ) {
+	typename set<key_type,Compare,Alloc>::const_iterator it = lhs.begin();
+	typename set<key_type,Compare,Alloc>::const_iterator ite = lhs.end();
+	typename set<key_type,Compare,Alloc>::const_iterator it2 = rhs.begin();
 	while (it != ite)
 	{
 		if (*it < *it2)
@@ -433,23 +433,23 @@ bool operator<( const set<Key,Compare,Alloc>& lhs, const set<Key,Compare,Alloc>&
 	return (false);
 }
 
-template< class Key, class Compare, class Alloc >
-bool operator<=( const set<Key,Compare,Alloc>& lhs, const set<Key,Compare,Alloc>& rhs ) {
+template< class key_type, class Compare, class Alloc >
+bool operator<=( const set<key_type,Compare,Alloc>& lhs, const set<key_type,Compare,Alloc>& rhs ) {
 	return ((lhs < rhs) || (lhs == rhs));
 }
 
-template< class Key, class Compare, class Alloc >
-bool operator>( const set<Key,Compare,Alloc>& lhs, const set<Key,Compare,Alloc>& rhs ) {
+template< class key_type, class Compare, class Alloc >
+bool operator>( const set<key_type,Compare,Alloc>& lhs, const set<key_type,Compare,Alloc>& rhs ) {
 	return (!(lhs <= rhs));
 }
 
-template< class Key, class Compare, class Alloc >
-bool operator>=( const set<Key,Compare,Alloc>& lhs, const set<Key,Compare,Alloc>& rhs ) {
+template< class key_type, class Compare, class Alloc >
+bool operator>=( const set<key_type,Compare,Alloc>& lhs, const set<key_type,Compare,Alloc>& rhs ) {
 	return (!(lhs < rhs));
 }
 
-template< class Key, class Compare, class Alloc >
-void swap( set<Key,Compare,Alloc>& x, set<Key,Compare,Alloc>& y ) {
+template< class key_type, class Compare, class Alloc >
+void swap( set<key_type,Compare,Alloc>& x, set<key_type,Compare,Alloc>& y ) {
 	x.swap(y);
 }
 
