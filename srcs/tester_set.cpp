@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 15:33:24 by jrasser           #+#    #+#             */
-/*   Updated: 2022/11/04 00:41:11 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/11/04 11:58:54 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,14 +36,14 @@ void tester_set(void)
 	display_title("SET < char >");
 	tester_set_type< char >();
 
-  display_title("SET < Int >");
-	tester_set_type< int >();
+  // display_title("SET < Int >");
+	// tester_set_type< int >();
 
-	display_title("SET < string >");
-	tester_set_type< std::string >();
+	// display_title("SET < string >");
+	// tester_set_type< std::string >();
 
-	display_title("SET < float >");
-	tester_set_type< float >();
+	// display_title("SET < float >");
+	// tester_set_type< float >();
 }
 
 

@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 12:54:45 by jrasser           #+#    #+#             */
-/*   Updated: 2022/11/04 00:31:53 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/11/04 13:30:15 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ namespace ft
 template <class T,
 					class T_key,
 					class T_value,
-					class Compare = std::less<T_key>,
+					class Compare = std::less<T>,
 					class Node = ft::Node<T>,
 					class Type_Alloc = std::allocator<T>
 >
@@ -63,19 +63,32 @@ public:
 	/*                                                     */
 	/* *************************************************** */
 
-	RedBlackTree(const node_alloc &node_alloc_init = node_alloc())
-	:
+	RedBlackTree(const node_alloc &node_alloc_init = node_alloc(), const Compare &comp = Compare()) 
+	: 
 		_node_alloc(node_alloc_init),
-		_last_node(NULL),
-		_comp(),
-		_size(0)
+	 	_comp(comp)
 	{
-		// std::cout << "Constructor tree called" << std::endl;
 		_nil = _node_alloc.allocate(1);
-		_node_alloc.construct(_nil, Node());
+		_nil->_color = N_BLACK;
+		_nil->_left = _nil;
+		_nil->_right = _nil;
+		_nil->_parent = _nil;
 		_root = _nil;
-		_last_node = _root;
+		_last_node = _nil;
+		_size = 0;
 	}
+	// :
+	// 	_node_alloc(node_alloc_init),
+	// 	_last_node(NULL),
+	// 	_comp(Compare()),
+	// 	_size(0)
+	// {
+	// 	// std::cout << "Constructor tree called" << std::endl;
+	// 	_nil = _node_alloc.allocate(1);
+	// 	_node_alloc.construct(_nil, Node());
+	// 	_root = _nil;
+	// 	_last_node = _root;
+	// }
 
 
 	RedBlackTree(const self& x)
@@ -135,7 +148,7 @@ public:
 				_node_alloc.deallocate(prev, 1);
 			}
 		}
-		_node_alloc.destroy(_nil);
+		// _node_alloc.destroy(_nil);
 		_node_alloc.deallocate(_nil, 1);
 	}
 
@@ -235,10 +248,74 @@ public:
 
 
 
-	// recupere la cle de comparaison de l'arbre
-	// T_key key_comp() const {
-	// 	return _comp;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	// template <class T1, classe T2, classe T3>
+	// bool operator<(const ft::Node<T>< ft::pair<T1, T2> > &lhs) {
+	// 	return lhs->_content.first < rhs->_content.first;
 	// }
+
+
+	// T_key const &node_key(value_type x) {
+  //   return T_key()(x);
+  // }
+
+	// template < typename T1, typename T2>
+	// bool operator<(const ft::Node<T1, T2> &lhs, const ft::Node<T1, T2> &rhs) {
+	// 	return lhs->_content.first < rhs->_content.first;
+	// }
+
+	// template < typename T1, typename T2, typename T3 >
+	// bool operator<(const ft::Node<T1, T2> &lhs, const T3 &rhs) {
+	// 	return lhs->_content.first < rhs->_content;
+	// }
+
+
+	template <typename T1, typename T2>
+	T_key const &node_key(const ft::pair<const T1, T2> &x ) {
+
+		// T_key key = T_key()(x);
+		// T_key key = T_key()(x.first);
+		T_key key = x.first;
+		// std::cout << "type key : " << key << std::endl;
+
+		return x.first;
+		// return T_key()(x);
+	}
+
+	template< class T1 >
+	T_key const &node_key(const T1 &x) {
+		return x;
+	}
+	
 
 
 	/* *************************************************** */
@@ -254,10 +331,10 @@ public:
     node_pointer	y = NULL;
 		node_pointer	node;
 
-
 		while (x != this->_nil) {
 			y = x;
-			if (val < x->_content)
+			// if ( _comp(node_key(val), node_key(x->_content)))
+			if ( val < x->_content )
 				x = x->_left;
 			else if (x->_content < val)
 				x = x->_right;
@@ -1033,6 +1110,19 @@ public:
 	}
 	
 
+	// template < class T1, class T2 >
+	// bool operator<(const ft::pair<T1, T2> &lhs)
+	// {
+	// 	return (this < lhs.first);
+	// }
+
+
+
+
+ 
+
+
+
 };
 
 
@@ -1054,7 +1144,29 @@ public:
 		return (rhs < lhs.first);
 	}
 
- 
+
+
+
+
+
+
+
+	
+
+
+	// template < typename T1, typename T2, typename T3>
+	// bool operator<(const ft::Node<ft::pair<T1, T2> > &lhs, const ft::Node<T3> &rhs) {
+	// 	return lhs->_content.first < rhs->_content;
+	// }
+
+	// template < typename T1, typename T2, typename T3 >
+	// bool operator<(const ft::Node<T1, T2> &lhs, const T3 &rhs) {
+	// 	return lhs->_content.first < rhs->_content;
+	// }
+
+
+
+
 
 
 } // namespace ft

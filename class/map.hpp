@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 18:14:05 by jrasser           #+#    #+#             */
-/*   Updated: 2022/11/04 00:31:59 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/11/04 13:26:02 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,24 +57,24 @@ public:
 
 	public:
 
-		value_compare() : _comp() {}
+		// value_compare() : _comp() {}
 		value_compare( Compare c ) : _comp(c) {}
 
 		bool operator() (const value_type& x, const value_type& y) const {
 			return (this->_comp(x.first, y.first));
 		}
 
-		bool operator() (const key_type& x, const value_type& y) const {
-			return (this->_comp(x, y.first));
-		}
+		// bool operator() (const key_type& x, const value_type& y) const {
+		// 	return (this->_comp(x, y.first));
+		// }
 
-		bool operator() (const value_type& x, const key_type& y) const {
-			return (this->_comp(x.first, y));
-		}
+		// bool operator() (const value_type& x, const key_type& y) const {
+		// 	return (this->_comp(x.first, y));
+		// }
 
-		bool operator() (const key_type& x, const key_type& y) const {
-			return (this->_comp(x, y));
-		}
+		// bool operator() (const key_type& x, const key_type& y) const {
+		// 	return (this->_comp(x, y));
+		// }
 	};
 
 	

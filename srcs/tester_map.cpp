@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 14:16:17 by jrasser           #+#    #+#             */
-/*   Updated: 2022/11/04 00:40:39 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/11/04 11:58:51 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,17 +103,17 @@ void tester_map(void)
 	display_title("MAP < String, Int >");
 	tester_map_type< std::string, int >();
 
-	display_title("MAP < Int, String >");
-	tester_map_type< int, std::string >();
+	// display_title("MAP < Int, String >");
+	// tester_map_type< int, std::string >();
 
-	display_title("MAP < String, String >");
-	tester_map_type< std::string, std::string >();
+	// display_title("MAP < String, String >");
+	// tester_map_type< std::string, std::string >();
 
-	display_title("MAP < Int, Int >");
-	tester_map_type< int, int >();
+	// display_title("MAP < Int, Int >");
+	// tester_map_type< int, int >();
 
-	display_title("MAP < Int, Float >");
-	tester_map_type< int, float >();
+	// display_title("MAP < Int, Float >");
+	// tester_map_type< int, float >();
 }
 
 
