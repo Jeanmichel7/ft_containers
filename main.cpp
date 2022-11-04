@@ -6,11 +6,29 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/14 22:19:53 by jrasser           #+#    #+#             */
-/*   Updated: 2022/11/04 16:22:23 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/11/04 19:39:52 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "main.hpp"
+
+void display_title(std::string title) {
+	std::cout << "\n\n\n\n\n" << BLU
+	<< "/* ***************************************************** */" << std::endl
+	<< "/*                                                       */" << std::endl
+	<< "/* ";
+
+	for (int i = 0; i < (int)((53 - title.length()) / 2); i++)
+		std::cout << " ";
+	std::cout << title ;
+	for (int i = 0; i < (int)((53 - title.length()) / 2); i++)
+		std::cout << " ";
+	std::cout << ((53 - title.length()) % 2 != 0 ? " " : "");
+	std::cout << " */" << std::endl
+	
+	<< "/*                                                       */" << std::endl
+	<< "/* ***************************************************** */\n" END << std::endl;
+}
 
 int main()
 {
@@ -18,8 +36,6 @@ int main()
 	tester_map(); 
 	tester_stack();
 	tester_set();
-
-	std::cout << std::endl;
 	return 0;
 }
 

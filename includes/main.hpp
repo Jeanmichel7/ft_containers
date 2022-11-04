@@ -6,12 +6,13 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 14:57:17 by jrasser           #+#    #+#             */
-/*   Updated: 2022/11/02 12:51:23 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/11/04 19:40:34 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef __MAIN_HPP__
 # define __MAIN_HPP__
+
 
 # define RED "\033[0;31m"
 # define REDB "\033[31;1m"
@@ -31,6 +32,10 @@
 # else
 #  define USE_CHRONO 0
 # endif
+
+#ifndef STL_TYPE
+# define STL_TYPE ft
+#endif
 
 # include <iostream>
 # include <sstream>
@@ -56,13 +61,17 @@
 /* ***************************************************** */
 void tester_vector(void);
 
-/* include vector */
-
-
-
 template< typename vector_type >
 void tester_vector_type();
-// #include <typeinfo>     // typeid
+
+
+
+
+
+void rendu_tester_vector(void);
+
+template< typename vector_type >
+void rendu_tester_vector_type();
 
 
 
@@ -71,12 +80,10 @@ void tester_vector_type();
 /*                         MAP                           */
 /* ***************************************************** */
 
+void tester_map(void);
+
 template< typename type_key_map, typename type_value_map >
 void tester_map_type();
-
-
-// template< typename T1, typename T2>
-// void sstr_comp(T1 it, T2 ft_it, std::string msg);
 
 template< typename T1, typename T2>
 void sstr_comp(T1 it, T2 ft_it, std::string msg);
@@ -87,7 +94,15 @@ void	comp_map( M1 &map, M2 &ft_map, std::string msg);
 template < typename T_map, typename T_pair, typename type_key_map, typename type_value_map>
 void fill_map(T_map *map);
 
-void tester_map(void);
+
+
+
+
+
+void rendu_tester_map( void );
+
+template< typename type_key_map, typename type_value_map >
+void rendu_tester_map_type();
 
 
 
