@@ -6,7 +6,7 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Fri Nov  4 19:56:07 2022
+# Make data base, printed on Fri Nov  4 19:57:14 2022
 
 # Variables
 
@@ -67,7 +67,6 @@ NVM_BIN = /home/jrasser/.nvm/versions/node/v16.14.2/bin
 # makefile (from 'Makefile', line 29)
 OBJS_BIN = $(addprefix $(OBJS_DIR), $(notdir $(SRCS_FT:.cpp=.o)))
 # environment
- 
 ELECTRON_RUN_AS_NODE = 1
 # environment
 VSCODE_IPC_HOOK_CLI = /mnt/wslg/runtime-dir/vscode-ipc-67ded4fd-8683-4518-a213-fcf023034da7.sock
@@ -244,7 +243,7 @@ srcs/tester_map.cpp:
 objs/rendu_tester_vector.o: srcs/rendu/rendu_tester_vector.cpp
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: 'rendu_tester_vector'
-#  Last modified 2022-11-04 19:55:23.525014
+#  Last modified 2022-11-04 19:56:51.812136
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'Makefile', line 47):
@@ -262,7 +261,7 @@ srcs/rendu/rendu_tester_vector.cpp:
 objs/main.o: main.cpp
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: 'main'
-#  Last modified 2022-11-04 19:55:09.825014
+#  Last modified 2022-11-04 19:56:37.562136
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'Makefile', line 37):
@@ -278,6 +277,7 @@ all: tester
 #  File has been updated.
 #  Successfully updated.
 
+ 
 .PHONY: all clean fclean re
 #  Implicit rule search has not been done.
 #  Modification time never checked.
@@ -293,7 +293,7 @@ srcs/tester_vector.cpp:
 objs/tester_set.o: srcs/tester_set.cpp
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: 'tester_set'
-#  Last modified 2022-11-04 19:55:18.795014
+#  Last modified 2022-11-04 19:56:46.842136
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'Makefile', line 42):
@@ -311,13 +311,13 @@ srcs/tester_stack.cpp:
 # Not a target:
 Makefile:
 #  Implicit rule search has been done.
-#  Last modified 2022-11-04 19:55:45.956436
+#  Last modified 2022-11-04 19:56:33.332136
 #  File has been updated.
 #  Successfully updated.
 
 tester: objs/main.o objs/tester_map.o objs/tester_set.o objs/tester_stack.o objs/tester_vector.o objs/rendu_tester_map.o objs/rendu_tester_vector.o objs/rendu_main.o
 #  Implicit rule search has not been done.
-#  Last modified 2022-11-04 19:55:24.625014
+#  Last modified 2022-11-04 19:56:52.562136
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'Makefile', line 54):
@@ -342,10 +342,9 @@ bin_std: objs/rendu_tester_map.o objs/rendu_tester_vector.o objs/rendu_main.o
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
-#  recipe to execute (from 'Makefile', line 76):
+#  recipe to execute (from 'Makefile', line 74):
 			@${CC} ${OBJS_BIN} -o $(TESTER_STD) ${CFLAGS} -D STL_TYPE=std ${DEBEUG}
 			@echo "$(ERASE)$(GRN) [Tester STD Successfully compiled]$(END)	$(CHECK)"
- 
 			@echo "Executable ./$(TESTER_STD) \n"
 
 fclean: clean
@@ -353,7 +352,7 @@ fclean: clean
 #  Implicit rule search has not been done.
 #  File does not exist.
 #  File has not been updated.
-#  recipe to execute (from 'Makefile', line 86):
+#  recipe to execute (from 'Makefile', line 84):
 			${RM} ${NAME} ${TESTER_FT} ${TESTER_STD}
 			@echo "$(GRN) [Fclean]$(END) 			$(CHECK)"
 
@@ -366,7 +365,7 @@ fclean: clean
 objs/tester_map.o: srcs/tester_map.cpp
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: 'tester_map'
-#  Last modified 2022-11-04 19:55:15.745014
+#  Last modified 2022-11-04 19:56:43.652136
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'Makefile', line 42):
@@ -378,7 +377,7 @@ bin_ft: objs/rendu_tester_map.o objs/rendu_tester_vector.o objs/rendu_main.o
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
-#  recipe to execute (from 'Makefile', line 71):
+#  recipe to execute (from 'Makefile', line 69):
 			@${CC} ${OBJS_BIN} -o $(TESTER_FT) ${CFLAGS} -D STL_TYPE=ft ${DEBEUG}
 			@echo "$(ERASE)$(GRN) [Tester FT Successfully compiled]$(END)	$(CHECK)"
 			@echo "Executable ./$(TESTER_FT) \n"
@@ -399,7 +398,7 @@ srcs/tester_set.cpp:
 objs/rendu_main.o: srcs/rendu/rendu_main.cpp
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: 'rendu_main'
-#  Last modified 2022-11-04 19:55:23.955014
+#  Last modified 2022-11-04 19:56:52.132136
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'Makefile', line 47):
@@ -412,21 +411,21 @@ clean:
 #  Implicit rule search has not been done.
 #  File does not exist.
 #  File has not been updated.
-#  recipe to execute (from 'Makefile', line 82):
+#  recipe to execute (from 'Makefile', line 80):
 			${RM} $(OBJS) ${OBJS_BIN}
 			@echo "$(GRN) [Clean]$(END) 			$(CHECK)"
 
 # Not a target:
 srcs/rendu/rendu_main.cpp:
 #  Implicit rule search has been done.
-#  Last modified 2022-11-04 19:45:56.916774
+#  Last modified 2022-11-04 19:56:17.621385
 #  File has been updated.
 #  Successfully updated.
 
 objs/tester_vector.o: srcs/tester_vector.cpp
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: 'tester_vector'
-#  Last modified 2022-11-04 19:55:22.185014
+#  Last modified 2022-11-04 19:56:50.282136
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'Makefile', line 42):
@@ -437,7 +436,7 @@ objs/tester_vector.o: srcs/tester_vector.cpp
 objs/tester_stack.o: srcs/tester_stack.cpp
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: 'tester_stack'
-#  Last modified 2022-11-04 19:55:19.815014
+#  Last modified 2022-11-04 19:56:48.062136
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'Makefile', line 42):
@@ -448,7 +447,7 @@ objs/tester_stack.o: srcs/tester_stack.cpp
 objs/rendu_tester_map.o: srcs/rendu/rendu_tester_map.cpp
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: 'rendu_tester_map'
-#  Last modified 2022-11-04 19:55:22.425014
+#  Last modified 2022-11-04 19:56:50.902136
 #  File has been updated.
 #  Successfully updated.
 #  recipe to execute (from 'Makefile', line 47):
@@ -477,6 +476,6 @@ srcs/rendu/rendu_tester_map.cpp:
 # strcache performance: lookups = 118 / hit rate = 37%
 # hash-table stats:
 # Load=74/8192=1%, Rehash=0, Collisions=4/118=3%
-# Finished Make data base on Fri Nov  4 19:56:07 2022
+# Finished Make data base on Fri Nov  4 19:57:14 2022
 
  

@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 14:57:17 by jrasser           #+#    #+#             */
-/*   Updated: 2022/11/04 19:40:34 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/11/04 20:10:31 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,8 @@ void rendu_tester_map( void );
 template< typename type_key_map, typename type_value_map >
 void rendu_tester_map_type();
 
+template <typename M1>
+void	display_map_list( M1 &map );
 
 
 /* ***************************************************** */

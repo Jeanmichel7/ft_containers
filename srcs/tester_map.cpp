@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 14:16:17 by jrasser           #+#    #+#             */
-/*   Updated: 2022/11/04 16:23:25 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/11/04 21:13:53 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,13 +182,15 @@ void tester_map_type() {
 	chrono.stl_start_chrono();
 	std::pair< it_type, bool > ret_insert_value 		= map.insert(pair(
 		convert<type_key_map>("b"),
-		convert<type_value_map>("2")));
+		convert<type_value_map>("2")
+	));
 	chrono.stl_end_chrono();
 
 	chrono.ft_start_chrono();
 	ft::pair< ft_it_type, bool > ft_ret_insert_value 	= ft_map.insert(ft_pair(
 		convert<type_key_map>("b"),
-		convert<type_value_map>("2")));
+		convert<type_value_map>("2")
+	));
 	chrono.ft_end_chrono();
 
 	str_comp(tostr(ret_insert_value.first->first), tostr(ft_ret_insert_value.first->first), "insert(value(ft_pair(\"b\", 2))) -> first -> first");
@@ -829,13 +831,15 @@ void tester_map_type() {
 	/* ***************************************************** */
 	std::cout << MAG "\n\nTEST iterator" END << std::endl;
 	
+	it_type 		it;
+	ft_it_type 	ft_it;
 
 	/* begin() */
 	chrono.stl_start_chrono();
-	it_type 	it		= map.begin();
+	it = map.begin();
 	chrono.stl_end_chrono();
 	chrono.ft_start_chrono();
-	ft_it_type 	ft_it 	= ft_map.begin();
+	ft_it = ft_map.begin();
 	chrono.ft_end_chrono();
 
 	// std::cout << "	it->first: " << it->first << " \n	ft_it->first: " << ft_it->first << std::endl;
@@ -2364,31 +2368,6 @@ void tester_map_type() {
 	str_comp(sstr.str(), ft_sstr.str(), "equal_range random");
 	sstr.str(""); sstr.clear(); ft_sstr.str(""); ft_sstr.clear();
 	chrono.diff_addition_chrono();
-
-
-
-
-
-
-
-
-	// ft_map.display_tree();
-
-	// /* valeur plus petit que debut de map */
-	// ret_equal_range = map.equal_range(convert<type_key_map>("-10"));
-	// ft_ret_equal_range = ft_map.equal_range(convert<type_key_map>("-10"));
-
-	// str_comp( tostr(ret_equal_range.first->first), tostr(ft_ret_equal_range.first->first), "equal_range(a).first");
-	// str_comp( tostr(ret_equal_range.first->second), tostr(ft_ret_equal_range.first->second), "equal_range(a).first.second");
-
-	// str_comp( tostr(ret_equal_range.second->first), tostr(ft_ret_equal_range.second->first), "equal_range(a).second");
-	// str_comp( tostr(ret_equal_range.second->second), tostr(ft_ret_equal_range.second->second), "equal_range(a).second.second");
-
-
-
-
-
-
 	std::cout << std::endl;
 
 
@@ -2401,17 +2380,11 @@ void tester_map_type() {
 	/* ******************* */
 
 
-
-
-
-
 	// std_map_t const const_map(map);
 	// ft_map_t const const_ft_map(ft_map);
 	std::pair<const_it_type, const_it_type> 			ret_cequal_range;
 	ft::pair<ft_const_it_type, ft_const_it_type> 	ft_ret_cequal_range;
 
-	const_it_type 		cit_map;
-	ft_const_it_type 	cit_ft_map;
 
 
 
@@ -2431,6 +2404,8 @@ void tester_map_type() {
 
 
 	/* random */
+	const_it_type 		cit_map;
+	ft_const_it_type 	cit_ft_map;
 	nb_test 	= 100;
 	int nrand	= 0;
 

@@ -6,7 +6,7 @@
 #    By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/01 15:24:21 by jrasser           #+#    #+#              #
-#    Updated: 2022/11/04 19:56:33 by jrasser          ###   ########.fr        #
+#    Updated: 2022/11/04 21:14:49 by jrasser          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -53,13 +53,13 @@ objs/%.o: srcs/rendu/**%.cpp
 ${NAME}	:	${OBJS} ${OBJS_BIN}
 			@${CC} ${OBJS} -o $(NAME) ${CFLAGS} ${DEBEUG}
 			@echo "$(ERASE)$(GRN) [Successfully compiled]$(END)	$(CHECK)"
-			@echo "Executable ./$(NAME) \n"
+			@echo "		Executable ./$(NAME) \n"
 			@${CC} ${OBJS_BIN} -o $(TESTER_FT) ${CFLAGS} -D STL_TYPE=ft ${DEBEUG}
 			@echo "$(ERASE)$(GRN) [Tester FT Successfully compiled]$(END)	$(CHECK)"
-			@echo "Executable ./$(TESTER_FT) \n"
+			@echo "		Executable ./$(TESTER_FT) \n"
 			@${CC} ${OBJS_BIN} -o $(TESTER_STD) ${CFLAGS} -D STL_TYPE=std ${DEBEUG}
 			@echo "$(ERASE)$(GRN) [Tester STD Successfully compiled]$(END)	$(CHECK)"
-			@echo "Executable ./$(TESTER_STD) \n"
+			@echo "		Executable ./$(TESTER_STD) \n"
 
 
 
@@ -68,12 +68,12 @@ all :	${NAME}
 bin_ft : ${OBJS_BIN}
 			@${CC} ${OBJS_BIN} -o $(TESTER_FT) ${CFLAGS} -D STL_TYPE=ft ${DEBEUG}
 			@echo "$(ERASE)$(GRN) [Tester FT Successfully compiled]$(END)	$(CHECK)"
-			@echo "Executable ./$(TESTER_FT) \n"
+			@echo "		Executable ./$(TESTER_FT) \n"
 
 bin_std : ${OBJS_BIN}
 			@${CC} ${OBJS_BIN} -o $(TESTER_STD) ${CFLAGS} -D STL_TYPE=std ${DEBEUG}
 			@echo "$(ERASE)$(GRN) [Tester STD Successfully compiled]$(END)	$(CHECK)"
-			@echo "Executable ./$(TESTER_STD) \n"
+			@echo "		Executable ./$(TESTER_STD) \n"
 
 
 clean :

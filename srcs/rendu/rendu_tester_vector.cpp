@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/04 16:39:23 by jrasser           #+#    #+#             */
-/*   Updated: 2022/11/04 19:47:31 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/11/04 21:12:23 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -257,8 +257,10 @@ void rendu_tester_vector_type() {
 	stl_it = stl_vector2.erase(stl_vector2.begin());
 	stl_it = stl_vector2.erase(stl_vector2.begin() + 2);
 	stl_it = stl_vector2.erase(stl_vector2.begin() + 2, stl_vector2.begin() + 4);
+	display_vector(stl_vector2);
 	stl_vector2.insert(stl_vector2.begin(), 1, convert<T>("42"));
 	stl_it = stl_vector2.erase(stl_vector2.begin(), stl_vector2.end());
+	display_vector(stl_vector2);
 
 
 

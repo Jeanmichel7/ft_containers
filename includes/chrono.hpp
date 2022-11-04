@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 17:30:03 by jrasser           #+#    #+#             */
-/*   Updated: 2022/11/01 23:52:50 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/11/04 21:13:00 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ struct s_time_diff
 
 		void stl_display_chrono() {
       std::cout << std::fixed;
-			std::cout << stl_time << "sec";
+			std::cout << stl_time << "sec" << std::endl;
 		}
 
 
@@ -136,7 +136,7 @@ struct s_time_diff
 
 		void ft_display_chrono() {
       std::cout << std::fixed;
-			std::cout << ft_time << "sec";
+			std::cout << "Time : " << ft_time << "sec";
 		}
 
 
