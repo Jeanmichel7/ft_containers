@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/30 12:54:45 by jrasser           #+#    #+#             */
-/*   Updated: 2022/11/04 13:30:15 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/11/04 14:04:59 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ public:
 	:
 		_node_alloc(node_alloc()),
 		_comp(x._comp),
-		_size(0)
+		_size()
 	{
 		// std::cout << "construcotr tree called" << std::endl;
 		_nil = _node_alloc.allocate(1);
@@ -247,77 +247,6 @@ public:
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	// template <class T1, classe T2, classe T3>
-	// bool operator<(const ft::Node<T>< ft::pair<T1, T2> > &lhs) {
-	// 	return lhs->_content.first < rhs->_content.first;
-	// }
-
-
-	// T_key const &node_key(value_type x) {
-  //   return T_key()(x);
-  // }
-
-	// template < typename T1, typename T2>
-	// bool operator<(const ft::Node<T1, T2> &lhs, const ft::Node<T1, T2> &rhs) {
-	// 	return lhs->_content.first < rhs->_content.first;
-	// }
-
-	// template < typename T1, typename T2, typename T3 >
-	// bool operator<(const ft::Node<T1, T2> &lhs, const T3 &rhs) {
-	// 	return lhs->_content.first < rhs->_content;
-	// }
-
-
-	template <typename T1, typename T2>
-	T_key const &node_key(const ft::pair<const T1, T2> &x ) {
-
-		// T_key key = T_key()(x);
-		// T_key key = T_key()(x.first);
-		T_key key = x.first;
-		// std::cout << "type key : " << key << std::endl;
-
-		return x.first;
-		// return T_key()(x);
-	}
-
-	template< class T1 >
-	T_key const &node_key(const T1 &x) {
-		return x;
-	}
-	
-
-
 	/* *************************************************** */
 	/*                                                     */
 	/*                       MODIFY                        */
@@ -333,10 +262,10 @@ public:
 
 		while (x != this->_nil) {
 			y = x;
-			// if ( _comp(node_key(val), node_key(x->_content)))
-			if ( val < x->_content )
+			// if ( val < x->_content )
+			if ( _comp(node_key(val), node_key(x->_content)))
 				x = x->_left;
-			else if (x->_content < val)
+			else if (_comp(node_key(x->_content), node_key(val)))
 				x = x->_right;
 			else
 				return ft::pair<iterator, bool>(iterator(x, _last_node, _nil), false);
@@ -353,7 +282,7 @@ public:
 		node->_parent = y;
 		if (y == NULL)
 			_root = node;
-		else if (node->_content < y->_content)
+		else if (_comp( node_key(node->_content), node_key(y->_content) ))
 			y->_left = node;
 		else
 			y->_right = node;
@@ -385,11 +314,11 @@ public:
 
     while (x != _nil) {
       y = x;
-     if (val < x->_content)
+     if (_comp( node_key(val), node_key(x->_content) ))
 				x = x->_left;
-			else if (x->_content < val)
+			else if (_comp(node_key(x->_content), node_key(val)))
 				x = x->_right;
-      else 
+			else
 				return iterator(x, _last_node, _nil);
     }
 
@@ -404,7 +333,7 @@ public:
     node->_parent = y;
     if (y == NULL)
       _root = node;
-    else if (node->_content < y->_content)
+    else if (_comp( node_key(node->_content), node_key(y->_content) ))
       y->_left = node;
     else
       y->_right = node;
@@ -436,9 +365,9 @@ public:
 
 		node_pointer x = _root;
 		while (x != _nil) {
-			if (to_insert < x->_content)
+			if (_comp(node_key(to_insert), node_key(x->_content) ))
 				x = x->_left;
-			else if (x->_content < to_insert)
+			else if (_comp(node_key(x->_content), node_key(to_insert)))
 				x = x->_right;
 			else 
 				return iterator(x, _last_node, _nil);
@@ -457,17 +386,19 @@ public:
 
 		node_pointer p = hint._node->_parent;
 		node_pointer gp = p->_parent;
-		if ( p && gp &&
-			(( gp > p && p->_content < to_insert && to_insert < gp->_content )
+		if ( (p && gp &&
+			( gp < p ) 
+			&& _comp( node_key(p->_content), node_key(to_insert) ) 
+			&& _comp( node_key(to_insert), node_key(gp->_content) ))
 			||
-			(p < gp && gp->_content < to_insert && to_insert < p->_content))) {
+			( p < gp  
+			&& _comp( node_key(gp->_content), node_key(to_insert) )
+			&& _comp( node_key(to_insert), node_key(p->_content) ))) {
 			// std::cout << "hint is good";
 			return insert_pair_pos(hint._node->_parent, to_insert);
 		} 
-		// else {
-			// std::cout << "hint not good";
+		// std::cout << "hint not good";
 		return insert_pair(to_insert).first;
-		// }
 	}
 
 
@@ -512,11 +443,13 @@ public:
 				z = current;
 				break;
 			}
-			if (pos._node->_content < current->_content)
+			if (_comp( node_key(pos._node->_content), node_key(current->_content)))
 				current = current->_left;
-			else if (current->_content < pos._node->_content)
+			else if (_comp( node_key(current->_content), node_key(pos._node->_content)))
 				current = current->_right;
-    }
+			else
+				break;
+		}
     if (z == _nil) {
       std::cout << "Key not found in the tree" << std::endl;
       return;
@@ -636,7 +569,7 @@ public:
 		while (current != NULL) {
 			if (current == to_find)
 				return iterator(current, _nil);
-			else if (current->_content < to_find)
+			else if (_comp( node_key(current->_content), node_key(to_find)))
 				current = current->_right;
 			else
 				current = current->_left;
@@ -651,7 +584,7 @@ public:
 		while (current != NULL) {
 			if (current == to_find)
 				return const_iterator(current, _nil);
-			else if (current->_content < to_find)
+			else if (_comp( node_key (current->_content), node_key(to_find)))
 				current = current->_right;
 			else
 				current = current->_left;
@@ -666,7 +599,7 @@ public:
     node_pointer y = _nil;
 
 		while (x != _nil) {
-			if (!(x->_content < key)) {
+			if (!(_comp( node_key(x->_content), key))) {
 				y = x;
 				x = x->_left;
 			} else {
@@ -681,7 +614,7 @@ public:
 		node_pointer y = _nil;
 
 		while (x != _nil) {
-			if (!(x->_content < key)) {
+			if (!(_comp( node_key(x->_content), key))) {
 				y = x;
 				x = x->_left;
 			} else {
@@ -696,7 +629,7 @@ public:
 		node_pointer y = _nil;
 
 		while (x != _nil) {
-			if (key < x->_content) {
+			if (_comp( key, node_key(x->_content))) {
 				y = x;
 				x = x->_left;
 			} else {
@@ -711,7 +644,7 @@ public:
 		node_pointer y = _nil;
 
 		while (x != _nil) {
-			if (key < x->_content) {
+			if (_comp( key, node_key(x->_content))) {
 				y = x;
 				x = x->_left;
 			} else {
@@ -787,7 +720,6 @@ public:
 		return !(*this < x);
 	}
 
-	
 
 
 
@@ -799,6 +731,27 @@ public:
 	/*                                                     */
 	/* *************************************************** */
 
+	
+	template <typename T1, typename T2>
+	T_key const &node_key(const ft::pair<const T1, T2> &x ) {
+		return x.first;
+	}
+
+	template< class T1 >
+	T_key const &node_key(const T1 &x) {
+		return x;
+	}
+	
+	template <typename T1, typename T2>
+	T_key const &node_key(const ft::pair<const T1, T2> &x ) const {
+		return x.first;
+	}
+
+	template< class T1 >
+	T_key const &node_key(const T1 &x) const {
+		return x;
+	}
+	
 	node_pointer minimum(node_pointer node) {
     while (node->_left != _nil) {
       node = node->_left;

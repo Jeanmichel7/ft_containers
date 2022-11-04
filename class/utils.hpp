@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/10 21:23:15 by jrasser           #+#    #+#             */
-/*   Updated: 2022/11/04 12:54:36 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/11/04 14:06:14 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -199,7 +199,7 @@ struct Node
 	Node(T const &content) 
 	: _content(content), _parent(NULL), _left(NULL), _right(NULL), _color(N_RED) {}
 
-	Node(T const &content, int color) 
+	Node(T const &content, int color)
 	: _content(content), _parent(NULL), _left(NULL), _right(NULL), _color(color) {}
 
 	Node(Node const &src) 
@@ -267,51 +267,6 @@ bool operator>=(Node<T> const &lhs, Node<T> const &rhs)
 {
 	return !(lhs < rhs);
 }
-
-
-
-// template <typename T1, typename T2, typename T3>
-// bool operator<(Node<ft::pair<T1, T2> > const &lhs, Node<ft::pair<T1, T2> > const &rhs)
-// {
-// 	return (lhs._content.first < rhs._content.first);
-// }
-
-// template <typename T1, typename T2, typename T3>
-// bool operator<(Node<T3> const &lhs, Node<ft::pair<T1, T2> > const &rhs)
-// {
-// 	return (lhs._content < rhs._content.first);
-// }
-
-// template <typename T1, typename T2, typename T3>
-// bool operator<(Node<ft::pair<T1, T2> > const &lhs, Node<T3> const &rhs)
-// {
-// 	return (lhs._content.first < rhs._content);
-// }
-
-
-
-
-
-
-template<typename _Arg, typename _Result>
-struct unary_function
-{
-	typedef _Arg 	argument_type;   
-	typedef _Result 	result_type;  
-};
-
-
-template<typename _Arg1, typename _Arg2, typename _Result>
-struct binary_function
-{
-	typedef _Arg1 	first_argument_type; 
-	typedef _Arg2 	second_argument_type;
-	typedef _Result 	result_type;
-};
-
-
-
-
 
 
 
