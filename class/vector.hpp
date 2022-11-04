@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/14 22:06:29 by jrasser           #+#    #+#             */
-/*   Updated: 2022/11/01 23:45:31 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/11/04 16:21:06 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ private:
 
 
 public:
+	size_type get_nb_elems() const { return _nb_elems; }
 	/* *************************************************** */
 	/*                                                     */
 	/*                     CONSTRUCTION                    */
@@ -125,8 +126,8 @@ public:
 
 	vector(const vector &other)
 	:
-		_alloc(Allocator()),
-		_start(_alloc.allocate(other._nb_elems)),
+		_alloc(other._alloc),
+		_start(_alloc.allocate(other._capacity)),
 		_finish(_start + other._nb_elems),
 		_nb_elems(other._nb_elems),
 		_capacity(other._capacity)
@@ -544,18 +545,16 @@ public:
 
 
 
-
-
 	void push_back(const T &value)
 	{
 		if (_nb_elems != _capacity) {
+			// reserve(_nb_elems + 1);
 			_alloc.construct(_finish, value);
 			++_finish;
 			++_nb_elems;
+			return;
 		}
-		else {
-			insert(end(), value);
-		}
+		insert(end(), value);
 	};
 
 	void pop_back()

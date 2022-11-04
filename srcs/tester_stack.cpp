@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 11:38:03 by jrasser           #+#    #+#             */
-/*   Updated: 2022/11/01 23:07:52 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/11/04 15:43:34 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -194,6 +194,35 @@ void tester_stack_type() {
   comp_stack(std_stack_copy, ft_stack_copy, "stack with custom container");
   chrono.diff_chrono();
 
+
+
+  /* test add value*/
+  chrono.stl_start_chrono();
+  std_stack_copy.push(convert<type_value>("100"));
+  chrono.stl_end_chrono();
+
+  chrono.ft_start_chrono();
+  ft_stack_copy.push(convert<type_value>("100"));
+  chrono.ft_end_chrono();
+
+  comp_stack(std_stack_copy, ft_stack_copy, "stack with custom container");
+  chrono.diff_chrono();
+
+
+
+  /* affectation */
+  chrono.stl_start_chrono();
+  std_stack_t std_stack_copy2 = std_stack;
+  chrono.stl_end_chrono();
+
+  chrono.ft_start_chrono();
+  ft_stack_t ft_stack_copy2 = ft_stack;
+  chrono.ft_end_chrono();
+
+  comp_stack(std_stack_copy2, ft_stack_copy2, "stack with custom container");
+  chrono.diff_chrono();
+
+  
   
   
   /* new onstructor d'affectation */

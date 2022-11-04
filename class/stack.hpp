@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 11:13:00 by jrasser           #+#    #+#             */
-/*   Updated: 2022/11/01 23:07:40 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/11/04 15:46:09 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ template <class T, class Container = ft::vector<T> >
 class stack {
 
 public:
-  typedef T const   value_type;
+  typedef T         value_type;
   typedef Container	container_type;
   typedef size_t		size_type;
 
@@ -44,17 +44,15 @@ public:
 
   ~stack() {}
 
-  stack(const stack &src) {
-    *this = src;
-  }
+  stack(const stack &src) 
+  : c(src.c)
+  {}
 
   stack &operator=(const stack &rhs) {
-    if (this != &rhs) {
+    if (this != &rhs)
       this->c = rhs.c;
-    }
-    return (*this);
+    return *this;
   }
-
 
 
   /* *************************************************** */

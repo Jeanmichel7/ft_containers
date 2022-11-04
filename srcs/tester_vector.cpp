@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 15:05:46 by jrasser           #+#    #+#             */
-/*   Updated: 2022/11/01 22:40:43 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/11/04 16:22:42 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -271,9 +271,50 @@ void tester_vector_type()
 	chrono.diff_chrono();
 
 
+	/* insert end*/
+	stl_vector.insert(stl_vector.end(), convert<T>("ff"));
+	ft_vector.insert(ft_vector.end(), convert<T>("ff"));
+	stl_vector.insert(stl_vector.end(), convert<T>("fff"));
+	ft_vector.insert(ft_vector.end(), convert<T>("fff"));
+
+	comp_vector(stl_vector, ft_vector, "insert end");
 
 
 
+
+	std::cout << MAG "\n\nTEST constructor copy" END << std::endl;
+
+	/* constructor copy */
+	chrono.stl_start_chrono();
+	std_vector_t stl_vector_copy(stl_vector);
+	chrono.stl_end_chrono();
+
+	chrono.ft_start_chrono();
+	ft_vector_t ft_vector_copy(ft_vector);
+	chrono.ft_end_chrono();
+
+	comp_vector(stl_vector_copy, ft_vector_copy, "constructor copy");
+	chrono.diff_chrono();
+
+	str_comp(tostr(stl_vector_copy.size()), tostr(ft_vector_copy.size()), "size copy");
+
+
+
+	/* add values */
+
+	stl_vector_copy.insert(stl_vector_copy.begin(), convert<T>("a"));
+	stl_vector_copy.insert(stl_vector_copy.begin(), convert<T>("b"));
+
+	ft_vector_copy.insert(ft_vector_copy.begin(), convert<T>("a"));
+	ft_vector_copy.insert(ft_vector_copy.begin(), convert<T>("b"));
+
+	comp_vector(stl_vector_copy, ft_vector_copy, "constructor copy + insert");
+
+
+	stl_vector_copy.push_back(convert<T>("f"));
+	ft_vector_copy.push_back(convert<T>("f"));
+
+	comp_vector(stl_vector_copy, ft_vector_copy, "add values");
 
 
 
@@ -432,7 +473,6 @@ void tester_vector_type()
 	ft_vector4[0] = convert<T>("zZz");
 	comp_vector(stl_vector, ft_vector, "constructor copy original");
 	comp_vector(stl_vector4, ft_vector4, "constructor copy copy");
-
 
 
 
