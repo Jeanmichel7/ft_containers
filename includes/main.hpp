@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 14:57:17 by jrasser           #+#    #+#             */
-/*   Updated: 2022/11/05 01:22:35 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/11/05 01:53:36 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,6 +119,14 @@ template< typename type_value >
 void tester_stack_type();
 
 
+
+void rendu_tester_stack( void );
+
+template< typename type_value >
+void rendu_tester_stack_type();
+
+template< typename type_value, class type_container >
+void rendu_tester_stack_container_type();
 
 
 /* ***************************************************** */

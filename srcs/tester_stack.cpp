@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 11:38:03 by jrasser           #+#    #+#             */
-/*   Updated: 2022/11/04 15:43:34 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/11/05 02:11:08 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,18 +49,14 @@ void stack_display (S &stack, std::string msg) {
 
 void tester_stack(void) 
 {
-  typedef int                               c_type_int;
-  typedef char                              c_type_char;
-  typedef std::string                       c_type_string;
-
   display_title("STACK < Int >");
-	tester_stack_type< c_type_int >();
+	tester_stack_type< int >();
 
   display_title("STACK < Char >");
-	tester_stack_type< c_type_char >();
+	tester_stack_type< char >();
 
 	display_title("STACK < String >");
-	tester_stack_type< c_type_string >();
+	tester_stack_type< std::string >();
 
   display_title("STACK < Int, std::deque >");
 	tester_stack_container_type< int, std::deque<int> >();
@@ -99,7 +95,7 @@ void tester_stack_type() {
 	/* ***************************************************** */
 	/*                       CONSTRUCTORS                    */
 	/* ***************************************************** */
-	std::cout << MAG "\n\nTEST constructor stack() " END << std::endl;
+	std::cout <<  "\n\nTEST constructor stack() "  << std::endl;
 
   /* constructr default container */
   std_stack_t std_stack;
@@ -117,7 +113,7 @@ void tester_stack_type() {
   /* *************************************************** */
   /*                       PUSH                          */
   /* *************************************************** */
-  std::cout << MAG "\n\nTEST Push() " END << std::endl;
+  std::cout <<  "\n\nTEST Push() "  << std::endl;
 
   /* push 10 */
   chrono.stl_start_chrono();
@@ -180,7 +176,7 @@ void tester_stack_type() {
   /* *************************************************** */
   /*                       CANONIQUE                     */
   /* *************************************************** */
-  std::cout << MAG "\n\nTEST copy + affectation() " END << std::endl;
+  std::cout <<  "\n\nTEST copy + affectation() "  << std::endl;
 
   /* constructor de copy */
   chrono.stl_start_chrono();
@@ -225,7 +221,7 @@ void tester_stack_type() {
   
   
   
-  /* new onstructor d'affectation */
+  /* new constructor d'affectation */
   chrono.stl_start_chrono();
   std_stack_t std_stack_assign = std_stack_copy;
   chrono.stl_end_chrono();
@@ -245,7 +241,7 @@ void tester_stack_type() {
   /* *************************************************** */
   /*                       POP                           */
   /* *************************************************** */
-  std::cout << MAG "\n\nTEST Pop() " END << std::endl;
+  std::cout <<  "\n\nTEST Pop() "  << std::endl;
 
   /* pop */
   chrono.stl_start_chrono();
@@ -293,7 +289,7 @@ void tester_stack_type() {
   /*                     ELEMENT ACCESS                  */
   /*                                                     */
   /* *************************************************** */
-  std::cout << MAG "\n\nTEST top " END << std::endl;
+  std::cout <<  "\n\nTEST top "  << std::endl;
 
   type_value std_top;
   type_value ft_top;
@@ -321,7 +317,7 @@ void tester_stack_type() {
   /* *************************************************** */
   /*                     CAPACITY                        */
   /* *************************************************** */
-  std::cout << MAG "\n\nTEST Capacity " END << std::endl;
+  std::cout <<  "\n\nTEST Capacity "  << std::endl;
 
   bool stl_bool;
 	bool ft_bool;
@@ -388,7 +384,7 @@ void tester_stack_container_type() {
 	/* ***************************************************** */
 	/*                       CONSTRUCTORS                    */
 	/* ***************************************************** */
-	std::cout << MAG "\n\nTEST constructor stack() " END << std::endl;
+	std::cout <<  "\n\nTEST constructor stack() "  << std::endl;
 
   /* constructr default container */
   std_stack_t std_stack;
@@ -457,7 +453,7 @@ void tester_stack_container_type() {
   /* *************************************************** */
   /*                       PUSH                          */
   /* *************************************************** */
-  std::cout << MAG "\n\nTEST Push() " END << std::endl;
+  std::cout <<  "\n\nTEST Push() "  << std::endl;
 
   /* push 10 */
   chrono.stl_start_chrono();
@@ -520,7 +516,7 @@ void tester_stack_container_type() {
   /* *************************************************** */
   /*                       POP                           */
   /* *************************************************** */
-  std::cout << MAG "\n\nTEST Pop() " END << std::endl;
+  std::cout <<  "\n\nTEST Pop() "  << std::endl;
 
   /* pop */
   chrono.stl_start_chrono();
@@ -565,7 +561,7 @@ void tester_stack_container_type() {
   /*                     ELEMENT ACCESS                  */
   /*                                                     */
   /* *************************************************** */
-  std::cout << MAG "\n\nTEST top() " END << std::endl;
+  std::cout <<  "\n\nTEST top() "  << std::endl;
 
   type_value std_top;
   type_value ft_top;
@@ -590,7 +586,7 @@ void tester_stack_container_type() {
   /* *************************************************** */
   /*                     CAPACITY                        */
   /* *************************************************** */
-  std::cout << MAG "\n\nTEST Capacity " END << std::endl;
+  std::cout <<  "\n\nTEST Capacity "  << std::endl;
 
   bool stl_bool;
 	bool ft_bool;
@@ -628,7 +624,7 @@ void tester_stack_container_type() {
   /* *************************************************** */
   /*                     RELATIONAL                      */
   /* *************************************************** */
-  std::cout << MAG "\n\nTEST Relational " END << std::endl;
+  std::cout <<  "\n\nTEST Relational "  << std::endl;
 
   std_stack_t std_stack10;
   ft_stack_t  ft_stack10;

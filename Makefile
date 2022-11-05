@@ -6,7 +6,7 @@
 #    By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/01 15:24:21 by jrasser           #+#    #+#              #
-#    Updated: 2022/11/05 01:41:05 by jrasser          ###   ########.fr        #
+#    Updated: 2022/11/05 02:10:42 by jrasser          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -56,19 +56,19 @@ ${NAME}	:	${OBJS}
 			@echo "	Executable ./$(NAME) \n"
 
 
-all :	bin_ft bin_std ${NAME}
+all :	${NAME} bin_ft bin_std
 
-bin : bin_ft bin_std
-
-bin_ft : 
-			@${CC} -DSTL_TYPE=ft $(wildcard srcs/rendu/**.cpp) -o $(TESTER_FT) ${CFLAGS} ${DEBEUG}
-			@echo "$(ERASE)$(GRN) [Tester FT Successfully compiled]$(END)	$(CHECK)"
-			@echo "	Executable ./$(TESTER_FT) \n"
+bin : bin_std bin_ft 
 
 bin_std : 
 			@${CC} -DSTL_TYPE=std $(wildcard srcs/rendu/**.cpp) -o $(TESTER_STD) ${CFLAGS} ${DEBEUG}
-			@echo "$(ERASE)$(GRN) [Tester STD Successfully compiled]$(END)	$(CHECK)"
+			@echo "$(ERASE)$(GRN) [Tester STD compiled]$(END)	$(CHECK)"
 			@echo "	Executable ./$(TESTER_STD) \n"
+
+bin_ft : 
+			@${CC} -DSTL_TYPE=ft $(wildcard srcs/rendu/**.cpp) -o $(TESTER_FT) ${CFLAGS} ${DEBEUG}
+			@echo "$(ERASE)$(GRN) [Tester FT compiled]$(END)	$(CHECK)"
+			@echo "	Executable ./$(TESTER_FT) \n"
 
 clean :
 			${RM} $(OBJS) ${OBJS_BIN}

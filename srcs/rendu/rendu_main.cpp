@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/04 19:38:23 by jrasser           #+#    #+#             */
-/*   Updated: 2022/11/05 01:40:18 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/11/05 02:20:09 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,14 +33,13 @@ void display_title(std::string title) {
 
 int main()
 {
-
-
 	struct s_time_diff 	chrono;
 	chrono.stl_start_chrono();
 
   rendu_tester_vector();
 	rendu_tester_map();
 	rendu_tester_set();
+	rendu_tester_stack();
 
 	chrono.stl_end_chrono();
 
@@ -51,9 +50,6 @@ int main()
 	// #endif
 	std::cout << "time : ";
 	chrono.stl_display_chrono();
-
-
-
 
   return 0;
 }
