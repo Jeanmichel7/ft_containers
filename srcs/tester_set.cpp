@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 15:33:24 by jrasser           #+#    #+#             */
-/*   Updated: 2022/11/04 16:23:16 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/11/04 22:02:55 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -2059,15 +2059,15 @@ void tester_set_type() {
 	ft_set_t 	ft_set_tmp;
 
 	chrono.stl_start_chrono();
-	std_set.clear();
+	std_set_tmp.clear();
 	chrono.stl_end_chrono();
 
 	chrono.ft_start_chrono();
-	ft_set.clear();
+	ft_set_tmp.clear();
 	chrono.ft_end_chrono();
 
-	str_comp(tostr(std_set.size()), tostr(ft_set.size()), "clear empty");
-	comp_set(std_set, ft_set, "clear empty");
+	str_comp(tostr(std_set_tmp.size()), tostr(ft_set_tmp.size()), "clear empty");
+	comp_set(std_set_tmp, ft_set_tmp, "clear empty");
 	chrono.diff_chrono();
 
 

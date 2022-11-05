@@ -6,11 +6,13 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/04 18:36:39 by jrasser           #+#    #+#             */
-/*   Updated: 2022/11/04 21:13:48 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/11/05 01:30:36 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/main.hpp"
+
+// #define T_SIZE_TYPE typename STL_TYPE
 
 
 void rendu_tester_map( void ) {
@@ -35,7 +37,7 @@ void rendu_tester_map( void ) {
 template< typename type_key_map, typename type_value_map >
 void rendu_tester_map_type() {
 
-	typedef STL_TYPE::map< type_key_map, type_value_map > 	std_map_t;
+	typedef typename STL_TYPE::map< type_key_map, type_value_map > 	std_map_t;
 
 	typedef typename std_map_t::iterator 										it_type;
 	typedef typename std_map_t::const_iterator 							const_it_type;
@@ -43,6 +45,7 @@ void rendu_tester_map_type() {
 	typedef typename std_map_t::const_reverse_iterator 			const_r_it_type;
 
 	typedef STL_TYPE::pair< type_key_map, type_value_map > 	pair;
+
 
 
 
@@ -178,7 +181,7 @@ void rendu_tester_map_type() {
 
 
 
-	std::cout << MAG "\n\nTEST insert( first, last )" END << std::endl;
+	std::cout <<  "\n\nTEST insert( first, last )"  << std::endl;
 
 	std_map_t map_insert_f_l;
 
@@ -221,7 +224,7 @@ void rendu_tester_map_type() {
 
 
 
-	std::cout << MAG "\n\nTEST iterator" END << std::endl;
+	std::cout <<  "\n\nTEST iterator"  << std::endl;
 
 	it_type it;
 
@@ -240,7 +243,7 @@ void rendu_tester_map_type() {
 
 
 
-	std::cout << MAG "\n\nTEST const iterator" END << std::endl;
+	std::cout <<  "\n\nTEST const iterator"  << std::endl;
 
 
 	const_it_type const_it3 	= map.begin();
@@ -279,7 +282,7 @@ void rendu_tester_map_type() {
 
 
 
-	std::cout << MAG "\n\nTEST reverse iterator" END << std::endl;
+	std::cout <<  "\n\nTEST reverse iterator"  << std::endl;
 
 	r_it_type 		r_it 	= map.rbegin();
 	std::cout << "rbegin : " << r_it->first << ", " << r_it->second << std::endl;
@@ -294,7 +297,7 @@ void rendu_tester_map_type() {
 
 
 
-	std::cout << MAG "\n\nTEST const reverse iterator" END << std::endl;
+	std::cout <<  "\n\nTEST const reverse iterator"  << std::endl;
 	
 	const_r_it_type 	const_r_it 		= map.rbegin();
 	std::cout << "crbegin : " << const_r_it->first << ", " << const_r_it->second << std::endl;
@@ -332,7 +335,7 @@ void rendu_tester_map_type() {
 
 
 
-	std::cout << MAG "\n\nTEST find(value)" END << std::endl;
+	std::cout <<  "\n\nTEST find(value)"  << std::endl;
 
 	it_type ret_find 		= map.find(convert<type_key_map>("a"));
 	std::cout << "find(a) : " << ret_find->first << ", " << ret_find->second << std::endl;
@@ -365,7 +368,7 @@ void rendu_tester_map_type() {
 
 
 
-	std::cout << MAG "\n\nTEST erase(pos)" END << std::endl;
+	std::cout <<  "\n\nTEST erase(pos)"  << std::endl;
 
 	map.erase(map.begin());
 	display_map_list(map);
@@ -394,7 +397,7 @@ void rendu_tester_map_type() {
 
 
 
-	std::cout << MAG "\n\nTEST erase(first, last)" END << std::endl;
+	std::cout <<  "\n\nTEST erase(first, last)"  << std::endl;
 
 	it_type 		it_erase_end 		= map.begin(); it_erase_end++;
 
@@ -434,7 +437,7 @@ void rendu_tester_map_type() {
 
 
 
-	std::cout << MAG "\n\nTEST erase(key)" END << std::endl;
+	std::cout <<  "\n\nTEST erase(key)"  << std::endl;
 	
 	size_t ret = map.erase(convert<type_key_map>("w"));
 	std::cout << "erase(w) : " << ret << std::endl;
@@ -455,7 +458,7 @@ void rendu_tester_map_type() {
 
 
 
-	std::cout << MAG "\n\nTEST swap()" END << std::endl;
+	std::cout <<  "\n\nTEST swap()"  << std::endl;
 
 	std_map_t map_swap(map);
 	map_swap.insert(pair(
@@ -478,7 +481,7 @@ void rendu_tester_map_type() {
 
 
 
-	std::cout << MAG "\n\nTEST constructor(first, last)" END << std::endl;
+	std::cout <<  "\n\nTEST constructor(first, last)"  << std::endl;
 	
 	std_map_t map_construct(map.begin(), map.end());
 	display_map_list(map_construct);
@@ -519,7 +522,7 @@ void rendu_tester_map_type() {
 
 
 
-	std::cout << MAG "\n\nTEST copy constructor" END << std::endl;
+	std::cout <<  "\n\nTEST copy constructor"  << std::endl;
 
 	std_map_t map_cp(map);
 	display_map_list(map_cp);
@@ -530,7 +533,7 @@ void rendu_tester_map_type() {
 
 
 
-	std::cout << MAG "\n\nTEST empty" END << std::endl;
+	std::cout <<  "\n\nTEST empty"  << std::endl;
 
 	std_map_t empty_map;
 	std::cout << "empty_map.empty() : " << empty_map.empty() << std::endl;
@@ -541,7 +544,7 @@ void rendu_tester_map_type() {
 
 
 
-	std::cout << MAG "\n\nTEST at" END << std::endl;
+	std::cout <<  "\n\nTEST at"  << std::endl;
 
 	type_value_map ret_at = map.at(convert<type_key_map>("@"));
 	std::cout << "map.at(@) : " << ret_at << std::endl;
@@ -559,7 +562,7 @@ void rendu_tester_map_type() {
 
 
 
-	std::cout << MAG "\n\nTEST []" END << std::endl;
+	std::cout <<  "\n\nTEST []"  << std::endl;
 
 	ret_at = map[convert<type_key_map>("@")];
 	std::cout << "map[@] : " << ret_at << std::endl;
@@ -572,7 +575,7 @@ void rendu_tester_map_type() {
 
 
 
-	std::cout << MAG "\n\nTEST size - max_size" END << std::endl;
+	std::cout <<  "\n\nTEST size - max_size"  << std::endl;
 
 	std::cout << "map.size() : " << map.size() << std::endl;
 	std::cout << "map.max_size() : " << map.size() << std::endl;
@@ -586,7 +589,7 @@ void rendu_tester_map_type() {
 
 
 
-	std::cout << MAG "\n\nTEST count" END << std::endl;
+	std::cout <<  "\n\nTEST count"  << std::endl;
 
 	std::cout << "map.count(@) : " << map.count(convert<type_key_map>("@")) << std::endl;
 	std::cout << "map.count(s) : " << map.count(convert<type_key_map>("s")) << std::endl;
@@ -596,7 +599,9 @@ void rendu_tester_map_type() {
 
 
 
-	std::cout << MAG "\n\nTEST equal_range()" END << std::endl;
+
+
+	std::cout <<  "\n\nTEST equal_range()"  << std::endl;
 	STL_TYPE::pair<it_type, it_type> 			ret_equal_range;
 	ret_equal_range = map.equal_range(convert<type_key_map>("-10"));
 	std::cout << "map.equal_range(-10) first  : " << ret_equal_range.first->first << " " << ret_equal_range.second->first << std::endl;
@@ -638,7 +643,7 @@ void rendu_tester_map_type() {
 
 
 
-	std::cout << MAG "\n\nTEST lower_bound()" END << std::endl;
+	std::cout <<  "\n\nTEST lower_bound()"  << std::endl;
 
 	it_type 		ret_lower_bound;
 	ret_lower_bound = map.lower_bound(convert<type_key_map>("-10"));
@@ -663,7 +668,7 @@ void rendu_tester_map_type() {
 
 
 
-	std::cout << MAG "\n\nTEST upper_bound()" END << std::endl;
+	std::cout <<  "\n\nTEST upper_bound()"  << std::endl;
 
 	it_type 		ret_upper_bound;
 	
@@ -679,7 +684,7 @@ void rendu_tester_map_type() {
 
 
 
-	std::cout << MAG "\n\nTEST key_comp()" END << std::endl;
+	std::cout <<  "\n\nTEST key_comp()"  << std::endl;
 
 	bool ret_map_key_comp = map.key_comp()(
 		convert<type_key_map>("a"),
@@ -721,7 +726,7 @@ void rendu_tester_map_type() {
 
 
 
-	std::cout << MAG "\n\nTEST value_comp()" END << std::endl;
+	std::cout <<  "\n\nTEST value_comp()"  << std::endl;
 
 
 	pair 	ret_map_vc1 	= STL_TYPE::make_pair(
@@ -753,7 +758,7 @@ void rendu_tester_map_type() {
 
 
 
-	std::cout << MAG "\n\nTEST relational operation" END << std::endl;
+	std::cout <<  "\n\nTEST relational operation"  << std::endl;
 	std_map_t map2;
 	std_map_t map3;
 
@@ -809,7 +814,7 @@ void rendu_tester_map_type() {
 
 
 
-	std::cout << MAG "\n\nTEST clear" END << std::endl;
+	std::cout <<  "\n\nTEST clear"  << std::endl;
 
 	map.clear();
 	display_map_list(map);

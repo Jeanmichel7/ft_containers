@@ -6,13 +6,11 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/04 16:39:23 by jrasser           #+#    #+#             */
-/*   Updated: 2022/11/04 21:12:23 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/11/04 23:48:23 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/main.hpp"
-
-
 
 template < typename V >
 void display_vector(V &vector) {

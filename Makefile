@@ -6,7 +6,7 @@
 #    By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/01 15:24:21 by jrasser           #+#    #+#              #
-#    Updated: 2022/11/04 21:14:49 by jrasser          ###   ########.fr        #
+#    Updated: 2022/11/05 01:41:05 by jrasser          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -50,31 +50,25 @@ objs/%.o: srcs/rendu/**%.cpp
 
 
 
-${NAME}	:	${OBJS} ${OBJS_BIN}
+${NAME}	:	${OBJS}
 			@${CC} ${OBJS} -o $(NAME) ${CFLAGS} ${DEBEUG}
 			@echo "$(ERASE)$(GRN) [Successfully compiled]$(END)	$(CHECK)"
-			@echo "		Executable ./$(NAME) \n"
-			@${CC} ${OBJS_BIN} -o $(TESTER_FT) ${CFLAGS} -D STL_TYPE=ft ${DEBEUG}
+			@echo "	Executable ./$(NAME) \n"
+
+
+all :	bin_ft bin_std ${NAME}
+
+bin : bin_ft bin_std
+
+bin_ft : 
+			@${CC} -DSTL_TYPE=ft $(wildcard srcs/rendu/**.cpp) -o $(TESTER_FT) ${CFLAGS} ${DEBEUG}
 			@echo "$(ERASE)$(GRN) [Tester FT Successfully compiled]$(END)	$(CHECK)"
-			@echo "		Executable ./$(TESTER_FT) \n"
-			@${CC} ${OBJS_BIN} -o $(TESTER_STD) ${CFLAGS} -D STL_TYPE=std ${DEBEUG}
+			@echo "	Executable ./$(TESTER_FT) \n"
+
+bin_std : 
+			@${CC} -DSTL_TYPE=std $(wildcard srcs/rendu/**.cpp) -o $(TESTER_STD) ${CFLAGS} ${DEBEUG}
 			@echo "$(ERASE)$(GRN) [Tester STD Successfully compiled]$(END)	$(CHECK)"
-			@echo "		Executable ./$(TESTER_STD) \n"
-
-
-
-all :	${NAME}
-
-bin_ft : ${OBJS_BIN}
-			@${CC} ${OBJS_BIN} -o $(TESTER_FT) ${CFLAGS} -D STL_TYPE=ft ${DEBEUG}
-			@echo "$(ERASE)$(GRN) [Tester FT Successfully compiled]$(END)	$(CHECK)"
-			@echo "		Executable ./$(TESTER_FT) \n"
-
-bin_std : ${OBJS_BIN}
-			@${CC} ${OBJS_BIN} -o $(TESTER_STD) ${CFLAGS} -D STL_TYPE=std ${DEBEUG}
-			@echo "$(ERASE)$(GRN) [Tester STD Successfully compiled]$(END)	$(CHECK)"
-			@echo "		Executable ./$(TESTER_STD) \n"
-
+			@echo "	Executable ./$(TESTER_STD) \n"
 
 clean :
 			${RM} $(OBJS) ${OBJS_BIN}
@@ -87,3 +81,7 @@ fclean :	clean
 re : 		fclean all
 
 .PHONY:		all clean fclean re
+
+# make fclean && make bin && ./tester_ft > testerft.txt && ./tester_std > testerstd.txt && diff testerft.txt testerstd.txt
+# make fclean && make bin && ./tester_ft > testerft.txt && ./tester_std > testerstd.txt && diff testerstd.txt testerft.txt > diff.txt
+# ./tester_ft > testerft.txt && ./tester_std > testerstd.txt && diff testerstd.txt testerft.txt > diff.txt

@@ -1,0 +1,84 @@
+194c194
+< size 	: 0
+---
+> size 	: 13
+196,197c196,197
+< empty	: 1
+< content : 
+---
+> empty	: 0
+> content : cfront, bli, blibli, 42, b, d, e, a, c, ff, fff, 123, cback
+221c221
+< size 	: 0
+---
+> size 	: 13
+223,224c223,224
+< empty	: 1
+< content : 
+---
+> empty	: 0
+> content : cfront, bli, blibli, 42, b, d, e, a, c, ff, fff, 123, cback
+463c463
+< size 	: 0
+---
+> size 	: 13
+465,466c465,466
+< empty	: 1
+< content : 
+---
+> empty	: 0
+> content : 514, 197, 484, 16, 50, 52, 53, 49, 51, 118, 192, 36, 360
+490c490
+< size 	: 0
+---
+> size 	: 13
+492,493c492,493
+< empty	: 1
+< content : 
+---
+> empty	: 0
+> content : 514, 197, 484, 16, 50, 52, 53, 49, 51, 118, 192, 36, 360
+732c732
+< size 	: 0
+---
+> size 	: 13
+734,735c734,735
+< empty	: 1
+< content : 
+---
+> empty	: 0
+> content : c, b, b, 4, b, d, e, a, c, f, f, 1, c
+759c759
+< size 	: 0
+---
+> size 	: 13
+761,762c761,762
+< empty	: 1
+< content : 
+---
+> empty	: 0
+> content : c, b, b, 4, b, d, e, a, c, f, f, 1, c
+1001c1001
+< size 	: 0
+---
+> size 	: 13
+1003,1004c1003,1004
+< empty	: 1
+< content : 
+---
+> empty	: 0
+> content : 0, 0, 0, 42, 0, 0, 0, 0, 0, 0, 0, 123, 0
+1028c1028
+< size 	: 0
+---
+> size 	: 13
+1030,1031c1030,1031
+< empty	: 1
+< content : 
+---
+> empty	: 0
+> content : 0, 0, 0, 42, 0, 0, 0, 0, 0, 0, 0, 123, 0
+3237c3237
+< time : 0.008554sec
+---
+> time : 0.006655sec

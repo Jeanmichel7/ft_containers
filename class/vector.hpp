@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/14 22:06:29 by jrasser           #+#    #+#             */
-/*   Updated: 2022/11/04 16:21:06 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/11/04 22:31:21 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -400,14 +400,14 @@ public:
 	/* *************************************************** */
 	void clear()
 	{
-		for (size_type i = 0; i < _nb_elems; i++)
-		{
-			_alloc.destroy(_start + i);
-		}
-		_alloc.deallocate(_start, _capacity);
-		_start = _alloc.allocate(0);
-		_finish = _start;
-		_nb_elems = 0;
+		// for (size_type i = 0; i < _nb_elems; i++)
+		// {
+		// 	_alloc.destroy(_start + i);
+		// }
+		// _alloc.deallocate(_start, _capacity);
+		// _start = _alloc.allocate(0);
+		// _finish = _start;
+		// _nb_elems = 0;
 	};
 
 

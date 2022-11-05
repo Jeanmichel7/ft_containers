@@ -6,7 +6,7 @@
 /*   By: jrasser <jrasser@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 14:57:17 by jrasser           #+#    #+#             */
-/*   Updated: 2022/11/04 20:10:31 by jrasser          ###   ########.fr       */
+/*   Updated: 2022/11/05 01:22:35 by jrasser          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,7 @@
 #  define USE_CHRONO 0
 # endif
 
-#ifndef STL_TYPE
-# define STL_TYPE ft
-#endif
+
 
 # include <iostream>
 # include <sstream>
@@ -44,17 +42,17 @@
 # include <queue>
 
 # include <vector>
-# include "vector.hpp"
+# include "../class/vector.hpp"
 # include <map>
-# include "map.hpp"
+# include "../class/map.hpp"
 # include <stack>
-# include "stack.hpp"
+# include "../class/stack.hpp"
 # include <set>
-# include "set.hpp"
+# include "../class/set.hpp"
 
+# include "../class/utils.hpp"
 # include "chrono.hpp"
 # include "convert.hpp"
-# include "utils.hpp"
 
 /* ***************************************************** */
 /*                        VECTOR                         */
@@ -133,9 +131,10 @@ void tester_set_type();
 
 
 
+void rendu_tester_set(void);
 
-
-
+template< typename type_value >
+void rendu_tester_set_type();
 
 /* ***************************************************** */
 /*                        UTILS                          */
