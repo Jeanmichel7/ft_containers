@@ -1,3 +1,4 @@
 objs/*.o
 objs
 prog
+.vscode
